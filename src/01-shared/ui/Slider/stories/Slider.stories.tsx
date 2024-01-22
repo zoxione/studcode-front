@@ -14,7 +14,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    defaultValue: 50,
+    defaultValue: [50],
     max: 100,
     step: 1,
   },
