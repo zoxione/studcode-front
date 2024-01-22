@@ -1,0 +1,30 @@
+type UserRole = "user" | "admin"
+
+interface UserFullName {
+  surname: string
+  name: string
+  patronymic: string
+}
+
+interface UserLinks {
+  github: string
+  vkontakte: string
+  telegram: string
+}
+
+interface User {
+  _id: string
+  username: string
+  email: string
+  password: string
+  role: UserRole
+  refresh_token: string
+  full_name: UserFullName
+  avatar: string
+  about: string
+  links: UserLinks
+  awards: any[] // TODO
+  projects: any[] // TODO
+}
+
+export type { User }
