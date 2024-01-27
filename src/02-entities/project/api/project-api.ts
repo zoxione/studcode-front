@@ -1,6 +1,6 @@
 import { ApiResponse } from "@/01-shared/api/types"
 import { Project } from "../model/types"
-import { GetAllProjectsFilter, GetAllProjectsResponse } from "./types"
+import { CreateProject, GetAllProjectsFilter, GetAllProjectsResponse } from "./types"
 import { getErrorMessage } from "@/01-shared/utils/get-error-message"
 
 class ProjectAPI {
@@ -10,7 +10,7 @@ class ProjectAPI {
     this.baseUrl = baseUrl
   }
 
-  async createOne(project: Project): Promise<ApiResponse<Project>> {
+  async createOne(project: CreateProject): Promise<ApiResponse<Project>> {
     try {
       const res = await fetch(`${this.baseUrl}/projects`, {
         method: "POST",
@@ -18,6 +18,7 @@ class ProjectAPI {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
       })
       if (!res.ok) {
         return { error: res.statusText, data: null }
@@ -39,12 +40,16 @@ class ProjectAPI {
     limit,
     search,
     time_frame,
+    tag_slug,
+    creator_id,
   }: GetAllProjectsFilter): Promise<ApiResponse<GetAllProjectsResponse>> {
     try {
       let url = `${this.baseUrl}/projects?page=${page}`
       url += limit ? `&limit=${limit}` : ""
       url += search ? `&search=${search}` : ""
       url += time_frame ? `&time_frame=${time_frame}` : ""
+      url += tag_slug ? `&tag_slug=${tag_slug}` : ""
+      url += creator_id ? `&creator_id=${creator_id}` : ""
       const res = await fetch(url, {
         method: "GET",
         cache: "no-store",

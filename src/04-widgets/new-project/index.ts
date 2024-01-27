@@ -1,1 +1,1 @@
-export { NewProjectForm } from "./ui/new-project-form"
+export { NewProject } from "./ui/new-project"

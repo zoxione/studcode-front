@@ -19,13 +19,11 @@ import { TagCardSmall } from "@/02-entities/tag/ui/tag-card-small"
 import { useQuery } from "@tanstack/react-query"
 import { CopyIcon, SearchIcon } from "lucide-react"
 
-export function Search() {
+const Search = () => {
   const { isPending, data: tags } = useQuery({
     queryKey: ["tags"],
     queryFn: () => tagAPI.getAll({}),
   })
-
-  console.log(tags)
 
   return (
     <div>
@@ -35,24 +33,27 @@ export function Search() {
             <SearchIcon className="mr-2 h-4 w-4" /> Поиск...
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-lg p-9">
+        <DialogContent className="sm:max-w-lg" withBackButton={false}>
           <div className="w-full flex flex-row gap-2">
             <Input type="search" placeholder="Что ищем?" />
             <Button type="submit">Поиск</Button>
           </div>
-          <Title order={6} className="mt-4">
-            Популярные теги
-          </Title>
-          <ScrollArea className="w-full h-[200px]">
-            <div className="grid grid-cols-3 gap-2">
-              {tags?.data?.data.map((tag) => (
-                <TagCardSmall key={tag._id} tag={tag} />
-              ))}
-            </div>
-          </ScrollArea>
+          <div>
+            <Title order={6}>Популярные теги</Title>
+            <ScrollArea className="mt-2 w-full h-[200px]">
+              <div className="grid grid-cols-3 gap-2">
+                {tags?.data?.data.map((tag) => (
+                  <TagCardSmall key={tag._id} tag={tag} />
+                ))}
+              </div>
+            </ScrollArea>
+          </div>
+
           <DialogFooter className="sm:justify-start"></DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
   )
 }
+
+export { Search }

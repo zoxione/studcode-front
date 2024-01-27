@@ -13,7 +13,7 @@ const TagBadge = forwardRef<HTMLAnchorElement, TagBadgeProps>(({ tag, className 
   const tagName = tag.name.ru !== "" ? tag.name.ru : tag.name.en
 
   return (
-    <Link href={`/projects?tagId=${tag._id}`} ref={ref} className={cn("", className)}>
+    <Link href={`/projects?tagId=${tag._id}`} ref={ref} className={cn("w-fit", className)}>
       <Badge variant="secondary" className="flex flex-row items-center gap-4">
         {tagName}
       </Badge>

@@ -13,7 +13,7 @@ interface LogoProps {
 
 export const Logo = ({ className }: LogoProps) => {
   return (
-    <Link href="/" className={cn("", className)}>
+    <Link href="/" scroll={false} className={cn("", className)}>
       <span
       // className={cn("font-bold", roboto_mono.className)}
       >

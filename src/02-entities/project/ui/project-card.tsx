@@ -13,30 +13,36 @@ export interface ProjectCardProps extends HTMLAttributes<HTMLDivElement> {
 
 const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(({ project, className }, ref) => {
   return (
-    <div
-      ref={ref}
-      className={cn("flex flex-row items-center gap-4 max-w-xl border hover:border-primary p-2 rounded-md", className)}
-    >
-      <Avatar className="w-12 h-12" asChild>
-        <Link href={`/projects/${project._id}`} className="flex flex-col gap-0">
-          <AvatarImage src={project.logo} width={48} height={48} alt={project.title} />
+    <div>
+      <Link
+        href={`/projects/${project._id}`}
+        scroll={false}
+        // ref={ref}
+        className={cn(
+          "flex flex-row items-center gap-4 max-w-xl rounded-md hover:bg-gradient-to-l from-accent",
+          className,
+        )}
+      >
+        <Avatar className="w-[60px] h-[60px]">
+          <AvatarImage src={project.logo} width={60} height={60} alt={project.title} />
           <AvatarFallback>{project.title[0]}</AvatarFallback>
-        </Link>
-      </Avatar>
-      <div className="flex flex-col gap-4 flex-1">
-        <Link href={`/projects/${project._id}`} className="flex flex-col gap-0">
-          <Title order={6} className="">
-            {project.title}
-          </Title>
-          <p className="text-sm font-medium leading-none">{project.tagline}</p>
-        </Link>
-        <div className="flex flex-row items-center">
-          {project.tags.map((tag) => (
-            <TagBadge key={tag._id} tag={tag} />
-          ))}
+        </Avatar>
+        <div className="flex-1 flex flex-col gap-2 overflow-hidden">
+          <div className="mb-6 flex flex-row items-center gap-1 text-base font-semibold">
+            <span className="flex-none">{project.title}</span>
+            <span>—</span>
+            <p className="line-clamp-1 ">{project.tagline}</p>
+          </div>
         </div>
+        <div className="w-fit pr-3">
+          <ApproveButton project={project} />
+        </div>
+      </Link>
+      <div className="absolute ml-[76px] -mt-7 flex flex-row items-center gap-1">
+        {project.tags.map((tag) => (
+          <TagBadge key={tag._id} tag={tag} />
+        ))}
       </div>
-      <ApproveButton project={project} />
     </div>
   )
 })

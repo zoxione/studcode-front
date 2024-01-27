@@ -16,9 +16,9 @@ const ApproveButton = ({ project }: ApproveButtonProps) => {
   }
 
   return (
-    <Button onClick={handleButtonClick} variant="outline" size="icon" className="flex flex-col gap-1 h-14 w-12">
+    <Button onClick={handleButtonClick} variant="outline" size="icon" className="flex flex-col h-10 w-8">
       <Flame className="h-4 w-4" />
-      <span className="text-xs">{project.flames}</span>
+      <span className="text-[10px] leading-normal">{project.flames}</span>
     </Button>
   )
 }

@@ -59,6 +59,29 @@ class TagAPI {
       }
     }
   }
+
+  async getOneBySlug(slug: string): Promise<ApiResponse<Tag>> {
+    try {
+      const res = await fetch(`${this.baseUrl}/tags/slug/${slug}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      if (!res.ok) {
+        return { error: res.statusText, data: null }
+      }
+      return {
+        error: null,
+        data: await res.json(),
+      }
+    } catch (error) {
+      return {
+        error: getErrorMessage(error),
+        data: null,
+      }
+    }
+  }
 }
 
 export const tagAPI = new TagAPI(`${process.env.API_URL}/v1`)

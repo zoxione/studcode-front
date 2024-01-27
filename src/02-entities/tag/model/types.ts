@@ -5,6 +5,7 @@ interface Tag {
     en: string
   }
   icon: string
+  slug: string
   created_at: string
   updated_at: string
 }

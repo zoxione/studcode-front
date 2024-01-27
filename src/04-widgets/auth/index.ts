@@ -1,1 +1,1 @@
-export { AuthModal } from "./ui/auth-modal"
+export { AuthDialog } from "./ui/auth-dialog"

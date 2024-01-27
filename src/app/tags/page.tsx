@@ -4,6 +4,7 @@ import { TagBadge, tagAPI } from "@/02-entities/tag"
 import { TagCard } from "@/02-entities/tag/ui/tag-card"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
+import { HeaderPage } from "@/04-widgets/header-page"
 import { Layout } from "@/04-widgets/layout"
 import { ChevronLeftIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
@@ -15,19 +16,8 @@ export default async function Tags() {
   const allTags = allData?.data ? allData.data : []
 
   return (
-    <Layout header={<Header />} footer={<Footer />} className="space-y-12">
-      <div className="flex flex-col gap-4 my-8">
-        <Link href="/">
-          <Button variant="link" size="none" className="text-foreground">
-            <ChevronLeftIcon className="mr-2 h-4 w-4" />
-            На главную
-          </Button>
-        </Link>
-        <div>
-          <Title order={2}>Теги</Title>
-          <span className="">Просмотрите 20 620 проектов по 470 тегам</span>
-        </div>
-      </div>
+    <Layout header={<Header />} footer={<Footer />} className="space-y-8">
+      <HeaderPage className="my-8" title="Теги" description="Просмотрите 20 620 проектов по 470 тегам" />
 
       <div>
         <Title order={6} className="mb-2">

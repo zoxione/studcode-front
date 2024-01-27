@@ -19,6 +19,15 @@ interface Account {
   exp: number
 }
 
+interface LogoutResponse {
+  message: string
+}
+
+interface RefreshResponse {
+  access_token: string
+  refresh_token: string
+}
+
 interface GetAllUsersFilter {
   page?: number
   limit?: number
@@ -32,4 +41,4 @@ interface GetAllUsersResponse {
   data: User[]
 }
 
-export type { GetAllUsersFilter, GetAllUsersResponse, Account, SignIn, SignInResponse }
+export type { GetAllUsersFilter, GetAllUsersResponse, Account, SignIn, SignInResponse, LogoutResponse, RefreshResponse }

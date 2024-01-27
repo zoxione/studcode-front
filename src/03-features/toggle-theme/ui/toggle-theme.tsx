@@ -22,15 +22,15 @@ export const ToggleTheme = () => {
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme("light")}>
           <SunIcon className="mr-2 h-4 w-4" />
-          <span>Light</span>
+          <span>Светлая</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("dark")}>
           <MoonIcon className="mr-2 h-4 w-4" />
-          <span>Dark</span>
+          <span>Темная</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")}>
           <LaptopIcon className="mr-2 h-4 w-4" />
-          <span>System</span>
+          <span>Системная</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

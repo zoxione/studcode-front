@@ -10,7 +10,7 @@ import { SignUpForm } from "@/03-features/sign-up"
 import { SignInForm } from "@/03-features/sign-in"
 import { EnvelopeClosedIcon, GitHubLogoIcon } from "@radix-ui/react-icons"
 
-const AuthModal = () => {
+const AuthDialog = () => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -22,7 +22,6 @@ const AuthModal = () => {
   }, [])
 
   const onClose = useCallback(() => {
-    console.log(pathname)
     router.push(pathname, { scroll: false })
   }, [pathname, router])
 
@@ -32,25 +31,26 @@ const AuthModal = () => {
 
   let dialogContent = (
     <DialogContent
-      className="sm:max-w-[425px]"
+      className="sm:max-w-[380px]"
+      withBackButton={false}
       onCloseButton={onClose}
       onEscapeKeyDown={onClose}
       onPointerDownOutside={onClose}
     >
-      <DialogTitle className="">Вход в аккаунт</DialogTitle>
+      <DialogTitle className="text-center">Вход в аккаунт</DialogTitle>
       <div className="flex flex-col gap-3">
-        <Button variant="secondary" className="w-full">
+        <Button variant="secondary" className="relative" disabled>
           <GitHubLogoIcon className="absolute left-3 h-4 w-4" />
-          Продолжить с GitHub
+          GitHub
         </Button>
-        <Button variant="secondary" className="w-full" asChild>
+        <Button variant="secondary" className="relative" asChild>
           <Link href={`${pathname}?modal=auth/email`} scroll={false}>
             <EnvelopeClosedIcon className="absolute left-3 h-4 w-4" />
             Почта
           </Link>
         </Button>
       </div>
-      <DialogFooter>
+      <DialogFooter className="text-center">
         Нет аккаунта?{" "}
         <Button asChild variant="link" size="none">
           <Link href={`${pathname}?modal=auth/signup`} scroll={false}>
@@ -63,7 +63,7 @@ const AuthModal = () => {
   if (modal === "auth/email") {
     dialogContent = (
       <DialogContent
-        className="sm:max-w-[425px]"
+        className="sm:max-w-[380px]"
         onBackButton={onBack}
         onCloseButton={onClose}
         onEscapeKeyDown={onClose}
@@ -71,12 +71,19 @@ const AuthModal = () => {
       >
         <DialogTitle className="text-center">Вход в аккаунт</DialogTitle>
         <SignInForm />
+        <DialogFooter className="text-center">
+          <Button asChild variant="link" size="none">
+            <Link href={`/`} scroll={false}>
+              Забыли пароль?
+            </Link>
+          </Button>
+        </DialogFooter>
       </DialogContent>
     )
   } else if (modal === "auth/signup") {
     dialogContent = (
       <DialogContent
-        className="sm:max-w-[425px]"
+        className="sm:max-w-[380px]"
         onBackButton={onBack}
         onCloseButton={onClose}
         onEscapeKeyDown={onClose}
@@ -84,18 +91,18 @@ const AuthModal = () => {
       >
         <DialogTitle className="text-center">Регистрация</DialogTitle>
         <div className="flex flex-col gap-3">
-          <Button variant="secondary" className="w-full">
+          <Button variant="secondary" className="relative" disabled>
             <GitHubLogoIcon className="absolute left-3 h-4 w-4" />
-            Продолжить с GitHub
+            GitHub
           </Button>
-          <Button variant="secondary" className="w-full" asChild>
+          <Button variant="secondary" className="relative" asChild>
             <Link href={`${pathname}?modal=auth/signup/email`} scroll={false}>
               <EnvelopeClosedIcon className="absolute left-3 h-4 w-4" />
               Почта
             </Link>
           </Button>
         </div>
-        <DialogFooter>
+        <DialogFooter className="text-center">
           Регистрируясь, вы соглашаетесь с
           <Button asChild variant="link" size="none">
             <Link href={`/`} scroll={false} target="_blank">
@@ -108,7 +115,7 @@ const AuthModal = () => {
   } else if (modal === "auth/signup/email") {
     dialogContent = (
       <DialogContent
-        className="sm:max-w-[425px]"
+        className="sm:max-w-[380px]"
         onBackButton={onBack}
         onCloseButton={onClose}
         onEscapeKeyDown={onClose}
@@ -123,4 +130,4 @@ const AuthModal = () => {
   return <Dialog open={isOpen}>{dialogContent}</Dialog>
 }
 
-export { AuthModal }
+export { AuthDialog }

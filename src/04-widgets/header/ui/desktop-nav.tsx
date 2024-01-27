@@ -27,8 +27,10 @@ export const DesktopNav = ({ className }: IDesktopNavProps) => {
 
   const { isPending, data: user } = useQuery({
     queryKey: ["user"],
-    queryFn: () => userAPI.whoAmI(),
+    queryFn: () => userAPI.whoami(),
   })
+
+  console.log(user)
 
   return (
     <nav className={cn("container flex items-center justify-between py-4", className)}>
@@ -36,7 +38,12 @@ export const DesktopNav = ({ className }: IDesktopNavProps) => {
       <div className="flex items-center space-x-4 mx-8 lg:space-x-6">
         <Search />
         {navLinks.map((item) => (
-          <Link key={item.id} href={item.path} className="text-sm font-medium transition-colors hover:text-primary">
+          <Link
+            key={item.id}
+            href={item.path}
+            scroll={false}
+            className="text-sm font-medium transition-colors hover:text-primary"
+          >
             {item.title}
           </Link>
         ))}
@@ -45,10 +52,17 @@ export const DesktopNav = ({ className }: IDesktopNavProps) => {
         {isPending ? (
           <ReloadIcon className="h-4 w-4 animate-spin" />
         ) : user?.error === null ? (
-          <UserMenu />
+          <>
+            <Button asChild>
+              <Link href="/projects/new" scroll={false}>
+                Добавить проект
+              </Link>
+            </Button>
+            <UserMenu />
+          </>
         ) : (
           <Button asChild>
-            <Link href={`${pathname}?modal=auth`} scroll={false} prefetch={false}>
+            <Link href={`${pathname}?modal=auth`} scroll={false}>
               Войти
             </Link>
           </Button>

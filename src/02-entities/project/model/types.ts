@@ -4,6 +4,18 @@ type ProjectPrice = "free" | "free_options" | "payment_required"
 
 type ProjectStatus = "draft" | "published" | "archived"
 
+interface ProjectLinks {
+  main: string
+  github: string
+  demo: string
+}
+
+interface ProjectCreator {
+  _id: string
+  username: string
+  avatar: string
+}
+
 interface Project {
   _id: string
   title: string
@@ -11,22 +23,14 @@ interface Project {
   status: ProjectStatus
   description: string
   flames: number
-  links: {
-    main: string
-    github: string
-    demo: string
-  }
+  links: ProjectLinks
   logo: string
   screenshots: string[]
   price: ProjectPrice
   tags: Tag[]
-  creator: {
-    _id: string
-    username: string
-    avatar: string
-  }
+  creator: ProjectCreator
   created_at: string
   updated_at: string
 }
 
-export type { Project, ProjectPrice, ProjectStatus }
+export type { Project, ProjectPrice, ProjectStatus, ProjectLinks, ProjectCreator }

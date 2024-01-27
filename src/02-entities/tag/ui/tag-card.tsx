@@ -13,7 +13,7 @@ const TagCard = forwardRef<HTMLAnchorElement, TagCardProps>(({ tag, className },
   const tagName = tag.name.ru !== "" ? tag.name.ru : tag.name.en
 
   return (
-    <Link href={`/projects?tagId=${tag._id}`} ref={ref} className={cn("", className)}>
+    <Link href={`/projects?tagId=${tag._id}`} ref={ref} scroll={false} className={cn("", className)}>
       <div className="h-full w-full flex flex-row items-center gap-2 p-4 hover:bg-accent">
         <span className="">{tag.icon}</span>
         <span className="grow line-clamp-1">{tagName}</span>

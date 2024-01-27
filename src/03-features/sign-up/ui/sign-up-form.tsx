@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-const singUpFormSchema = z.object({
+const signUpFormSchema = z.object({
   username: z.string().min(2).max(32),
   email: z.string().email(),
   password: z.string().min(4).max(32),
@@ -18,8 +18,8 @@ const singUpFormSchema = z.object({
 interface SignUpFormProps extends HTMLAttributes<HTMLFormElement> {}
 
 const SignUpForm = ({ className }: SignUpFormProps) => {
-  const form = useForm<z.infer<typeof singUpFormSchema>>({
-    resolver: zodResolver(singUpFormSchema),
+  const signUpForm = useForm<z.infer<typeof signUpFormSchema>>({
+    resolver: zodResolver(signUpFormSchema),
     defaultValues: {
       username: "",
       email: "",
@@ -27,7 +27,7 @@ const SignUpForm = ({ className }: SignUpFormProps) => {
     },
   })
 
-  async function onSubmit(values: z.infer<typeof singUpFormSchema>) {
+  async function onSubmit(values: z.infer<typeof signUpFormSchema>) {
     const res = await fetch(`${process.env.API_URL}/v1/auth/register`, {
       method: "POST",
       body: JSON.stringify(values),
@@ -44,10 +44,10 @@ const SignUpForm = ({ className }: SignUpFormProps) => {
     }
   }
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+    <Form {...signUpForm}>
+      <form onSubmit={signUpForm.handleSubmit(onSubmit)} className="space-y-3">
         <FormField
-          control={form.control}
+          control={signUpForm.control}
           name="username"
           render={({ field }) => (
             <FormItem>
@@ -60,7 +60,7 @@ const SignUpForm = ({ className }: SignUpFormProps) => {
           )}
         />
         <FormField
-          control={form.control}
+          control={signUpForm.control}
           name="email"
           render={({ field }) => (
             <FormItem>
@@ -72,9 +72,8 @@ const SignUpForm = ({ className }: SignUpFormProps) => {
             </FormItem>
           )}
         />
-
         <FormField
-          control={form.control}
+          control={signUpForm.control}
           name="password"
           render={({ field }) => (
             <FormItem>

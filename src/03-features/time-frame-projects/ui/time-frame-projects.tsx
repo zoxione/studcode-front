@@ -12,7 +12,6 @@ const TimeFrameProjects = ({ timeFrame }: TimeFrameProjectsProps) => {
   const router = useRouter()
 
   const handleChangeValue = (value: string) => {
-    console.log(value)
     // router.refresh()
     router.replace("/?timeFrame=" + value, { scroll: false })
   }

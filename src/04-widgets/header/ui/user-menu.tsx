@@ -12,29 +12,46 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/01-shared/ui/DropdownMenu"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/01-shared/ui/Tooltip"
 import { userAPI } from "@/02-entities/user"
-import { CopyIcon, ExitIcon, GearIcon, PersonIcon, PlusIcon } from "@radix-ui/react-icons"
+import { ChevronDownIcon, CopyIcon, ExitIcon, GearIcon, PersonIcon, PlusIcon } from "@radix-ui/react-icons"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 export function UserMenu() {
+  const router = useRouter()
+
   const { isPending, data: user } = useQuery({
     queryKey: ["user"],
-    queryFn: () => userAPI.whoAmI(),
+    queryFn: () => userAPI.whoami(),
   })
 
-  console.log(user)
+  const handleLogout = async () => {
+    const res = await userAPI.logout()
 
-  const handleLogout = () => {}
+    if (res.error === null) {
+      toast.success("Вы вышли из аккаунта")
+      window.location.reload()
+    } else {
+      toast.error("Произошла ошибка")
+    }
+  }
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(user?.data?.email || "")
+  }
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+        <Button variant="ghost" className="p-1">
           <Avatar className="h-8 w-8">
-            <AvatarImage src="/avatars/01.png" alt="@shadcn" />
-            <AvatarFallback>SC</AvatarFallback>
+            <AvatarImage src={user?.data?.avatar} alt={user?.data?.username} />
+            <AvatarFallback>{user?.data?.username.charAt(0).toUpperCase()}</AvatarFallback>
           </Avatar>
+          <ChevronDownIcon className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
@@ -43,24 +60,31 @@ export function UserMenu() {
             <p className="text-sm font-medium leading-none">{user?.data?.username}</p>
             <div className="flex flex-row items-center justify-between">
               <p className="text-xs leading-none text-muted-foreground">{user?.data?.email}</p>
-              <CopyIcon className=" h-4 w-4" />
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <CopyIcon onClick={handleCopyEmail} className="h-4 w-4 hover:text-muted-foreground cursor-copy" />
+                  </TooltipTrigger>
+                  <TooltipContent>Скопировать</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href={`/projects/new`}>
+            <Link href={`/projects/new`} scroll={false}>
               Добавить проект <PlusIcon className="ml-auto h-4 w-4" />
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href={`/user/${user?.data?.sub}`}>
+            <Link href={`/u/${user?.data?.sub}`} scroll={false}>
               Профиль <PersonIcon className="ml-auto h-4 w-4" />
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href={`/user/${user?.data?.sub}/settings`}>
+            <Link href={`/u/${user?.data?.sub}/settings`} scroll={false}>
               Настройки <GearIcon className="ml-auto h-4 w-4" />
             </Link>
           </DropdownMenuItem>

@@ -12,7 +12,7 @@ const TagCardSmall = forwardRef<HTMLAnchorElement, TagCardSmallProps>(({ tag, cl
   const tagName = tag.name.ru !== "" ? tag.name.ru : tag.name.en
 
   return (
-    <Link href={`/projects?tagId=${tag._id}`} ref={ref} className={cn("", className)}>
+    <Link href={`/projects?tagId=${tag._id}`} ref={ref} scroll={false} className={cn("", className)}>
       <div className="h-full w-full flex flex-col items-center justify-center gap-2 border rounded-md px-10 py-3 text-center hover:bg-accent">
         <span>{tag.icon}</span>
         <span>{tagName}</span>

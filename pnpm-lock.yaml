@@ -65,9 +65,6 @@ dependencies:
   cmdk:
     specifier: ^0.2.0
     version: 0.2.0(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
-  date-fns:
-    specifier: ^3.3.1
-    version: 3.3.1
   embla-carousel-react:
     specifier: 8.0.0-rc19
     version: 8.0.0-rc19(react@18.0.0)

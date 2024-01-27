@@ -57,7 +57,7 @@ export const MobileNav = ({ className }: IMobileNavProps) => {
           </SheetFooter>
         </SheetContent>
       </Sheet>
-      <Link href="/" className="font-bold inline-block">
+      <Link href="/" scroll={false} className="font-bold inline-block">
         {siteConfig.name}
       </Link>
       <Button variant="outline" size="icon">

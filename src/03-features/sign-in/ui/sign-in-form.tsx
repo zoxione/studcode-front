@@ -9,8 +9,10 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/01-shared/ui/Input"
 import { cn } from "@/01-shared/utils/cn"
 import { toast } from "sonner"
+import { useRouter } from "next/navigation"
+import { userAPI } from "@/02-entities/user"
 
-const singInFormSchema = z.object({
+const signInFormSchema = z.object({
   email: z.string().email(),
   password: z.string().min(4).max(32),
 })
@@ -18,41 +20,33 @@ const singInFormSchema = z.object({
 interface SignInFormProps extends HTMLAttributes<HTMLFormElement> {}
 
 const SignInForm = ({ className }: SignInFormProps) => {
-  const form = useForm<z.infer<typeof singInFormSchema>>({
-    resolver: zodResolver(singInFormSchema),
+  const router = useRouter()
+
+  const signInForm = useForm<z.infer<typeof signInFormSchema>>({
+    resolver: zodResolver(signInFormSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   })
 
-  async function onSubmit(values: z.infer<typeof singInFormSchema>) {
-    console.log(values)
+  async function onSubmit(values: z.infer<typeof signInFormSchema>) {
+    const { data: user, error } = await userAPI.login({ ...values })
 
-    const res = await fetch(`${process.env.API_URL}/v1/auth/login`, {
-      method: "POST",
-      body: JSON.stringify(values),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      credentials: "include",
-    })
-
-    console.log(res)
-
-    if (res.ok) {
+    if (error === null) {
       toast.success("Вы вошли в аккаунт")
+      router.push("/", { scroll: false })
+      // window.location.reload()
     } else {
       toast.error("Произошла ошибка при авторизации")
     }
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+    <Form {...signInForm}>
+      <form onSubmit={signInForm.handleSubmit(onSubmit)} className="space-y-3">
         <FormField
-          control={form.control}
+          control={signInForm.control}
           name="email"
           render={({ field }) => (
             <FormItem>
@@ -65,7 +59,7 @@ const SignInForm = ({ className }: SignInFormProps) => {
           )}
         />
         <FormField
-          control={form.control}
+          control={signInForm.control}
           name="password"
           render={({ field }) => (
             <FormItem>

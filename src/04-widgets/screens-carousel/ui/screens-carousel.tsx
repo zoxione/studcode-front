@@ -1,17 +1,17 @@
 "use client"
 
-import useEmblaCarousel from "embla-carousel-react"
-import { useEffect } from "react"
+import { Carousel, CarouselContent, CarouselItem } from "@/01-shared/ui/Carousel"
+import { cn } from "@/01-shared/utils/cn"
 import PhotoSwipeLightbox from "photoswipe/lightbox"
 import "photoswipe/style.css"
+import { useEffect } from "react"
 
 interface ScreensCarouselProps {
+  className?: string
   screens: string[]
 }
 
-const ScreensCarousel = ({ screens }: ScreensCarouselProps) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false })
-
+const ScreensCarousel = ({ screens, className }: ScreensCarouselProps) => {
   useEffect(() => {
     let lightbox = new PhotoSwipeLightbox({
       gallery: "#screens-carousel-gallery",
@@ -27,30 +27,25 @@ const ScreensCarousel = ({ screens }: ScreensCarouselProps) => {
     }
   }, [])
 
-  useEffect(() => {
-    if (emblaApi) {
-      console.log(emblaApi.slideNodes())
-    }
-  }, [emblaApi])
-
   return (
-    <div className="overflow-hidden" ref={emblaRef}>
-      <div className="pswp-gallery flex" id="screens-carousel-gallery">
+    <Carousel className={cn("", className)} opts={{ dragFree: true, loop: false }}>
+      <CarouselContent id="screens-carousel-gallery" className="pswp-gallery -ml-1">
         {screens.map((screen, index) => (
-          <a
-            href={screen}
-            key={"screens-carousel-gallery" + "-" + index}
-            className="flex-[0_0_50%] min-w-0 pl-6 relative"
-            target="_blank"
-            rel="noreferrer"
-            data-pswp-width={640}
-            data-pswp-height={290}
-          >
-            <img className="block w-full h-96 object-contain" src={screen} alt="screen" />
-          </a>
+          <CarouselItem className="basis-auto pl-1" key={index}>
+            <a
+              href={screen}
+              key={`screens-carousel-gallery-${index}`}
+              target="_blank"
+              rel="noreferrer"
+              data-pswp-width={640}
+              data-pswp-height={290}
+            >
+              <img className="block w-full h-[488px] object-contain" src={screen} alt="screen" />
+            </a>
+          </CarouselItem>
         ))}
-      </div>
-    </div>
+      </CarouselContent>
+    </Carousel>
   )
 }
 

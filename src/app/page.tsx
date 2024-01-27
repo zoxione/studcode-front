@@ -1,7 +1,14 @@
+import { Title } from "@/01-shared/ui/Title"
+import { normalizeTimeFrame } from "@/01-shared/utils/normalize-time-frame"
+import { projectAPI } from "@/02-entities/project"
+import { TagBadge, tagAPI } from "@/02-entities/tag"
+import { TimeFrameProjects } from "@/03-features/time-frame-projects"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { Hero } from "@/04-widgets/hero"
 import { Layout } from "@/04-widgets/layout"
+import { ProjectsDraftsList } from "@/04-widgets/projects-drafts-list"
+import { ProjectsList } from "@/04-widgets/projects-list"
 import { z } from "zod"
 
 const allowedValues = {
@@ -17,27 +24,38 @@ export default async function Home({
 }: {
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
-  // const searchParamsParsed = ParamsSchema.parse({
-  //   timeFrame: searchParams?.timeFrame,
-  // })
+  const searchParamsParsed = ParamsSchema.parse({
+    timeFrame: searchParams?.timeFrame,
+  })
+  const timeFrameNormalized = normalizeTimeFrame(searchParamsParsed.timeFrame)
 
-  // console.log(searchParamsParsed)
-
-  // const { data, error } = await projectsAPI.getAll({ time_frame: searchParamsParsed.timeFrame })
-  // const projects = data?.data ? data.data : []
-  // console.log(projects.length)
+  const { data: tags } = await tagAPI.getAll({ limit: 5 })
 
   return (
     <Layout header={<Header />} footer={<Footer />} className="">
       <Hero className="my-8" />
-      {/* <div className="space-y-2 my-12">
-        <TimeFrameProjects timeFrame={searchParamsParsed.timeFrame} />
-        <Title order={4} className="mb-4">
-          Лучшие проекты за месяц
-        </Title>
-      </div> */}
 
-      {/* <ProjectsList initialProjects={projects} /> */}
+      <div className="mt-20 mb-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="col-span-2">
+          <TimeFrameProjects timeFrame={searchParamsParsed.timeFrame} />
+          <Title order={4} className="mt-6 mb-4">
+            Лучшие проекты за {timeFrameNormalized}
+          </Title>
+          <ProjectsList time_frame={searchParamsParsed.timeFrame} />
+        </div>
+        <div className="space-y-8">
+          <div className="flex flex-col gap-4">
+            <Title order={4}>Популярные теги</Title>
+            {tags?.data.map((tag) => (
+              <TagBadge key={tag._id} tag={tag} />
+            ))}
+          </div>
+          <div className="flex flex-col gap-4">
+            <Title order={4}>Ваши черновики</Title>
+            <ProjectsDraftsList limit={5} />
+          </div>
+        </div>
+      </div>
     </Layout>
   )
 }

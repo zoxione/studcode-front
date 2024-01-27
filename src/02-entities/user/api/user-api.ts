@@ -1,6 +1,14 @@
 import { getErrorMessage } from "@/01-shared/utils/get-error-message"
 import { User } from "../model/types"
-import { Account, GetAllUsersFilter, GetAllUsersResponse, SignIn, SignInResponse } from "./types"
+import {
+  Account,
+  GetAllUsersFilter,
+  GetAllUsersResponse,
+  LogoutResponse,
+  RefreshResponse,
+  SignIn,
+  SignInResponse,
+} from "./types"
 import { ApiResponse } from "@/01-shared/api/types"
 
 class UserAPI {
@@ -42,6 +50,7 @@ class UserAPI {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
       })
       if (!res.ok) {
         return { error: res.statusText, data: null }
@@ -58,9 +67,57 @@ class UserAPI {
     }
   }
 
-  async whoAmI(): Promise<ApiResponse<Account>> {
+  async whoami(): Promise<ApiResponse<Account>> {
     try {
       const res = await fetch(`${this.baseUrl}/auth/whoami`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      })
+      if (!res.ok) {
+        return { error: res.statusText, data: null }
+      }
+      return {
+        error: null,
+        data: await res.json(),
+      }
+    } catch (error) {
+      return {
+        error: getErrorMessage(error),
+        data: null,
+      }
+    }
+  }
+
+  async refresh(): Promise<ApiResponse<RefreshResponse>> {
+    try {
+      const res = await fetch(`${this.baseUrl}/auth/refresh`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      })
+      if (!res.ok) {
+        return { error: res.statusText, data: null }
+      }
+      return {
+        error: null,
+        data: await res.json(),
+      }
+    } catch (error) {
+      return {
+        error: getErrorMessage(error),
+        data: null,
+      }
+    }
+  }
+
+  async logout(): Promise<ApiResponse<LogoutResponse>> {
+    try {
+      const res = await fetch(`${this.baseUrl}/auth/logout`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
