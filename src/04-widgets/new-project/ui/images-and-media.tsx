@@ -1,7 +1,8 @@
+import { UseFormReturn } from "react-hook-form"
+
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
 import { Title } from "@/01-shared/ui/Title"
-import { UseFormReturn } from "react-hook-form"
 
 interface ImagesAndMediaProps {
   form: UseFormReturn<

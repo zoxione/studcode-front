@@ -1,8 +1,8 @@
+import { GitHubLogoIcon, LinkBreak2Icon } from "@radix-ui/react-icons"
+import { notFound } from "next/navigation"
+
 import { Button } from "@/01-shared/ui/Button"
-import { Checkbox } from "@/01-shared/ui/Checkbox"
 import { Input } from "@/01-shared/ui/Input"
-import { Label } from "@/01-shared/ui/Label"
-import { Switch } from "@/01-shared/ui/Switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/01-shared/ui/Tabs"
 import { Title } from "@/01-shared/ui/Title"
 import { User, userAPI } from "@/02-entities/user"
@@ -12,11 +12,12 @@ import { PrivacySettings } from "@/03-features/privacy-settings"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"
-import { GitHubLogoIcon, LinkBreak2Icon } from "@radix-ui/react-icons"
 
 export default async function User({ params }: { params: { id: string } }) {
-  const { data: user, error } = await userAPI.getOneById(params.id)
-  console.log(user)
+  const user = await userAPI.getOneById(params.id)
+  if (!user) {
+    notFound()
+  }
 
   return (
     <Layout header={<Header />} footer={<Footer />} className="">

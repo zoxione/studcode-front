@@ -1,28 +1,46 @@
 "use client"
 
-import { Toaster } from "@/01-shared/ui/Sonner"
-import { AuthDialog } from "@/04-widgets/auth"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ThemeProvider } from "next-themes"
-import { useSearchParams } from "next/navigation"
 import { ReactNode } from "react"
+import { toast } from "sonner"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+
+import { Toaster } from "@/01-shared/ui/Sonner"
 
 interface IProviders {
   children: ReactNode
 }
 
 const Providers = ({ children }: IProviders) => {
-  // const searchParams = useSearchParams()
-  // const modal = searchParams.get("modal")
-
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient({
+    queryCache: new QueryCache({
+      onError: (error, query) => {
+        toast.error(`Произошла ошибка: ${error.message}`)
+      },
+    }),
+    mutationCache: new MutationCache({
+      onError: (error, query) => {
+        toast.error(`Произошла ошибка: ${error.message}`)
+      },
+    }),
+    defaultOptions: {
+      // queries: {
+      //   refetchOnWindowFocus: false,
+      //   retry: false,
+      // },
+      // mutations: {
+      //   retry: false,
+      // },
+    },
+  })
 
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <Toaster position="top-center" richColors closeButton />
         {children}
-        {/* {modal?.includes("auth") ? <AuthDialog /> : null} */}
+        <ReactQueryDevtools initialIsOpen={false} />
       </ThemeProvider>
     </QueryClientProvider>
   )

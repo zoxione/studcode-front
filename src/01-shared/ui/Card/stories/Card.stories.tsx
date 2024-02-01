@@ -1,9 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/react"
 import { Button } from "../../Button"
 import { Input } from "../../Input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../Select"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/Card"
 import { Label } from "../../Label"
+
+import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
   title: "UI/Card",

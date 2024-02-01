@@ -1,5 +1,6 @@
-import { cn } from "@/01-shared/utils/cn"
 import * as React from "react"
+
+import { cn } from "@/01-shared/utils/cn"
 
 const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
   <div ref={ref} className={cn("rounded-xl border bg-card text-card-foreground shadow", className)} {...props} />

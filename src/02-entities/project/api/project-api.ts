@@ -1,7 +1,6 @@
-import { ApiResponse } from "@/01-shared/api/types"
 import { Project } from "../model/types"
+
 import { CreateProject, GetAllProjectsFilter, GetAllProjectsResponse } from "./types"
-import { getErrorMessage } from "@/01-shared/utils/get-error-message"
 
 class ProjectAPI {
   private baseUrl: string = ""
@@ -10,163 +9,134 @@ class ProjectAPI {
     this.baseUrl = baseUrl
   }
 
-  async createOne(project: CreateProject): Promise<ApiResponse<Project>> {
-    try {
-      const res = await fetch(`${this.baseUrl}/projects`, {
-        method: "POST",
-        body: JSON.stringify(project),
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      })
-      if (!res.ok) {
-        return { error: res.statusText, data: null }
-      }
-      return {
-        error: null,
-        data: await res.json(),
-      }
-    } catch (error) {
-      return {
-        error: getErrorMessage(error),
-        data: null,
-      }
+  /**
+   * Создание нового проекта
+   */
+  async createOne(project: CreateProject): Promise<Project> {
+    const res = await fetch(`${this.baseUrl}`, {
+      method: "POST",
+      body: JSON.stringify(project),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
+    })
+
+    if (!res.ok) {
+      throw new Error(`Failed to create project: ${res.statusText}`)
     }
+
+    return await res.json()
   }
 
-  async getAll({
-    page = 0,
-    limit,
-    search,
-    time_frame,
-    tag_slug,
-    creator_id,
-  }: GetAllProjectsFilter): Promise<ApiResponse<GetAllProjectsResponse>> {
-    try {
-      let url = `${this.baseUrl}/projects?page=${page}`
-      url += limit ? `&limit=${limit}` : ""
-      url += search ? `&search=${search}` : ""
-      url += time_frame ? `&time_frame=${time_frame}` : ""
-      url += tag_slug ? `&tag_slug=${tag_slug}` : ""
-      url += creator_id ? `&creator_id=${creator_id}` : ""
-      const res = await fetch(url, {
-        method: "GET",
-        cache: "no-store",
-        // next: { revalidate: 60 },
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      if (!res.ok) {
-        return { error: res.statusText, data: null }
-      }
-      return {
-        error: null,
-        data: await res.json(),
-      }
-    } catch (error) {
-      return {
-        error: getErrorMessage(error),
-        data: null,
+  /**
+   * Получение всех проектов
+   */
+  async getAll(filter: GetAllProjectsFilter): Promise<GetAllProjectsResponse> {
+    const url = new URL(`${this.baseUrl}`)
+    for (const [key, value] of Object.entries(filter)) {
+      if (value) {
+        url.searchParams.append(key, value)
       }
     }
+
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
+    })
+
+    if (!res.ok) {
+      throw new Error(`Failed to get projects: ${res.statusText}`)
+    }
+
+    return await res.json()
   }
 
-  async getOneById(id: string): Promise<ApiResponse<Project>> {
-    try {
-      const res = await fetch(`${this.baseUrl}/projects/${id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+  /**
+   * Получение одного проекта по id
+   */
+  async getOneById(id: string): Promise<Project> {
+    const res = await fetch(`${this.baseUrl}/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
+    })
 
-      if (!res.ok) {
-        return { error: res.statusText, data: null }
-      }
-      return {
-        error: null,
-        data: await res.json(),
-      }
-    } catch (error) {
-      return {
-        error: getErrorMessage(error),
-        data: null,
-      }
+    if (!res.ok) {
+      throw new Error(`Failed to get one project: ${res.statusText}`)
     }
+
+    return await res.json()
   }
 
-  async updateOneById(id: string, project: Project): Promise<ApiResponse<Project>> {
-    try {
-      const res = await fetch(`${this.baseUrl}/projects/${id}`, {
-        method: "PUT",
-        body: JSON.stringify(project),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      if (!res.ok) {
-        return { error: res.statusText, data: null }
-      }
-      return {
-        error: null,
-        data: await res.json(),
-      }
-    } catch (error) {
-      return {
-        error: getErrorMessage(error),
-        data: null,
-      }
+  /**
+   * Обновление проекта по id
+   */
+  async updateOneById(id: string, project: Project): Promise<Project> {
+    const res = await fetch(`${this.baseUrl}/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(project),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
+    })
+
+    if (!res.ok) {
+      throw new Error(`Failed to update project: ${res.statusText}`)
     }
+
+    return await res.json()
   }
 
-  async deleteOneById(id: string): Promise<ApiResponse<Project>> {
-    try {
-      const res = await fetch(`${this.baseUrl}/projects/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      if (!res.ok) {
-        return { error: res.statusText, data: null }
-      }
-      return {
-        error: null,
-        data: await res.json(),
-      }
-    } catch (error) {
-      return {
-        error: getErrorMessage(error),
-        data: null,
-      }
+  /**
+   * Удаление проекта по id
+   */
+  async deleteOneById(id: string): Promise<Project> {
+    const res = await fetch(`${this.baseUrl}/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
+    })
+
+    if (!res.ok) {
+      throw new Error(`Failed to delete project: ${res.statusText}`)
     }
+
+    return await res.json()
   }
 
-  async approveOneById(project: Project): Promise<ApiResponse<Project>> {
-    try {
-      const res = await fetch(`${this.baseUrl}/projects/${project._id}`, {
-        method: "PUT",
-        body: JSON.stringify({ ...project, flames: project.flames + 1 }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      if (!res.ok) {
-        return { error: res.statusText, data: null }
-      }
-      return {
-        error: null,
-        data: await res.json(),
-      }
-    } catch (error) {
-      return {
-        error: getErrorMessage(error),
-        data: null,
-      }
+  /**
+   * Голосование за проект по id
+   */
+  async voteOneById(project_id: string): Promise<Project> {
+    const res = await fetch(`${this.baseUrl}/vote/${project_id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
+    })
+
+    if (!res.ok) {
+      throw new Error(`Failed to vote project: ${res.statusText}`)
     }
+
+    return await res.json()
   }
 }
 
-export const projectAPI = new ProjectAPI(`${process.env.API_URL}/v1`)
+export const projectAPI = new ProjectAPI(`${process.env.API_URL}/v1/projects`)

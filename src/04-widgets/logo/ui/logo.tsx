@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+
 import { siteConfig } from "@/01-shared/lib"
 import { cn } from "@/01-shared/utils/cn"
 // import { Roboto_Mono } from "next/font/google"
@@ -13,7 +14,7 @@ interface LogoProps {
 
 export const Logo = ({ className }: LogoProps) => {
   return (
-    <Link href="/" scroll={false} className={cn("", className)}>
+    <Link href="/" className={cn("", className)}>
       <span
       // className={cn("font-bold", roboto_mono.className)}
       >

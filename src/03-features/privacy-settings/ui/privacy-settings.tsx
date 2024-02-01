@@ -4,12 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { HTMLAttributes } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
+
 import { Button } from "@/01-shared/ui/Button"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
-import { Input } from "@/01-shared/ui/Input"
-import { User } from "@/02-entities/user"
-import { Switch } from "@/01-shared/ui/Switch"
 import { Checkbox } from "@/01-shared/ui/Checkbox"
+import { Form, FormControl, FormField, FormItem, FormLabel } from "@/01-shared/ui/Form"
+import { User } from "@/02-entities/user"
 
 const privacyFormSchema = z.object({
   awards_received: z.boolean().optional(),

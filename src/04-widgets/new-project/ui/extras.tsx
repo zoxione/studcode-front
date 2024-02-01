@@ -1,7 +1,8 @@
+import { UseFormReturn } from "react-hook-form"
+
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { RadioGroup, RadioGroupItem } from "@/01-shared/ui/RadioGroup"
 import { Title } from "@/01-shared/ui/Title"
-import { UseFormReturn } from "react-hook-form"
 
 interface ExtrasProps {
   form: UseFormReturn<

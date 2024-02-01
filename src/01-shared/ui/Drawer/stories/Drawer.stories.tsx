@@ -1,4 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react"
 import { Button } from "../../Button"
 import {
   Drawer,
@@ -10,6 +9,8 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "../ui/Drawer"
+
+import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
   title: "UI/Drawer",

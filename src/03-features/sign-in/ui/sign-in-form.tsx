@@ -1,16 +1,14 @@
 "use client"
 
-import { HTMLAttributes } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { HTMLAttributes } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
+
 import { Button } from "@/01-shared/ui/Button"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
-import { cn } from "@/01-shared/utils/cn"
-import { toast } from "sonner"
-import { useRouter } from "next/navigation"
-import { userAPI } from "@/02-entities/user"
+import { useLoginMutation } from "@/02-entities/user"
 
 const signInFormSchema = z.object({
   email: z.string().email(),
@@ -20,7 +18,7 @@ const signInFormSchema = z.object({
 interface SignInFormProps extends HTMLAttributes<HTMLFormElement> {}
 
 const SignInForm = ({ className }: SignInFormProps) => {
-  const router = useRouter()
+  const { mutate: login } = useLoginMutation()
 
   const signInForm = useForm<z.infer<typeof signInFormSchema>>({
     resolver: zodResolver(signInFormSchema),
@@ -31,15 +29,7 @@ const SignInForm = ({ className }: SignInFormProps) => {
   })
 
   async function onSubmit(values: z.infer<typeof signInFormSchema>) {
-    const { data: user, error } = await userAPI.login({ ...values })
-
-    if (error === null) {
-      toast.success("Вы вошли в аккаунт")
-      router.push("/", { scroll: false })
-      // window.location.reload()
-    } else {
-      toast.error("Произошла ошибка при авторизации")
-    }
+    login(values)
   }
 
   return (

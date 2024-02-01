@@ -1,17 +1,18 @@
 "use client"
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/01-shared/ui/Select"
 import { useRouter } from "next/navigation"
 
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/01-shared/ui/Select"
+
 interface SortProjectsProps {
-  order: "votes" | "alphabet"
+  order: "title" | "flames"
 }
 
 const SortProjects = ({ order }: SortProjectsProps) => {
   const router = useRouter()
 
   const handleChangeValue = (value: string) => {
-    router.push("?order=" + value, { scroll: false })
+    router.push("?order=" + value)
   }
 
   return (
@@ -20,8 +21,8 @@ const SortProjects = ({ order }: SortProjectsProps) => {
         <SelectValue placeholder="Сортировать" />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="votes">По голосам</SelectItem>
-        <SelectItem value="alphabet">По алфавиту</SelectItem>
+        <SelectItem value="title">По алфавиту</SelectItem>
+        <SelectItem value="flames">По голосам</SelectItem>
       </SelectContent>
     </Select>
   )

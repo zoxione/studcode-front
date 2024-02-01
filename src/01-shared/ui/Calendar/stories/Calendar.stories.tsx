@@ -1,6 +1,7 @@
+import { Calendar } from "../ui/Calendar"
+
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { Calendar } from "../ui/Calendar"
 
 const meta = {
   title: "UI/Calendar",

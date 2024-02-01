@@ -1,6 +1,7 @@
+import { z } from "zod"
+
 import { Title } from "@/01-shared/ui/Title"
 import { normalizeTimeFrame } from "@/01-shared/utils/normalize-time-frame"
-import { projectAPI } from "@/02-entities/project"
 import { TagBadge, tagAPI } from "@/02-entities/tag"
 import { TimeFrameProjects } from "@/03-features/time-frame-projects"
 import { Footer } from "@/04-widgets/footer"
@@ -9,7 +10,6 @@ import { Hero } from "@/04-widgets/hero"
 import { Layout } from "@/04-widgets/layout"
 import { ProjectsDraftsList } from "@/04-widgets/projects-drafts-list"
 import { ProjectsList } from "@/04-widgets/projects-list"
-import { z } from "zod"
 
 const allowedValues = {
   timeFrame: ["day", "week", "month", "year"],
@@ -29,7 +29,7 @@ export default async function Home({
   })
   const timeFrameNormalized = normalizeTimeFrame(searchParamsParsed.timeFrame)
 
-  const { data: tags } = await tagAPI.getAll({ limit: 5 })
+  const { results: tags } = await tagAPI.getAll({ limit: 5 })
 
   return (
     <Layout header={<Header />} footer={<Footer />} className="">
@@ -41,18 +41,18 @@ export default async function Home({
           <Title order={4} className="mt-6 mb-4">
             Лучшие проекты за {timeFrameNormalized}
           </Title>
-          <ProjectsList time_frame={searchParamsParsed.timeFrame} />
+          <ProjectsList filter={{ time_frame: searchParamsParsed.timeFrame }} />
         </div>
         <div className="space-y-8">
           <div className="flex flex-col gap-4">
             <Title order={4}>Популярные теги</Title>
-            {tags?.data.map((tag) => (
+            {tags.map((tag) => (
               <TagBadge key={tag._id} tag={tag} />
             ))}
           </div>
           <div className="flex flex-col gap-4">
             <Title order={4}>Ваши черновики</Title>
-            <ProjectsDraftsList limit={5} />
+            <ProjectsDraftsList limit={5} creator_id="" />
           </div>
         </div>
       </div>

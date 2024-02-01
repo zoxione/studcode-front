@@ -1,8 +1,9 @@
 "use client"
 
+import { useRouter } from "next/navigation"
+
 import { Tabs, TabsList, TabsTrigger } from "@/01-shared/ui/Tabs"
 import { TimeFrameProject } from "@/02-entities/project/api/types"
-import { useRouter } from "next/navigation"
 
 interface TimeFrameProjectsProps {
   timeFrame: TimeFrameProject
@@ -12,8 +13,7 @@ const TimeFrameProjects = ({ timeFrame }: TimeFrameProjectsProps) => {
   const router = useRouter()
 
   const handleChangeValue = (value: string) => {
-    // router.refresh()
-    router.replace("/?timeFrame=" + value, { scroll: false })
+    router.replace("/?timeFrame=" + value)
   }
 
   return (
@@ -24,8 +24,6 @@ const TimeFrameProjects = ({ timeFrame }: TimeFrameProjectsProps) => {
         <TabsTrigger value="month">Месяц</TabsTrigger>
         <TabsTrigger value="year">Год</TabsTrigger>
       </TabsList>
-      {/* <TabsContent value="account">Make changes to your account here.</TabsContent>
-        <TabsContent value="password">Change your password here.</TabsContent> */}
     </Tabs>
   )
 }

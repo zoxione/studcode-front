@@ -1,11 +1,11 @@
 "use client"
 
-import * as React from "react"
-import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area"
-import { cn } from "@/01-shared/utils/cn"
-import { useCallback, useMemo, useState } from "react"
 import { StarFilledIcon, StarIcon } from "@radix-ui/react-icons"
+import { useCallback, useMemo, useState } from "react"
+
 import { Button } from "../../Button"
+
+import { cn } from "@/01-shared/utils/cn"
 
 interface RatingProps {
   className?: string
@@ -55,11 +55,13 @@ const Rating = ({
       .map((index) => (
         <div key={index}>
           <Button
+            type="button"
             onClick={onSelectedClick && (() => onSelectedClick(index))}
             onMouseEnter={() => setHoveredStars(index)}
             onMouseLeave={() => setHoveredStars(0)}
             variant="ghost"
             size="none"
+            className={`${readOnly ? "cursor-default" : "cursor-pointer"}`}
           >
             {getStar(index)}
           </Button>

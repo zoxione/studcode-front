@@ -1,10 +1,12 @@
 "use client"
 
+import { useEffect } from "react"
+import PhotoSwipeLightbox from "photoswipe/lightbox"
+
 import { Carousel, CarouselContent, CarouselItem } from "@/01-shared/ui/Carousel"
 import { cn } from "@/01-shared/utils/cn"
-import PhotoSwipeLightbox from "photoswipe/lightbox"
+
 import "photoswipe/style.css"
-import { useEffect } from "react"
 
 interface ScreensCarouselProps {
   className?: string

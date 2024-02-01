@@ -1,19 +1,16 @@
-import { Button } from "@/01-shared/ui/Button"
 import { Title } from "@/01-shared/ui/Title"
-import { TagBadge, tagAPI } from "@/02-entities/tag"
-import { TagCard } from "@/02-entities/tag/ui/tag-card"
+import { tagAPI } from "@/02-entities/tag"
+import { TagCard } from "@/02-entities/tag"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { HeaderPage } from "@/04-widgets/header-page"
 import { Layout } from "@/04-widgets/layout"
-import { ChevronLeftIcon } from "@radix-ui/react-icons"
-import Link from "next/link"
 
 export default async function Tags() {
-  const { data: popularData } = await tagAPI.getAll({})
-  const { data: allData } = await tagAPI.getAll({ limit: 1000 })
-  const popularTags = popularData?.data ? popularData.data : []
-  const allTags = allData?.data ? allData.data : []
+  const { results: popularData } = await tagAPI.getAll({})
+  const { results: allData } = await tagAPI.getAll({ limit: 1000 })
+  const popularTags = popularData ? popularData : []
+  const allTags = allData ? allData : []
 
   return (
     <Layout header={<Header />} footer={<Footer />} className="space-y-8">

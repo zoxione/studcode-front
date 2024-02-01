@@ -2,7 +2,7 @@ import { Tag } from "@/02-entities/tag"
 
 type ProjectPrice = "free" | "free_options" | "payment_required"
 
-type ProjectStatus = "draft" | "published" | "archived"
+type ProjectStatus = "draft" | "published" | "archived" | ""
 
 interface ProjectLinks {
   main: string

@@ -1,17 +1,19 @@
 "use client"
 
-import { Button } from "@/01-shared/ui/Button"
-import { Checkbox } from "@/01-shared/ui/Checkbox"
-import { Form } from "@/01-shared/ui/Form"
-import { Title } from "@/01-shared/ui/Title"
-import { projectAPI } from "@/02-entities/project"
-import { userAPI } from "@/02-entities/user"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
+
+import { Button } from "@/01-shared/ui/Button"
+import { Checkbox } from "@/01-shared/ui/Checkbox"
+import { Form } from "@/01-shared/ui/Form"
+import { Title } from "@/01-shared/ui/Title"
+import { projectAPI, useCreateOneProjectMutation } from "@/02-entities/project"
+import { useWhoamiQuery, userAPI } from "@/02-entities/user"
+
 import { Extras } from "./extras"
 import { ImagesAndMedia } from "./images-and-media"
 import { MainInfo } from "./main-info"
@@ -45,7 +47,8 @@ const newProjectFormSchema = z.object({
 
 const NewProject = () => {
   const [currentSection, setCurrentSection] = useState(0)
-  const router = useRouter()
+  const { data: user } = useWhoamiQuery()
+  const { mutate: createOneProject } = useCreateOneProjectMutation()
 
   const newProjectForm = useForm<z.infer<typeof newProjectFormSchema>>({
     resolver: zodResolver(newProjectFormSchema),
@@ -72,9 +75,8 @@ const NewProject = () => {
   const onSubmit = async (values: z.infer<typeof newProjectFormSchema>) => {
     console.log("values", values)
 
-    const { data: user } = await userAPI.whoami()
     if (user) {
-      const res = await projectAPI.createOne({
+      createOneProject({
         title: values.title,
         tagline: values.tagline,
         status: "draft",
@@ -89,15 +91,8 @@ const NewProject = () => {
         screenshots: [],
         price: values.price,
         tags: [],
-        creator: user?.sub,
+        creator: user.sub,
       })
-
-      if (res.error) {
-        toast.error("Произошла ошибка при создании проекта")
-      } else {
-        toast.success("Проект создан")
-        router.push(`/u/${user.sub}`)
-      }
     } else {
       toast.error("Вы не авторизованы")
     }

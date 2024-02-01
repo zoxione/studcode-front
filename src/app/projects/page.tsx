@@ -1,5 +1,6 @@
-import { Title } from "@/01-shared/ui/Title"
-import { projectAPI } from "@/02-entities/project"
+import { notFound } from "next/navigation"
+import { z } from "zod"
+
 import { Tag, tagAPI } from "@/02-entities/tag"
 import { SortProjects } from "@/03-features/sort-projects"
 import { Footer } from "@/04-widgets/footer"
@@ -7,11 +8,9 @@ import { Header } from "@/04-widgets/header"
 import { HeaderPage } from "@/04-widgets/header-page"
 import { Layout } from "@/04-widgets/layout"
 import { ProjectsList } from "@/04-widgets/projects-list"
-import { notFound } from "next/navigation"
-import { z } from "zod"
 
 const allowedValues = {
-  order: ["votes", "alphabet"],
+  order: ["title", "flames"],
 } as const
 
 const ParamsSchema = z.object({
@@ -24,12 +23,12 @@ export default async function Projects({
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
   let tag: Tag | null = null
-  const tagId = searchParams?.tagId ? (searchParams.tagId as string) : ""
-  if (tagId === "") {
-    const { data: tags } = await tagAPI.getAll({})
-    tag = tags?.data[0] !== undefined ? tags.data[0] : null
+  const tagSlug = searchParams?.tagSlug ? (searchParams.tagSlug as string) : ""
+  if (tagSlug === "") {
+    const { results: tags } = await tagAPI.getAll({})
+    tag = tags[0] !== undefined ? tags[0] : null
   } else {
-    tag = (await tagAPI.getOneById(tagId)).data
+    tag = await tagAPI.getOneBySlug(tagSlug)
   }
   if (tag === null) {
     notFound()
@@ -50,7 +49,7 @@ export default async function Projects({
 
       <SortProjects order={searchParamsParsed.order} />
 
-      <ProjectsList tag_slug={tag.slug} />
+      <ProjectsList filter={{ tag_slug: tag.slug, order: searchParamsParsed.order }} />
     </Layout>
   )
 }

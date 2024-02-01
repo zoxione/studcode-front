@@ -32,13 +32,32 @@ interface GetAllUsersFilter {
   page?: number
   limit?: number
   search?: string
+  order?: keyof User
 }
 
 interface GetAllUsersResponse {
-  stats: {
-    totalCount: number
+  filter: Required<GetAllUsersFilter>
+  info: {
+    find_count: number
+    total_count: number
+    count_pages: number
   }
-  data: User[]
+  results: User[]
 }
 
-export type { GetAllUsersFilter, GetAllUsersResponse, Account, SignIn, SignInResponse, LogoutResponse, RefreshResponse }
+interface RegisterUser {
+  username: string
+  email: string
+  password: string
+}
+
+export type {
+  GetAllUsersFilter,
+  GetAllUsersResponse,
+  Account,
+  SignIn,
+  SignInResponse,
+  LogoutResponse,
+  RefreshResponse,
+  RegisterUser,
+}

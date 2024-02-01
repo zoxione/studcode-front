@@ -1,6 +1,6 @@
 {
   "name": "studcode-front",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "dev": "explorer http://localhost:3030 & next dev -p 3030",
@@ -29,6 +29,7 @@
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.0.7",
     "@tanstack/react-query": "^5.17.19",
+    "@tanstack/react-query-devtools": "^5.18.0",
     "class-variance-authority": "^0.7.0",
     "cmdk": "^0.2.0",
     "embla-carousel-react": "8.0.0-rc19",
@@ -64,6 +65,7 @@
     "clsx": "^2.1.0",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
+    "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-storybook": "^0.6.15",
     "postcss": "^8",
     "storybook": "^7.6.10",

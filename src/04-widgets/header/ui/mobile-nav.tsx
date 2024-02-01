@@ -1,5 +1,8 @@
 "use client"
 
+import { MenuIcon, SearchIcon } from "lucide-react"
+import Link from "next/link"
+
 import { siteConfig } from "@/01-shared/lib"
 import { Button } from "@/01-shared/ui/Button"
 import { Input } from "@/01-shared/ui/Input"
@@ -15,8 +18,6 @@ import {
   SheetTrigger,
 } from "@/01-shared/ui/Sheet"
 import { cn } from "@/01-shared/utils/cn"
-import { MenuIcon, SearchIcon } from "lucide-react"
-import Link from "next/link"
 
 interface IMobileNavProps {
   className?: string
@@ -57,7 +58,7 @@ export const MobileNav = ({ className }: IMobileNavProps) => {
           </SheetFooter>
         </SheetContent>
       </Sheet>
-      <Link href="/" scroll={false} className="font-bold inline-block">
+      <Link href="/" className="font-bold inline-block">
         {siteConfig.name}
       </Link>
       <Button variant="outline" size="icon">

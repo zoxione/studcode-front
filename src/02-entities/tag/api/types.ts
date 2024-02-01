@@ -4,13 +4,17 @@ interface GetAllTagsFilter {
   page?: number
   limit?: number
   search?: string
+  order?: keyof Tag
 }
 
 interface GetAllTagsResponse {
-  stats: {
-    totalCount: number
+  filter: Required<GetAllTagsFilter>
+  info: {
+    find_count: number
+    total_count: number
+    count_pages: number
   }
-  data: Tag[]
+  results: Tag[]
 }
 
 export type { GetAllTagsFilter, GetAllTagsResponse }

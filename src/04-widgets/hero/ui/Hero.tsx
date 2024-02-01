@@ -1,9 +1,10 @@
-import { Button } from "@/01-shared/ui/Button"
-import { Title } from "@/01-shared/ui/Title"
-import { cn } from "@/01-shared/utils/cn"
 import { PlusCircledIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
 import { HTMLAttributes } from "react"
+
+import { Button } from "@/01-shared/ui/Button"
+import { Title } from "@/01-shared/ui/Title"
+import { cn } from "@/01-shared/utils/cn"
 
 interface HeroProps extends HTMLAttributes<HTMLDivElement> {}
 
@@ -17,7 +18,7 @@ const Hero = ({ className }: HeroProps) => {
         проекты России
       </Title>
       <Button variant="link" size="none" asChild className="w-fit">
-        <Link href="/projects/new" scroll={false}>
+        <Link href="/projects/new">
           <PlusCircledIcon className="mr-2 h-4 w-4" />
           Добавить проект
         </Link>

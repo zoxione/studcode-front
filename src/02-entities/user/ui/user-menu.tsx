@@ -1,5 +1,8 @@
 "use client"
 
+import { ChevronDownIcon, CopyIcon, ExitIcon, GearIcon, PersonIcon, PlusIcon } from "@radix-ui/react-icons"
+import Link from "next/link"
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/Avatar"
 import { Button } from "@/01-shared/ui/Button"
 import {
@@ -9,38 +12,25 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/01-shared/ui/DropdownMenu"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/01-shared/ui/Tooltip"
-import { userAPI } from "@/02-entities/user"
-import { ChevronDownIcon, CopyIcon, ExitIcon, GearIcon, PersonIcon, PlusIcon } from "@radix-ui/react-icons"
-import { useQuery } from "@tanstack/react-query"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
+import { useLogoutMutation, useWhoamiQuery } from "@/02-entities/user"
 
 export function UserMenu() {
-  const router = useRouter()
+  const { data: user } = useWhoamiQuery()
+  const { mutate: logout } = useLogoutMutation()
 
-  const { isPending, data: user } = useQuery({
-    queryKey: ["user"],
-    queryFn: () => userAPI.whoami(),
-  })
+  if (!user) {
+    return null
+  }
 
   const handleLogout = async () => {
-    const res = await userAPI.logout()
-
-    if (res.error === null) {
-      toast.success("Вы вышли из аккаунта")
-      window.location.reload()
-    } else {
-      toast.error("Произошла ошибка")
-    }
+    logout()
   }
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText(user?.data?.email || "")
+    navigator.clipboard.writeText(user.email)
   }
 
   return (
@@ -48,8 +38,8 @@ export function UserMenu() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="p-1">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={user?.data?.avatar} alt={user?.data?.username} />
-            <AvatarFallback>{user?.data?.username.charAt(0).toUpperCase()}</AvatarFallback>
+            <AvatarImage src={user.avatar} alt={user.username} />
+            <AvatarFallback>{user.username[0].toUpperCase()}</AvatarFallback>
           </Avatar>
           <ChevronDownIcon className="h-4 w-4" />
         </Button>
@@ -57,9 +47,9 @@ export function UserMenu() {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{user?.data?.username}</p>
+            <p className="text-sm font-medium leading-none">{user.username}</p>
             <div className="flex flex-row items-center justify-between">
-              <p className="text-xs leading-none text-muted-foreground">{user?.data?.email}</p>
+              <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
@@ -74,17 +64,17 @@ export function UserMenu() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href={`/projects/new`} scroll={false}>
+            <Link href={`/projects/new`}>
               Добавить проект <PlusIcon className="ml-auto h-4 w-4" />
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href={`/u/${user?.data?.sub}`} scroll={false}>
+            <Link href={`/u/${user.sub}`}>
               Профиль <PersonIcon className="ml-auto h-4 w-4" />
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href={`/u/${user?.data?.sub}/settings`} scroll={false}>
+            <Link href={`/u/${user.sub}/settings`}>
               Настройки <GearIcon className="ml-auto h-4 w-4" />
             </Link>
           </DropdownMenuItem>

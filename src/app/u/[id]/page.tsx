@@ -1,3 +1,6 @@
+import { DotsHorizontalIcon, GitHubLogoIcon } from "@radix-ui/react-icons"
+import { notFound } from "next/navigation"
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/Avatar"
 import { Badge } from "@/01-shared/ui/Badge"
 import { Button } from "@/01-shared/ui/Button"
@@ -6,16 +9,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/01-shared/ui/Tabs"
 import { Textarea } from "@/01-shared/ui/Textarea"
 import { Title } from "@/01-shared/ui/Title"
 import { getUserInitials } from "@/01-shared/utils/get-user-initials"
-import { projectAPI } from "@/02-entities/project"
 import { userAPI } from "@/02-entities/user"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"
 import { ProjectsList } from "@/04-widgets/projects-list"
-import { DotsHorizontalIcon, GitHubLogoIcon } from "@radix-ui/react-icons"
 
 export default async function User({ params }: { params: { id: string } }) {
-  const { data: user, error } = await userAPI.getOneById(params.id)
+  const user = await userAPI.getOneById(params.id)
+  if (!user) {
+    notFound()
+  }
   const userInitials = getUserInitials(
     user?.full_name.surname || "",
     user?.full_name.name || "",
@@ -72,10 +76,10 @@ export default async function User({ params }: { params: { id: string } }) {
           </div>
         </TabsContent>
         <TabsContent value="projects">
-          <ProjectsList creator_id={user?._id} />
+          <ProjectsList filter={{ creator_id: user?._id, status: "published" }} />
         </TabsContent>
         <TabsContent value="drafts">
-          <ProjectsList creator_id={user?._id} />
+          <ProjectsList filter={{ creator_id: user?._id, status: "draft" }} />
         </TabsContent>
       </Tabs>
     </Layout>

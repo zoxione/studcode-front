@@ -1,8 +1,9 @@
 "use client"
 
-import { cn } from "@/01-shared/utils/cn"
 import * as React from "react"
 import { Drawer as DrawerPrimitive } from "vaul"
+
+import { cn } from "@/01-shared/utils/cn"
 
 const Drawer = ({ shouldScaleBackground = true, ...props }: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
   <DrawerPrimitive.Root shouldScaleBackground={shouldScaleBackground} {...props} />

@@ -1,13 +1,14 @@
 "use client"
 
-import { Button } from "@/01-shared/ui/Button"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
-import { Input } from "@/01-shared/ui/Input"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { HTMLAttributes } from "react"
 import { useForm } from "react-hook-form"
-import { toast } from "sonner"
 import * as z from "zod"
+
+import { Button } from "@/01-shared/ui/Button"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
+import { Input } from "@/01-shared/ui/Input"
+import { useRegisterMutation } from "@/02-entities/user"
 
 const signUpFormSchema = z.object({
   username: z.string().min(2).max(32),
@@ -18,6 +19,8 @@ const signUpFormSchema = z.object({
 interface SignUpFormProps extends HTMLAttributes<HTMLFormElement> {}
 
 const SignUpForm = ({ className }: SignUpFormProps) => {
+  const { mutate: register } = useRegisterMutation()
+
   const signUpForm = useForm<z.infer<typeof signUpFormSchema>>({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: {
@@ -27,22 +30,10 @@ const SignUpForm = ({ className }: SignUpFormProps) => {
     },
   })
 
-  async function onSubmit(values: z.infer<typeof signUpFormSchema>) {
-    const res = await fetch(`${process.env.API_URL}/v1/auth/register`, {
-      method: "POST",
-      body: JSON.stringify(values),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    })
-
-    if (res.ok) {
-      toast.success("Регистрация прошла успешно")
-    } else {
-      toast.error("Произошла ошибка при регистрации")
-    }
+  const onSubmit = async (values: z.infer<typeof signUpFormSchema>) => {
+    register(values)
   }
+
   return (
     <Form {...signUpForm}>
       <form onSubmit={signUpForm.handleSubmit(onSubmit)} className="space-y-3">

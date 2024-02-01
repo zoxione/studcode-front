@@ -1,6 +1,5 @@
 import { ToggleTheme } from "@/03-features/toggle-theme"
 import { Logo } from "@/04-widgets/logo"
-import { ReactNode } from "react"
 
 interface IFooterProps {}
 

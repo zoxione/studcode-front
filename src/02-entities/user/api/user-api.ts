@@ -1,15 +1,6 @@
-import { getErrorMessage } from "@/01-shared/utils/get-error-message"
 import { User } from "../model/types"
-import {
-  Account,
-  GetAllUsersFilter,
-  GetAllUsersResponse,
-  LogoutResponse,
-  RefreshResponse,
-  SignIn,
-  SignInResponse,
-} from "./types"
-import { ApiResponse } from "@/01-shared/api/types"
+
+import { GetAllUsersFilter, GetAllUsersResponse } from "./types"
 
 class UserAPI {
   private baseUrl: string = ""
@@ -18,176 +9,93 @@ class UserAPI {
     this.baseUrl = baseUrl
   }
 
-  async register(user: Partial<User>): Promise<ApiResponse<User>> {
-    try {
-      const res = await fetch(`${this.baseUrl}/auth/register`, {
-        method: "POST",
-        body: JSON.stringify(user),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      if (!res.ok) {
-        return { error: res.statusText, data: null }
-      }
-      return {
-        error: null,
-        data: await res.json(),
-      }
-    } catch (error) {
-      return {
-        error: getErrorMessage(error),
-        data: null,
+  /**
+   * Получение всех пользователей
+   */
+  async getAll(filter: GetAllUsersFilter): Promise<GetAllUsersResponse> {
+    const url = new URL(`${this.baseUrl}`)
+    for (const [key, value] of Object.entries(filter)) {
+      if (value) {
+        url.searchParams.append(key, value)
       }
     }
+
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
+    })
+
+    if (!res.ok) {
+      throw new Error(`Failed to get users: ${res.statusText}`)
+    }
+
+    return await res.json()
   }
 
-  async login(signIn: SignIn): Promise<ApiResponse<SignInResponse>> {
-    try {
-      const res = await fetch(`${this.baseUrl}/auth/login`, {
-        method: "POST",
-        body: JSON.stringify(signIn),
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      })
-      if (!res.ok) {
-        return { error: res.statusText, data: null }
-      }
-      return {
-        error: null,
-        data: await res.json(),
-      }
-    } catch (error) {
-      return {
-        error: getErrorMessage(error),
-        data: null,
-      }
+  /**
+   * Получение одного пользователя по id
+   */
+  async getOneById(id: string): Promise<User> {
+    const res = await fetch(`${this.baseUrl}/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
+    })
+
+    if (!res.ok) {
+      throw new Error(`Failed to get one user: ${res.statusText}`)
     }
+
+    return await res.json()
   }
 
-  async whoami(): Promise<ApiResponse<Account>> {
-    try {
-      const res = await fetch(`${this.baseUrl}/auth/whoami`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      })
-      if (!res.ok) {
-        return { error: res.statusText, data: null }
-      }
-      return {
-        error: null,
-        data: await res.json(),
-      }
-    } catch (error) {
-      return {
-        error: getErrorMessage(error),
-        data: null,
-      }
+  /**
+   * Обновление пользователя по id
+   */
+  async updateOneById(id: string, project: User): Promise<User> {
+    const res = await fetch(`${this.baseUrl}/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(project),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
+    })
+
+    if (!res.ok) {
+      throw new Error(`Failed to update user: ${res.statusText}`)
     }
+
+    return await res.json()
   }
 
-  async refresh(): Promise<ApiResponse<RefreshResponse>> {
-    try {
-      const res = await fetch(`${this.baseUrl}/auth/refresh`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      })
-      if (!res.ok) {
-        return { error: res.statusText, data: null }
-      }
-      return {
-        error: null,
-        data: await res.json(),
-      }
-    } catch (error) {
-      return {
-        error: getErrorMessage(error),
-        data: null,
-      }
-    }
-  }
+  /**
+   * Удаление пользователя по id
+   */
+  async deleteOneById(id: string): Promise<User> {
+    const res = await fetch(`${this.baseUrl}/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
+    })
 
-  async logout(): Promise<ApiResponse<LogoutResponse>> {
-    try {
-      const res = await fetch(`${this.baseUrl}/auth/logout`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      })
-      if (!res.ok) {
-        return { error: res.statusText, data: null }
-      }
-      return {
-        error: null,
-        data: await res.json(),
-      }
-    } catch (error) {
-      return {
-        error: getErrorMessage(error),
-        data: null,
-      }
+    if (!res.ok) {
+      throw new Error(`Failed to delete user: ${res.statusText}`)
     }
-  }
 
-  async getAll({ page = 0, limit, search }: GetAllUsersFilter): Promise<ApiResponse<GetAllUsersResponse>> {
-    try {
-      let url = `${this.baseUrl}/users?page=${page}`
-      url += limit ? `&limit=${limit}` : ""
-      url += search ? `&search=${search}` : ""
-      const res = await fetch(url, {
-        method: "GET",
-        next: { revalidate: 60 },
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      if (!res.ok) {
-        return { error: res.statusText, data: null }
-      }
-      return {
-        error: null,
-        data: await res.json(),
-      }
-    } catch (error) {
-      return {
-        error: getErrorMessage(error),
-        data: null,
-      }
-    }
-  }
-
-  async getOneById(id: string): Promise<ApiResponse<User>> {
-    try {
-      const res = await fetch(`${this.baseUrl}/users/${id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      if (!res.ok) {
-        return { error: res.statusText, data: null }
-      }
-      return {
-        error: null,
-        data: await res.json(),
-      }
-    } catch (error) {
-      return {
-        error: getErrorMessage(error),
-        data: null,
-      }
-    }
+    return await res.json()
   }
 }
 
-export const userAPI = new UserAPI(`${process.env.API_URL}/v1`)
+export const userAPI = new UserAPI(`${process.env.API_URL}/v1/users`)

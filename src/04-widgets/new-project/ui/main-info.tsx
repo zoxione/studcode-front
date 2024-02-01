@@ -1,8 +1,9 @@
+import { UseFormReturn } from "react-hook-form"
+
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
 import { Textarea } from "@/01-shared/ui/Textarea"
 import { Title } from "@/01-shared/ui/Title"
-import { UseFormReturn } from "react-hook-form"
 
 interface MainInfoProps {
   form: UseFormReturn<

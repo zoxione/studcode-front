@@ -3,9 +3,10 @@
 import * as React from "react"
 import { X } from "lucide-react"
 import { Command as CommandPrimitive } from "cmdk"
+import { HTMLAttributes, KeyboardEvent, useCallback, useRef, useState } from "react"
+
 import { Command, CommandGroup, CommandItem } from "@/01-shared/ui/Command"
 import { Badge } from "@/01-shared/ui/Badge"
-import { HTMLAttributes, KeyboardEvent, useCallback, useRef, useState } from "react"
 
 type Item = Record<"value" | "label", string>
 
