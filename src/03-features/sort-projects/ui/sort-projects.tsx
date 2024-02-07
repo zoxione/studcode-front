@@ -1,8 +1,9 @@
 "use client"
 
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/01-shared/ui/Select"
+import { useCallback } from "react"
 
 interface SortProjectsProps {
   order: "title" | "flames"
@@ -10,9 +11,23 @@ interface SortProjectsProps {
 
 const SortProjects = ({ order }: SortProjectsProps) => {
   const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
+  // Get a new searchParams string by merging the current
+  // searchParams with a provided key/value pair
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString())
+      params.set(name, value)
+
+      return params.toString()
+    },
+    [searchParams],
+  )
 
   const handleChangeValue = (value: string) => {
-    router.push("?order=" + value)
+    router.push(pathname + "?" + createQueryString("order", value))
   }
 
   return (

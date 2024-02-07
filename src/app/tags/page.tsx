@@ -20,7 +20,7 @@ export default async function Tags() {
         <Title order={6} className="mb-2">
           Популярные
         </Title>
-        <div className="grid grid-cols-5">
+        <div className="grid grid-cols-auto-fit">
           {popularTags.map((tag) => (
             <TagCard key={tag._id} tag={tag} />
           ))}
@@ -31,7 +31,7 @@ export default async function Tags() {
         <Title order={6} className="mb-2">
           Просмотреть все
         </Title>
-        <div className="grid grid-cols-5">
+        <div className="grid grid-cols-auto-fit">
           {allTags.map((tag) => (
             <TagCard key={tag._id} tag={tag} />
           ))}

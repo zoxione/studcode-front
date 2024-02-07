@@ -1,4 +1,6 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 import { Project } from "../model/types"
 
@@ -7,12 +9,15 @@ import { CreateProject, GetAllProjectsFilter } from "./types"
 
 const useCreateOneProjectMutation = () => {
   const queryClient = useQueryClient()
+  const router = useRouter()
   return useMutation({
     mutationFn: (project: CreateProject) => {
       return projectAPI.createOne(project)
     },
-    onSuccess: () => {
+    onSuccess: (project: Project) => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
+      toast.success("Проект успешно создан")
+      router.push(`/projects/${project._id}`)
     },
   })
 }

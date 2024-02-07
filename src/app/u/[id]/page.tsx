@@ -30,12 +30,12 @@ export default async function User({ params }: { params: { id: string } }) {
     <Layout header={<Header />} footer={<Footer />} className="">
       <div className="absolute left-0 h-24 w-full bg-gradient-to-l from-[#FFA585] to-[#FFEDA0]"></div>
 
-      <Avatar className="absolute top-24 h-36 w-36">
+      <Avatar className="absolute top-24 left-1/2 md:left-auto transform -translate-x-1/2 md:translate-x-0 h-36 w-36">
         <AvatarImage src={user?.avatar} alt={user?.username} />
         <AvatarFallback className="text-5xl font-semibold">{userInitials}</AvatarFallback>
       </Avatar>
 
-      <div className="mt-24 flex flex-row gap-6">
+      <div className="mt-24 flex flex-col md:flex-row items-center md:items-stretch gap-2 md:gap-6">
         <div className="mt-20 w-36 flex flex-row items-center justify-center gap-2">
           <span className="text-green-600 font-semibold">+160</span>
           <span className="font-medium">c 2010 г.</span>
@@ -52,7 +52,7 @@ export default async function User({ params }: { params: { id: string } }) {
         </div>
       </div>
 
-      <Tabs defaultValue="profile" className="w-[640px] mt-8 mb-8">
+      <Tabs defaultValue="profile" className="w-full max-w-2xl mt-8 mb-8">
         <TabsList className="mb-6">
           <TabsTrigger value="profile">Профиль</TabsTrigger>
           <TabsTrigger value="projects">Проекты</TabsTrigger>

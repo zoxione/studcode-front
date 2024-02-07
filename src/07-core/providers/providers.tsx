@@ -28,13 +28,13 @@ const Providers = ({ children }: IProviders) => {
       },
     }),
     defaultOptions: {
-      // queries: {
-      //   refetchOnWindowFocus: false,
-      //   retry: false,
-      // },
-      // mutations: {
-      //   retry: false,
-      // },
+      queries: {
+        refetchOnWindowFocus: false,
+        retry: false,
+      },
+      mutations: {
+        retry: false,
+      },
     },
   })
 

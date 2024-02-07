@@ -58,9 +58,9 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
-  *::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+  /* *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
   }
 
   *::-webkit-scrollbar-track {
@@ -71,5 +71,11 @@
   *::-webkit-scrollbar-thumb {
     @apply bg-border;
     border-radius: 10px;
+  } */
+}
+
+@media (max-width: 640px) {
+  .container {
+    @apply px-4;
   }
 }

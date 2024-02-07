@@ -25,7 +25,7 @@ interface IMobileNavProps {
 
 export const MobileNav = ({ className }: IMobileNavProps) => {
   return (
-    <nav className={cn("flex h-20 items-center justify-between py-6", className)}>
+    <nav className={cn("container flex max-w-screen-2xl items-center justify-between h-16", className)}>
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="ghost">

@@ -1,27 +1,25 @@
+"use client"
+
 import { UseFormReturn } from "react-hook-form"
+import * as z from "zod"
+
+import { newProjectFormSchema } from "./new-project"
 
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
 import { Textarea } from "@/01-shared/ui/Textarea"
 import { Title } from "@/01-shared/ui/Title"
+import { useGetAllTagsQuery } from "@/02-entities/tag"
+import { MultiSelect, Option } from "@/01-shared/ui/MultiSelect"
 
 interface MainInfoProps {
-  form: UseFormReturn<
-    {
-      title: string
-      tagline: string
-      source_link: string
-      description: string
-      demo_link: string
-      price: "free" | "free_options" | "payment_required"
-      github_link?: string | undefined
-    },
-    any,
-    undefined
-  >
+  form: UseFormReturn<z.infer<typeof newProjectFormSchema>>
 }
 
 const MainInfo = ({ form }: MainInfoProps) => {
+  const { data: tags } = useGetAllTagsQuery({ limit: 1000 })
+  const tagsItems: Option[] = tags?.results.map((tag) => ({ label: tag.name.ru, value: tag._id })) || []
+
   return (
     <>
       <div className="space-y-4">
@@ -112,25 +110,26 @@ const MainInfo = ({ form }: MainInfoProps) => {
 
       <div className="space-y-4">
         <Title order={5}>Теги</Title>
-        {/* <FormField
-              control={form.control}
-              name="tags"
-              render={({ field }) => (
-                <FormItem> */}
-        {/* <FormLabel>Теги</FormLabel> */}
-        {/* <FormControl>
-                    <MultiSelect
-                      items={[
-                        { value: "react", label: "React" },
-                        { value: "svelte", label: "Svelte" },
-                      ]}
-                    />
-                  </FormControl>
-                  <FormDescription>Выберите до трех тем</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
+        <FormField
+          control={form.control}
+          name="tags"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel htmlFor="tags">Теги</FormLabel>
+              <FormControl>
+                <MultiSelect
+                  value={field.value}
+                  onChange={field.onChange}
+                  options={tagsItems}
+                  placeholder="Выберите до трех тем"
+                  emptyIndicator={<span className="text-center">Ничего не найдено</span>}
+                />
+              </FormControl>
+              <FormDescription>Выберите до трех тем</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
       </div>
     </>
   )

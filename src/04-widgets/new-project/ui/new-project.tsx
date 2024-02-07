@@ -18,7 +18,13 @@ import { Extras } from "./extras"
 import { ImagesAndMedia } from "./images-and-media"
 import { MainInfo } from "./main-info"
 
-const newProjectFormSchema = z.object({
+const optionSchema = z.object({
+  label: z.string(),
+  value: z.string(),
+  disable: z.boolean().optional(),
+})
+
+export const newProjectFormSchema = z.object({
   title: z
     .string()
     .min(2, { message: "Минимальная длина заголовка - 2 символа" })
@@ -30,15 +36,19 @@ const newProjectFormSchema = z.object({
   source_link: z.string().url({ message: "Некорректный URL для исходного кода" }),
   github_link: z.string().url({ message: "Некорректный URL для исходного кода" }).optional(),
   description: z
-    .string()
-    .min(2, { message: "Минимальная длина описания - 2 символа" })
-    .max(255, { message: "Максимальная длина описания - 255 символов" }),
-  // tags: z.array(
-  //   z
-  //     .string()
-  //     .min(2, { message: "Минимальная длина тега - 2 символа" })
-  //     .max(50, { message: "Максимальная длина тега - 50 символов" }),
-  // ),
+    .union([
+      z.string().length(0),
+      z
+        .string()
+        .min(2, { message: "Минимальная длина описания - 2 символа" })
+        .max(255, { message: "Максимальная длина описания - 255 символов" }),
+    ])
+
+    .optional()
+    .transform((e) => (e === "" ? undefined : e)),
+  tags: z.array(optionSchema).min(1, { message: "Выберите хотя бы 1 тег" }).max(3, {
+    message: "Выберите максимум 3 тега",
+  }),
   // logo: z.string().url({ message: "Некорректный URL аватара" }),
   // screenshots: z.array(z.string().url({ message: "Некорректный URL скриншота" })),
   demo_link: z.string().url({ message: "Некорректный URL для демонстрации" }),
@@ -58,7 +68,7 @@ const NewProject = () => {
       source_link: "",
       github_link: "",
       description: "",
-      // tags: [],
+      tags: [],
       // logo: "",
       // screenshots: [],
       demo_link: "",
@@ -67,10 +77,10 @@ const NewProject = () => {
   })
 
   useEffect(() => {
-    if (newProjectForm.formState.isSubmitted && !newProjectForm.formState.isValid) {
+    if (newProjectForm.formState.isSubmitted && Object.keys(newProjectForm.formState.errors).length > 0) {
       toast.error("Введены некорректные данные")
     }
-  }, [newProjectForm.formState.submitCount])
+  }, [newProjectForm.formState.submitCount, newProjectForm.formState.errors])
 
   const onSubmit = async (values: z.infer<typeof newProjectFormSchema>) => {
     console.log("values", values)
@@ -80,7 +90,7 @@ const NewProject = () => {
         title: values.title,
         tagline: values.tagline,
         status: "draft",
-        description: values.description,
+        description: values.description || "",
         flames: 0,
         links: {
           main: values.source_link,
@@ -142,11 +152,11 @@ const NewProject = () => {
                 <Checkbox checked={newProjectForm.getValues().description !== ""} />
                 Описание
               </label>
-              {/* <label className="flex items-center gap-2 text-sm font-medium leading-none">
+              <label className="flex items-center gap-2 text-sm font-medium leading-none">
                 <Checkbox checked={newProjectForm.getValues().tags.length > 0} />
                 Теги (хотя бы 1)
               </label>
-              <label className="flex items-center gap-2 text-sm font-medium leading-none">
+              {/*<label className="flex items-center gap-2 text-sm font-medium leading-none">
                 <Checkbox checked={newProjectForm.getValues().logo !== ""} />
                 Логотип
               </label>
@@ -189,12 +199,9 @@ const NewProject = () => {
     },
   ]
 
-  console.log("currentSection", currentSection)
-  console.log(newProjectForm.getValues())
-
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 gap-16 h-full">
-      <aside className="hidden lg:flex flex-col gap-2 sticky top-[80px] h-[calc(100vh-80px-116px)]">
+    <div className="grid grid-cols-1 lg:grid-cols-4 auto-rows-min gap-8 lg:gap-16 h-full">
+      <aside className="flex flex-col gap-2 lg:sticky lg:top-[80px] lg:h-[calc(100vh-80px-116px)]">
         {sections.map((section, index) => (
           <Button
             key={section.title}
@@ -209,9 +216,9 @@ const NewProject = () => {
           </Button>
         ))}
       </aside>
-      <section className="col-span-3 lg:col-span-3 h-full">
+      <section className="col-span-1 lg:col-span-3 h-full">
         <Form {...newProjectForm}>
-          <form onSubmit={newProjectForm.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={newProjectForm.handleSubmit(onSubmit)} className="space-y-8 mb-8">
             {sections[currentSection].content}
           </form>
         </Form>

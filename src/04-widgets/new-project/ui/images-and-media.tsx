@@ -1,23 +1,15 @@
+"use client"
+
 import { UseFormReturn } from "react-hook-form"
 
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
 import { Title } from "@/01-shared/ui/Title"
+import { newProjectFormSchema } from "./new-project"
+import * as z from "zod"
 
 interface ImagesAndMediaProps {
-  form: UseFormReturn<
-    {
-      title: string
-      tagline: string
-      source_link: string
-      description: string
-      demo_link: string
-      price: "free" | "free_options" | "payment_required"
-      github_link?: string | undefined
-    },
-    any,
-    undefined
-  >
+  form: UseFormReturn<z.infer<typeof newProjectFormSchema>>
 }
 
 const ImagesAndMedia = ({ form }: ImagesAndMediaProps) => {

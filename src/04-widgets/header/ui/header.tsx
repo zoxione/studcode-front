@@ -12,8 +12,9 @@ export const Header = ({ className }: IHeaderProps) => {
     <header
       className={cn("w-full sticky top-0 z-50 border-b border-b-border backdrop-blur-sm bg-background/80", className)}
     >
-      <DesktopNav className="hidden lg:flex" />
-      <MobileNav className="lg:hidden flex" />
+      <DesktopNav className="" />
+      {/* <DesktopNav className="hidden lg:flex" /> */}
+      {/* <MobileNav className="lg:hidden flex" /> */}
     </header>
   )
 }

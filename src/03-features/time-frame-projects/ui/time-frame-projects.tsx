@@ -17,7 +17,7 @@ const TimeFrameProjects = ({ timeFrame }: TimeFrameProjectsProps) => {
   }
 
   return (
-    <Tabs defaultValue={timeFrame} className="w-[400px]" onValueChange={handleChangeValue}>
+    <Tabs defaultValue={timeFrame} className="w-full max-w-md" onValueChange={handleChangeValue}>
       <TabsList>
         <TabsTrigger value="day">День</TabsTrigger>
         <TabsTrigger value="week">Неделя</TabsTrigger>
