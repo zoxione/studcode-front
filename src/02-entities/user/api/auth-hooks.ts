@@ -37,6 +37,7 @@ const useWhoamiQuery = () => {
     queryKey: ["auth-user"],
     queryFn: () => authAPI.whoami(),
     retry: 1,
+    meta: { slug: "auth-user-whoami-query" },
   })
 }
 

@@ -1,42 +1,16 @@
 import { NextResponse } from "next/server"
 
+import { isTokenValid } from "./01-shared/utils/is-token-valid"
+import { parseJwt } from "./01-shared/utils/parse-jwt"
+
 import type { NextFetchEvent, NextRequest } from "next/server"
-
-type TokenGeneric = {
-  sub: string
-  username: string
-  email: string
-  avatar: string
-  iat: number
-  exp: number
-}
-
-function parseJwt(token: string): TokenGeneric | null {
-  try {
-    return JSON.parse(atob(token.split(".")[1]))
-  } catch (e) {
-    return null
-  }
-}
-
-function isTokenValid(token: string): boolean {
-  if (!token) {
-    return false
-  }
-  const decodedToken = parseJwt(token)
-  if (decodedToken === null) {
-    return false
-  }
-  const nowUnix = (+new Date() / 1e3) | 0
-  return decodedToken.exp > nowUnix
-}
 
 export async function middleware(request: NextRequest, event: NextFetchEvent) {
   const nowUnix = (+new Date() / 1e3) | 0
   const newResponse = NextResponse.next()
 
-  let accessToken: string = request.cookies.get("access_token")?.value || ""
-  let refreshToken: string = request.cookies.get("refresh_token")?.value || ""
+  let accessToken: string = request.cookies.get(process.env.ACCESS_TOKEN_NAME)?.value || ""
+  let refreshToken: string = request.cookies.get(process.env.REFRESH_TOKEN_NAME)?.value || ""
 
   let accessTokenIsValid = isTokenValid(accessToken)
   if (!accessTokenIsValid && refreshToken) {
@@ -44,7 +18,7 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
     const res = await fetch(`${process.env.API_URL}/v1/auth/refresh`, {
       method: "GET",
       headers: {
-        Cookie: `access_token=${accessToken}; refresh_token=${refreshToken}`,
+        Cookie: `${process.env.ACCESS_TOKEN_NAME}=${accessToken}; ${process.env.REFRESH_TOKEN_NAME}=${refreshToken}`,
       },
     })
     if (res.ok) {
@@ -54,11 +28,11 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
       if (access_token_decoded) {
         console.log("[Middleware] Setting new tokens")
         newResponse.cookies.set({
-          name: "access_token",
+          name: process.env.ACCESS_TOKEN_NAME,
           value: data.access_token,
           httpOnly: true,
-          secure: false,
-          sameSite: "lax",
+          secure: process.env.NODE_ENV === "production",
+          sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
           maxAge: access_token_decoded.exp - nowUnix,
         })
         accessTokenIsValid = true

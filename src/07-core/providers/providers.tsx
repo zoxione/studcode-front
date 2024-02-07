@@ -16,6 +16,9 @@ const Providers = ({ children }: IProviders) => {
   const queryClient = new QueryClient({
     queryCache: new QueryCache({
       onError: (error, query) => {
+        if (query.meta?.slug === "auth-user-whoami-query") {
+          return
+        }
         toast.error(`Произошла ошибка: ${error.message}`)
       },
     }),
