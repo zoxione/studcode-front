@@ -3,7 +3,6 @@
 import { UseFormReturn } from "react-hook-form"
 import * as z from "zod"
 
-import { newProjectFormSchema } from "./new-project"
 
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
@@ -12,12 +11,14 @@ import { Title } from "@/01-shared/ui/Title"
 import { useGetAllTagsQuery } from "@/02-entities/tag"
 import { MultiSelect, Option } from "@/01-shared/ui/MultiSelect"
 
-interface MainInfoProps {
-  form: UseFormReturn<z.infer<typeof newProjectFormSchema>>
+import { editProjectFormSchema } from "./edit-project-form"
+
+interface MainInfoSectionProps {
+  form: UseFormReturn<z.infer<typeof editProjectFormSchema>>
 }
 
-const MainInfo = ({ form }: MainInfoProps) => {
-  const { data: tags } = useGetAllTagsQuery({ limit: 1000 })
+const MainInfoSection = ({ form }: MainInfoSectionProps) => {
+  const { data: tags } = useGetAllTagsQuery({ limit: 1000, order: "name.ru" })
   const tagsItems: Option[] = tags?.results.map((tag) => ({ label: tag.name.ru, value: tag._id })) || []
 
   return (
@@ -135,4 +136,4 @@ const MainInfo = ({ form }: MainInfoProps) => {
   )
 }
 
-export { MainInfo }
+export { MainInfoSection }

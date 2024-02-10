@@ -1,5 +1,6 @@
 import { DotsHorizontalIcon, GitHubLogoIcon } from "@radix-ui/react-icons"
 import { notFound } from "next/navigation"
+import Link from "next/link"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/Avatar"
 import { Badge } from "@/01-shared/ui/Badge"
@@ -14,17 +15,17 @@ import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"
 import { ProjectsList } from "@/04-widgets/projects-list"
+import { getSession } from "@/03-features/auth"
 
 export default async function User({ params }: { params: { id: string } }) {
   const user = await userAPI.getOneById(params.id)
   if (!user) {
     notFound()
   }
-  const userInitials = getUserInitials(
-    user?.full_name.surname || "",
-    user?.full_name.name || "",
-    user?.full_name.patronymic || "",
-  )
+  const userInitials = getUserInitials(user?.full_name.surname, user?.full_name.name)
+
+  const session = getSession()
+  const isOwner = session?.sub === user?._id
 
   return (
     <Layout header={<Header />} footer={<Footer />} className="">
@@ -45,10 +46,12 @@ export default async function User({ params }: { params: { id: string } }) {
           <span>@{user?.username}</span>
         </div>
         <div className="ml-auto flex flex-row items-center gap-2">
-          <Button variant="outline" size="icon">
+          {/* <Button variant="outline" size="icon">
             <DotsHorizontalIcon className="w-4 h-4" />
+          </Button> */}
+          <Button asChild>
+            <Link href={`/u/${user._id}/settings`}>Изменить</Link>
           </Button>
-          <Button>Изменить</Button>
         </div>
       </div>
 
@@ -56,30 +59,50 @@ export default async function User({ params }: { params: { id: string } }) {
         <TabsList className="mb-6">
           <TabsTrigger value="profile">Профиль</TabsTrigger>
           <TabsTrigger value="projects">Проекты</TabsTrigger>
-          <TabsTrigger value="drafts">Черновики</TabsTrigger>
+          {isOwner ? <TabsTrigger value="drafts">Черновики</TabsTrigger> : null}
         </TabsList>
         <TabsContent value="profile" className="space-y-4">
           <div className="space-y-1">
-            <Label htmlFor="about">Описание</Label>
-            <Textarea disabled placeholder={user?.about} id="about" />
+            <Title order={6}>Описание</Title>
+            <Textarea disabled placeholder={user?.about} />
           </div>
           <div className="space-y-1">
             <Title order={6}>Ссылки</Title>
-            <Badge variant="outline">
-              <GitHubLogoIcon className="mr-1 h-4 w-4" />
-              Github
-            </Badge>
+            {user.links.github ? (
+              <Badge variant="outline" asChild>
+                <Link href={user.links.github} target="_blank">
+                  <GitHubLogoIcon className="mr-1 h-4 w-4" />
+                  Github
+                </Link>
+              </Badge>
+            ) : null}
+            {user.links.telegram ? (
+              <Badge variant="outline" asChild>
+                <Link href={user.links.telegram} target="_blank">
+                  <GitHubLogoIcon className="mr-1 h-4 w-4" />
+                  Telegram
+                </Link>
+              </Badge>
+            ) : null}
+            {user.links.vkontakte ? (
+              <Badge variant="outline" asChild>
+                <Link href={user.links.vkontakte} target="_blank">
+                  <GitHubLogoIcon className="mr-1 h-4 w-4" />
+                  Vk
+                </Link>
+              </Badge>
+            ) : null}
           </div>
-          <div className="space-y-1">
+          {/* <div className="space-y-1">
             <Title order={6}>Награды</Title>
             <Badge variant="outline">Топ 1</Badge>
-          </div>
+          </div> */}
         </TabsContent>
         <TabsContent value="projects">
           <ProjectsList filter={{ creator_id: user?._id, status: "published" }} />
         </TabsContent>
         <TabsContent value="drafts">
-          <ProjectsList filter={{ creator_id: user?._id, status: "draft" }} />
+          <ProjectsList filter={{ creator_id: user?._id, status: "draft" }} projectCardProps={{ isEdit: true }} />
         </TabsContent>
       </Tabs>
     </Layout>

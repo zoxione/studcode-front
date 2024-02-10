@@ -3,9 +3,10 @@
 import { StarFilledIcon, StarIcon } from "@radix-ui/react-icons"
 import { useCallback, useMemo, useState } from "react"
 
+import { cn } from "@/01-shared/utils/cn"
+
 import { Button } from "../../Button"
 
-import { cn } from "@/01-shared/utils/cn"
 
 interface RatingProps {
   className?: string
@@ -61,7 +62,7 @@ const Rating = ({
             onMouseLeave={() => setHoveredStars(0)}
             variant="ghost"
             size="none"
-            className={`${readOnly ? "cursor-default" : "cursor-pointer"}`}
+            className={`${readOnly ? "cursor-default" : "cursor-pointer"} hover:bg-transparent`}
           >
             {getStar(index)}
           </Button>

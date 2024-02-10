@@ -1,18 +1,20 @@
 "use client"
 
 import { UseFormReturn } from "react-hook-form"
+import * as z from "zod"
+
 
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { RadioGroup, RadioGroupItem } from "@/01-shared/ui/RadioGroup"
 import { Title } from "@/01-shared/ui/Title"
-import { newProjectFormSchema } from "./new-project"
-import * as z from "zod"
 
-interface ExtrasProps {
-  form: UseFormReturn<z.infer<typeof newProjectFormSchema>>
+import { editProjectFormSchema } from "./edit-project-form"
+
+interface ExtrasSectionProps {
+  form: UseFormReturn<z.infer<typeof editProjectFormSchema>>
 }
 
-const Extras = ({ form }: ExtrasProps) => {
+const ExtrasSection = ({ form }: ExtrasSectionProps) => {
   return (
     <>
       <div className="space-y-4">
@@ -58,4 +60,4 @@ const Extras = ({ form }: ExtrasProps) => {
   )
 }
 
-export { Extras }
+export { ExtrasSection }

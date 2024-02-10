@@ -27,4 +27,4 @@ interface User {
   projects: any[] // TODO
 }
 
-export type { User }
+export type { User, UserFullName, UserLinks, UserRole }

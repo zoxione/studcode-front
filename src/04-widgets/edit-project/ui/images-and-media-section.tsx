@@ -1,18 +1,19 @@
 "use client"
 
 import { UseFormReturn } from "react-hook-form"
+import * as z from "zod"
 
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
 import { Title } from "@/01-shared/ui/Title"
-import { newProjectFormSchema } from "./new-project"
-import * as z from "zod"
 
-interface ImagesAndMediaProps {
-  form: UseFormReturn<z.infer<typeof newProjectFormSchema>>
+import { editProjectFormSchema } from "./edit-project-form"
+
+interface ImagesAndMediaSectionProps {
+  form: UseFormReturn<z.infer<typeof editProjectFormSchema>>
 }
 
-const ImagesAndMedia = ({ form }: ImagesAndMediaProps) => {
+const ImagesAndMediaSection = ({ form }: ImagesAndMediaSectionProps) => {
   return (
     <>
       <div className="space-y-4">
@@ -70,4 +71,4 @@ const ImagesAndMedia = ({ form }: ImagesAndMediaProps) => {
   )
 }
 
-export { ImagesAndMedia }
+export { ImagesAndMediaSection }

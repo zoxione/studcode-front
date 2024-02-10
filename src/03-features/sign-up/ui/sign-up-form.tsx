@@ -8,7 +8,7 @@ import * as z from "zod"
 import { Button } from "@/01-shared/ui/Button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
-import { useRegisterMutation } from "@/02-entities/user"
+import { useRegisterMutation } from "@/03-features/auth"
 
 const signUpFormSchema = z.object({
   username: z.string().min(2).max(32),

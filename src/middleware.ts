@@ -5,12 +5,24 @@ import { parseJwt } from "./01-shared/utils/parse-jwt"
 
 import type { NextFetchEvent, NextRequest } from "next/server"
 
+const GUARD_ROUTES = ["/projects/new", "/u/[id]/settings"]
+
 export async function middleware(request: NextRequest, event: NextFetchEvent) {
   const nowUnix = (+new Date() / 1e3) | 0
   const newResponse = NextResponse.next()
 
   let accessToken: string = request.cookies.get(process.env.ACCESS_TOKEN_NAME)?.value || ""
   let refreshToken: string = request.cookies.get(process.env.REFRESH_TOKEN_NAME)?.value || ""
+  if (!accessToken && !refreshToken) {
+    console.log("[Middleware] No tokens")
+    const matchingRoute = GUARD_ROUTES.find((route) => {
+      const routePattern = new RegExp(`^${route.replace(/\[.*?\]/g, ".*")}$`)
+      return routePattern.test(request.nextUrl.pathname)
+    })
+    if (matchingRoute) {
+      return NextResponse.redirect(new URL("/sign-in", request.url))
+    }
+  }
 
   let accessTokenIsValid = isTokenValid(accessToken)
   if (!accessTokenIsValid && refreshToken) {

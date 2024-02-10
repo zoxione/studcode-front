@@ -1,3 +1,5 @@
+import { RecursivePartial } from "@/01-shared/utils/recursive-partial"
+
 import { User } from "../model/types"
 
 import { GetAllUsersFilter, GetAllUsersResponse } from "./types"
@@ -59,7 +61,7 @@ class UserAPI {
   /**
    * Обновление пользователя по id
    */
-  async updateOneById(id: string, project: User): Promise<User> {
+  async updateOneById(id: string, project: RecursivePartial<User>): Promise<User> {
     const res = await fetch(`${this.baseUrl}/${id}`, {
       method: "PUT",
       body: JSON.stringify(project),

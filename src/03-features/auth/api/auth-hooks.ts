@@ -2,17 +2,26 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 
-import { RegisterUser, SignIn } from "./types"
+import { User } from "@/02-entities/user"
+
 import { authAPI } from "./auth-api"
+import { RegisterUser, SignIn } from "./types"
+
 
 const useRegisterMutation = () => {
   const queryClient = useQueryClient()
+  const { mutate: login } = useLoginMutation()
+  let registerUser: RegisterUser
   return useMutation({
     mutationFn: (user: RegisterUser) => {
+      registerUser = user
       return authAPI.register(user)
     },
-    onSuccess: () => {
+    onSuccess: (user: User) => {
       queryClient.invalidateQueries({ queryKey: ["auth-user"] })
+      toast.success("Вы зарегистрировались")
+      login({ email: registerUser.email, password: registerUser.password })
+      window.location.href = "/"
     },
   })
 }
@@ -27,7 +36,8 @@ const useLoginMutation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["auth-user"] })
       toast.success("Вы вошли в аккаунт")
-      router.push("/")
+      // router.push("/")
+      window.location.href = "/"
     },
   })
 }
@@ -36,7 +46,6 @@ const useWhoamiQuery = () => {
   return useQuery({
     queryKey: ["auth-user"],
     queryFn: () => authAPI.whoami(),
-    retry: 1,
     meta: { slug: "auth-user-whoami-query" },
   })
 }
@@ -57,7 +66,8 @@ const useLogoutMutation = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["auth-user"] })
-      router.push("/")
+      // router.push("/")
+      window.location.href = "/"
     },
   })
 }

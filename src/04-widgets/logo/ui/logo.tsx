@@ -14,7 +14,7 @@ interface LogoProps {
 
 export const Logo = ({ className }: LogoProps) => {
   return (
-    <Link href="/" className={cn(`${roboto_mono.className} font-bold leading-none`, className)}>
+    <Link href="/" className={cn(`${roboto_mono.className} font-bold leading-none line-clamp-1`, className)}>
       {siteConfig.name}
     </Link>
   )

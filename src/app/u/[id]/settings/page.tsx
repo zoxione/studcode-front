@@ -27,7 +27,7 @@ export default async function User({ params }: { params: { id: string } }) {
           <TabsTrigger value="details">Мои данные</TabsTrigger>
         </TabsList>
         <TabsContent value="settings" className="mt-6 space-y-12">
-          <div className="space-y-6">
+          <div className="space-y-4">
             <Title order={3}>Подключенные аккаунты</Title>
             <div className="space-y-4">
               <span>Вы связаны с:</span>
@@ -56,16 +56,16 @@ export default async function User({ params }: { params: { id: string } }) {
               </div>
             </div>
           </div>
-          <div className="space-y-6">
+          <div className="space-y-4">
             <Title order={3}>Настройки уведомлений</Title>
             <NotificationSettings user={user as User} />
           </div>
-          <div className="space-y-6">
+          <div className="space-y-4">
             <Title order={3}>Конфиденциальность</Title>
             <PrivacySettings user={user as User} />
           </div>
         </TabsContent>
-        <TabsContent value="details">
+        <TabsContent value="details" className="space-y-4">
           <Title order={3}>Мои данные</Title>
           <MyDetails user={user as User} />
         </TabsContent>

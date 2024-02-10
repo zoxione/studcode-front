@@ -1,4 +1,5 @@
 import { Tag } from "@/02-entities/tag"
+import { UserFullName } from "@/02-entities/user"
 
 type ProjectPrice = "free" | "free_options" | "payment_required"
 
@@ -14,6 +15,7 @@ interface ProjectCreator {
   _id: string
   username: string
   avatar: string
+  full_name: UserFullName
 }
 
 interface Project {
@@ -27,6 +29,7 @@ interface Project {
   logo: string
   screenshots: string[]
   price: ProjectPrice
+  rating: number
   tags: Tag[]
   creator: ProjectCreator
   created_at: string

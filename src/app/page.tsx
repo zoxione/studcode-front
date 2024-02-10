@@ -10,6 +10,7 @@ import { Hero } from "@/04-widgets/hero"
 import { Layout } from "@/04-widgets/layout"
 import { ProjectsDraftsList } from "@/04-widgets/projects-drafts-list"
 import { ProjectsList } from "@/04-widgets/projects-list"
+import { getSession } from "@/03-features/auth"
 
 const allowedValues = {
   timeFrame: ["day", "week", "month", "year"],
@@ -31,6 +32,8 @@ export default async function Home({
 
   const { results: tags } = await tagAPI.getAll({ limit: 5 })
 
+  const session = getSession()
+
   return (
     <Layout header={<Header />} footer={<Footer />} className="">
       <Hero className="my-8" />
@@ -50,10 +53,12 @@ export default async function Home({
               <TagBadge key={tag._id} tag={tag} />
             ))}
           </div>
-          <div className="flex flex-col gap-4">
-            <Title order={4}>Ваши черновики</Title>
-            <ProjectsDraftsList limit={5} creator_id="" />
-          </div>
+          {session ? (
+            <div className="flex flex-col gap-4">
+              <Title order={4}>Ваши черновики</Title>
+              <ProjectsDraftsList limit={5} creator_id={session.sub} />
+            </div>
+          ) : null}
         </div>
       </div>
     </Layout>

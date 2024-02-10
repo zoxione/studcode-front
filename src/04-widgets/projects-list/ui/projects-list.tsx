@@ -7,16 +7,17 @@ import { toast } from "sonner"
 
 import { GetAllProjectsFilter, ProjectCard, useGetAllProjectsInfiniteQuery } from "@/02-entities/project"
 import { cn } from "@/01-shared/utils/cn"
+import { ProjectCardProps } from "@/02-entities/project/ui/project-card"
 
 interface ProjectsListProps {
   className?: string
   filter: GetAllProjectsFilter
+  projectCardProps?: ProjectCardProps
 }
 
-export const ProjectsList = ({ filter, className }: ProjectsListProps) => {
+export const ProjectsList = ({ filter, projectCardProps, className }: ProjectsListProps) => {
   const {
     data: projects,
-    error,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
@@ -46,7 +47,7 @@ export const ProjectsList = ({ filter, className }: ProjectsListProps) => {
         : projects.pages.map((group, i) => (
             <Fragment key={i}>
               {group.results.map((project) => (
-                <ProjectCard key={project._id} project={project} />
+                <ProjectCard key={project._id} project={project} {...projectCardProps} />
               ))}
             </Fragment>
           ))}

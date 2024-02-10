@@ -1,9 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { toast } from "sonner"
+
+import { RecursivePartial } from "@/01-shared/utils/recursive-partial"
 
 import { User } from "../model/types"
 
 import { GetAllUsersFilter } from "./types"
 import { userAPI } from "./user-api"
+
 
 const useGetAllUsersQuery = (filter: GetAllUsersFilter) => {
   const { page, limit, search, order } = filter
@@ -23,11 +27,12 @@ const useGetOneByIdUserQuery = (id: string) => {
 const useUpdateOneByIdUserMutation = () => {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ id, user }: { id: string; user: User }) => {
+    mutationFn: ({ id, user }: { id: string; user: RecursivePartial<User> }) => {
       return userAPI.updateOneById(id, user)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] })
+      toast.success("Данные успешно обновлены")
     },
   })
 }

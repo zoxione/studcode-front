@@ -1,4 +1,4 @@
-const getUserInitials = (surname: string, name: string, patronymic: string) => {
+const getUserInitials = (surname: string, name: string) => {
   return `${surname[0].toUpperCase()}${name[0].toUpperCase()}`
 }
 

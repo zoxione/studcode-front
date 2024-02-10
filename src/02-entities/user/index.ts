@@ -1,7 +1,5 @@
-export { authAPI } from "./api/auth-api"
-export * from "./api/auth-hooks"
 export { userAPI } from "./api/user-api"
 export * from "./api/user-hooks"
 export * from "./api/types"
-export type { User } from "./model/types"
+export type { User, UserFullName, UserLinks, UserRole } from "./model/types"
 export { UserMenu } from "./ui/user-menu"

@@ -8,7 +8,7 @@ import * as z from "zod"
 import { Button } from "@/01-shared/ui/Button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
-import { useLoginMutation } from "@/02-entities/user"
+import { useLoginMutation } from "@/03-features/auth"
 
 const signInFormSchema = z.object({
   email: z.string().email(),

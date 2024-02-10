@@ -34,7 +34,10 @@ const useGetAllProjectsInfiniteQuery = (filter: GetAllProjectsFilter) => {
   const { page, limit, search, order, time_frame, tag_slug, creator_id, status } = filter
   return useInfiniteQuery({
     queryKey: ["projects", page, limit, search, order, time_frame, tag_slug, creator_id, status],
-    queryFn: () => projectAPI.getAll(filter),
+    queryFn: async ({ pageParam }: { pageParam: number }) => {
+      const res = await projectAPI.getAll({ ...filter, page: pageParam })
+      return res
+    },
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       const nextPageIndex =
@@ -65,12 +68,15 @@ const useUpdateOneByIdProjectMutation = () => {
 
 const useDeleteOneByIdProjectMutation = () => {
   const queryClient = useQueryClient()
+  const router = useRouter()
   return useMutation({
     mutationFn: (id: string) => {
       return projectAPI.deleteOneById(id)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
+      toast.success("Проект успешно удален")
+      router.back()
     },
   })
 }

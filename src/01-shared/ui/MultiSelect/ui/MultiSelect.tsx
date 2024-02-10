@@ -5,10 +5,11 @@ import { X } from "lucide-react"
 import { useEffect } from "react"
 import { Command as CommandPrimitive } from "cmdk"
 
+import { cn } from "@/01-shared/utils/cn"
+
 import { Command, CommandGroup, CommandItem, CommandEmpty, CommandList } from "../../Command"
 import { Badge } from "../../Badge"
 
-import { cn } from "@/01-shared/utils/cn"
 
 export interface Option {
   value: string

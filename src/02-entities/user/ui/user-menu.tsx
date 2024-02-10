@@ -15,13 +15,17 @@ import {
   DropdownMenuTrigger,
 } from "@/01-shared/ui/DropdownMenu"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/01-shared/ui/Tooltip"
-import { useLogoutMutation, useWhoamiQuery } from "@/02-entities/user"
+import { useLogoutMutation, useSession } from "@/03-features/auth"
+import { Session } from "@/02-entities/session"
 
-export function UserMenu() {
-  const { data: user } = useWhoamiQuery()
+interface UserMenuProps {
+  session: Session
+}
+
+export function UserMenu({ session }: UserMenuProps) {
   const { mutate: logout } = useLogoutMutation()
 
-  if (!user) {
+  if (!session) {
     return null
   }
 
@@ -30,7 +34,7 @@ export function UserMenu() {
   }
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText(user.email)
+    navigator.clipboard.writeText(session.email)
   }
 
   return (
@@ -38,8 +42,8 @@ export function UserMenu() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="p-1">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={user.avatar} alt={user.username} />
-            <AvatarFallback>{user.username[0].toUpperCase()}</AvatarFallback>
+            <AvatarImage src={session.avatar} alt={session.username} />
+            <AvatarFallback>{session.username[0].toUpperCase()}</AvatarFallback>
           </Avatar>
           <ChevronDownIcon className="h-4 w-4" />
         </Button>
@@ -47,9 +51,9 @@ export function UserMenu() {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{user.username}</p>
+            <p className="text-sm font-medium leading-none">{session.username}</p>
             <div className="flex flex-row items-center justify-between">
-              <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+              <p className="text-xs leading-none text-muted-foreground">{session.email}</p>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
@@ -69,12 +73,12 @@ export function UserMenu() {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href={`/u/${user.sub}`}>
+            <Link href={`/u/${session.sub}`}>
               Профиль <PersonIcon className="ml-auto h-4 w-4" />
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href={`/u/${user.sub}/settings`}>
+            <Link href={`/u/${session.sub}/settings`}>
               Настройки <GearIcon className="ml-auto h-4 w-4" />
             </Link>
           </DropdownMenuItem>

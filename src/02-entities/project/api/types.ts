@@ -25,15 +25,14 @@ interface GetAllProjectsResponse {
 
 interface CreateProject {
   title: string
-  tagline: string
-  status: ProjectStatus
-  description: string
-  flames: number
-  links: ProjectLinks
-  logo: string
-  screenshots: string[]
-  price: ProjectPrice
-  tags: string[]
+  tagline?: string
+  status?: ProjectStatus
+  description?: string
+  links?: ProjectLinks
+  logo?: string
+  screenshots?: string[]
+  price?: ProjectPrice
+  tags?: string[]
   creator: string
 }
 

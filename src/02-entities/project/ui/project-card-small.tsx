@@ -1,12 +1,13 @@
 import Link from "next/link"
 import { HTMLAttributes, forwardRef } from "react"
 
-import { Project } from "../model/types"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/Avatar"
 import { Skeleton } from "@/01-shared/ui/Skeleton"
 import { cn } from "@/01-shared/utils/cn"
 import { normalizeDate } from "@/01-shared/utils/normalize-date"
+
+import { Project } from "../model/types"
 
 export interface ProjectCardSmallProps extends HTMLAttributes<HTMLDivElement> {
   project?: Project
@@ -39,11 +40,11 @@ const ProjectCardSmall = forwardRef<HTMLDivElement, ProjectCardSmallProps>(({ pr
         className,
       )}
     >
-      <Avatar className="w-[60px] h-[60px] flex flex-col gap-0">
+      <Avatar className="w-[60px] h-[60px] text-lg">
         <AvatarImage src={project.logo} width={60} height={60} alt={project.title} />
         <AvatarFallback>{project.title[0]}</AvatarFallback>
       </Avatar>
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-hidden pr-3">
         <span className="text-base font-semibold">{project.title}</span>
         <p className="text-sm">Последнее изменение: {normalizeDate(project.updated_at)}</p>
       </div>

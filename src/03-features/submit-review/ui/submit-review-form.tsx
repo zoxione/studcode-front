@@ -11,11 +11,14 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/01-shared
 import { Rating } from "@/01-shared/ui/Rating"
 import { Textarea } from "@/01-shared/ui/Textarea"
 import { useCreateOneReviewMutation } from "@/02-entities/reviews"
-import { useWhoamiQuery } from "@/02-entities/user"
+import { useSession } from "@/03-features/auth"
 
 const submitReviewFormSchema = z.object({
-  text: z.string().min(1).max(256),
-  rating: z.number().min(1).max(5),
+  text: z
+    .string()
+    .min(1, { message: "Минимальная длина 1 символ" })
+    .max(256, { message: "Максимальная длина 256 символов" }),
+  rating: z.number().min(1, { message: "Минимальная оценка 1" }).max(5, { message: "Максимальная оценка 5" }),
 })
 
 interface SubmitReviewFormProps extends HTMLAttributes<HTMLFormElement> {
@@ -23,7 +26,7 @@ interface SubmitReviewFormProps extends HTMLAttributes<HTMLFormElement> {
 }
 
 const SubmitReviewForm = ({ project_id, className }: SubmitReviewFormProps) => {
-  const { data: user } = useWhoamiQuery()
+  const { data: session } = useSession()
   const { mutate: createOneReview } = useCreateOneReviewMutation()
 
   const submitReviewForm = useForm<z.infer<typeof submitReviewFormSchema>>({
@@ -35,11 +38,12 @@ const SubmitReviewForm = ({ project_id, className }: SubmitReviewFormProps) => {
   })
 
   async function onSubmit(values: z.infer<typeof submitReviewFormSchema>) {
-    if (!user) {
+    if (!session) {
       toast.error("Необходимо авторизоваться")
-    } else {
-      createOneReview({ project: project_id, text: values.text, rating: values.rating, reviewer: user.sub })
+      return
     }
+
+    createOneReview({ project: project_id, text: values.text, rating: values.rating, reviewer: session.sub })
   }
 
   return (

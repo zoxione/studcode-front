@@ -2,9 +2,10 @@ import { ChevronRightIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
 import { HTMLAttributes, forwardRef } from "react"
 
+import { cn } from "@/01-shared/utils/cn"
+
 import { Tag } from "../model/types"
 
-import { cn } from "@/01-shared/utils/cn"
 
 export interface TagCardProps extends HTMLAttributes<HTMLAnchorElement> {
   tag: Tag
