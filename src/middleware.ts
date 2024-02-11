@@ -5,19 +5,40 @@ import { parseJwt } from "./01-shared/utils/parse-jwt"
 
 import type { NextFetchEvent, NextRequest } from "next/server"
 
-const GUARD_ROUTES = ["/projects/new", "/u/[id]/settings"]
+const GUARD_ROUTES = ["/projects/new"]
+
+export const config = {
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    {
+      source: "/((?!api|_next/static|_next/image|favicon.ico).*)",
+      missing: [
+        { type: "header", key: "next-router-prefetch" },
+        { type: "header", key: "purpose", value: "prefetch" },
+      ],
+    },
+  ],
+}
 
 export async function middleware(request: NextRequest, event: NextFetchEvent) {
   const nowUnix = (+new Date() / 1e3) | 0
   const newResponse = NextResponse.next()
+  const { pathname } = request.nextUrl
 
   let accessToken: string = request.cookies.get(process.env.ACCESS_TOKEN_NAME)?.value || ""
   let refreshToken: string = request.cookies.get(process.env.REFRESH_TOKEN_NAME)?.value || ""
+  console.log("[Middleware] Tokens", accessToken, refreshToken)
   if (!accessToken && !refreshToken) {
     console.log("[Middleware] No tokens")
     const matchingRoute = GUARD_ROUTES.find((route) => {
       const routePattern = new RegExp(`^${route.replace(/\[.*?\]/g, ".*")}$`)
-      return routePattern.test(request.nextUrl.pathname)
+      return routePattern.test(pathname)
     })
     if (matchingRoute) {
       return NextResponse.redirect(new URL("/sign-in", request.url))
