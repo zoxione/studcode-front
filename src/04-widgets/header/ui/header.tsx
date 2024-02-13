@@ -4,7 +4,7 @@ import { PlusIcon, ReloadIcon } from "@radix-ui/react-icons"
 import { MenuIcon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-
+import { useSession } from "next-auth/react"
 
 import { footerLinks, navLinks } from "@/01-shared/lib"
 import { Button } from "@/01-shared/ui/Button"
@@ -14,7 +14,6 @@ import { cn } from "@/01-shared/utils/cn"
 import { Search } from "@/03-features/search"
 import { Logo } from "@/04-widgets/logo"
 import { ToggleTheme } from "@/03-features/toggle-theme"
-import { useSession } from "@/03-features/auth"
 
 import { UserMenu } from "../../../02-entities/user"
 
@@ -23,9 +22,9 @@ interface IHeaderProps {
 }
 
 export const Header = ({ className }: IHeaderProps) => {
-  const { isPending, data: session, isSuccess } = useSession()
-
   const pathname = usePathname()
+  const { data: session, status } = useSession()
+  console.log({ session, status })
 
   return (
     <header
@@ -98,9 +97,11 @@ export const Header = ({ className }: IHeaderProps) => {
 
         <div className="flex flex-1 items-center justify-between gap-2 md:justify-end">
           <Search className="flex-1 lg:flex-none" />
-          {isPending ? (
-            <ReloadIcon className="h-4 w-4 animate-spin" />
-          ) : isSuccess ? (
+          {status === "loading" ? (
+            <Button variant="ghost" size="icon">
+              <ReloadIcon className="h-4 w-4 animate-spin" />
+            </Button>
+          ) : status === "authenticated" ? (
             <>
               <Button asChild>
                 <Link href="/projects/new">
@@ -110,11 +111,11 @@ export const Header = ({ className }: IHeaderProps) => {
                   </span>
                 </Link>
               </Button>
-              <UserMenu session={session} />
+              <UserMenu user={session.user} />
             </>
           ) : (
             <Button asChild>
-              <Link href="/sign-in">Войти</Link>
+              <Link href="/?dialog=auth">Войти</Link>
             </Button>
           )}
         </div>

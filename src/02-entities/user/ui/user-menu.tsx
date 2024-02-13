@@ -1,7 +1,16 @@
 "use client"
 
-import { ChevronDownIcon, CopyIcon, ExitIcon, GearIcon, PersonIcon, PlusIcon } from "@radix-ui/react-icons"
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  CopyIcon,
+  ExitIcon,
+  GearIcon,
+  PersonIcon,
+  PlusIcon,
+} from "@radix-ui/react-icons"
 import Link from "next/link"
+import { Session } from "next-auth"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/Avatar"
 import { Button } from "@/01-shared/ui/Button"
@@ -15,45 +24,52 @@ import {
   DropdownMenuTrigger,
 } from "@/01-shared/ui/DropdownMenu"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/01-shared/ui/Tooltip"
-import { useLogoutMutation, useSession } from "@/03-features/auth"
-import { Session } from "@/02-entities/session"
+import { useLogoutMutation } from "@/03-features/auth"
+import { signOut } from "next-auth/react"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 interface UserMenuProps {
-  session: Session
+  user: Session["user"]
 }
 
-export function UserMenu({ session }: UserMenuProps) {
-  const { mutate: logout } = useLogoutMutation()
+export function UserMenu({ user }: UserMenuProps) {
+  const [openMenu, setOpenMenu] = useState(false)
 
-  if (!session) {
-    return null
-  }
+  // const { mutate: logout } = useLogoutMutation()
 
   const handleLogout = async () => {
-    logout()
+    await signOut()
   }
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText(session.email)
+    navigator.clipboard.writeText(user.email)
   }
 
   return (
-    <DropdownMenu>
+    <DropdownMenu onOpenChange={setOpenMenu}>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="p-1">
+        <Button
+          variant="ghost"
+          className={`p-1 gap-0.5 focus-visible:ring-0 ${openMenu ? "bg-accent text-accent-foreground" : ""}`}
+        >
           <Avatar className="h-8 w-8">
-            <AvatarImage src={session.avatar} alt={session.username} />
-            <AvatarFallback>{session.username[0].toUpperCase()}</AvatarFallback>
+            <AvatarImage src={user.avatar} alt={user.username} />
+            <AvatarFallback>{user.username[0].toUpperCase()}</AvatarFallback>
           </Avatar>
-          <ChevronDownIcon className="h-4 w-4" />
+          {openMenu ? (
+            <ChevronUpIcon className="h-4 w-4 animate-in spin-in-180 duration-200" />
+          ) : (
+            <ChevronDownIcon className="h-4 w-4 animate-in spin-in-180 duration-200" />
+          )}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{session.username}</p>
+            <p className="text-sm font-medium leading-none">{user.username}</p>
             <div className="flex flex-row items-center justify-between">
-              <p className="text-xs leading-none text-muted-foreground">{session.email}</p>
+              <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
@@ -73,12 +89,12 @@ export function UserMenu({ session }: UserMenuProps) {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href={`/u/${session.sub}`}>
+            <Link href={`/u/${user._id}`}>
               Профиль <PersonIcon className="ml-auto h-4 w-4" />
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href={`/u/${session.sub}/settings`}>
+            <Link href={`/u/${user._id}/settings`}>
               Настройки <GearIcon className="ml-auto h-4 w-4" />
             </Link>
           </DropdownMenuItem>

@@ -11,7 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/01-shared
 import { Rating } from "@/01-shared/ui/Rating"
 import { Textarea } from "@/01-shared/ui/Textarea"
 import { useCreateOneReviewMutation } from "@/02-entities/reviews"
-import { useSession } from "@/03-features/auth"
+import { useSession } from "next-auth/react"
 
 const submitReviewFormSchema = z.object({
   text: z
@@ -43,7 +43,7 @@ const SubmitReviewForm = ({ project_id, className }: SubmitReviewFormProps) => {
       return
     }
 
-    createOneReview({ project: project_id, text: values.text, rating: values.rating, reviewer: session.sub })
+    createOneReview({ project: project_id, text: values.text, rating: values.rating, reviewer: session.user._id })
   }
 
   return (

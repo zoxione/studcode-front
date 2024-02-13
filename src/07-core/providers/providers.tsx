@@ -1,10 +1,13 @@
 "use client"
 
 import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { ThemeProvider } from "next-themes"
-import { ReactNode } from "react"
-import { toast } from "sonner"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import { SessionProvider } from "next-auth/react"
+import { ThemeProvider } from "next-themes"
+import { ReactNode, Suspense } from "react"
+import { toast } from "sonner"
+
+import { DialogProvider } from "./dialog-provider"
 
 import { Toaster } from "@/01-shared/ui/Sonner"
 
@@ -39,14 +42,19 @@ const Providers = ({ children }: IProviders) => {
   })
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <Toaster position="top-center" richColors closeButton />
-        {children}
-        <ReactQueryDevtools initialIsOpen={false} />
-      </ThemeProvider>
-    </QueryClientProvider>
+    <SessionProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Toaster position="top-center" richColors closeButton />
+          <Suspense>
+            <DialogProvider />
+          </Suspense>
+          {children}
+          <ReactQueryDevtools initialIsOpen={false} />
+        </ThemeProvider>
+      </QueryClientProvider>
+    </SessionProvider>
   )
 }
 
-export default Providers
+export { Providers }

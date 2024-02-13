@@ -1,8 +1,6 @@
+import { LogoutResponse, RefreshResponse, RegisterUser, SessionUser, SignIn, SignInResponse } from "./types"
 
 import { User } from "@/02-entities/user"
-import { Session } from "@/02-entities/session"
-
-import { LogoutResponse, RefreshResponse, RegisterUser, SignIn, SignInResponse } from "./types"
 
 class AuthAPI {
   private baseUrl: string = ""
@@ -56,7 +54,7 @@ class AuthAPI {
   /**
    * Получение информации о текущем пользователе
    */
-  async whoami(): Promise<Session> {
+  async whoami(): Promise<SessionUser> {
     const res = await fetch(`${this.baseUrl}/whoami`, {
       method: "GET",
       headers: {

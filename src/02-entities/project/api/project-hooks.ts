@@ -6,6 +6,7 @@ import { Project } from "../model/types"
 
 import { projectAPI } from "./project-api"
 import { CreateProject, GetAllProjectsFilter } from "./types"
+import { RecursivePartial } from "@/01-shared/utils/recursive-partial"
 
 const useCreateOneProjectMutation = () => {
   const queryClient = useQueryClient()
@@ -17,7 +18,7 @@ const useCreateOneProjectMutation = () => {
     onSuccess: (project: Project) => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
       toast.success("Проект успешно создан")
-      router.push(`/projects/${project._id}`)
+      router.push(`/projects/${project._id}/edit`)
     },
   })
 }
@@ -56,12 +57,15 @@ const useGetOneByIdProjectQuery = (id: string) => {
 
 const useUpdateOneByIdProjectMutation = () => {
   const queryClient = useQueryClient()
+  const router = useRouter()
   return useMutation({
-    mutationFn: ({ id, project }: { id: string; project: Project }) => {
+    mutationFn: ({ id, project }: { id: string; project: RecursivePartial<Project> }) => {
       return projectAPI.updateOneById(id, project)
     },
-    onSuccess: () => {
+    onSuccess: (project: Project) => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
+      toast.success("Проект успешно обновлен")
+      router.push(`/projects/${project._id}`)
     },
   })
 }

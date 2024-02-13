@@ -20,6 +20,8 @@ import { ReviewsList } from "@/04-widgets/reviews-list"
 import { ScreensCarousel } from "@/04-widgets/screens-carousel"
 import { getUserInitials } from "@/01-shared/utils/get-user-initials"
 
+export const revalidate = 60
+
 export default async function ProjectPage({ params }: { params: { id: string } }) {
   const { id } = params
   const project = await projectAPI.getOneById(id)
@@ -64,7 +66,6 @@ export default async function ProjectPage({ params }: { params: { id: string } }
               <Title order={5}>Что такое {project.title}?</Title>
               <Card>
                 <CardContent className="p-6">
-                  {project.description}
                   <p>{project.description}</p>
                   {project.tags.length > 0 ? (
                     <div className="mt-4 flex flex-row items-center gap-2">

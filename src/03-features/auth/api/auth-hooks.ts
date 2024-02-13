@@ -2,11 +2,10 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 
-import { User } from "@/02-entities/user"
-
 import { authAPI } from "./auth-api"
 import { RegisterUser, SignIn } from "./types"
 
+import { User } from "@/02-entities/user"
 
 const useRegisterMutation = () => {
   const queryClient = useQueryClient()

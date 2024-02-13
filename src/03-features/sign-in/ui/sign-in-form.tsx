@@ -4,11 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { HTMLAttributes } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
+import { signIn } from "next-auth/react"
 
 import { Button } from "@/01-shared/ui/Button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
-import { useLoginMutation } from "@/03-features/auth"
 
 const signInFormSchema = z.object({
   email: z.string().email(),
@@ -18,8 +18,6 @@ const signInFormSchema = z.object({
 interface SignInFormProps extends HTMLAttributes<HTMLFormElement> {}
 
 const SignInForm = ({ className }: SignInFormProps) => {
-  const { mutate: login } = useLoginMutation()
-
   const signInForm = useForm<z.infer<typeof signInFormSchema>>({
     resolver: zodResolver(signInFormSchema),
     defaultValues: {
@@ -29,7 +27,8 @@ const SignInForm = ({ className }: SignInFormProps) => {
   })
 
   async function onSubmit(values: z.infer<typeof signInFormSchema>) {
-    login(values)
+    const res = await signIn("credentials", { ...values, redirect: true, callbackUrl: "/" })
+    console.log(res)
   }
 
   return (

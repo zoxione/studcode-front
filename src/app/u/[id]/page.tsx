@@ -1,6 +1,7 @@
 import { DotsHorizontalIcon, GitHubLogoIcon } from "@radix-ui/react-icons"
 import { notFound } from "next/navigation"
 import Link from "next/link"
+import { getServerSession } from "next-auth"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/Avatar"
 import { Badge } from "@/01-shared/ui/Badge"
@@ -15,7 +16,9 @@ import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"
 import { ProjectsList } from "@/04-widgets/projects-list"
-import { getSession } from "@/03-features/auth"
+import { authOptions } from "@/01-shared/lib/auth-options"
+
+export const revalidate = 20
 
 export default async function User({ params }: { params: { id: string } }) {
   const user = await userAPI.getOneById(params.id)
@@ -24,8 +27,8 @@ export default async function User({ params }: { params: { id: string } }) {
   }
   const userInitials = getUserInitials(user?.full_name.surname, user?.full_name.name)
 
-  const session = getSession()
-  const isOwner = session?.sub === user?._id
+  const session = await getServerSession(authOptions)
+  const isOwner = session?.user._id === user?._id
 
   return (
     <Layout header={<Header />} footer={<Footer />} className="">

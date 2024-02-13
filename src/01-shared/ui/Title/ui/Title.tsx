@@ -8,12 +8,12 @@ import styles from "./Title.module.scss"
 const titleVariants = cva([""], {
   variants: {
     order: {
-      1: "scroll-m-20 text-4xl font-extrabold tracking-tight",
-      2: "scroll-m-20 text-3xl font-semibold tracking-tight",
-      3: "scroll-m-20 text-2xl font-semibold tracking-tight",
-      4: "scroll-m-20 text-xl font-semibold tracking-tight",
-      5: "scroll-m-20 text-lg font-semibold tracking-tight",
-      6: "scroll-m-20 text-base font-semibold tracking-tight",
+      1: "text-4xl font-extrabold tracking-tight",
+      2: "text-3xl font-semibold tracking-tight",
+      3: "text-2xl font-semibold tracking-tight",
+      4: "text-xl font-semibold tracking-tight",
+      5: "text-lg font-semibold tracking-tight",
+      6: "text-base font-semibold tracking-tight",
     },
   },
   defaultVariants: {

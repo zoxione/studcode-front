@@ -2,7 +2,6 @@ import { Calendar } from "../ui/Calendar"
 
 import type { Meta, StoryObj } from "@storybook/react"
 
-
 const meta = {
   title: "UI/Calendar",
   component: Calendar,
@@ -17,7 +16,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     mode: "single",
-    selected: new Date(),
+    selected: new Date(2024, 1, 1),
     onSelect: () => {},
     className: "rounded-md border",
   },

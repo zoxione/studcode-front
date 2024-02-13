@@ -8,14 +8,13 @@ import * as z from "zod"
 
 import { Button } from "@/01-shared/ui/Button"
 import { Form } from "@/01-shared/ui/Form"
-import { Project, useCreateOneProjectMutation } from "@/02-entities/project"
-import { useSession } from "@/03-features/auth"
+import { Project, useCreateOneProjectMutation, useUpdateOneByIdProjectMutation } from "@/02-entities/project"
 
 import { MainInfoSection } from "./main-info-section"
 import { ExtrasSection } from "./extras-section"
 import { ImagesAndMediaSection } from "./images-and-media-section"
 import { PublishSection } from "./publish-section"
-
+import { useSession } from "next-auth/react"
 
 const optionSchema = z.object({
   label: z.string(),
@@ -61,7 +60,7 @@ interface EditProjectFormProps {
 const EditProjectForm = ({ project }: EditProjectFormProps) => {
   const [currentSection, setCurrentSection] = useState(0)
   const { data: session } = useSession()
-  const { mutate: createOneProject } = useCreateOneProjectMutation()
+  const { mutate: updateProject } = useUpdateOneByIdProjectMutation()
 
   const editProjectForm = useForm<z.infer<typeof editProjectFormSchema>>({
     resolver: zodResolver(editProjectFormSchema),
@@ -93,21 +92,24 @@ const EditProjectForm = ({ project }: EditProjectFormProps) => {
       return
     }
 
-    createOneProject({
-      title: values.title,
-      tagline: values.tagline,
-      status: "draft",
-      description: values.description || "",
-      links: {
-        main: values.source_link,
-        demo: values.demo_link,
-        github: values.github_link || "",
+    updateProject({
+      id: project._id,
+      project: {
+        title: values.title,
+        tagline: values.tagline,
+        status: "draft",
+        description: values.description || "",
+        links: {
+          main: values.source_link,
+          demo: values.demo_link,
+          github: values.github_link || "",
+        },
+        logo: "https://vk.com/im",
+        screenshots: [],
+        price: values.price,
+        // tags: values.tags.map((tag) => tag.value),
+        // creator: session.user._id,
       },
-      logo: "https://vk.com/im",
-      screenshots: [],
-      price: values.price,
-      tags: values.tags.map((tag) => tag.value),
-      creator: session.sub,
     })
   }
 
