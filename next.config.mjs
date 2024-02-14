@@ -18,6 +18,7 @@ const nextConfig = {
     API_URL: process.env.API_URL,
     ACCESS_TOKEN_NAME: process.env.ACCESS_TOKEN_NAME,
     REFRESH_TOKEN_NAME: process.env.REFRESH_TOKEN_NAME,
+    TOKEN_DOMAIN: process.env.TOKEN_DOMAIN,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     GITHUB_ID: process.env.GITHUB_ID,

@@ -81,7 +81,7 @@ class TagAPI {
    * Получение одного тега по slug
    */
   async getOneBySlug(slug: string): Promise<Tag> {
-    const res = await fetch(`${this.baseUrl}/slug/${slug}`, {
+    const res = await fetch(`${this.baseUrl}/${slug}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

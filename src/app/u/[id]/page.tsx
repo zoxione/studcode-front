@@ -18,7 +18,7 @@ import { Layout } from "@/04-widgets/layout"
 import { ProjectsList } from "@/04-widgets/projects-list"
 import { authOptions } from "@/01-shared/lib/auth-options"
 
-export const revalidate = 20
+export const revalidate = 10
 
 export default async function User({ params }: { params: { id: string } }) {
   const user = await userAPI.getOneById(params.id)

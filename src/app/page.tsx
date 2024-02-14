@@ -10,6 +10,8 @@ import { Hero } from "@/04-widgets/hero"
 import { Layout } from "@/04-widgets/layout"
 import { ProjectsDraftsList } from "@/04-widgets/projects-drafts-list"
 import { ProjectsList } from "@/04-widgets/projects-list"
+import { authOptions } from "@/01-shared/lib/auth-options"
+import { getServerSession } from "next-auth"
 
 const allowedValues = {
   timeFrame: ["day", "week", "month", "year"],
@@ -31,6 +33,8 @@ export default async function Home({
 
   const { results: tags } = await tagAPI.getAll({ limit: 5 })
 
+  const session = await getServerSession(authOptions)
+
   return (
     <Layout header={<Header />} footer={<Footer />} className="">
       <Hero className="my-8" />
@@ -41,7 +45,7 @@ export default async function Home({
           <Title order={4} className="mt-6 mb-4">
             Лучшие проекты за {timeFrameNormalized}
           </Title>
-          <ProjectsList filter={{ time_frame: searchParamsParsed.timeFrame }} />
+          <ProjectsList filter={{ time_frame: searchParamsParsed.timeFrame, status: "published" }} />
         </div>
         <div className="space-y-8">
           <div className="flex flex-col gap-4">
@@ -50,12 +54,12 @@ export default async function Home({
               <TagBadge key={tag._id} tag={tag} />
             ))}
           </div>
-          {/* {session ? (
+          {session ? (
             <div className="flex flex-col gap-4">
               <Title order={4}>Ваши черновики</Title>
-              <ProjectsDraftsList limit={5} creator_id={session.sub} />
+              <ProjectsDraftsList limit={5} creator_id={session.user._id} />
             </div>
-          ) : null} */}
+          ) : null}
         </div>
       </div>
     </Layout>

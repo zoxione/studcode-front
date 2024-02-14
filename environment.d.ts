@@ -4,6 +4,7 @@ namespace NodeJS {
     API_URL: string
     ACCESS_TOKEN_NAME: string
     REFRESH_TOKEN_NAME: string
+    TOKEN_DOMAIN: string
     NEXTAUTH_SECRET: string
     NEXTAUTH_URL: string
     GITHUB_ID: string

@@ -20,7 +20,7 @@ import { ReviewsList } from "@/04-widgets/reviews-list"
 import { ScreensCarousel } from "@/04-widgets/screens-carousel"
 import { getUserInitials } from "@/01-shared/utils/get-user-initials"
 
-export const revalidate = 60
+export const revalidate = 10
 
 export default async function ProjectPage({ params }: { params: { id: string } }) {
   const { id } = params
