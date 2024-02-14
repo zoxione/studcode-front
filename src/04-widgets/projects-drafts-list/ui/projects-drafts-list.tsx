@@ -4,7 +4,7 @@ import { toast } from "sonner"
 import Link from "next/link"
 
 import { cn } from "@/01-shared/utils/cn"
-import { ProjectDraftCard, useGetAllProjectsQuery } from "@/02-entities/project"
+import { Project, ProjectDraftCard, useGetAllProjectsQuery } from "@/02-entities/project"
 import { Button } from "@/01-shared/ui/Button"
 
 interface ProjectsDraftsListProps {
@@ -18,7 +18,7 @@ export const ProjectsDraftsList = ({ limit, creator_id, className }: ProjectsDra
     data: projects,
     error,
     status: statusProjects,
-  } = useGetAllProjectsQuery({ limit: limit, status: "draft", creator_id })
+  } = useGetAllProjectsQuery({ limit: limit, status: "draft", creator_id, order: "updated_at" })
 
   if (statusProjects === "error") {
     return null

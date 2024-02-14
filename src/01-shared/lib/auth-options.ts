@@ -16,7 +16,7 @@ async function refreshToken(token: JWT): Promise<JWT> {
   cookies().set({
     name: process.env.ACCESS_TOKEN_NAME,
     value: data.access_token,
-    domain: process.env.TOKEN_DOMAIN,
+    // domain: process.env.TOKEN_DOMAIN,
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
@@ -78,12 +78,10 @@ export const authOptions: NextAuthOptions = {
         const data = await res.json()
         const nowUnix = (+new Date() / 1e3) | 0
 
-        console.log(process.env.TOKEN_DOMAIN)
-
         cookies().set({
           name: process.env.ACCESS_TOKEN_NAME,
           value: data.access_token,
-          domain: process.env.TOKEN_DOMAIN,
+          // domain: process.env.TOKEN_DOMAIN,
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
           sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
@@ -92,7 +90,7 @@ export const authOptions: NextAuthOptions = {
         cookies().set({
           name: process.env.REFRESH_TOKEN_NAME,
           value: data.refresh_token,
-          domain: process.env.TOKEN_DOMAIN,
+          // domain: process.env.TOKEN_DOMAIN,
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
           sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
@@ -122,7 +120,7 @@ export const authOptions: NextAuthOptions = {
       session.access_token = token.access_token
       session.access_token_exp = token.access_token_exp
       session.refresh_token = token.refresh_token
-      session.access_token_exp = token.access_token_exp
+      session.refresh_token_exp = token.refresh_token_exp
       return session
     },
   },

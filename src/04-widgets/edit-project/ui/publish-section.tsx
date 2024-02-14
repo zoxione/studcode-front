@@ -3,7 +3,6 @@
 import { UseFormReturn } from "react-hook-form"
 import * as z from "zod"
 
-
 import { Button } from "@/01-shared/ui/Button"
 import { Checkbox } from "@/01-shared/ui/Checkbox"
 import { Title } from "@/01-shared/ui/Title"
@@ -12,9 +11,10 @@ import { editProjectFormSchema } from "./edit-project-form"
 
 interface PublishSectionProps {
   form: UseFormReturn<z.infer<typeof editProjectFormSchema>>
+  onSaveDraft: () => void
 }
 
-const PublishSection = ({ form }: PublishSectionProps) => {
+const PublishSection = ({ form, onSaveDraft }: PublishSectionProps) => {
   return (
     <>
       <div className="space-y-4">
@@ -73,7 +73,12 @@ const PublishSection = ({ form }: PublishSectionProps) => {
         </div>
       </div>
 
-      <Button type="submit">Отправить</Button>
+      <div className="space-x-2">
+        <Button type="submit">Отправить</Button>
+        <Button type="button" variant="outline" onClick={onSaveDraft}>
+          Сохранить в черновиках
+        </Button>
+      </div>
     </>
   )
 }

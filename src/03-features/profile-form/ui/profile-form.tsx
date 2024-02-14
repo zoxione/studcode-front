@@ -17,33 +17,31 @@ const fullNameSchema = z.object({
   patronymic: z.string().optional(),
 })
 
-const myDetailsFormSchema = z.object({
+const profileFormSchema = z.object({
   full_name: fullNameSchema,
-  username: z.string().optional(),
   about: z.string().optional(),
 })
 
-interface MyDetailsProps extends HTMLAttributes<HTMLFormElement> {
+interface ProfileFormProps extends HTMLAttributes<HTMLFormElement> {
   user: User
 }
 
-const MyDetails = ({ user }: MyDetailsProps) => {
+const ProfileForm = ({ user }: ProfileFormProps) => {
   const { mutate: updateUser } = useUpdateOneByIdUserMutation()
 
-  const myDetailsForm = useForm<z.infer<typeof myDetailsFormSchema>>({
-    resolver: zodResolver(myDetailsFormSchema),
+  const profileForm = useForm<z.infer<typeof profileFormSchema>>({
+    resolver: zodResolver(profileFormSchema),
     defaultValues: {
       full_name: {
         name: user?.full_name.name || "",
         surname: user?.full_name.surname || "",
         patronymic: user?.full_name.patronymic || "",
       },
-      username: user?.username || "",
       about: user?.about || "",
     },
   })
 
-  function onSubmitNotificationsForm(values: z.infer<typeof myDetailsFormSchema>) {
+  function onSubmitNotificationsForm(values: z.infer<typeof profileFormSchema>) {
     updateUser({
       id: user._id,
       user: { ...values },
@@ -51,77 +49,64 @@ const MyDetails = ({ user }: MyDetailsProps) => {
   }
 
   return (
-    <Form {...myDetailsForm}>
-      <form onSubmit={myDetailsForm.handleSubmit(onSubmitNotificationsForm)} className="space-y-4">
+    <Form {...profileForm}>
+      <form onSubmit={profileForm.handleSubmit(onSubmitNotificationsForm)} className="space-y-4">
         <FormField
-          control={myDetailsForm.control}
+          control={profileForm.control}
           name="full_name.surname"
           render={({ field }) => (
             <FormItem className="col-span-2">
               <FormLabel>Фамилия</FormLabel>
               <FormControl>
-                <Input type="text" placeholder="Фамилия" {...field} />
+                <Input type="text" placeholder="Ваша фамилия" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <FormField
-          control={myDetailsForm.control}
+          control={profileForm.control}
           name="full_name.name"
           render={({ field }) => (
             <FormItem className="col-span-2">
               <FormLabel>Имя</FormLabel>
               <FormControl>
-                <Input type="text" placeholder="Имя" {...field} />
+                <Input type="text" placeholder="Ваше имя" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <FormField
-          control={myDetailsForm.control}
+          control={profileForm.control}
           name="full_name.patronymic"
           render={({ field }) => (
             <FormItem className="col-span-2">
               <FormLabel>Отчество</FormLabel>
               <FormControl>
-                <Input type="text" placeholder="Отчество" {...field} />
+                <Input type="text" placeholder="Ваше отчество" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <FormField
-          control={myDetailsForm.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem className="col-span-2">
-              <FormLabel>Имя пользователя</FormLabel>
-              <FormControl>
-                <Input type="text" placeholder="Имя пользователя" disabled {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={myDetailsForm.control}
+          control={profileForm.control}
           name="about"
           render={({ field }) => (
             <FormItem className="col-span-2">
               <FormLabel>О себе</FormLabel>
               <FormControl>
-                <Textarea placeholder="О себе" {...field} />
+                <Textarea placeholder="Расскажи нам немного о себе" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Сохранить</Button>
+        <Button type="submit">Обновить профиль</Button>
       </form>
     </Form>
   )
 }
 
-export { MyDetails }
+export { ProfileForm }

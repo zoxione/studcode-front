@@ -64,7 +64,11 @@ const useUpdateOneByIdProjectMutation = () => {
     },
     onSuccess: (project: Project) => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
-      toast.success("Проект успешно обновлен")
+      if (project.status === "published") {
+        toast.success("Проект опубликован")
+      } else if (project.status === "draft") {
+        toast.success("Проект сохранен в черновик")
+      }
       router.push(`/projects/${project._id}`)
     },
   })

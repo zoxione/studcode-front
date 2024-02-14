@@ -25,6 +25,8 @@ interface User {
   links: UserLinks
   awards: any[] // TODO
   projects: any[] // TODO
+  created_at: string
+  updated_at: string
 }
 
 export type { User, UserFullName, UserLinks, UserRole }

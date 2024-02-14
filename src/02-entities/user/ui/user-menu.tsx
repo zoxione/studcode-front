@@ -94,7 +94,7 @@ export function UserMenu({ user }: UserMenuProps) {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href={`/u/${user._id}/settings`}>
+            <Link href={`/u/settings`}>
               Настройки <GearIcon className="ml-auto h-4 w-4" />
             </Link>
           </DropdownMenuItem>

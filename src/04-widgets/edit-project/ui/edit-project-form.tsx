@@ -26,7 +26,7 @@ export const editProjectFormSchema = z.object({
   title: z
     .string()
     .min(2, { message: "Минимальная длина заголовка - 2 символа" })
-    .max(50, { message: "Максимальная длина заголовка - 50 символов" }),
+    .max(20, { message: "Максимальная длина заголовка - 20 символов" }),
   tagline: z
     .string()
     .min(2, { message: "Минимальная длина тега - 2 символа" })
@@ -34,22 +34,15 @@ export const editProjectFormSchema = z.object({
   source_link: z.string().url({ message: "Некорректный URL для исходного кода" }),
   github_link: z.string().url({ message: "Некорректный URL для исходного кода" }).optional(),
   description: z
-    .union([
-      z.string().length(0),
-      z
-        .string()
-        .min(2, { message: "Минимальная длина описания - 2 символа" })
-        .max(255, { message: "Максимальная длина описания - 255 символов" }),
-    ])
-
-    .optional()
-    .transform((e) => (e === "" ? undefined : e)),
+    .string()
+    .min(2, { message: "Минимальная длина описания - 2 символа" })
+    .max(255, { message: "Максимальная длина описания - 255 символов" }),
   tags: z.array(optionSchema).min(1, { message: "Выберите хотя бы 1 тег" }).max(3, {
     message: "Выберите максимум 3 тега",
   }),
   // logo: z.string().url({ message: "Некорректный URL аватара" }),
   // screenshots: z.array(z.string().url({ message: "Некорректный URL скриншота" })),
-  demo_link: z.string().url({ message: "Некорректный URL для демонстрации" }),
+  demo_link: z.string().url({ message: "Некорректный URL для демонстрации" }).optional(),
   price: z.enum(["free", "free_options", "payment_required"]),
 })
 
@@ -84,14 +77,34 @@ const EditProjectForm = ({ project }: EditProjectFormProps) => {
     }
   }, [editProjectForm.formState.submitCount, editProjectForm.formState.errors])
 
-  const onSubmit = async (values: z.infer<typeof editProjectFormSchema>) => {
-    console.log("values", values)
-
+  const handlePublish = async (values: z.infer<typeof editProjectFormSchema>) => {
     if (!session) {
       toast.error("Вы не авторизованы")
       return
     }
+    updateProject({
+      id: project._id,
+      project: {
+        title: values.title,
+        tagline: values.tagline,
+        status: "published",
+        description: values.description || "",
+        links: {
+          main: values.source_link,
+          demo: values.demo_link,
+          github: values.github_link || "",
+        },
+        logo: "https://vk.com/im",
+        screenshots: [],
+        price: values.price,
+        // tags: values.tags.map((tag) => tag.value),
+        // creator: session.user._id,
+      },
+    })
+  }
 
+  const handleSaveDraft = () => {
+    const values = editProjectForm.getValues()
     updateProject({
       id: project._id,
       project: {
@@ -130,7 +143,7 @@ const EditProjectForm = ({ project }: EditProjectFormProps) => {
     },
     {
       title: "Публикация",
-      content: <PublishSection form={editProjectForm} />,
+      content: <PublishSection form={editProjectForm} onSaveDraft={handleSaveDraft} />,
     },
   ]
 
@@ -153,7 +166,7 @@ const EditProjectForm = ({ project }: EditProjectFormProps) => {
       </aside>
       <section className="col-span-1 lg:col-span-3 h-full">
         <Form {...editProjectForm}>
-          <form onSubmit={editProjectForm.handleSubmit(onSubmit)} className="space-y-8 mb-8">
+          <form onSubmit={editProjectForm.handleSubmit(handlePublish)} className="space-y-8 mb-8">
             {sections[currentSection].content}
           </form>
         </Form>
