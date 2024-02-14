@@ -16,7 +16,7 @@ async function refreshToken(token: JWT): Promise<JWT> {
   cookies().set({
     name: process.env.ACCESS_TOKEN_NAME,
     value: data.access_token,
-    // domain: process.env.TOKEN_DOMAIN,
+    domain: process.env.TOKEN_DOMAIN,
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
@@ -81,7 +81,7 @@ export const authOptions: NextAuthOptions = {
         cookies().set({
           name: process.env.ACCESS_TOKEN_NAME,
           value: data.access_token,
-          // domain: process.env.TOKEN_DOMAIN,
+          domain: process.env.TOKEN_DOMAIN,
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
           sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
@@ -90,7 +90,7 @@ export const authOptions: NextAuthOptions = {
         cookies().set({
           name: process.env.REFRESH_TOKEN_NAME,
           value: data.refresh_token,
-          // domain: process.env.TOKEN_DOMAIN,
+          domain: process.env.TOKEN_DOMAIN,
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
           sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
