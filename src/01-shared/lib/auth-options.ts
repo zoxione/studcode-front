@@ -1,29 +1,8 @@
 import { NextAuthOptions } from "next-auth"
-import { JWT } from "next-auth/jwt"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { cookies } from "next/headers"
 
-async function refreshToken(token: JWT): Promise<JWT> {
-  console.log("refreshed")
-  const res = await fetch(process.env.API_URL + "/v1/auth/refresh", {
-    method: "GET",
-    headers: {
-      authorization: `Bearer ${token.refresh_token}`,
-    },
-  })
-  const data = await res.json()
-  const nowUnix = (+new Date() / 1e3) | 0
-  cookies().set({
-    name: process.env.ACCESS_TOKEN_NAME,
-    value: data.access_token,
-    domain: process.env.TOKEN_DOMAIN,
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    maxAge: data.access_token_exp - nowUnix,
-  })
-  return { ...token, ...data }
-}
+import { refreshTokens } from "../utils/refresh-tokens"
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -84,7 +63,7 @@ export const authOptions: NextAuthOptions = {
           domain: process.env.TOKEN_DOMAIN,
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
-          sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+          sameSite: process.env.NODE_ENV === "production" ? "lax" : "lax",
           maxAge: data.access_token_exp - nowUnix,
         })
         cookies().set({
@@ -93,7 +72,7 @@ export const authOptions: NextAuthOptions = {
           domain: process.env.TOKEN_DOMAIN,
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
-          sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+          sameSite: process.env.NODE_ENV === "production" ? "lax" : "lax",
           maxAge: data.refresh_token_exp - nowUnix,
         })
 
@@ -106,11 +85,15 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user: response }) {
       if (response) {
         // в первый раз
+        console.log("[AUTH] First time login")
         return { ...token, ...response }
       }
       const nowUnix = (+new Date() / 1e3) | 0
       if (nowUnix > token.access_token_exp) {
-        return await refreshToken(token)
+        // токен устарел
+        console.log("[AUTH] Refreshing access token")
+        const data = await refreshTokens(token)
+        return { ...token, ...data }
       }
       return token
     },
