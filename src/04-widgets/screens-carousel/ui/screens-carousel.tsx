@@ -18,6 +18,8 @@ const ScreensCarousel = ({ screens, className }: ScreensCarouselProps) => {
     let lightbox = new PhotoSwipeLightbox({
       gallery: "#screens-carousel-gallery",
       children: "a",
+      initialZoomLevel: "fill",
+      showHideAnimationType: "fade",
       pswpModule: () => import("photoswipe"),
     })
     lightbox.init()
@@ -39,8 +41,8 @@ const ScreensCarousel = ({ screens, className }: ScreensCarouselProps) => {
               key={`screens-carousel-gallery-${index}`}
               target="_blank"
               rel="noreferrer"
-              data-pswp-width={640}
-              data-pswp-height={290}
+              // data-pswp-width={640}
+              // data-pswp-height={290}
             >
               <img className="block w-full h-[488px] object-contain" src={screen} alt="screen" />
             </a>

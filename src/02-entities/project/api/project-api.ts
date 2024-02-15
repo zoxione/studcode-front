@@ -1,7 +1,7 @@
 import { RecursivePartial } from "@/01-shared/utils/recursive-partial"
 import { Project } from "../model/types"
 
-import { CreateProject, GetAllProjectsFilter, GetAllProjectsResponse } from "./types"
+import { CreateProject, GetAllProjectsFilter, GetAllProjectsResponse, UpdateProject } from "./types"
 
 class ProjectAPI {
   private baseUrl: string = ""
@@ -81,7 +81,7 @@ class ProjectAPI {
   /**
    * Обновление проекта по id
    */
-  async updateOneById(id: string, project: RecursivePartial<Project>): Promise<Project> {
+  async updateOneById(id: string, project: UpdateProject): Promise<Project> {
     const res = await fetch(`${this.baseUrl}/${id}`, {
       method: "PUT",
       body: JSON.stringify(project),

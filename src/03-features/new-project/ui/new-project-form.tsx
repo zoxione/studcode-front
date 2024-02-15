@@ -1,17 +1,16 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { HTMLAttributes } from "react"
 import { useForm } from "react-hook-form"
-import * as z from "zod"
 import { toast } from "sonner"
-
-import { Input } from "@/01-shared/ui/Input"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
-import { Button } from "@/01-shared/ui/Button"
-import { useCreateOneProjectMutation } from "@/02-entities/project"
-import { useSession } from "next-auth/react"
+import * as z from "zod"
 import { ReloadIcon } from "@radix-ui/react-icons"
+import { useSession } from "next-auth/react"
+
+import { Button } from "@/01-shared/ui/Button"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/01-shared/ui/Form"
+import { Input } from "@/01-shared/ui/Input"
+import { useCreateOneProjectMutation } from "@/02-entities/project"
 
 const newProjectFormSchema = z.object({
   title: z.string().min(3, { message: "Название проекта должно содержать не менее 3 символов" }).max(32, {

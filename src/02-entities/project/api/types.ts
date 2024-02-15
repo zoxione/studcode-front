@@ -1,3 +1,4 @@
+import { DeepPartial } from "react-hook-form"
 import { Project, ProjectLinks, ProjectPrice, ProjectStatus } from "../model/types"
 
 type TimeFrameProject = "day" | "week" | "month" | "year" | "all"
@@ -23,17 +24,12 @@ interface GetAllProjectsResponse {
   results: Project[]
 }
 
-interface CreateProject {
-  title: string
-  tagline?: string
-  status?: ProjectStatus
-  description?: string
-  links?: ProjectLinks
-  logo?: string
-  screenshots?: string[]
-  price?: ProjectPrice
-  tags?: string[]
+interface CreateProject extends Pick<Project, "title"> {
   creator: string
 }
 
-export type { GetAllProjectsFilter, GetAllProjectsResponse, TimeFrameProject, CreateProject }
+interface UpdateProject extends Omit<DeepPartial<Project>, "_id" | "tags" | "creator" | "created_at" | "updated_at"> {
+  tags?: string[]
+}
+
+export type { GetAllProjectsFilter, GetAllProjectsResponse, TimeFrameProject, CreateProject, UpdateProject }

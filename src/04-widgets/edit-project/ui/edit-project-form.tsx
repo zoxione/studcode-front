@@ -1,20 +1,21 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { Button } from "@/01-shared/ui/Button"
-import { Form } from "@/01-shared/ui/Form"
-import { Project, useCreateOneProjectMutation, useUpdateOneByIdProjectMutation } from "@/02-entities/project"
-
-import { MainInfoSection } from "./main-info-section"
 import { ExtrasSection } from "./extras-section"
 import { ImagesAndMediaSection } from "./images-and-media-section"
+import { MainInfoSection } from "./main-info-section"
 import { PublishSection } from "./publish-section"
-import { useSession } from "next-auth/react"
+
+import { Button } from "@/01-shared/ui/Button"
+import { Form } from "@/01-shared/ui/Form"
+import { Project, useUpdateOneByIdProjectMutation } from "@/02-entities/project"
+import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "../data/constants"
 
 const optionSchema = z.object({
   label: z.string(),
@@ -40,7 +41,27 @@ export const editProjectFormSchema = z.object({
   tags: z.array(optionSchema).min(1, { message: "Выберите хотя бы 1 тег" }).max(3, {
     message: "Выберите максимум 3 тега",
   }),
-  // logo: z.string().url({ message: "Некорректный URL аватара" }),
+  // logo: z.string().url({ message: "Некорректный URL логотипа" }),
+  logo: z
+    .any()
+    .refine((files) => files?.length == 1, "Логотип необходим.")
+    .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, `Максимальный размер логотипа - 5MB.`)
+    .refine(
+      (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
+      "Принимаются только файлы типа .jpg, .jpeg, .png и .webp.",
+    ),
+  screenshots: z
+    .any()
+    .refine((files) => files?.length >= 1, "Скриншоты необходимы.")
+    .refine((files) => files?.length <= 10, "Максимальное количество скриншотов - 10.")
+    .refine(
+      (files) => Array.from(files).every((file: any) => file?.size <= MAX_FILE_SIZE),
+      `Максимальный размер скриншота - 5MB.`,
+    )
+    .refine(
+      (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
+      "Принимаются только файлы типа .jpg, .jpeg, .png и .webp.",
+    ),
   // screenshots: z.array(z.string().url({ message: "Некорректный URL скриншота" })),
   demo_link: z.string().url({ message: "Некорректный URL для демонстрации" }).optional(),
   price: z.enum(["free", "free_options", "payment_required"]),
@@ -64,8 +85,8 @@ const EditProjectForm = ({ project }: EditProjectFormProps) => {
       github_link: project.links.github || "",
       description: project.description,
       tags: project.tags.map((tag) => ({ label: tag.name.ru, value: tag._id })),
-      // logo: "",
-      // screenshots: [],
+      logo: "https://raw.githubusercontent.com/AmyGrooove/bisky-front/dev/public/favicons/favicon-128x128.png",
+      screenshots: [],
       demo_link: project.links.demo || "",
       price: project.price,
     },
@@ -94,17 +115,20 @@ const EditProjectForm = ({ project }: EditProjectFormProps) => {
           demo: values.demo_link,
           github: values.github_link || "",
         },
-        logo: "https://vk.com/im",
+        logo: "https://raw.githubusercontent.com/AmyGrooove/bisky-front/dev/public/favicons/favicon-128x128.png",
         screenshots: [],
         price: values.price,
-        // tags: values.tags.map((tag) => tag.value),
-        // creator: session.user._id,
+        tags: values.tags.map((tag) => tag.value),
       },
     })
   }
 
   const handleSaveDraft = () => {
     const values = editProjectForm.getValues()
+    if (!session) {
+      toast.error("Вы не авторизованы")
+      return
+    }
     updateProject({
       id: project._id,
       project: {
@@ -117,16 +141,13 @@ const EditProjectForm = ({ project }: EditProjectFormProps) => {
           demo: values.demo_link,
           github: values.github_link || "",
         },
-        logo: "https://vk.com/im",
+        logo: "",
         screenshots: [],
         price: values.price,
-        // tags: values.tags.map((tag) => tag.value),
-        // creator: session.user._id,
+        tags: values.tags.map((tag) => tag.value),
       },
     })
   }
-
-  console.log("values", editProjectForm.getValues())
 
   const sections = [
     {

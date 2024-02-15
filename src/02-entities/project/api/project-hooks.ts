@@ -5,7 +5,7 @@ import { toast } from "sonner"
 import { Project } from "../model/types"
 
 import { projectAPI } from "./project-api"
-import { CreateProject, GetAllProjectsFilter } from "./types"
+import { CreateProject, GetAllProjectsFilter, UpdateProject } from "./types"
 import { RecursivePartial } from "@/01-shared/utils/recursive-partial"
 
 const useCreateOneProjectMutation = () => {
@@ -59,7 +59,7 @@ const useUpdateOneByIdProjectMutation = () => {
   const queryClient = useQueryClient()
   const router = useRouter()
   return useMutation({
-    mutationFn: ({ id, project }: { id: string; project: RecursivePartial<Project> }) => {
+    mutationFn: ({ id, project }: { id: string; project: UpdateProject }) => {
       return projectAPI.updateOneById(id, project)
     },
     onSuccess: (project: Project) => {
