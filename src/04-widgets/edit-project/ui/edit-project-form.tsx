@@ -7,15 +7,18 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
+import { Button } from "@/01-shared/ui/Button"
+import { Form } from "@/01-shared/ui/Form"
+import { Project, useUpdateOneByIdProjectMutation } from "@/02-entities/project"
+
+import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "../data/constants"
+
 import { ExtrasSection } from "./extras-section"
 import { ImagesAndMediaSection } from "./images-and-media-section"
 import { MainInfoSection } from "./main-info-section"
 import { PublishSection } from "./publish-section"
 
-import { Button } from "@/01-shared/ui/Button"
-import { Form } from "@/01-shared/ui/Form"
-import { Project, useUpdateOneByIdProjectMutation } from "@/02-entities/project"
-import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "../data/constants"
+
 
 const optionSchema = z.object({
   label: z.string(),

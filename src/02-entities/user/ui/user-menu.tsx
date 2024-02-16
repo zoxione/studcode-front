@@ -11,6 +11,9 @@ import {
 } from "@radix-ui/react-icons"
 import Link from "next/link"
 import { Session } from "next-auth"
+import { signOut } from "next-auth/react"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/Avatar"
 import { Button } from "@/01-shared/ui/Button"
@@ -25,9 +28,6 @@ import {
 } from "@/01-shared/ui/DropdownMenu"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/01-shared/ui/Tooltip"
 import { useLogoutMutation } from "@/03-features/auth"
-import { signOut } from "next-auth/react"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
 
 interface UserMenuProps {
   user: Session["user"]

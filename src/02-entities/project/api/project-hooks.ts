@@ -2,11 +2,12 @@ import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tansta
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
+import { RecursivePartial } from "@/01-shared/utils/recursive-partial"
+
 import { Project } from "../model/types"
 
 import { projectAPI } from "./project-api"
 import { CreateProject, GetAllProjectsFilter, UpdateProject } from "./types"
-import { RecursivePartial } from "@/01-shared/utils/recursive-partial"
 
 const useCreateOneProjectMutation = () => {
   const queryClient = useQueryClient()

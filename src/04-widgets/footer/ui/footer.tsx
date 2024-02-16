@@ -15,9 +15,7 @@ export const Footer = ({}: IFooterProps) => {
           <ul className="flex flex-col md:flex-row md:items-center gap-4">
             {footerLinks.map((link) => (
               <li key={link.id} className="hover:text-background/60 text-sm">
-                <Link href={link.href} target="_blank">
-                  {link.label}
-                </Link>
+                <Link href={link.href}>{link.label}</Link>
               </li>
             ))}
             <ToggleTheme />

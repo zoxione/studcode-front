@@ -1,4 +1,5 @@
 import { RecursivePartial } from "@/01-shared/utils/recursive-partial"
+
 import { Project } from "../model/types"
 
 import { CreateProject, GetAllProjectsFilter, GetAllProjectsResponse, UpdateProject } from "./types"

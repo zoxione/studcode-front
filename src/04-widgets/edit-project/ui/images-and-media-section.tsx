@@ -2,14 +2,15 @@
 
 import { UseFormReturn } from "react-hook-form"
 import * as z from "zod"
+import { ImageIcon } from "@radix-ui/react-icons"
 
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
 import { Title } from "@/01-shared/ui/Title"
-
 import { Dropzone } from "@/01-shared/ui/Dropzone"
-import { ImageIcon } from "@radix-ui/react-icons"
+
 import { ACCEPTED_IMAGE_TYPES } from "../data/constants"
+
 import { editProjectFormSchema } from "./edit-project-form"
 
 interface ImagesAndMediaSectionProps {

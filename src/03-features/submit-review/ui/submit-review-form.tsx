@@ -5,13 +5,13 @@ import { HTMLAttributes } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
+import { useSession } from "next-auth/react"
 
 import { Button } from "@/01-shared/ui/Button"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/01-shared/ui/Form"
 import { Rating } from "@/01-shared/ui/Rating"
 import { Textarea } from "@/01-shared/ui/Textarea"
 import { useCreateOneReviewMutation } from "@/02-entities/reviews"
-import { useSession } from "next-auth/react"
 
 const submitReviewFormSchema = z.object({
   text: z

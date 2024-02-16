@@ -2,6 +2,7 @@ import { GitHubLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { YoutubeIcon } from "lucide-react"
+import { Metadata, ResolvingMetadata } from "next"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/Avatar"
 import { Badge } from "@/01-shared/ui/Badge"
@@ -20,9 +21,34 @@ import { ReviewsList } from "@/04-widgets/reviews-list"
 import { ScreensCarousel } from "@/04-widgets/screens-carousel"
 import { getUserInitials } from "@/01-shared/utils/get-user-initials"
 
+interface PageProps {
+  params: { id: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export async function generateMetadata(
+  { params, searchParams }: PageProps,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const id = params.id
+  const project = await projectAPI.getOneById(id)
+  const previousImages = (await parent).openGraph?.images || []
+
+  return {
+    title: project.title,
+    description: project.tagline,
+    openGraph: {
+      title: project.title,
+      description: project.tagline,
+      url: `${process.env.APP_URL}/projects/${id}`,
+      images: [project.logo, ...previousImages],
+    },
+  }
+}
+
 export const revalidate = 10
 
-export default async function ProjectPage({ params }: { params: { id: string } }) {
+export default async function ProjectPage({ params }: PageProps) {
   const { id } = params
   const project = await projectAPI.getOneById(id)
   if (!project) {

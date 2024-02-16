@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { getServerSession } from "next-auth"
 
 import { Title } from "@/01-shared/ui/Title"
 import { normalizeTimeFrame } from "@/01-shared/utils/normalize-time-frame"
@@ -11,7 +12,6 @@ import { Layout } from "@/04-widgets/layout"
 import { ProjectsDraftsList } from "@/04-widgets/projects-drafts-list"
 import { ProjectsList } from "@/04-widgets/projects-list"
 import { authOptions } from "@/01-shared/lib/auth-options"
-import { getServerSession } from "next-auth"
 
 const allowedValues = {
   timeFrame: ["day", "week", "month", "year"],
@@ -39,7 +39,7 @@ export default async function Home({
     <Layout header={<Header />} footer={<Footer />} className="">
       <Hero className="my-8" />
 
-      <div className="mt-20 mb-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="mt-20 mb-8 grid grid-cols-1 lg:grid-cols-3 lg:gap-8">
         <div className="col-span-2">
           <TimeFrameProjects timeFrame={searchParamsParsed.timeFrame} />
           <Title order={4} className="mt-6 mb-4">

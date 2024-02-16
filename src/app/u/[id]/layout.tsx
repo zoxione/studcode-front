@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ReactNode } from "react"
+import { Metadata, ResolvingMetadata } from "next"
 
 import { authOptions } from "@/01-shared/lib/auth-options"
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/Avatar"
@@ -14,9 +15,35 @@ import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"
 
+interface PageProps {
+  params: { id: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+  children: ReactNode
+}
+
+export async function generateMetadata(
+  { params, searchParams }: PageProps,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const id = params.id
+  const user = await userAPI.getOneById(params.id)
+  const previousImages = (await parent).openGraph?.images || []
+
+  return {
+    title: user.username,
+    description: user.about,
+    openGraph: {
+      title: user.username,
+      description: user.about,
+      url: `${process.env.APP_URL}/u/${id}`,
+      images: [user.avatar, ...previousImages],
+    },
+  }
+}
+
 export const revalidate = 10
 
-export default async function User({ params, children }: { params: { id: string }; children: ReactNode }) {
+export default async function User({ params, children }: PageProps) {
   let user
   try {
     user = await userAPI.getOneById(params.id)

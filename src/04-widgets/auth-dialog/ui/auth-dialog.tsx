@@ -1,14 +1,15 @@
 "use client"
 
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+
 import { Button } from "@/01-shared/ui/Button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/01-shared/ui/Card"
 import { Dialog, DialogContent } from "@/01-shared/ui/Dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/01-shared/ui/Tabs"
 import { SignInForm } from "@/03-features/sign-in"
 import { SignUpForm } from "@/03-features/sign-up"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
 
 const AuthDialog = () => {
   const router = useRouter()
@@ -21,7 +22,7 @@ const AuthDialog = () => {
   return (
     <Dialog open={isOpen}>
       <DialogContent
-        className="sm:max-w-[380px]"
+        className="sm:max-w-[380px] flex justify-center items-center"
         withBackButton={false}
         onCloseButton={() => router.push("/")}
         onCloseAutoFocus={() => router.push("/")}
@@ -29,7 +30,7 @@ const AuthDialog = () => {
         onPointerDownOutside={() => router.push("/")}
         onInteractOutside={() => router.push("/")}
       >
-        <Tabs defaultValue="sign-in">
+        <Tabs defaultValue="sign-in" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="sign-in">Авторизация</TabsTrigger>
             <TabsTrigger value="sign-up">Регистрация</TabsTrigger>

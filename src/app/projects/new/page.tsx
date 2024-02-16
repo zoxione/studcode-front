@@ -1,11 +1,10 @@
-import { buttonVariants } from "@/01-shared/ui/Button"
+import Link from "next/link"
+
 import { Title } from "@/01-shared/ui/Title"
-import { cn } from "@/01-shared/utils/cn"
 import { NewProjectForm } from "@/03-features/new-project"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"
-import Link from "next/link"
 
 export default function NewProjectPage() {
   return (
@@ -18,11 +17,11 @@ export default function NewProjectPage() {
         <NewProjectForm />
         <p className="text-center text-sm text-muted-foreground">
           Нажимая кнопку &quot;Создать&quot;, вы соглашаетесь с нашими{" "}
-          <Link href="/terms" className="underline underline-offset-4 hover:text-primary">
-            Условиями использования
+          <Link href="/terms" target="_blank" className="underline underline-offset-4 hover:text-primary">
+            Пользовательским соглашением
           </Link>{" "}
           и{" "}
-          <Link href="/privacy" className="underline underline-offset-4 hover:text-primary">
+          <Link href="/privacy" target="_blank" className="underline underline-offset-4 hover:text-primary">
             Политикой конфиденциальности
           </Link>
           .

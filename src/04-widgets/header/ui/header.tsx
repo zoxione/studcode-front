@@ -38,10 +38,9 @@ export const Header = ({ className }: IHeaderProps) => {
               <Link
                 key={item.id}
                 href={item.path}
-                className={`
-                ${pathname === item.path ? "text-primary/90" : ""}
-                text-sm font-medium leading-none transition-colors hover:text-primary
-              `}
+                className={`${
+                  pathname === item.path ? "text-primary/90" : ""
+                } text-sm font-medium leading-none transition-colors hover:text-primary`}
               >
                 {item.title}
               </Link>

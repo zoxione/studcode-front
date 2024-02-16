@@ -12,11 +12,11 @@ export const footerLinks = [
   {
     id: 3,
     label: "Пользовательское соглашение",
-    href: "/terms-of-service",
+    href: "/terms",
   },
   {
     id: 4,
     label: "Политика конфиденциальности",
-    href: "/privacy-policy",
+    href: "/privacy",
   },
 ]
