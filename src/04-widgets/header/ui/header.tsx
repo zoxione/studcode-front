@@ -58,7 +58,7 @@ export const Header = ({ className }: IHeaderProps) => {
             <SheetHeader className="text-left">
               <Logo />
             </SheetHeader>
-            <div className="flex flex-col h-[calc(100vh-4rem)]">
+            <div className="flex flex-col h-full">
               <ScrollArea className="flex-1 my-8">
                 <div className="flex flex-col justify-center gap-2 h-full">
                   {navLinks.map((item) => (
@@ -74,7 +74,6 @@ export const Header = ({ className }: IHeaderProps) => {
                   ))}
                 </div>
               </ScrollArea>
-
               <div className="flex flex-col gap-4">
                 <ul className="flex flex-col md:flex-row md:items-center gap-2">
                   {footerLinks.map((link) => (

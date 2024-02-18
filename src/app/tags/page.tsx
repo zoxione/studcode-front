@@ -7,9 +7,8 @@ import { HeaderPage } from "@/04-widgets/header-page"
 import { Layout } from "@/04-widgets/layout"
 
 export default async function Tags() {
-  const { results: popularData } = await tagAPI.getAll({})
+  const popularTags = await tagAPI.getAllPopular()
   const { results: allData } = await tagAPI.getAll({ limit: 1000 })
-  const popularTags = popularData ? popularData : []
   const allTags = allData ? allData : []
 
   return (

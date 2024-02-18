@@ -31,7 +31,7 @@ export default async function Home({
   })
   const timeFrameNormalized = normalizeTimeFrame(searchParamsParsed.timeFrame)
 
-  const { results: tags } = await tagAPI.getAll({ limit: 5 })
+  const tags = await tagAPI.getAllPopular()
 
   const session = await getServerSession(authOptions)
 

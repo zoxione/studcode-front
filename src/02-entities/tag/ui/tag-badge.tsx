@@ -1,11 +1,10 @@
 import Link from "next/link"
 import { HTMLAttributes, forwardRef } from "react"
 
-
-import { Badge } from "@/01-shared/ui/Badge"
-import { cn } from "@/01-shared/utils/cn"
-
 import { Tag } from "../model/types"
+
+import { badgeVariants } from "@/01-shared/ui/Badge"
+import { cn } from "@/01-shared/utils/cn"
 
 export interface TagBadgeProps extends HTMLAttributes<HTMLAnchorElement> {
   tag: Tag
@@ -15,11 +14,13 @@ const TagBadge = forwardRef<HTMLAnchorElement, TagBadgeProps>(({ tag, className 
   const tagName = tag.name.ru !== "" ? tag.name.ru : tag.name.en
 
   return (
-    <Badge variant="secondary" className="flex flex-row items-center gap-4" asChild>
-      <Link href={`/projects?tagSlug=${tag.slug}`} ref={ref} className={cn("w-fit", className)}>
-        {tagName}
-      </Link>
-    </Badge>
+    <Link
+      href={`/tags/${tag.slug}`}
+      ref={ref}
+      className={cn(badgeVariants({ variant: "secondary" }), "w-fit", className)}
+    >
+      {tagName}
+    </Link>
   )
 })
 TagBadge.displayName = "TagBadge"

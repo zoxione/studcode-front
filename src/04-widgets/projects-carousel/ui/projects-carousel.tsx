@@ -8,13 +8,15 @@ import { cn } from "@/01-shared/utils/cn"
 
 import "photoswipe/style.css"
 import { ProjectCard, ProjectCardSmall, useGetAllProjectsQuery } from "@/02-entities/project"
+import { Title } from "@/01-shared/ui/Title"
 
 interface ScreensCarouselProps {
   className?: string
   tagSlug: string
+  label: string
 }
 
-const ProjectsCarousel = ({ tagSlug, className }: ScreensCarouselProps) => {
+const ProjectsCarousel = ({ tagSlug, label, className }: ScreensCarouselProps) => {
   const { data: projects } = useGetAllProjectsQuery({ tag_slug: tagSlug })
 
   if (projects?.results.length === 0 || !projects) {
@@ -25,18 +27,26 @@ const ProjectsCarousel = ({ tagSlug, className }: ScreensCarouselProps) => {
     <Carousel
       opts={{
         align: "start",
+        dragFree: true,
       }}
-      className={cn("w-full", className)}
+      className={cn("w-full space-y-2", className)}
     >
+      <div className="flex flex-row justify-between items-center">
+        <Title order={5} className="font-medium line-clamp-1">
+          {label}
+        </Title>
+        <div className="flex flex-row items-center gap-2 relative">
+          <CarouselPrevious className="static translate-y-0 rounded-md" />
+          <CarouselNext className="static  translate-y-0 rounded-md" />
+        </div>
+      </div>
       <CarouselContent className="">
         {projects.results.map((project) => (
-          <CarouselItem key={project._id} className="md:basis-1/2 lg:basis-1/3">
+          <CarouselItem key={project._id} className="w-fit basis-auto">
             <ProjectCardSmall project={project} />
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
     </Carousel>
   )
 }

@@ -39,7 +39,7 @@ const ProjectDraftCard = forwardRef<HTMLDivElement, ProjectDraftCardProps>(({ pr
         className,
       )}
     >
-      <Avatar className="w-[60px] h-[60px] text-lg">
+      <Avatar className="w-[60px] h-[60px] text-lg rounded-md">
         <AvatarImage src={project.logo} width={60} height={60} alt={project.title} />
         <AvatarFallback>{project.title[0]}</AvatarFallback>
       </Avatar>

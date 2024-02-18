@@ -1,12 +1,12 @@
 "use client"
 
-import { Trash2Icon } from "lucide-react"
 import { ReloadIcon } from "@radix-ui/react-icons"
+import { Trash2Icon } from "lucide-react"
 
-import { Button } from "@/01-shared/ui/Button"
+import { useDeleteOneByIdProjectMutation } from "../api/project-hooks"
+
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -15,8 +15,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/01-shared/ui/AlertDialog"
-
-import { useDeleteOneByIdProjectMutation } from "../api/project-hooks"
+import { Button } from "@/01-shared/ui/Button"
 
 interface DeleteProjectButtonProps {
   id: string

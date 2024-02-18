@@ -57,6 +57,23 @@ class TagAPI {
     return await res.json()
   }
 
+  async getAllPopular(): Promise<Tag[]> {
+    const res = await fetch(`${this.baseUrl}/popular`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
+    })
+
+    if (!res.ok) {
+      throw new Error(`Failed to get popular tags: ${res.statusText}`)
+    }
+
+    return await res.json()
+  }
+
   /**
    * Получение одного тега по id
    */

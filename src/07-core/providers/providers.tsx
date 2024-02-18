@@ -11,7 +11,6 @@ import { Toaster } from "@/01-shared/ui/Sonner"
 
 import { DialogProvider } from "./dialog-provider"
 
-
 interface IProviders {
   children: ReactNode
 }
@@ -46,7 +45,7 @@ const Providers = ({ children }: IProviders) => {
     <SessionProvider>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Toaster position="top-center" richColors closeButton />
+          <Toaster position="bottom-right" richColors closeButton />
           <Suspense>
             <DialogProvider />
           </Suspense>

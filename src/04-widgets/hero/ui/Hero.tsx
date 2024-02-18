@@ -2,7 +2,7 @@ import { PlusCircledIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
 import { HTMLAttributes } from "react"
 
-import { Button } from "@/01-shared/ui/Button"
+import { Button, buttonVariants } from "@/01-shared/ui/Button"
 import { Title } from "@/01-shared/ui/Title"
 import { cn } from "@/01-shared/utils/cn"
 
@@ -17,12 +17,10 @@ const Hero = ({ className }: HeroProps) => {
       <Title order={2} className="text-center font-normal mb-6">
         проекты России
       </Title>
-      <Button variant="link" size="none" asChild className="w-fit">
-        <Link href="/projects/new">
-          <PlusCircledIcon className="mr-2 h-4 w-4" />
-          Добавить проект
-        </Link>
-      </Button>
+      <Link href="/projects/new" className={cn(buttonVariants({ size: "sm" }))}>
+        <PlusCircledIcon className="mr-2 h-4 w-4" />
+        Добавить проект
+      </Link>
     </div>
   )
 }
