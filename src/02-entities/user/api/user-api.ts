@@ -29,6 +29,9 @@ class UserAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["users"],
+      },
     })
 
     if (!res.ok) {
@@ -49,6 +52,9 @@ class UserAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["users"],
+      },
     })
 
     if (!res.ok) {
@@ -70,6 +76,9 @@ class UserAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["users"],
+      },
     })
 
     if (!res.ok) {
@@ -90,6 +99,9 @@ class UserAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["users"],
+      },
     })
 
     if (!res.ok) {

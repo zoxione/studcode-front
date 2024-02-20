@@ -8,7 +8,6 @@ import { User } from "../model/types"
 import { GetAllUsersFilter } from "./types"
 import { userAPI } from "./user-api"
 
-
 const useGetAllUsersQuery = (filter: GetAllUsersFilter) => {
   const { page, limit, search, order } = filter
   return useQuery({
@@ -30,8 +29,9 @@ const useUpdateOneByIdUserMutation = () => {
     mutationFn: ({ id, user }: { id: string; user: RecursivePartial<User> }) => {
       return userAPI.updateOneById(id, user)
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["users"] })
+      const res = await fetch(`/api/revalidate?tag=users`)
       toast.success("Данные успешно обновлены")
     },
   })
@@ -43,8 +43,9 @@ const useDeleteOneByIdUserMutation = () => {
     mutationFn: (id: string) => {
       return userAPI.deleteOneById(id)
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["users"] })
+      const res = await fetch(`/api/revalidate?tag=users`)
     },
   })
 }

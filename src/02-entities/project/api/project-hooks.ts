@@ -16,8 +16,9 @@ const useCreateOneProjectMutation = () => {
     mutationFn: (project: CreateProject) => {
       return projectAPI.createOne(project)
     },
-    onSuccess: (project: Project) => {
+    onSuccess: async (project: Project) => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
+      const res = await fetch(`/api/revalidate?tag=projects`)
       toast.success("Проект успешно создан")
       router.push(`/projects/${project._id}/edit`)
     },
@@ -63,8 +64,9 @@ const useUpdateOneByIdProjectMutation = () => {
     mutationFn: ({ id, project }: { id: string; project: UpdateProject }) => {
       return projectAPI.updateOneById(id, project)
     },
-    onSuccess: (project: Project) => {
+    onSuccess: async (project: Project) => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
+      const res = await fetch(`/api/revalidate?tag=projects`)
       if (project.status === "published") {
         toast.success("Проект опубликован")
       } else if (project.status === "draft") {
@@ -82,8 +84,9 @@ const useDeleteOneByIdProjectMutation = () => {
     mutationFn: (id: string) => {
       return projectAPI.deleteOneById(id)
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
+      const res = await fetch(`/api/revalidate?tag=projects`)
       toast.success("Проект успешно удален")
       router.back()
     },
@@ -96,8 +99,9 @@ const useVoteOneByIdProjectMutation = () => {
     mutationFn: (id: string) => {
       return projectAPI.voteOneById(id)
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
+      const res = await fetch(`/api/revalidate?tag=projects`)
     },
   })
 }

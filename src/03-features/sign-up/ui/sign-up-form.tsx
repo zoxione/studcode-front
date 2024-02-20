@@ -9,12 +9,9 @@ import { Button } from "@/01-shared/ui/Button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
 import { useRegisterMutation } from "@/03-features/auth"
+import { userFormSchema } from "@/02-entities/user"
 
-const signUpFormSchema = z.object({
-  username: z.string().min(2).max(32),
-  email: z.string().email(),
-  password: z.string().min(4).max(32),
-})
+const signUpFormSchema = userFormSchema.pick({ username: true, full_name: true, email: true, password: true })
 
 interface SignUpFormProps extends HTMLAttributes<HTMLFormElement> {}
 
@@ -25,6 +22,11 @@ const SignUpForm = ({ className }: SignUpFormProps) => {
     resolver: zodResolver(signUpFormSchema),
     defaultValues: {
       username: "",
+      full_name: {
+        name: "",
+        surname: "",
+        patronymic: "",
+      },
       email: "",
       password: "",
     },
@@ -45,6 +47,45 @@ const SignUpForm = ({ className }: SignUpFormProps) => {
               <FormLabel>Имя пользователя</FormLabel>
               <FormControl>
                 <Input type="text" placeholder="example" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={signUpForm.control}
+          name="full_name.surname"
+          render={({ field }) => (
+            <FormItem className="col-span-2">
+              <FormLabel>Фамилия</FormLabel>
+              <FormControl>
+                <Input type="text" placeholder="Иванов" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={signUpForm.control}
+          name="full_name.name"
+          render={({ field }) => (
+            <FormItem className="col-span-2">
+              <FormLabel>Имя</FormLabel>
+              <FormControl>
+                <Input type="text" placeholder="Иван" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={signUpForm.control}
+          name="full_name.patronymic"
+          render={({ field }) => (
+            <FormItem className="col-span-2">
+              <FormLabel>Отчество (необязательно)</FormLabel>
+              <FormControl>
+                <Input type="text" placeholder="Иванович" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -23,6 +23,9 @@ class ProjectAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["projects"],
+      },
     })
 
     if (!res.ok) {
@@ -50,6 +53,9 @@ class ProjectAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["projects"],
+      },
     })
 
     if (!res.ok) {
@@ -70,6 +76,9 @@ class ProjectAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["projects"],
+      },
     })
 
     if (!res.ok) {
@@ -91,6 +100,9 @@ class ProjectAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["projects"],
+      },
     })
 
     if (!res.ok) {
@@ -111,6 +123,9 @@ class ProjectAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["projects"],
+      },
     })
 
     if (!res.ok) {
@@ -131,6 +146,9 @@ class ProjectAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["projects"],
+      },
     })
 
     if (!res.ok) {

@@ -21,6 +21,9 @@ class ReviewAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["reviews"],
+      },
     })
 
     if (!res.ok) {
@@ -48,6 +51,9 @@ class ReviewAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["reviews"],
+      },
     })
 
     if (!res.ok) {
@@ -68,6 +74,9 @@ class ReviewAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["reviews"],
+      },
     })
 
     if (!res.ok) {
@@ -89,6 +98,9 @@ class ReviewAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["reviews"],
+      },
     })
 
     if (!res.ok) {
@@ -109,6 +121,9 @@ class ReviewAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["reviews"],
+      },
     })
 
     if (!res.ok) {

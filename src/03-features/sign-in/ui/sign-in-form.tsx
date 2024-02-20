@@ -9,11 +9,9 @@ import { signIn } from "next-auth/react"
 import { Button } from "@/01-shared/ui/Button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
+import { userFormSchema } from "@/02-entities/user"
 
-const signInFormSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(4).max(32),
-})
+const signInFormSchema = userFormSchema.pick({ email: true, password: true })
 
 interface SignInFormProps extends HTMLAttributes<HTMLFormElement> {}
 

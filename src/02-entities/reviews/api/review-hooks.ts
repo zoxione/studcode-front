@@ -11,8 +11,9 @@ const useCreateOneReviewMutation = () => {
     mutationFn: (review: CreateReview) => {
       return reviewAPI.createOne(review)
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["reviews"] })
+      const res = await fetch(`/api/revalidate?tag=reviews`)
     },
   })
 }
@@ -38,8 +39,9 @@ const useUpdateOneByIdReviewMutation = () => {
     mutationFn: ({ id, review }: { id: string; review: Review }) => {
       return reviewAPI.updateOneById(id, review)
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["reviews"] })
+      const res = await fetch(`/api/revalidate?tag=reviews`)
     },
   })
 }
@@ -50,8 +52,9 @@ const useDeleteOneByIdReviewMutation = () => {
     mutationFn: (id: string) => {
       return reviewAPI.deleteOneById(id)
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["reviews"] })
+      const res = await fetch(`/api/revalidate?tag=reviews`)
     },
   })
 }

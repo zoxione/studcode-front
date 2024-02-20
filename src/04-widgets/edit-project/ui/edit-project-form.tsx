@@ -18,8 +18,6 @@ import { ImagesAndMediaSection } from "./images-and-media-section"
 import { MainInfoSection } from "./main-info-section"
 import { PublishSection } from "./publish-section"
 
-
-
 const optionSchema = z.object({
   label: z.string(),
   value: z.string(),
@@ -144,7 +142,7 @@ const EditProjectForm = ({ project }: EditProjectFormProps) => {
           demo: values.demo_link,
           github: values.github_link || "",
         },
-        logo: "",
+        logo: "https://raw.githubusercontent.com/AmyGrooove/bisky-front/dev/public/favicons/favicon-128x128.png",
         screenshots: [],
         price: values.price,
         tags: values.tags.map((tag) => tag.value),
