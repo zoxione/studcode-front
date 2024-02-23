@@ -9,9 +9,11 @@ import { Input } from "@/01-shared/ui/Input"
 import { Title } from "@/01-shared/ui/Title"
 import { Dropzone } from "@/01-shared/ui/Dropzone"
 
-import { ACCEPTED_IMAGE_TYPES } from "../data/constants"
+import { ACCEPTED_IMAGE_TYPES } from "../lib/constants"
 
-import { editProjectFormSchema } from "./edit-project-form"
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/01-shared/ui/Carousel"
+import { ProjectCardSmall } from "@/02-entities/project"
+import { editProjectFormSchema } from "../lib/edit-project-form-schema"
 
 interface ImagesAndMediaSectionProps {
   form: UseFormReturn<z.infer<typeof editProjectFormSchema>>
@@ -27,17 +29,16 @@ const ImagesAndMediaSection = ({ form }: ImagesAndMediaSectionProps) => {
         <div className="flex flex-row items-center gap-6">
           <FormField
             control={form.control}
-            name="logo"
+            name="logo_file"
             render={({ field }) => (
               <FormItem className="">
                 <FormControl>
                   <Dropzone
                     classNameWrapper="w-20 h-20"
                     accept={ACCEPTED_IMAGE_TYPES.join(", ")}
+                    preview
+                    classNamePreview="size-full aspect-square"
                     dropContent={<ImageIcon className="h-6 w-6" />}
-                    handleOnDrop={(acceptedFiles) => {
-                      field.onChange(acceptedFiles)
-                    }}
                     {...field}
                   />
                 </FormControl>
@@ -55,7 +56,7 @@ const ImagesAndMediaSection = ({ form }: ImagesAndMediaSectionProps) => {
         <Title order={5}>Скриншоты</Title>
         <FormField
           control={form.control}
-          name="screenshots"
+          name="screenshots_files"
           render={({ field }) => (
             <FormItem className="">
               <FormControl>
@@ -63,6 +64,7 @@ const ImagesAndMediaSection = ({ form }: ImagesAndMediaSectionProps) => {
                   classNameWrapper=""
                   accept={ACCEPTED_IMAGE_TYPES.join(", ")}
                   multiple
+                  preview
                   dropContent={
                     <div className="flex flex-row items-center gap-4 py-8">
                       <ImageIcon className="h-8 w-8" />
@@ -76,13 +78,48 @@ const ImagesAndMediaSection = ({ form }: ImagesAndMediaSectionProps) => {
                       </div>
                     </div>
                   }
-                  handleOnDrop={(acceptedFiles) => {
-                    field.onChange(acceptedFiles)
-                  }}
                   {...field}
                 />
               </FormControl>
               <FormMessage />
+              {form.watch("screenshots_files").length > 0 ? (
+                <Carousel
+                  opts={{
+                    align: "start",
+                    dragFree: true,
+                  }}
+                  className=""
+                >
+                  <CarouselContent className="">
+                    {Array.from(form.watch("screenshots_files") as FileList).map((file: File) => {
+                      if (file.type.includes("image")) {
+                        return (
+                          <CarouselItem key={file.name} className="w-fit basis-auto">
+                            <img key={file.name} src={URL.createObjectURL(file)} className="h-20" alt={file.name} />
+                          </CarouselItem>
+                        )
+                      } else {
+                        return null
+                      }
+                    })}
+                  </CarouselContent>
+                  <CarouselPrevious type="button" className="left-1 rounded-md" />
+                  <CarouselNext type="button" className="right-1 rounded-md" />
+                </Carousel>
+              ) : // <div className="flex items-center gap-3 p-4 relative">
+              //   <p className="text-sm font-medium">
+              //     {Array.from(form.watch("screenshots_files") as FileList).map((file: File) => {
+              //       if (file.type.includes("image")) {
+              //         return (
+              //           <img key={file.name} src={URL.createObjectURL(file)} className="w-20 h-20" alt={file.name} />
+              //         )
+              //       } else {
+              //         return null
+              //       }
+              //     })}
+              //   </p>
+              // </div>
+              null}
             </FormItem>
           )}
         />

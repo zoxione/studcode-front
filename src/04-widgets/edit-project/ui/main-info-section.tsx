@@ -3,15 +3,13 @@
 import { UseFormReturn } from "react-hook-form"
 import * as z from "zod"
 
-
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
 import { Textarea } from "@/01-shared/ui/Textarea"
 import { Title } from "@/01-shared/ui/Title"
 import { useGetAllTagsQuery } from "@/02-entities/tag"
 import { MultiSelect, Option } from "@/01-shared/ui/MultiSelect"
-
-import { editProjectFormSchema } from "./edit-project-form"
+import { editProjectFormSchema } from "../lib/edit-project-form-schema"
 
 interface MainInfoSectionProps {
   form: UseFormReturn<z.infer<typeof editProjectFormSchema>>

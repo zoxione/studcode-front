@@ -7,7 +7,7 @@ import { RecursivePartial } from "@/01-shared/utils/recursive-partial"
 import { Project } from "../model/types"
 
 import { projectAPI } from "./project-api"
-import { CreateProject, GetAllProjectsFilter, UpdateProject } from "./types"
+import { CreateProject, GetAllProjectsFilter, ProjectFiles, UpdateProject } from "./types"
 
 const useCreateOneProjectMutation = () => {
   const queryClient = useQueryClient()
@@ -67,12 +67,32 @@ const useUpdateOneByIdProjectMutation = () => {
     onSuccess: async (project: Project) => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
       const res = await fetch(`/api/revalidate?tag=projects`)
-      if (project.status === "published") {
-        toast.success("Проект опубликован")
-      } else if (project.status === "draft") {
-        toast.success("Проект сохранен в черновик")
-      }
-      router.push(`/projects/${project._id}`)
+    },
+  })
+}
+
+const useUploadsOneByIdProjectMutation = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ id, files }: { id: string; files: ProjectFiles }) => {
+      return projectAPI.uploadsOneById(id, files)
+    },
+    onSuccess: async () => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] })
+      const res = await fetch(`/api/revalidate?tag=projects`)
+    },
+  })
+}
+
+const useVoteOneByIdProjectMutation = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (id: string) => {
+      return projectAPI.voteOneById(id)
+    },
+    onSuccess: async () => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] })
+      const res = await fetch(`/api/revalidate?tag=projects`)
     },
   })
 }
@@ -93,19 +113,6 @@ const useDeleteOneByIdProjectMutation = () => {
   })
 }
 
-const useVoteOneByIdProjectMutation = () => {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: (id: string) => {
-      return projectAPI.voteOneById(id)
-    },
-    onSuccess: async () => {
-      queryClient.invalidateQueries({ queryKey: ["projects"] })
-      const res = await fetch(`/api/revalidate?tag=projects`)
-    },
-  })
-}
-
 export {
   useCreateOneProjectMutation,
   useGetAllProjectsQuery,
@@ -114,4 +121,5 @@ export {
   useUpdateOneByIdProjectMutation,
   useDeleteOneByIdProjectMutation,
   useVoteOneByIdProjectMutation,
+  useUploadsOneByIdProjectMutation,
 }

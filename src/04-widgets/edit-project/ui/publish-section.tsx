@@ -6,15 +6,16 @@ import * as z from "zod"
 import { Button } from "@/01-shared/ui/Button"
 import { Checkbox } from "@/01-shared/ui/Checkbox"
 import { Title } from "@/01-shared/ui/Title"
-
-import { editProjectFormSchema } from "./edit-project-form"
+import { editProjectFormSchema } from "../lib/edit-project-form-schema"
+import { ReloadIcon } from "@radix-ui/react-icons"
 
 interface PublishSectionProps {
   form: UseFormReturn<z.infer<typeof editProjectFormSchema>>
   onSaveDraft: () => void
+  isLoading: boolean
 }
 
-const PublishSection = ({ form, onSaveDraft }: PublishSectionProps) => {
+const PublishSection = ({ form, onSaveDraft, isLoading }: PublishSectionProps) => {
   return (
     <>
       <div className="space-y-4">
@@ -74,9 +75,25 @@ const PublishSection = ({ form, onSaveDraft }: PublishSectionProps) => {
       </div>
 
       <div className="space-x-2">
-        <Button type="submit">Отправить</Button>
-        <Button type="button" variant="outline" onClick={onSaveDraft}>
-          Сохранить в черновиках
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? (
+            <>
+              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+              Публикация...
+            </>
+          ) : (
+            <>Опубликовать</>
+          )}
+        </Button>
+        <Button type="button" variant="outline" onClick={onSaveDraft} disabled={isLoading}>
+          {isLoading ? (
+            <>
+              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+              Сохранение...
+            </>
+          ) : (
+            <>Сохранить в черновиках</>
+          )}
         </Button>
       </div>
     </>

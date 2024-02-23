@@ -1,54 +1,53 @@
 import React, { ChangeEvent, ReactNode, useEffect, useRef, useState } from "react"
-import PhotoSwipeLightbox from "photoswipe/lightbox"
-
-import { cn } from "@/01-shared/utils/cn"
 
 import { Card, CardContent } from "../../Card"
 import { Input } from "../../Input"
 
+import { cn } from "@/01-shared/utils/cn"
 
-import "photoswipe/style.css"
-
-interface DropzoneProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, ""> {
+interface DropzoneProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "value" | "onChange"> {
   classNameWrapper?: string
+  classNamePreview?: string
   dropContent?: ReactNode | string
-  handleOnDrop: (acceptedFiles: FileList | null) => void
+  preview?: boolean
+  value: FileList | null
+  onChange: (files: FileList | null) => void
 }
 
 const Dropzone = React.forwardRef<HTMLDivElement, DropzoneProps>(
-  ({ className, classNameWrapper, dropContent, handleOnDrop, accept, multiple = false, ...props }, ref) => {
+  (
+    {
+      className,
+      classNameWrapper,
+      dropContent,
+      value,
+      onChange,
+      accept,
+      multiple = false,
+      classNamePreview,
+      preview = false,
+      ...props
+    },
+    ref,
+  ) => {
     const inputRef = useRef<HTMLInputElement | null>(null)
-
-    useEffect(() => {
-      let lightbox = new PhotoSwipeLightbox({
-        gallery: "#preview-images-gallery",
-        children: "a",
-        pswpModule: () => import("photoswipe"),
-      })
-      lightbox.init()
-
-      return () => {
-        lightbox.destroy()
-        // @ts-ignore
-        lightbox = null
-      }
-    }, [])
 
     // Function to handle drag over event
     const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
       e.preventDefault()
       e.stopPropagation()
-      handleOnDrop(null)
+      onChange(null)
     }
 
     // Function to handle drop event
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
       e.preventDefault()
       e.stopPropagation()
+
       const { files } = e.dataTransfer
       if (inputRef.current) {
         inputRef.current.files = files
-        handleOnDrop(files)
+        onChange(files)
       }
     }
 
@@ -74,25 +73,17 @@ const Dropzone = React.forwardRef<HTMLDivElement, DropzoneProps>(
           onClick={handleButtonClick}
         >
           <div className="flex items-center justify-center text-muted-foreground overflow-hidden rounded-md">
-            <span
-              id="preview-images-gallery"
-              className="pswp-gallery font-medium flex flex-row flex-wrap items-center gap-2"
-            >
-              {inputRef.current?.files?.length
-                ? Array.from(inputRef.current.files).map((file) => {
+            <span className="font-medium flex flex-row flex-wrap items-center gap-2">
+              {value?.length && preview
+                ? Array.from(value).map((file) => {
                     if (file.type.includes("image")) {
                       return (
-                        <a
-                          href={URL.createObjectURL(file)}
+                        <img
                           key={file.name}
-                          target="_blank"
-                          rel="noreferrer"
-                          data-pswp-width={1024}
-                          data-pswp-height={768}
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <img src={URL.createObjectURL(file)} className="w-20 h-20" alt={file.name} />
-                        </a>
+                          src={URL.createObjectURL(file)}
+                          className={cn("max-h-[200px] object-cover", classNamePreview)}
+                          alt={file.name}
+                        />
                       )
                     } else {
                       return null
@@ -108,7 +99,7 @@ const Dropzone = React.forwardRef<HTMLDivElement, DropzoneProps>(
               accept={accept}
               multiple={multiple}
               className={cn("hidden", className)}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnDrop(e.target.files)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.target.files)}
             />
           </div>
         </CardContent>

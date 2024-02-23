@@ -33,4 +33,16 @@ interface UpdateProject extends Omit<DeepPartial<Project>, "_id" | "tags" | "cre
   tags?: string[]
 }
 
-export type { GetAllProjectsFilter, GetAllProjectsResponse, TimeFrameProject, CreateProject, UpdateProject }
+interface ProjectFiles {
+  logo_file?: FileList
+  screenshots_files?: FileList
+}
+
+export type {
+  GetAllProjectsFilter,
+  GetAllProjectsResponse,
+  TimeFrameProject,
+  CreateProject,
+  UpdateProject,
+  ProjectFiles,
+}

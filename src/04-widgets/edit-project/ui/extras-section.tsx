@@ -3,12 +3,10 @@
 import { UseFormReturn } from "react-hook-form"
 import * as z from "zod"
 
-
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { RadioGroup, RadioGroupItem } from "@/01-shared/ui/RadioGroup"
 import { Title } from "@/01-shared/ui/Title"
-
-import { editProjectFormSchema } from "./edit-project-form"
+import { editProjectFormSchema } from "../lib/edit-project-form-schema"
 
 interface ExtrasSectionProps {
   form: UseFormReturn<z.infer<typeof editProjectFormSchema>>

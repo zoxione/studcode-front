@@ -12,15 +12,17 @@ async function refreshTokens(token: JWT): Promise<JWT> {
   })
   const data = await res.json()
   const nowUnix = (+new Date() / 1e3) | 0
-  cookies().set({
-    name: process.env.ACCESS_TOKEN_NAME,
-    value: data.access_token,
-    domain: process.env.TOKEN_DOMAIN,
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "lax" : "lax",
-    maxAge: data.access_token_exp - nowUnix,
-  })
+  try {
+    cookies().set({
+      name: process.env.ACCESS_TOKEN_NAME,
+      value: data.access_token,
+      domain: process.env.TOKEN_DOMAIN,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "lax" : "lax",
+      maxAge: data.access_token_exp - nowUnix,
+    })
+  } catch (err) {}
   return { ...token, ...data }
 }
 
