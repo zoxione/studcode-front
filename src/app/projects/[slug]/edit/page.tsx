@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import { getServerSession } from "next-auth"
 
 import { Title } from "@/01-shared/ui/Title"
@@ -18,7 +18,7 @@ export default async function EditProjectPage({ params }: { params: { slug: stri
 
   const session = await getServerSession(authOptions)
   if (project.creator._id !== session?.user._id) {
-    notFound()
+    redirect("/denied")
   }
 
   return (
