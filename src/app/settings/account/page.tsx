@@ -7,7 +7,7 @@ import { AccountForm } from "@/03-features/account-form"
 
 export default async function UserAccount() {
   const session = await getServerSession(authOptions)
-  const user = await userAPI.getOneById(session?.user._id as string)
+  const user = await userAPI.getOne(session?.user._id as string)
 
   return (
     <div className="space-y-6">

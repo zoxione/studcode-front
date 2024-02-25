@@ -9,6 +9,7 @@ import { Textarea } from "@/01-shared/ui/Textarea"
 import { Title } from "@/01-shared/ui/Title"
 import { useGetAllTagsQuery } from "@/02-entities/tag"
 import { MultiSelect, Option } from "@/01-shared/ui/MultiSelect"
+
 import { editProjectFormSchema } from "../lib/edit-project-form-schema"
 
 interface MainInfoSectionProps {

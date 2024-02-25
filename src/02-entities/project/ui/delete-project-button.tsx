@@ -3,7 +3,6 @@
 import { ReloadIcon } from "@radix-ui/react-icons"
 import { Trash2Icon } from "lucide-react"
 
-import { useDeleteOneByIdProjectMutation } from "../api/project-hooks"
 
 import {
   AlertDialog,
@@ -16,6 +15,8 @@ import {
   AlertDialogTrigger,
 } from "@/01-shared/ui/AlertDialog"
 import { Button } from "@/01-shared/ui/Button"
+
+import { useDeleteOneByIdProjectMutation } from "../api/project-hooks"
 
 interface DeleteProjectButtonProps {
   id: string

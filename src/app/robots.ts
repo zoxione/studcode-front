@@ -6,17 +6,17 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api", "/projects/*/edit", "/u/*/drafts", "/u/settings/*"],
+        disallow: ["/api", "/projects/*/edit", "/*/drafts", "/settings/*"],
       },
       {
         userAgent: "Googlebot",
         allow: "/",
-        disallow: ["/api", "/projects/*/edit", "/u/*/drafts", "/u/settings/*"],
+        disallow: ["/api", "/projects/*/edit", "/*/drafts", "/settings/*"],
       },
       {
         userAgent: "Yandex",
         allow: "/",
-        disallow: ["/api", "/projects/*/edit", "/u/*/drafts", "/u/settings/*"],
+        disallow: ["/api", "/projects/*/edit", "/*/drafts", "/settings/*"],
       },
     ],
     sitemap: `${process.env.APP_URL}/sitemap.xml`,

@@ -33,7 +33,7 @@ const ProjectDraftCard = forwardRef<HTMLDivElement, ProjectDraftCardProps>(({ pr
 
   return (
     <Link
-      href={`/projects/${project._id}`}
+      href={`/projects/${project.slug}`}
       className={cn(
         "flex flex-row items-center gap-4 max-w-xl rounded-md hover:bg-gradient-to-l from-accent duration-200",
         className,

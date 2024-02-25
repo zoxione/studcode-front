@@ -1,11 +1,12 @@
 import { useState } from "react"
 import * as z from "zod"
 import { toast } from "sonner"
+import { useRouter } from "next/navigation"
+
+import { ProjectStatus, useUpdateOneByIdProjectMutation, useUploadsOneByIdProjectMutation } from "@/02-entities/project"
 
 import { editProjectFormSchema } from "./edit-project-form-schema"
 
-import { ProjectStatus, useUpdateOneByIdProjectMutation, useUploadsOneByIdProjectMutation } from "@/02-entities/project"
-import { useRouter } from "next/navigation"
 
 const useEditProject = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -15,6 +16,7 @@ const useEditProject = () => {
 
   const handleProject = async (
     projectId: string,
+    projectSlug: string,
     values: z.infer<typeof editProjectFormSchema>,
     status: ProjectStatus,
     successMessage: string,
@@ -44,15 +46,23 @@ const useEditProject = () => {
 
     setIsLoading(false)
     toast.success(successMessage)
-    router.push(`/projects/${projectId}`)
+    router.push(`/projects/${projectSlug}`)
   }
 
-  const handlePublish = async (projectId: string, values: z.infer<typeof editProjectFormSchema>) => {
-    await handleProject(projectId, values, "published", "Проект опубликован")
+  const handlePublish = async (
+    projectId: string,
+    projectSlug: string,
+    values: z.infer<typeof editProjectFormSchema>,
+  ) => {
+    await handleProject(projectId, projectSlug, values, "published", "Проект опубликован")
   }
 
-  const handleSaveDraft = async (projectId: string, values: z.infer<typeof editProjectFormSchema>) => {
-    await handleProject(projectId, values, "draft", "Проект сохранен в черновик")
+  const handleSaveDraft = async (
+    projectId: string,
+    projectSlug: string,
+    values: z.infer<typeof editProjectFormSchema>,
+  ) => {
+    await handleProject(projectId, projectSlug, values, "draft", "Проект сохранен в черновик")
   }
 
   return { handlePublish, handleSaveDraft, isLoading }

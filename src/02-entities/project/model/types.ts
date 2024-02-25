@@ -32,6 +32,7 @@ interface Project {
   rating: number
   tags: Tag[]
   creator: ProjectCreator
+  slug: string
   created_at: string
   updated_at: string
 }

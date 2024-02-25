@@ -10,11 +10,11 @@ interface UserSettingsSidebarProps extends React.HTMLAttributes<HTMLElement> {}
 
 const items = [
   {
-    href: "/u/settings",
+    href: "/settings",
     title: "Профиль",
   },
   {
-    href: "/u/settings/account",
+    href: "/settings/account",
     title: "Аккаунт",
   },
 ]

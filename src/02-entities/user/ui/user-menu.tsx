@@ -89,12 +89,12 @@ export function UserMenu({ user }: UserMenuProps) {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href={`/u/${user._id}`}>
+            <Link href={`/${user.username}`}>
               Профиль <PersonIcon className="ml-auto h-4 w-4" />
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href={`/u/settings`}>
+            <Link href={`/settings`}>
               Настройки <GearIcon className="ml-auto h-4 w-4" />
             </Link>
           </DropdownMenuItem>

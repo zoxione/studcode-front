@@ -11,7 +11,6 @@ import { getUserInitials } from "@/01-shared/utils/get-user-initials"
 import { normalizeDate } from "@/01-shared/utils/normalize-date"
 import { Button } from "@/01-shared/ui/Button"
 
-
 import { Review } from "../model/types"
 
 export interface ReviewCardProps extends HTMLAttributes<HTMLAnchorElement> {
@@ -26,7 +25,7 @@ const ReviewCard = forwardRef<HTMLAnchorElement, ReviewCardProps>(({ review, cla
       <CardContent className="p-4 space-y-3">
         <div className="flex flex-row items-center gap-2 ">
           <Avatar className="w-10 h-10" asChild>
-            <Link href={`/u/${review.reviewer._id}`}>
+            <Link href={`/${review.reviewer.username}`}>
               <AvatarImage src={review.reviewer.avatar} width={40} height={40} alt={review.reviewer.username} />
               <AvatarFallback>{reviewerInitials}</AvatarFallback>
             </Link>

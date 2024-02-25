@@ -1,14 +1,9 @@
 "use client"
 
-import { useEffect } from "react"
-import PhotoSwipeLightbox from "photoswipe/lightbox"
-
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/01-shared/ui/Carousel"
 import { cn } from "@/01-shared/utils/cn"
-
-import "photoswipe/style.css"
-import { ProjectCard, ProjectCardSmall, useGetAllProjectsQuery } from "@/02-entities/project"
 import { Title } from "@/01-shared/ui/Title"
+import { ProjectCardSmall, useGetAllProjectsQuery } from "@/02-entities/project"
 
 interface ScreensCarouselProps {
   className?: string
@@ -37,7 +32,7 @@ const ProjectsCarousel = ({ tagSlug, label, className }: ScreensCarouselProps) =
         </Title>
         <div className="flex flex-row items-center gap-2 relative">
           <CarouselPrevious className="static translate-y-0 rounded-md" />
-          <CarouselNext className="static  translate-y-0 rounded-md" />
+          <CarouselNext className="static translate-y-0 rounded-md" />
         </div>
       </div>
       <CarouselContent className="">

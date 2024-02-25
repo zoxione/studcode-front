@@ -42,10 +42,10 @@ class UserAPI {
   }
 
   /**
-   * Получение одного пользователя по id
+   * Получение одного пользователя по id/username/email
    */
-  async getOneById(id: string): Promise<User> {
-    const res = await fetch(`${this.baseUrl}/${id}`, {
+  async getOne(key: string): Promise<User> {
+    const res = await fetch(`${this.baseUrl}/${key}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

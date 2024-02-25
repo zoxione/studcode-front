@@ -6,6 +6,10 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
+import { Button } from "@/01-shared/ui/Button"
+import { Form } from "@/01-shared/ui/Form"
+import { Project } from "@/02-entities/project"
+
 import { editProjectFormSchema } from "../lib/edit-project-form-schema"
 import { useEditProject } from "../lib/use-edit-project"
 
@@ -14,9 +18,6 @@ import { ImagesAndMediaSection } from "./images-and-media-section"
 import { MainInfoSection } from "./main-info-section"
 import { PublishSection } from "./publish-section"
 
-import { Button } from "@/01-shared/ui/Button"
-import { Form } from "@/01-shared/ui/Form"
-import { Project } from "@/02-entities/project"
 
 interface EditProjectFormProps {
   project: Project
@@ -66,7 +67,7 @@ const EditProjectForm = ({ project }: EditProjectFormProps) => {
       content: (
         <PublishSection
           form={editProjectForm}
-          onSaveDraft={() => handleSaveDraft(project._id, editProjectForm.getValues())}
+          onSaveDraft={() => handleSaveDraft(project.slug, project._id, editProjectForm.getValues())}
           isLoading={isLoading}
         />
       ),
@@ -94,7 +95,7 @@ const EditProjectForm = ({ project }: EditProjectFormProps) => {
         <Form {...editProjectForm}>
           <form
             onSubmit={editProjectForm.handleSubmit((values: z.infer<typeof editProjectFormSchema>) =>
-              handlePublish(project._id, values),
+              handlePublish(project.slug, project._id, values),
             )}
             className="space-y-8 mb-8"
           >

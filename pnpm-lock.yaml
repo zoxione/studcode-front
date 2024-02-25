@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@fancyapps/ui':
+    specifier: ^5.0.33
+    version: 5.0.33
   '@hookform/resolvers':
     specifier: ^3.3.4
     version: 3.3.4(react-hook-form@7.49.3)
@@ -74,9 +77,6 @@ dependencies:
   '@tanstack/react-query-devtools':
     specifier: ^5.18.0
     version: 5.18.0(@tanstack/react-query@5.17.19)(react@18.0.0)
-  '@types/mdx':
-    specifier: ^2.0.11
-    version: 2.0.11
   class-variance-authority:
     specifier: ^0.7.0
     version: 0.7.0
@@ -86,9 +86,6 @@ dependencies:
   embla-carousel-react:
     specifier: 8.0.0-rc19
     version: 8.0.0-rc19(react@18.0.0)
-  jose:
-    specifier: ^5.2.1
-    version: 5.2.1
   lucide-react:
     specifier: ^0.314.0
     version: 0.314.0(react@18.0.0)
@@ -101,9 +98,6 @@ dependencies:
   next-themes:
     specifier: ^0.2.1
     version: 0.2.1(next@14.1.0)(react-dom@18.0.0)(react@18.0.0)
-  photoswipe:
-    specifier: ^5.4.3
-    version: 5.4.3
   react:
     specifier: ^18
     version: 18.0.0
@@ -160,6 +154,9 @@ devDependencies:
   '@tanstack/eslint-plugin-query':
     specifier: ^5.17.20
     version: 5.17.20(eslint@8.0.0)(typescript@5.0.2)
+  '@types/mdx':
+    specifier: ^2.0.11
+    version: 2.0.11
   '@types/node':
     specifier: ^20
     version: 20.0.0
@@ -1802,6 +1799,10 @@ packages:
   /@fal-works/esbuild-plugin-global-externals@2.1.2:
     resolution: {integrity: sha512-cEee/Z+I12mZcFJshKcCqC8tuX5hG3s+d+9nZ3LabqKF1vKdF41B92pJVCBggjAGORAeOzyyDDKrZwIkLffeOQ==}
     dev: true
+
+  /@fancyapps/ui@5.0.33:
+    resolution: {integrity: sha512-nYW7ntjhrpqoLz/vA9KpJ2zJ5gXRB7rpFKXWjW4GC1f2st/IoI1Oy2TEEz0xABIlvPTCuoMXaT1X3UC7bP97rA==}
+    dev: false
 
   /@floating-ui/core@1.5.3:
     resolution: {integrity: sha512-O0WKDOo0yhJuugCx6trZQj5jVJ9yR0ystG2JaNAemYUWce+pmM6WUEFIibnWyEJKdrDxhm75NoSRME35FNaM/Q==}
@@ -8924,10 +8925,6 @@ packages:
     resolution: {integrity: sha512-W+oqK4H+r5sITxfxpSU+MMdr/YSWGvgZMQDIsNoBDGGy4i7GBPTtvFKibQzW06n3U3TqHjhvBJsirShsEJ6eeQ==}
     dev: false
 
-  /jose@5.2.1:
-    resolution: {integrity: sha512-qiaQhtQRw6YrOaOj0v59h3R6hUY9NvxBmmnMfKemkqYmBB0tEc97NbLP7ix44VP5p9/0YHG8Vyhzuo5YBNwviA==}
-    dev: false
-
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -10539,11 +10536,6 @@ packages:
       '@types/estree': 1.0.5
       estree-walker: 3.0.3
       is-reference: 3.0.2
-    dev: false
-
-  /photoswipe@5.4.3:
-    resolution: {integrity: sha512-9UC6oJBK4oXFZ5HcdlcvGkfEHsVrmE4csUdCQhEjHYb3PvPLO3PG7UhnPuOgjxwmhq5s17Un5NUdum01LgBDng==}
-    engines: {node: '>= 0.12.0'}
     dev: false
 
   /picocolors@1.0.0:

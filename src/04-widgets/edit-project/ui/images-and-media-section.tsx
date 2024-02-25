@@ -1,19 +1,19 @@
 "use client"
 
+import { ImageIcon } from "@radix-ui/react-icons"
 import { UseFormReturn } from "react-hook-form"
 import * as z from "zod"
-import { ImageIcon } from "@radix-ui/react-icons"
 
+
+import { Dropzone } from "@/01-shared/ui/Dropzone"
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
 import { Title } from "@/01-shared/ui/Title"
-import { Dropzone } from "@/01-shared/ui/Dropzone"
-
-import { ACCEPTED_IMAGE_TYPES } from "../lib/constants"
-
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/01-shared/ui/Carousel"
-import { ProjectCardSmall } from "@/02-entities/project"
+import { Fancybox } from "@/01-shared/lib/fancybox"
+
 import { editProjectFormSchema } from "../lib/edit-project-form-schema"
+import { ACCEPTED_IMAGE_TYPES } from "../lib/constants"
 
 interface ImagesAndMediaSectionProps {
   form: UseFormReturn<z.infer<typeof editProjectFormSchema>>
@@ -64,9 +64,8 @@ const ImagesAndMediaSection = ({ form }: ImagesAndMediaSectionProps) => {
                   classNameWrapper=""
                   accept={ACCEPTED_IMAGE_TYPES.join(", ")}
                   multiple
-                  preview
                   dropContent={
-                    <div className="flex flex-row items-center gap-4 py-8">
+                    <div className="flex flex-row items-center gap-4 py-12">
                       <ImageIcon className="h-8 w-8" />
                       <div className="flex flex-col">
                         <span className="font-medium text-sm">
@@ -90,19 +89,29 @@ const ImagesAndMediaSection = ({ form }: ImagesAndMediaSectionProps) => {
                   }}
                   className=""
                 >
-                  <CarouselContent className="">
-                    {Array.from(form.watch("screenshots_files") as FileList).map((file: File) => {
-                      if (file.type.includes("image")) {
-                        return (
-                          <CarouselItem key={file.name} className="w-fit basis-auto">
-                            <img key={file.name} src={URL.createObjectURL(file)} className="h-20" alt={file.name} />
-                          </CarouselItem>
-                        )
-                      } else {
-                        return null
-                      }
-                    })}
-                  </CarouselContent>
+                  <Fancybox
+                    options={{
+                      Carousel: {
+                        infinite: false,
+                      },
+                    }}
+                  >
+                    <CarouselContent className="">
+                      {Array.from(form.watch("screenshots_files") as FileList).map((file: File) => {
+                        if (file.type.includes("image")) {
+                          return (
+                            <CarouselItem key={file.name} className="w-fit basis-auto">
+                              <a href={URL.createObjectURL(file)} data-fancybox="gallery">
+                                <img key={file.name} src={URL.createObjectURL(file)} className="h-20" alt={file.name} />
+                              </a>
+                            </CarouselItem>
+                          )
+                        } else {
+                          return null
+                        }
+                      })}
+                    </CarouselContent>
+                  </Fancybox>
                   <CarouselPrevious type="button" className="left-1 rounded-md" />
                   <CarouselNext type="button" className="right-1 rounded-md" />
                 </Carousel>

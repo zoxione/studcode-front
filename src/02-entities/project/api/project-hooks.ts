@@ -20,7 +20,7 @@ const useCreateOneProjectMutation = () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
       const res = await fetch(`/api/revalidate?tag=projects`)
       toast.success("Проект успешно создан")
-      router.push(`/projects/${project._id}/edit`)
+      router.push(`/projects/${project.slug}/edit`)
     },
   })
 }
@@ -53,7 +53,7 @@ const useGetAllProjectsInfiniteQuery = (filter: GetAllProjectsFilter) => {
 const useGetOneByIdProjectQuery = (id: string) => {
   return useQuery({
     queryKey: ["projects", id],
-    queryFn: () => projectAPI.getOneById(id),
+    queryFn: () => projectAPI.getOne(id),
   })
 }
 

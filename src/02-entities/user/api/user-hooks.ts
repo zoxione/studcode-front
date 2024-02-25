@@ -19,7 +19,7 @@ const useGetAllUsersQuery = (filter: GetAllUsersFilter) => {
 const useGetOneByIdUserQuery = (id: string) => {
   return useQuery({
     queryKey: ["users", id],
-    queryFn: () => userAPI.getOneById(id),
+    queryFn: () => userAPI.getOne(id),
   })
 }
 

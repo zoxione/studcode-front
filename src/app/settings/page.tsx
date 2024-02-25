@@ -7,7 +7,7 @@ import { ProfileForm } from "@/03-features/profile-form"
 
 export default async function UserProfile() {
   const session = await getServerSession(authOptions)
-  const user = await userAPI.getOneById(session?.user._id as string)
+  const user = await userAPI.getOne(session?.user._id as string)
 
   return (
     <div className="space-y-6">

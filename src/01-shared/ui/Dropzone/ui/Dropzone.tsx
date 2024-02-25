@@ -1,9 +1,10 @@
 import React, { ChangeEvent, ReactNode, useEffect, useRef, useState } from "react"
 
+import { cn } from "@/01-shared/utils/cn"
+
 import { Card, CardContent } from "../../Card"
 import { Input } from "../../Input"
 
-import { cn } from "@/01-shared/utils/cn"
 
 interface DropzoneProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "value" | "onChange"> {
   classNameWrapper?: string
@@ -81,7 +82,7 @@ const Dropzone = React.forwardRef<HTMLDivElement, DropzoneProps>(
                         <img
                           key={file.name}
                           src={URL.createObjectURL(file)}
-                          className={cn("max-h-[200px] object-cover", classNamePreview)}
+                          className={cn("max-h-[200px]", classNamePreview)}
                           alt={file.name}
                         />
                       )

@@ -22,7 +22,7 @@ import { ScreensCarousel } from "@/04-widgets/screens-carousel"
 import { getUserInitials } from "@/01-shared/utils/get-user-initials"
 
 interface PageProps {
-  params: { id: string }
+  params: { slug: string }
   searchParams: { [key: string]: string | string[] | undefined }
 }
 
@@ -30,8 +30,8 @@ export async function generateMetadata(
   { params, searchParams }: PageProps,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const id = params.id
-  const project = await projectAPI.getOneById(id)
+  const slug = params.slug
+  const project = await projectAPI.getOne(slug)
   const previousImages = (await parent).openGraph?.images || []
 
   return {
@@ -40,17 +40,17 @@ export async function generateMetadata(
     openGraph: {
       title: project.title,
       description: project.tagline,
-      url: `${process.env.APP_URL}/projects/${id}`,
+      url: `${process.env.APP_URL}/projects/${slug}`,
       images: [project.logo, ...previousImages],
     },
   }
 }
 
-export const revalidate = 10
+export const revalidate = 60
 
 export default async function ProjectPage({ params }: PageProps) {
-  const { id } = params
-  const project = await projectAPI.getOneById(id)
+  const { slug } = params
+  const project = await projectAPI.getOne(slug)
   if (!project) {
     notFound()
   }
@@ -142,7 +142,7 @@ export default async function ProjectPage({ params }: PageProps) {
               <div className="space-y-2">
                 <Title order={6}>Автор</Title>
                 <Avatar className="w-8 h-8 ml-auto text-sm" asChild>
-                  <Link href={`/u/${project.creator._id}`}>
+                  <Link href={`/${project.creator.username}`}>
                     <AvatarImage src={project.creator.avatar} width={32} height={32} alt={project.creator.username} />
                     <AvatarFallback>{creatorInitials}</AvatarFallback>
                   </Link>

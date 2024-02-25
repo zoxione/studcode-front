@@ -16,7 +16,7 @@ import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"
 
 interface PageProps {
-  params: { id: string }
+  params: { username: string }
   searchParams: { [key: string]: string | string[] | undefined }
   children: ReactNode
 }
@@ -25,8 +25,8 @@ export async function generateMetadata(
   { params, searchParams }: PageProps,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const id = params.id
-  const user = await userAPI.getOneById(params.id)
+  const username = params.username
+  const user = await userAPI.getOne(params.username)
   const previousImages = (await parent).openGraph?.images || []
 
   return {
@@ -35,25 +35,25 @@ export async function generateMetadata(
     openGraph: {
       title: user.username,
       description: user.about,
-      url: `${process.env.APP_URL}/u/${id}`,
+      url: `${process.env.APP_URL}/${username}`,
       images: [user.avatar, ...previousImages],
     },
   }
 }
 
-export const revalidate = 10
+export const revalidate = 60
 
 export default async function User({ params, children }: PageProps) {
   let user
   try {
-    user = await userAPI.getOneById(params.id)
+    user = await userAPI.getOne(params.username)
   } catch {
     notFound()
   }
 
   const userInitials = getUserInitials(user?.full_name.surname, user?.full_name.name)
   const session = await getServerSession(authOptions)
-  const isOwner = session?.user._id === user?._id
+  const isOwner = session?.user.username === user?.username
 
   return (
     <Layout header={<Header />} footer={<Footer />} className="">
@@ -79,7 +79,7 @@ export default async function User({ params, children }: PageProps) {
           </Button> */}
           {isOwner ? (
             <Button asChild>
-              <Link href={`/u/settings`}>Изменить</Link>
+              <Link href={`/settings`}>Изменить</Link>
             </Button>
           ) : null}
         </div>

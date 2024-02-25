@@ -6,8 +6,8 @@ import { Textarea } from "@/01-shared/ui/Textarea"
 import { Title } from "@/01-shared/ui/Title"
 import { userAPI } from "@/02-entities/user"
 
-export default async function UserProfile({ params }: { params: { id: string } }) {
-  const user = await userAPI.getOneById(params.id)
+export default async function UserProfile({ params }: { params: { username: string } }) {
+  const user = await userAPI.getOne(params.username)
 
   return (
     <div className="space-y-4">

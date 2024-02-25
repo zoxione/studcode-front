@@ -39,7 +39,7 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(({ project, loa
   return (
     <div className="h-[60px] max-w-xl relative" ref={ref}>
       <Link
-        href={`/projects/${project._id}`}
+        href={`/projects/${project.slug}`}
         className={cn(
           "flex flex-row items-center gap-4 rounded-md hover:bg-gradient-to-l from-accent duration-200",
           className,
@@ -70,7 +70,7 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(({ project, loa
       {isEdit ? (
         <div className="absolute right-14 top-1/2 transform -translate-y-1/2">
           <Button variant="ghost" size="icon" asChild>
-            <Link href={`/projects/${project._id}/edit`}>
+            <Link href={`/projects/${project.slug}/edit`}>
               <EditIcon className="w-4 h-4" />
             </Link>
           </Button>

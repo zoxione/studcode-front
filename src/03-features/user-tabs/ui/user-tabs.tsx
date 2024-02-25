@@ -24,18 +24,18 @@ const UserTabs = ({ user, isOwner, className }: UserTabsProps) => {
     <Tabs defaultValue={tabsValue} className={cn("", className)}>
       <TabsList className="mb-6">
         <TabsTrigger value="" asChild>
-          <Link href={`/u/${user._id}`} scroll={false}>
+          <Link href={`/${user.username}`} scroll={false}>
             Профиль
           </Link>
         </TabsTrigger>
         <TabsTrigger value="projects" asChild>
-          <Link href={`/u/${user._id}/projects`} scroll={false}>
+          <Link href={`/${user.username}/projects`} scroll={false}>
             Проекты
           </Link>
         </TabsTrigger>
         {isOwner ? (
           <TabsTrigger value="drafts" asChild>
-            <Link href={`/u/${user._id}/drafts`} scroll={false}>
+            <Link href={`/${user.username}/drafts`} scroll={false}>
               Черновики
             </Link>
           </TabsTrigger>

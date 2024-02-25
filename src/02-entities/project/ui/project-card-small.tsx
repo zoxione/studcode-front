@@ -1,10 +1,11 @@
 import Link from "next/link"
 import { HTMLAttributes, forwardRef } from "react"
 
-import { Project } from "../model/types"
 
 import { cn } from "@/01-shared/utils/cn"
 import { Title } from "@/01-shared/ui/Title"
+
+import { Project } from "../model/types"
 
 export interface ProjectCardSmallProps extends HTMLAttributes<HTMLAnchorElement> {
   project: Project
@@ -13,7 +14,7 @@ export interface ProjectCardSmallProps extends HTMLAttributes<HTMLAnchorElement>
 const ProjectCardSmall = forwardRef<HTMLAnchorElement, ProjectCardSmallProps>(({ project, className }, ref) => {
   return (
     <Link
-      href={`/projects/${project._id}`}
+      href={`/projects/${project.slug}`}
       ref={ref}
       className={cn(
         "w-36 h-36 flex flex-col items-center justify-center gap-2 overflow-hidden border rounded-md px-10 py-3 text-center hover:bg-accent duration-200",

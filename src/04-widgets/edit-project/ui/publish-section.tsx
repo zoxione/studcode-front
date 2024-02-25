@@ -2,12 +2,13 @@
 
 import { UseFormReturn } from "react-hook-form"
 import * as z from "zod"
+import { ReloadIcon } from "@radix-ui/react-icons"
 
 import { Button } from "@/01-shared/ui/Button"
 import { Checkbox } from "@/01-shared/ui/Checkbox"
 import { Title } from "@/01-shared/ui/Title"
+
 import { editProjectFormSchema } from "../lib/edit-project-form-schema"
-import { ReloadIcon } from "@radix-ui/react-icons"
 
 interface PublishSectionProps {
   form: UseFormReturn<z.infer<typeof editProjectFormSchema>>

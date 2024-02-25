@@ -66,10 +66,10 @@ class ProjectAPI {
   }
 
   /**
-   * Получение одного проекта по id
+   * Получение одного проекта по id/slug
    */
-  async getOneById(id: string): Promise<Project> {
-    const res = await fetch(`${this.baseUrl}/${id}`, {
+  async getOne(key: string): Promise<Project> {
+    const res = await fetch(`${this.baseUrl}/${key}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
