@@ -17,4 +17,8 @@ interface GetAllUsersResponse {
   results: User[]
 }
 
-export type { GetAllUsersFilter, GetAllUsersResponse }
+interface UserFiles {
+  avatar_file?: FileList
+}
+
+export type { GetAllUsersFilter, GetAllUsersResponse, UserFiles }

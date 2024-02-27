@@ -2,7 +2,7 @@ import { RecursivePartial } from "@/01-shared/utils/recursive-partial"
 
 import { User } from "../model/types"
 
-import { GetAllUsersFilter, GetAllUsersResponse } from "./types"
+import { GetAllUsersFilter, GetAllUsersResponse, UserFiles } from "./types"
 
 class UserAPI {
   private baseUrl: string = ""
@@ -67,10 +67,10 @@ class UserAPI {
   /**
    * Обновление пользователя по id
    */
-  async updateOneById(id: string, project: RecursivePartial<User>): Promise<User> {
+  async updateOneById(id: string, user: RecursivePartial<User>): Promise<User> {
     const res = await fetch(`${this.baseUrl}/${id}`, {
       method: "PUT",
-      body: JSON.stringify(project),
+      body: JSON.stringify(user),
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -83,6 +83,35 @@ class UserAPI {
 
     if (!res.ok) {
       throw new Error(`Failed to update user: ${res.statusText}`)
+    }
+
+    return await res.json()
+  }
+
+  /**
+   * Загрузка файлов пользователя по id
+   */
+  async uploadsOneById(user_id: string, files: UserFiles): Promise<User> {
+    const formData = new FormData()
+    if (files.avatar_file) {
+      formData.append("avatar_file", files.avatar_file[0])
+    }
+
+    const res = await fetch(`${this.baseUrl}/${user_id}/uploads`, {
+      method: "POST",
+      body: formData,
+      headers: {
+        // "Content-Type": "application/json",
+        // Accept: "application/json",
+      },
+      credentials: "include",
+      next: {
+        tags: ["users"],
+      },
+    })
+
+    if (!res.ok) {
+      throw new Error(`Failed to uploads files user: ${res.statusText}`)
     }
 
     return await res.json()

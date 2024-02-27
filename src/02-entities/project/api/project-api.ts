@@ -113,7 +113,7 @@ class ProjectAPI {
   }
 
   /**
-   * Голосование за проект по id
+   * Загрузка файлов проекта по id
    */
   async uploadsOneById(project_id: string, files: ProjectFiles): Promise<Project> {
     const formData = new FormData()

@@ -1,33 +1,37 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { HTMLAttributes } from "react"
+import { HTMLAttributes, useState } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
+import { ImageIcon } from "@radix-ui/react-icons"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 import { Button } from "@/01-shared/ui/Button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
 import { Textarea } from "@/01-shared/ui/Textarea"
-import { User, useUpdateOneByIdUserMutation } from "@/02-entities/user"
+import {
+  ACCEPTED_IMAGE_TYPES,
+  User,
+  useUpdateOneByIdUserMutation,
+  useUploadsOneByIdUserMutation,
+  userFormSchema,
+} from "@/02-entities/user"
+import { Dropzone } from "@/01-shared/ui/Dropzone"
 
-const fullNameSchema = z.object({
-  surname: z.string().optional(),
-  name: z.string().optional(),
-  patronymic: z.string().optional(),
-})
-
-const profileFormSchema = z.object({
-  full_name: fullNameSchema,
-  about: z.string().optional(),
-})
+const profileFormSchema = userFormSchema.pick({ avatar_file: true, full_name: true, about: true })
 
 interface ProfileFormProps extends HTMLAttributes<HTMLFormElement> {
   user: User
 }
 
 const ProfileForm = ({ user }: ProfileFormProps) => {
-  const { mutate: updateUser } = useUpdateOneByIdUserMutation()
+  const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
+  const { mutateAsync: updateUserAsync } = useUpdateOneByIdUserMutation()
+  const { mutateAsync: uploadsFilesAsync } = useUploadsOneByIdUserMutation()
 
   const profileForm = useForm<z.infer<typeof profileFormSchema>>({
     resolver: zodResolver(profileFormSchema),
@@ -41,16 +45,57 @@ const ProfileForm = ({ user }: ProfileFormProps) => {
     },
   })
 
-  function onSubmitNotificationsForm(values: z.infer<typeof profileFormSchema>) {
-    updateUser({
+  const onSubmit = async (values: z.infer<typeof profileFormSchema>) => {
+    setIsLoading(true)
+
+    await updateUserAsync({
       id: user._id,
-      user: { ...values },
+      user: {
+        full_name: values.full_name,
+        about: values.about,
+      },
     })
+    await uploadsFilesAsync({
+      id: user._id,
+      files: { avatar_file: values.avatar_file },
+    })
+
+    setIsLoading(false)
+    toast.success("Профиль обновлен")
+    router.push(`/${user.username}`)
   }
 
   return (
     <Form {...profileForm}>
-      <form onSubmit={profileForm.handleSubmit(onSubmitNotificationsForm)} className="space-y-4">
+      <form onSubmit={profileForm.handleSubmit(onSubmit)} className="space-y-4">
+        <div className="space-y-4">
+          {/* <Title order={5}>Логотип</Title> */}
+          <div className="flex flex-row items-center gap-6">
+            <FormField
+              control={profileForm.control}
+              name="avatar_file"
+              render={({ field }) => (
+                <FormItem className="">
+                  <FormControl>
+                    <Dropzone
+                      classNameWrapper="w-24 h-24 rounded-full overflow-hidden"
+                      accept={ACCEPTED_IMAGE_TYPES.join(", ")}
+                      preview
+                      classNamePreview="size-full aspect-square"
+                      dropContent={<ImageIcon className="h-6 w-6" />}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex flex-col text-sm">
+              <span>Разрешенные форматы: JPG, JPEG, PNG, WEBP.</span>
+              <span>Максимальный размер: 5 МБ.</span>
+            </div>
+          </div>
+        </div>
         <FormField
           control={profileForm.control}
           name="full_name.surname"

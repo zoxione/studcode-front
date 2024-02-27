@@ -5,7 +5,6 @@ import { cn } from "@/01-shared/utils/cn"
 import { Card, CardContent } from "../../Card"
 import { Input } from "../../Input"
 
-
 interface DropzoneProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "value" | "onChange"> {
   classNameWrapper?: string
   classNamePreview?: string
@@ -68,7 +67,7 @@ const Dropzone = React.forwardRef<HTMLDivElement, DropzoneProps>(
         )}
       >
         <CardContent
-          className="h-full flex flex-col items-center justify-center space-y-2 p-1 text-xs"
+          className="h-full flex flex-col items-center justify-center space-y-2 p-0 text-xs"
           onDragOver={handleDragOver}
           onDrop={handleDrop}
           onClick={handleButtonClick}

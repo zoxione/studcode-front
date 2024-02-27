@@ -5,7 +5,7 @@ import { RecursivePartial } from "@/01-shared/utils/recursive-partial"
 
 import { User } from "../model/types"
 
-import { GetAllUsersFilter } from "./types"
+import { GetAllUsersFilter, UserFiles } from "./types"
 import { userAPI } from "./user-api"
 
 const useGetAllUsersQuery = (filter: GetAllUsersFilter) => {
@@ -37,6 +37,19 @@ const useUpdateOneByIdUserMutation = () => {
   })
 }
 
+const useUploadsOneByIdUserMutation = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ id, files }: { id: string; files: UserFiles }) => {
+      return userAPI.uploadsOneById(id, files)
+    },
+    onSuccess: async () => {
+      queryClient.invalidateQueries({ queryKey: ["user"] })
+      const res = await fetch(`/api/revalidate?tag=user`)
+    },
+  })
+}
+
 const useDeleteOneByIdUserMutation = () => {
   const queryClient = useQueryClient()
   return useMutation({
@@ -50,4 +63,10 @@ const useDeleteOneByIdUserMutation = () => {
   })
 }
 
-export { useGetAllUsersQuery, useGetOneByIdUserQuery, useUpdateOneByIdUserMutation, useDeleteOneByIdUserMutation }
+export {
+  useGetAllUsersQuery,
+  useGetOneByIdUserQuery,
+  useUpdateOneByIdUserMutation,
+  useUploadsOneByIdUserMutation,
+  useDeleteOneByIdUserMutation,
+}

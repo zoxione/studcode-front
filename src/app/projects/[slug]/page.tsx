@@ -1,12 +1,13 @@
-import { GitHubLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons"
+import { GitHubLogoIcon, Pencil1Icon, TwitterLogoIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { YoutubeIcon } from "lucide-react"
 import { Metadata, ResolvingMetadata } from "next"
+import { getServerSession } from "next-auth"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/Avatar"
 import { Badge } from "@/01-shared/ui/Badge"
-import { Button } from "@/01-shared/ui/Button"
+import { Button, buttonVariants } from "@/01-shared/ui/Button"
 import { Card, CardContent } from "@/01-shared/ui/Card"
 import { Rating } from "@/01-shared/ui/Rating"
 import { Title } from "@/01-shared/ui/Title"
@@ -20,6 +21,8 @@ import { Layout } from "@/04-widgets/layout"
 import { ReviewsList } from "@/04-widgets/reviews-list"
 import { ScreensCarousel } from "@/04-widgets/screens-carousel"
 import { getUserInitials } from "@/01-shared/utils/get-user-initials"
+import { authOptions } from "@/01-shared/lib/auth-options"
+import { cn } from "@/01-shared/utils/cn"
 
 interface PageProps {
   params: { slug: string }
@@ -56,6 +59,8 @@ export default async function ProjectPage({ params }: PageProps) {
   }
 
   const creatorInitials = getUserInitials(project.creator.full_name.surname, project.creator.full_name.name)
+  const session = await getServerSession(authOptions)
+  const isOwner = session?.user.username === project.creator.username
 
   return (
     <Layout header={<Header />} footer={<Footer />} className="">
@@ -76,8 +81,16 @@ export default async function ProjectPage({ params }: PageProps) {
               <Rating defaultValue={project.rating} readOnly className="" />
             </div>
           </div>
-          <div className="flex flex-row gap-4 items-center">
+          <div className="flex flex-row gap-2 items-center">
             <VoteButton id={project._id} flames={project.flames} />
+            {isOwner ? (
+              <Link
+                href={`/projects/${project.slug}/edit`}
+                className={cn(buttonVariants({ variant: "outline", size: "icon" }))}
+              >
+                <Pencil1Icon className="w-4 h-4" />
+              </Link>
+            ) : null}
             <Button variant="default" asChild>
               <Link href={project.links.main} target="_blank">
                 Посетить

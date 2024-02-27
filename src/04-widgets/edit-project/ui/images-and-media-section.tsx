@@ -4,7 +4,6 @@ import { ImageIcon } from "@radix-ui/react-icons"
 import { UseFormReturn } from "react-hook-form"
 import * as z from "zod"
 
-
 import { Dropzone } from "@/01-shared/ui/Dropzone"
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
@@ -20,8 +19,6 @@ interface ImagesAndMediaSectionProps {
 }
 
 const ImagesAndMediaSection = ({ form }: ImagesAndMediaSectionProps) => {
-  console.log("form", form.getValues())
-
   return (
     <>
       <div className="space-y-4">
