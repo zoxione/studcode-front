@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
+import { useSession } from "next-auth/react"
 
 import { RecursivePartial } from "@/01-shared/utils/recursive-partial"
 
@@ -25,14 +26,17 @@ const useGetOneByIdUserQuery = (id: string) => {
 
 const useUpdateOneByIdUserMutation = () => {
   const queryClient = useQueryClient()
+  const { data: session, status, update } = useSession()
   return useMutation({
     mutationFn: ({ id, user }: { id: string; user: RecursivePartial<User> }) => {
       return userAPI.updateOneById(id, user)
     },
-    onSuccess: async () => {
+    onSuccess: async (user: User) => {
       queryClient.invalidateQueries({ queryKey: ["users"] })
-      const res = await fetch(`/api/revalidate?tag=users`)
-      toast.success("Данные успешно обновлены")
+      await fetch(`/api/revalidate?tag=users`)
+      queryClient.invalidateQueries({ queryKey: ["auth-user"] })
+      await fetch(`/api/revalidate?tag=auth-user`)
+      update({ _id: user._id, email: user.email, avatar: user.avatar, username: user.username })
     },
   })
 }

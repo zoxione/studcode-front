@@ -1,46 +1,45 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { toast } from "sonner"
 import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 import { User } from "@/02-entities/user"
 
 import { authAPI } from "./auth-api"
-import { RegisterUser, SignIn } from "./types"
+import { RegisterUser } from "./types"
 
 
 const useRegisterMutation = () => {
   const queryClient = useQueryClient()
-  const { mutate: login } = useLoginMutation()
   let registerUser: RegisterUser
   return useMutation({
     mutationFn: (user: RegisterUser) => {
       registerUser = user
       return authAPI.register(user)
     },
-    onSuccess: (user: User) => {
+    onSuccess: async (user: User) => {
       queryClient.invalidateQueries({ queryKey: ["auth-user"] })
-      toast.success("Вы зарегистрировались")
-      login({ email: registerUser.email, password: registerUser.password })
-      window.location.href = "/"
+      const res = await fetch(`/api/revalidate?tag=auth-user`)
+      toast.success("Вы успешно зарегистрировались")
     },
   })
 }
 
-const useLoginMutation = () => {
-  const queryClient = useQueryClient()
-  const router = useRouter()
-  return useMutation({
-    mutationFn: (user: SignIn) => {
-      return authAPI.login(user)
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["auth-user"] })
-      toast.success("Вы вошли в аккаунт")
-      // router.push("/")
-      window.location.href = "/"
-    },
-  })
-}
+// const useLoginMutation = () => {
+//   const queryClient = useQueryClient()
+//   const router = useRouter()
+//   return useMutation({
+//     mutationFn: (user: SignIn) => {
+//       return authAPI.login(user)
+//     },
+//     onSuccess: async () => {
+//       queryClient.invalidateQueries({ queryKey: ["auth-user"] })
+//       const res = await fetch(`/api/revalidate?tag=auth-user`)
+//       toast.success("Вы вошли в аккаунт")
+//       // router.push("/")
+//       window.location.href = "/"
+//     },
+//   })
+// }
 
 const useWhoamiQuery = () => {
   return useQuery({
@@ -57,19 +56,20 @@ const useRefreshQuery = () => {
   })
 }
 
-const useLogoutMutation = () => {
-  const queryClient = useQueryClient()
-  const router = useRouter()
-  return useMutation({
-    mutationFn: () => {
-      return authAPI.logout()
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["auth-user"] })
-      // router.push("/")
-      window.location.href = "/"
-    },
-  })
-}
+// const useLogoutMutation = () => {
+//   const queryClient = useQueryClient()
+//   const router = useRouter()
+//   return useMutation({
+//     mutationFn: () => {
+//       return authAPI.logout()
+//     },
+//     onSuccess: async () => {
+//       queryClient.invalidateQueries({ queryKey: ["auth-user"] })
+//       const res = await fetch(`/api/revalidate?tag=auth-user`)
+//       // router.push("/")
+//       window.location.href = "/"
+//     },
+//   })
+// }
 
-export { useRegisterMutation, useLoginMutation, useWhoamiQuery, useRefreshQuery, useLogoutMutation }
+export { useRefreshQuery, useRegisterMutation, useWhoamiQuery }

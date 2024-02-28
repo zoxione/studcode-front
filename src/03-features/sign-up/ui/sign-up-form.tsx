@@ -1,22 +1,26 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { HTMLAttributes } from "react"
+import { HTMLAttributes, useState } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
+import { ReloadIcon } from "@radix-ui/react-icons"
+import { toast } from "sonner"
+import { signIn } from "next-auth/react"
 
 import { Button } from "@/01-shared/ui/Button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
-import { useRegisterMutation } from "@/03-features/auth"
 import { userFormSchema } from "@/02-entities/user"
+import { useRegisterMutation } from "@/03-features/auth"
 
 const signUpFormSchema = userFormSchema.pick({ username: true, full_name: true, email: true, password: true })
 
 interface SignUpFormProps extends HTMLAttributes<HTMLFormElement> {}
 
 const SignUpForm = ({ className }: SignUpFormProps) => {
-  const { mutate: register } = useRegisterMutation()
+  const [isLoading, setIsLoading] = useState(false)
+  const { mutateAsync: registerAsync } = useRegisterMutation()
 
   const signUpForm = useForm<z.infer<typeof signUpFormSchema>>({
     resolver: zodResolver(signUpFormSchema),
@@ -33,7 +37,15 @@ const SignUpForm = ({ className }: SignUpFormProps) => {
   })
 
   const onSubmit = async (values: z.infer<typeof signUpFormSchema>) => {
-    register(values)
+    try {
+      setIsLoading(true)
+      await registerAsync(values)
+      await signIn("credentials", { ...values, redirect: true, callbackUrl: "/" })
+    } catch (e) {
+      toast.error("Произошла ошибка при регистрации")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -117,8 +129,15 @@ const SignUpForm = ({ className }: SignUpFormProps) => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full mt-16">
-          Зарегистрироваться
+        <Button type="submit" className="w-full mt-16" disabled={isLoading}>
+          {isLoading ? (
+            <>
+              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+              Регистрация...
+            </>
+          ) : (
+            <>Зарегистрироваться</>
+          )}
         </Button>
       </form>
     </Form>

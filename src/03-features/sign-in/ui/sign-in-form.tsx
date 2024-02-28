@@ -1,10 +1,12 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { HTMLAttributes } from "react"
+import { HTMLAttributes, useState } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { signIn } from "next-auth/react"
+import { toast } from "sonner"
+import { ReloadIcon } from "@radix-ui/react-icons"
 
 import { Button } from "@/01-shared/ui/Button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
@@ -16,6 +18,8 @@ const signInFormSchema = userFormSchema.pick({ email: true, password: true })
 interface SignInFormProps extends HTMLAttributes<HTMLFormElement> {}
 
 const SignInForm = ({ className }: SignInFormProps) => {
+  const [isLoading, setIsLoading] = useState(false)
+
   const signInForm = useForm<z.infer<typeof signInFormSchema>>({
     resolver: zodResolver(signInFormSchema),
     defaultValues: {
@@ -25,8 +29,14 @@ const SignInForm = ({ className }: SignInFormProps) => {
   })
 
   async function onSubmit(values: z.infer<typeof signInFormSchema>) {
-    const res = await signIn("credentials", { ...values, redirect: true, callbackUrl: "/" })
-    console.log(res)
+    try {
+      setIsLoading(true)
+      await signIn("credentials", { ...values, redirect: true, callbackUrl: "/" })
+    } catch (e) {
+      toast.error("Произошла ошибка")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -58,8 +68,15 @@ const SignInForm = ({ className }: SignInFormProps) => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
-          Войти
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          {isLoading ? (
+            <>
+              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+              Вход...
+            </>
+          ) : (
+            <>Войти</>
+          )}
         </Button>
       </form>
     </Form>

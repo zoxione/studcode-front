@@ -9,10 +9,9 @@ import {
   PersonIcon,
   PlusIcon,
 } from "@radix-ui/react-icons"
-import Link from "next/link"
 import { Session } from "next-auth"
 import { signOut } from "next-auth/react"
-import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { useState } from "react"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/Avatar"
@@ -27,7 +26,6 @@ import {
   DropdownMenuTrigger,
 } from "@/01-shared/ui/DropdownMenu"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/01-shared/ui/Tooltip"
-import { useLogoutMutation } from "@/03-features/auth"
 
 interface UserMenuProps {
   user: Session["user"]
@@ -35,8 +33,6 @@ interface UserMenuProps {
 
 export function UserMenu({ user }: UserMenuProps) {
   const [openMenu, setOpenMenu] = useState(false)
-
-  // const { mutate: logout } = useLogoutMutation()
 
   const handleLogout = async () => {
     await signOut()

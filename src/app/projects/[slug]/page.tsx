@@ -23,6 +23,7 @@ import { ScreensCarousel } from "@/04-widgets/screens-carousel"
 import { getUserInitials } from "@/01-shared/utils/get-user-initials"
 import { authOptions } from "@/01-shared/lib/auth-options"
 import { cn } from "@/01-shared/utils/cn"
+import { getYouTubeId } from "@/01-shared/utils/get-youtube-id"
 
 interface PageProps {
   params: { slug: string }
@@ -113,6 +114,21 @@ export default async function ProjectPage({ params }: PageProps) {
                       ))}
                     </div>
                   ) : null}
+                </CardContent>
+              </Card>
+            </div>
+            <div className="space-y-2">
+              <Card>
+                <CardContent className="p-6">
+                  <iframe
+                    className="rounded-lg"
+                    title={project.title}
+                    width="100%"
+                    height="340"
+                    src={`https://www.youtube.com/embed/${getYouTubeId(project.links.demo)}`}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
                 </CardContent>
               </Card>
             </div>

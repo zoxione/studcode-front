@@ -46,30 +46,32 @@ const ProfileForm = ({ user }: ProfileFormProps) => {
   })
 
   const onSubmit = async (values: z.infer<typeof profileFormSchema>) => {
-    setIsLoading(true)
-
-    await updateUserAsync({
-      id: user._id,
-      user: {
-        full_name: values.full_name,
-        about: values.about,
-      },
-    })
-    await uploadsFilesAsync({
-      id: user._id,
-      files: { avatar_file: values.avatar_file },
-    })
-
-    setIsLoading(false)
-    toast.success("Профиль обновлен")
-    router.push(`/${user.username}`)
+    try {
+      setIsLoading(true)
+      await uploadsFilesAsync({
+        id: user._id,
+        files: { avatar_file: values.avatar_file },
+      })
+      await updateUserAsync({
+        id: user._id,
+        user: {
+          full_name: values.full_name,
+          about: values.about,
+        },
+      })
+      toast.success("Профиль обновлен")
+      router.push(`/${user.username}`)
+    } catch (e) {
+      toast.error("Произошла ошибка при обновлении профиля")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
     <Form {...profileForm}>
       <form onSubmit={profileForm.handleSubmit(onSubmit)} className="space-y-4">
         <div className="space-y-4">
-          {/* <Title order={5}>Логотип</Title> */}
           <div className="flex flex-row items-center gap-6">
             <FormField
               control={profileForm.control}

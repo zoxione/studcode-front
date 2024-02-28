@@ -36,8 +36,8 @@ const userFormSchema = z.object({
     .optional(),
   avatar_file: z
     .any()
-    .refine((files) => files?.length == 1, "Логотип необходим.")
-    .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, `Максимальный размер логотипа - 5MB.`)
+    .refine((files) => files?.length == 1, "Аватар необходим.")
+    .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, `Максимальный размер аватара - 5MB.`)
     .refine(
       (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
       "Принимаются только файлы типа .jpg, .jpeg, .png и .webp.",

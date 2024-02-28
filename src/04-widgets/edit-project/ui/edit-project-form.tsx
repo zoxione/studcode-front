@@ -18,7 +18,6 @@ import { ImagesAndMediaSection } from "./images-and-media-section"
 import { MainInfoSection } from "./main-info-section"
 import { PublishSection } from "./publish-section"
 
-
 interface EditProjectFormProps {
   project: Project
 }
@@ -67,7 +66,7 @@ const EditProjectForm = ({ project }: EditProjectFormProps) => {
       content: (
         <PublishSection
           form={editProjectForm}
-          onSaveDraft={() => handleSaveDraft(project.slug, project._id, editProjectForm.getValues())}
+          onSaveDraft={() => handleSaveDraft(project._id, project.slug, editProjectForm.getValues())}
           isLoading={isLoading}
         />
       ),
@@ -95,7 +94,7 @@ const EditProjectForm = ({ project }: EditProjectFormProps) => {
         <Form {...editProjectForm}>
           <form
             onSubmit={editProjectForm.handleSubmit((values: z.infer<typeof editProjectFormSchema>) =>
-              handlePublish(project.slug, project._id, values),
+              handlePublish(project._id, project.slug, values),
             )}
             className="space-y-8 mb-8"
           >

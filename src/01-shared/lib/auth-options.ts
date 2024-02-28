@@ -82,7 +82,10 @@ export const authOptions: NextAuthOptions = {
   ],
 
   callbacks: {
-    async jwt({ token, user: response }) {
+    async jwt({ token, user: response, trigger, session }) {
+      if (trigger === "update") {
+        token.user = session
+      }
       if (response) {
         // в первый раз
         console.log("[AUTH] First time login")
