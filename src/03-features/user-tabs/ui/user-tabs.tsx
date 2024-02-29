@@ -17,7 +17,9 @@ const UserTabs = ({ user, isOwner, className }: UserTabsProps) => {
   const tabsValues = ["", "projects", "drafts"]
   const pathname = usePathname()
   const splitPathname = pathname.split("/")
-  const tabsValue = tabsValues.includes(splitPathname[splitPathname.length - 1]) ? splitPathname[3] : ""
+  const tabsValue = tabsValues.includes(splitPathname[splitPathname.length - 1])
+    ? splitPathname[splitPathname.length - 1]
+    : ""
 
   return (
     <Tabs defaultValue={tabsValue} className={cn("", className)}>

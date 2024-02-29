@@ -7,11 +7,7 @@ import { userAPI } from "@/02-entities/user"
 export default async function UserProjects({ params }: { params: { username: string } }) {
   const session = await getServerSession(authOptions)
   const user = await userAPI.getOne(params.username)
+  const isOwner = session?.user._id === user._id
 
-  return (
-    <ProjectsList
-      filter={{ creator_id: user._id, status: "published" }}
-      projectCardProps={{ isEdit: session ? true : false }}
-    />
-  )
+  return <ProjectsList filter={{ creator_id: user._id, status: "published" }} projectCardProps={{ isEdit: isOwner }} />
 }

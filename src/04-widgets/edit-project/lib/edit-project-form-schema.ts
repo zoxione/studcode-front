@@ -15,8 +15,8 @@ const editProjectFormSchema = z.object({
     .max(20, { message: "Максимальная длина заголовка - 20 символов" }),
   tagline: z
     .string()
-    .min(2, { message: "Минимальная длина тега - 2 символа" })
-    .max(50, { message: "Максимальная длина тега - 50 символов" }),
+    .min(2, { message: "Минимальная длина слогана - 2 символа" })
+    .max(50, { message: "Максимальная длина слогана - 50 символов" }),
   source_link: z.string().url({ message: "Некорректный URL для исходного кода" }),
   github_link: z.string().url({ message: "Некорректный URL для исходного кода" }).optional(),
   description: z
@@ -26,7 +26,6 @@ const editProjectFormSchema = z.object({
   tags: z.array(optionSchema).min(1, { message: "Выберите хотя бы 1 тег" }).max(3, {
     message: "Выберите максимум 3 тега",
   }),
-  // logo_file: z.string().url({ message: "Некорректный URL логотипа" }),
   logo_file: z
     .any()
     .refine((files) => files?.length == 1, "Логотип необходим.")
@@ -47,8 +46,17 @@ const editProjectFormSchema = z.object({
       (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
       "Принимаются только файлы типа .jpg, .jpeg, .png и .webp.",
     ),
-  // screenshots_files: z.array(z.string().url({ message: "Некорректный URL скриншота" })),
-  demo_link: z.string().url({ message: "Некорректный URL для демонстрации" }).optional(),
+  demo_link: z
+    .string()
+    .refine(
+      (value) => {
+        const youtubeRegex =
+          /^(https?:\/\/)?(www\.)?(youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+        return youtubeRegex.test(value)
+      },
+      { message: "Некорректная ссылка на YouTube" },
+    )
+    .optional(),
   price: z.enum(["free", "free_options", "payment_required"]),
 })
 

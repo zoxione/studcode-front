@@ -12,7 +12,7 @@ interface ScreensCarouselProps {
 }
 
 const ProjectsCarousel = ({ tagSlug, label, className }: ScreensCarouselProps) => {
-  const { data: projects } = useGetAllProjectsQuery({ tag_slug: tagSlug })
+  const { data: projects } = useGetAllProjectsQuery({ tag_slug: tagSlug, status: "published" })
 
   if (projects?.results.length === 0 || !projects) {
     return null
