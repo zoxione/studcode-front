@@ -5,7 +5,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/Avatar"
 import { Skeleton } from "@/01-shared/ui/Skeleton"
 import { cn } from "@/01-shared/utils/cn"
 import { normalizeDate } from "@/01-shared/utils/normalize-date"
-
 import { Project } from "../model/types"
 
 export interface ProjectDraftCardProps extends HTMLAttributes<HTMLDivElement> {

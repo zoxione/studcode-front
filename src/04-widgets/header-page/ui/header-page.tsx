@@ -2,7 +2,7 @@ import { ChevronLeftIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
 import { HTMLAttributes, forwardRef } from "react"
 
-import { Button, buttonVariants } from "@/01-shared/ui/Button"
+import { buttonVariants } from "@/01-shared/ui/Button"
 import { Title } from "@/01-shared/ui/Title"
 import { cn } from "@/01-shared/utils/cn"
 

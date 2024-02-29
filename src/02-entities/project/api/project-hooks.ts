@@ -2,10 +2,7 @@ import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tansta
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
-import { RecursivePartial } from "@/01-shared/utils/recursive-partial"
-
 import { Project } from "../model/types"
-
 import { projectAPI } from "./project-api"
 import { CreateProject, GetAllProjectsFilter, ProjectFiles, UpdateProject } from "./types"
 
@@ -18,7 +15,7 @@ const useCreateOneProjectMutation = () => {
     },
     onSuccess: async (project: Project) => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
-      const res = await fetch(`/api/revalidate?tag=projects`)
+      await fetch(`/api/revalidate?tag=projects`)
       toast.success("Проект успешно создан")
       router.push(`/projects/${project.slug}/edit`)
     },
@@ -59,14 +56,13 @@ const useGetOneByIdProjectQuery = (id: string) => {
 
 const useUpdateOneByIdProjectMutation = () => {
   const queryClient = useQueryClient()
-  const router = useRouter()
   return useMutation({
     mutationFn: ({ id, project }: { id: string; project: UpdateProject }) => {
       return projectAPI.updateOneById(id, project)
     },
-    onSuccess: async (project: Project) => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
-      const res = await fetch(`/api/revalidate?tag=projects`)
+      await fetch(`/api/revalidate?tag=projects`)
     },
   })
 }
@@ -79,7 +75,7 @@ const useUploadsOneByIdProjectMutation = () => {
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
-      const res = await fetch(`/api/revalidate?tag=projects`)
+      await fetch(`/api/revalidate?tag=projects`)
     },
   })
 }
@@ -92,7 +88,7 @@ const useVoteOneByIdProjectMutation = () => {
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
-      const res = await fetch(`/api/revalidate?tag=projects`)
+      await fetch(`/api/revalidate?tag=projects`)
     },
   })
 }
@@ -106,7 +102,7 @@ const useDeleteOneByIdProjectMutation = () => {
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
-      const res = await fetch(`/api/revalidate?tag=projects`)
+      await fetch(`/api/revalidate?tag=projects`)
       toast.success("Проект успешно удален")
       router.back()
     },

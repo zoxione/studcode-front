@@ -9,10 +9,8 @@ import * as z from "zod"
 import { Button } from "@/01-shared/ui/Button"
 import { Form } from "@/01-shared/ui/Form"
 import { Project } from "@/02-entities/project"
-
 import { editProjectFormSchema } from "../lib/edit-project-form-schema"
 import { useEditProject } from "../lib/use-edit-project"
-
 import { ExtrasSection } from "./extras-section"
 import { ImagesAndMediaSection } from "./images-and-media-section"
 import { MainInfoSection } from "./main-info-section"

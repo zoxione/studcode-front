@@ -1,7 +1,6 @@
-import React, { ChangeEvent, ReactNode, useEffect, useRef, useState } from "react"
+import React, { ChangeEvent, ReactNode, useRef } from "react"
 
 import { cn } from "@/01-shared/utils/cn"
-
 import { Card, CardContent } from "../../Card"
 import { Input } from "../../Input"
 

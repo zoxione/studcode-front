@@ -2,12 +2,11 @@ import { Roboto } from "next/font/google"
 import { ReactNode, Suspense } from "react"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-
+import type { Metadata, Viewport } from "next"
 
 import { Providers } from "@/07-core/providers/providers"
 import { YandexMetrika } from "@/01-shared/lib/yandex-metrika"
 
-import type { Metadata, Viewport } from "next"
 
 import "@/07-core/styles/globals.css"
 

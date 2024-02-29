@@ -1,7 +1,5 @@
 import { RecursivePartial } from "@/01-shared/utils/recursive-partial"
-
 import { User } from "../model/types"
-
 import { GetAllUsersFilter, GetAllUsersResponse, UserFiles } from "./types"
 
 class UserAPI {

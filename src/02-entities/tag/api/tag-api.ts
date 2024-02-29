@@ -1,5 +1,4 @@
 import { Tag } from "../model/types"
-
 import { GetAllTagsFilter, GetAllTagsResponse } from "./types"
 
 class TagAPI {

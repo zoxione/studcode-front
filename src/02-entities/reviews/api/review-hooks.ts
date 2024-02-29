@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 import { Review } from "../model/types"
-
 import { CreateReview, GetAllReviewsFilter } from "./types"
 import { reviewAPI } from "./review-api"
 
@@ -13,7 +12,7 @@ const useCreateOneReviewMutation = () => {
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["reviews"] })
-      const res = await fetch(`/api/revalidate?tag=reviews`)
+      await fetch(`/api/revalidate?tag=reviews`)
     },
   })
 }
@@ -41,7 +40,7 @@ const useUpdateOneByIdReviewMutation = () => {
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["reviews"] })
-      const res = await fetch(`/api/revalidate?tag=reviews`)
+      await fetch(`/api/revalidate?tag=reviews`)
     },
   })
 }
@@ -54,7 +53,7 @@ const useDeleteOneByIdReviewMutation = () => {
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["reviews"] })
-      const res = await fetch(`/api/revalidate?tag=reviews`)
+      await fetch(`/api/revalidate?tag=reviews`)
     },
   })
 }

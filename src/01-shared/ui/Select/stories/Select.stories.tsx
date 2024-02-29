@@ -1,6 +1,7 @@
+import type { Meta, StoryObj } from "@storybook/react"
+
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/Select"
 
-import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
   title: "UI/Select",

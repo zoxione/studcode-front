@@ -10,7 +10,6 @@ import { Input } from "@/01-shared/ui/Input"
 import { Title } from "@/01-shared/ui/Title"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/01-shared/ui/Carousel"
 import { Fancybox } from "@/01-shared/lib/fancybox"
-
 import { editProjectFormSchema } from "../lib/edit-project-form-schema"
 import { ACCEPTED_IMAGE_TYPES } from "../lib/constants"
 

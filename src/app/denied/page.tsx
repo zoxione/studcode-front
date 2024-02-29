@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { InfoIcon } from "lucide-react"
 import { ArrowLeftIcon, CrossCircledIcon } from "@radix-ui/react-icons"
 
 import { Title } from "@/01-shared/ui/Title"

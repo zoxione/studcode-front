@@ -22,7 +22,7 @@ interface PageProps {
 }
 
 export async function generateMetadata(
-  { params, searchParams }: PageProps,
+  { params }: PageProps,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const username = params.username

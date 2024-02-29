@@ -1,3 +1,5 @@
+import type { Meta, StoryObj } from "@storybook/react"
+
 import {
   Sheet,
   SheetClose,
@@ -12,7 +14,6 @@ import { Input } from "../../Input"
 import { Button } from "../../Button"
 import { Label } from "../../Label"
 
-import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
   title: "UI/Sheet",

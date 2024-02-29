@@ -1,10 +1,9 @@
 "use client"
 
-import { toast } from "sonner"
 import Link from "next/link"
 
 import { cn } from "@/01-shared/utils/cn"
-import { Project, ProjectDraftCard, useGetAllProjectsQuery } from "@/02-entities/project"
+import { ProjectDraftCard, useGetAllProjectsQuery } from "@/02-entities/project"
 import { Button } from "@/01-shared/ui/Button"
 
 interface ProjectsDraftsListProps {

@@ -1,11 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { toast } from "sonner"
 import { useSession } from "next-auth/react"
 
 import { RecursivePartial } from "@/01-shared/utils/recursive-partial"
-
 import { User } from "../model/types"
-
 import { GetAllUsersFilter, UserFiles } from "./types"
 import { userAPI } from "./user-api"
 
@@ -26,7 +23,7 @@ const useGetOneByIdUserQuery = (id: string) => {
 
 const useUpdateOneByIdUserMutation = () => {
   const queryClient = useQueryClient()
-  const { data: session, status, update } = useSession()
+  const { update } = useSession()
   return useMutation({
     mutationFn: ({ id, user }: { id: string; user: RecursivePartial<User> }) => {
       return userAPI.updateOneById(id, user)
@@ -48,8 +45,8 @@ const useUploadsOneByIdUserMutation = () => {
       return userAPI.uploadsOneById(id, files)
     },
     onSuccess: async () => {
-      queryClient.invalidateQueries({ queryKey: ["user"] })
-      const res = await fetch(`/api/revalidate?tag=user`)
+      queryClient.invalidateQueries({ queryKey: ["users"] })
+      await fetch(`/api/revalidate?tag=users`)
     },
   })
 }
@@ -62,7 +59,7 @@ const useDeleteOneByIdUserMutation = () => {
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["users"] })
-      const res = await fetch(`/api/revalidate?tag=users`)
+      await fetch(`/api/revalidate?tag=users`)
     },
   })
 }

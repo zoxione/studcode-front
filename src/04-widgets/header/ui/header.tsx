@@ -9,12 +9,11 @@ import { useSession } from "next-auth/react"
 import { footerLinks, navLinks } from "@/01-shared/lib"
 import { Button } from "@/01-shared/ui/Button"
 import { ScrollArea } from "@/01-shared/ui/ScrollArea"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/01-shared/ui/Sheet"
+import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "@/01-shared/ui/Sheet"
 import { cn } from "@/01-shared/utils/cn"
 import { Search } from "@/03-features/search"
 import { Logo } from "@/04-widgets/logo"
 import { ToggleTheme } from "@/03-features/toggle-theme"
-
 import { UserMenu } from "../../../02-entities/user"
 
 interface IHeaderProps {
@@ -24,7 +23,7 @@ interface IHeaderProps {
 export const Header = ({ className }: IHeaderProps) => {
   const pathname = usePathname()
   const { data: session, status } = useSession()
-  console.log({ session, status })
+  // console.log({ session, status })
 
   return (
     <header

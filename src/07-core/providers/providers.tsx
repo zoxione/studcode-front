@@ -8,7 +8,6 @@ import { ReactNode, Suspense } from "react"
 import { toast } from "sonner"
 
 import { Toaster } from "@/01-shared/ui/Sonner"
-
 import { DialogProvider } from "./dialog-provider"
 
 interface IProviders {
@@ -26,7 +25,7 @@ const Providers = ({ children }: IProviders) => {
       },
     }),
     mutationCache: new MutationCache({
-      onError: (error, query) => {
+      onError: (error) => {
         toast.error(`Произошла ошибка: ${error.message}`)
       },
     }),

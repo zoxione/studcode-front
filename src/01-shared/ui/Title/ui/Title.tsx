@@ -3,8 +3,6 @@ import { HTMLAttributes } from "react"
 
 import { cn } from "@/01-shared/utils/cn"
 
-import styles from "./Title.module.scss"
-
 const titleVariants = cva([""], {
   variants: {
     order: {

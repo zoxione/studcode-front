@@ -1,5 +1,6 @@
 import { EnvelopeClosedIcon, FaceIcon, GearIcon, PersonIcon } from "@radix-ui/react-icons"
 import { CalendarIcon, RocketIcon } from "lucide-react"
+import type { Meta, StoryObj } from "@storybook/react"
 
 import {
   Command,
@@ -12,7 +13,6 @@ import {
   CommandShortcut,
 } from "../ui/Command"
 
-import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
   title: "UI/Command",

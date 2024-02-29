@@ -1,4 +1,4 @@
-import { GitHubLogoIcon, Pencil1Icon, TwitterLogoIcon } from "@radix-ui/react-icons"
+import { GitHubLogoIcon, Pencil1Icon } from "@radix-ui/react-icons"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { YoutubeIcon } from "lucide-react"
@@ -31,7 +31,7 @@ interface PageProps {
 }
 
 export async function generateMetadata(
-  { params, searchParams }: PageProps,
+  { params }: PageProps,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const slug = params.slug

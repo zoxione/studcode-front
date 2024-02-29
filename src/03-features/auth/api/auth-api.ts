@@ -1,5 +1,4 @@
 import { User } from "@/02-entities/user"
-
 import { LogoutResponse, RefreshResponse, RegisterUser, SessionUser, SignIn, SignInResponse } from "./types"
 
 

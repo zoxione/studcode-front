@@ -1,5 +1,4 @@
 import { Review } from "../model/types"
-
 import { CreateReview, GetAllReviewsFilter, GetAllReviewsResponse } from "./types"
 
 class ReviewAPI {

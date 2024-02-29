@@ -7,9 +7,7 @@ import { Skeleton } from "@/01-shared/ui/Skeleton"
 import { cn } from "@/01-shared/utils/cn"
 import { TagBadge } from "@/02-entities/tag"
 import { Button } from "@/01-shared/ui/Button"
-
 import { Project } from "../model/types"
-
 import { VoteButton } from "./vote-button"
 
 export interface ProjectCardProps extends HTMLAttributes<HTMLDivElement> {

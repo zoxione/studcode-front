@@ -1,12 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
 import { User } from "@/02-entities/user"
-
 import { authAPI } from "./auth-api"
 import { RegisterUser } from "./types"
-
 
 const useRegisterMutation = () => {
   const queryClient = useQueryClient()
@@ -16,9 +13,9 @@ const useRegisterMutation = () => {
       registerUser = user
       return authAPI.register(user)
     },
-    onSuccess: async (user: User) => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["auth-user"] })
-      const res = await fetch(`/api/revalidate?tag=auth-user`)
+      await fetch(`/api/revalidate?tag=auth-user`)
       toast.success("Вы успешно зарегистрировались")
     },
   })

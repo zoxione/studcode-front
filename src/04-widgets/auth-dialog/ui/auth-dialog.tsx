@@ -10,7 +10,6 @@ import { Dialog, DialogContent } from "@/01-shared/ui/Dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/01-shared/ui/Tabs"
 import { SignInForm } from "@/03-features/sign-in"
 import { SignUpForm } from "@/03-features/sign-up"
-import { ScrollArea } from "@/01-shared/ui/ScrollArea"
 
 const AuthDialog = () => {
   const router = useRouter()

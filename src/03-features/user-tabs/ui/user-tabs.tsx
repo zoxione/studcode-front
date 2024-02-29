@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ReactNode } from "react"
 
 import { User } from "@/02-entities/user"
 import { Tabs, TabsList, TabsTrigger } from "@/01-shared/ui/Tabs"

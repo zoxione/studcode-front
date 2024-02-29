@@ -6,7 +6,7 @@ import { toast } from "sonner"
 import { useSession } from "next-auth/react"
 
 import { Button } from "@/01-shared/ui/Button"
-import { Project, useVoteOneByIdProjectMutation } from "@/02-entities/project"
+import { useVoteOneByIdProjectMutation } from "@/02-entities/project"
 
 interface VoteButtonProps {
   id: string

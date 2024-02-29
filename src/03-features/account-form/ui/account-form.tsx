@@ -8,7 +8,6 @@ import * as z from "zod"
 import { Button } from "@/01-shared/ui/Button"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
-import { Textarea } from "@/01-shared/ui/Textarea"
 import { User, useUpdateOneByIdUserMutation } from "@/02-entities/user"
 
 const accountFormSchema = z.object({

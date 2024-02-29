@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 import { Tag } from "../model/types"
-
 import { GetAllTagsFilter } from "./types"
 import { tagAPI } from "./tag-api"
 
@@ -33,8 +32,9 @@ const useUpdateOneByIdTagMutation = () => {
     mutationFn: ({ id, tag }: { id: string; tag: Tag }) => {
       return tagAPI.updateOneById(id, tag)
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["tags"] })
+      await fetch(`/api/revalidate?tag=tags`)
     },
   })
 }
@@ -45,8 +45,9 @@ const useDeleteOneByIdTagMutation = () => {
     mutationFn: (id: string) => {
       return tagAPI.deleteOneById(id)
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["tags"] })
+      await fetch(`/api/revalidate?tag=tags`)
     },
   })
 }

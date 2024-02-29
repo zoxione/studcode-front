@@ -43,10 +43,7 @@ const Search = ({ className }: SearchProps) => {
 
   const { data: projects, fetchStatus } = useGetAllProjectsQuery({ search: debouncedSearchQuery })
 
-  const onSubmit = async (values: z.infer<typeof searchFormSchema>) => {
-    console.log(values)
-    console.log(projects)
-  }
+  const onSubmit = async (values: z.infer<typeof searchFormSchema>) => {}
 
   return (
     <Dialog>

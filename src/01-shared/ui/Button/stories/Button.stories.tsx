@@ -1,8 +1,8 @@
 import { ChevronRightIcon, EnvelopeOpenIcon, ReloadIcon } from "@radix-ui/react-icons"
+import type { Meta, StoryObj } from "@storybook/react"
 
 import { Button } from "../ui/Button"
 
-import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
   title: "UI/Button",

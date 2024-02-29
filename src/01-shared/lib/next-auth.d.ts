@@ -1,3 +1,6 @@
+/* eslint-disable unused-imports/no-unused-vars */
+/* eslint-disable unused-imports/no-unused-imports */
+
 import NextAuth from "next-auth"
 import { JWT } from "next-auth/jwt"
 

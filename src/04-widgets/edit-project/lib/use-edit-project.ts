@@ -4,7 +4,6 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 
 import { ProjectStatus, useUpdateOneByIdProjectMutation, useUploadsOneByIdProjectMutation } from "@/02-entities/project"
-
 import { editProjectFormSchema } from "./edit-project-form-schema"
 
 const useEditProject = () => {

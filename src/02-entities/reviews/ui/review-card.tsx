@@ -1,4 +1,3 @@
-import { MinusIcon, PlusIcon } from "@radix-ui/react-icons"
 import { HTMLAttributes, forwardRef } from "react"
 import Link from "next/link"
 import { ThumbsDownIcon, ThumbsUpIcon } from "lucide-react"
@@ -10,7 +9,6 @@ import { Title } from "@/01-shared/ui/Title"
 import { getUserInitials } from "@/01-shared/utils/get-user-initials"
 import { normalizeDate } from "@/01-shared/utils/normalize-date"
 import { Button } from "@/01-shared/ui/Button"
-
 import { Review } from "../model/types"
 
 export interface ReviewCardProps extends HTMLAttributes<HTMLAnchorElement> {

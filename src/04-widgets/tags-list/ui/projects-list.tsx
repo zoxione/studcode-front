@@ -3,7 +3,6 @@
 import { ReloadIcon } from "@radix-ui/react-icons"
 import { Fragment, useEffect } from "react"
 import { useInView } from "react-intersection-observer"
-import { toast } from "sonner"
 
 import { GetAllProjectsFilter, ProjectCard, useGetAllProjectsInfiniteQuery } from "@/02-entities/project"
 import { cn } from "@/01-shared/utils/cn"
