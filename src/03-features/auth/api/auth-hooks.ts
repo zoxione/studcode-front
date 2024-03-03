@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 
-import { User } from "@/02-entities/user"
 import { authAPI } from "./auth-api"
 import { RegisterUser } from "./types"
 

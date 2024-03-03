@@ -8,7 +8,7 @@ import { Layout } from "@/04-widgets/layout"
 
 export default function NewProjectPage() {
   return (
-    <Layout header={<Header />} footer={<Footer />} className="flex flex-col justify-center items-center gap-8">
+    <Layout header={<Header />} footer={<Footer />} className="flex flex-col justify-center items-center gap-8 py-8">
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
         <div className="flex flex-col space-y-2 text-center">
           <Title order={3}>Новый проект</Title>
