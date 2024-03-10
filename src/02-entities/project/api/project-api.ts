@@ -1,4 +1,3 @@
-
 import { Project } from "../model/types"
 import { CreateProject, GetAllProjectsFilter, GetAllProjectsResponse, ProjectFiles, UpdateProject } from "./types"
 
@@ -64,7 +63,7 @@ class ProjectAPI {
   }
 
   /**
-   * Получение одного проекта по id/slug
+   * Получение одного проекта
    */
   async getOne(key: string): Promise<Project> {
     const res = await fetch(`${this.baseUrl}/${key}`, {
@@ -87,10 +86,10 @@ class ProjectAPI {
   }
 
   /**
-   * Обновление проекта по id
+   * Обновление проекта
    */
-  async updateOneById(id: string, project: UpdateProject): Promise<Project> {
-    const res = await fetch(`${this.baseUrl}/${id}`, {
+  async updateOne(key: string, project: UpdateProject): Promise<Project> {
+    const res = await fetch(`${this.baseUrl}/${key}`, {
       method: "PUT",
       body: JSON.stringify(project),
       headers: {
@@ -111,9 +110,32 @@ class ProjectAPI {
   }
 
   /**
-   * Загрузка файлов проекта по id
+   * Удаление проекта
    */
-  async uploadsOneById(project_id: string, files: ProjectFiles): Promise<Project> {
+  async deleteOne(key: string): Promise<Project> {
+    const res = await fetch(`${this.baseUrl}/${key}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
+      next: {
+        tags: ["projects"],
+      },
+    })
+
+    if (!res.ok) {
+      throw new Error(`Failed to delete project: ${res.statusText}`)
+    }
+
+    return await res.json()
+  }
+
+  /**
+   * Загрузка файлов проекта
+   */
+  async uploadsOne(key: string, files: ProjectFiles): Promise<Project> {
     const formData = new FormData()
     if (files.logo_file) {
       formData.append("logo_file", files.logo_file[0])
@@ -124,13 +146,9 @@ class ProjectAPI {
       }
     }
 
-    const res = await fetch(`${this.baseUrl}/${project_id}/uploads`, {
+    const res = await fetch(`${this.baseUrl}/${key}/uploads`, {
       method: "POST",
       body: formData,
-      headers: {
-        // "Content-Type": "application/json",
-        // Accept: "application/json",
-      },
       credentials: "include",
       next: {
         tags: ["projects"],
@@ -145,10 +163,10 @@ class ProjectAPI {
   }
 
   /**
-   * Голосование за проект по id
+   * Голосование за проект
    */
-  async voteOneById(project_id: string): Promise<Project> {
-    const res = await fetch(`${this.baseUrl}/${project_id}/vote`, {
+  async voteOne(key: string): Promise<Project> {
+    const res = await fetch(`${this.baseUrl}/${key}/vote`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -162,29 +180,6 @@ class ProjectAPI {
 
     if (!res.ok) {
       throw new Error(`Failed to vote project: ${res.statusText}`)
-    }
-
-    return await res.json()
-  }
-
-  /**
-   * Удаление проекта по id
-   */
-  async deleteOneById(id: string): Promise<Project> {
-    const res = await fetch(`${this.baseUrl}/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      credentials: "include",
-      next: {
-        tags: ["projects"],
-      },
-    })
-
-    if (!res.ok) {
-      throw new Error(`Failed to delete project: ${res.statusText}`)
     }
 
     return await res.json()

@@ -5,14 +5,11 @@ import { HTMLAttributes, forwardRef } from "react"
 import { cn } from "@/01-shared/utils/cn"
 import { Tag } from "../model/types"
 
-
 export interface TagCardProps extends HTMLAttributes<HTMLAnchorElement> {
   tag: Tag
 }
 
 const TagCard = forwardRef<HTMLAnchorElement, TagCardProps>(({ tag, className }, ref) => {
-  const tagName = tag.name.ru !== "" ? tag.name.ru : tag.name.en
-
   return (
     <Link
       href={`/tags/${tag.slug}`}
@@ -22,9 +19,9 @@ const TagCard = forwardRef<HTMLAnchorElement, TagCardProps>(({ tag, className },
         className,
       )}
     >
-      <span className="">{tag.icon}</span>
-      <span className="grow line-clamp-1">{tagName}</span>
-      <ChevronRightIcon className="w-4 h-4" />
+      <span className="flex-none w-10 h-10 bg-accent rounded-md flex justify-center items-center">{tag.icon}</span>
+      <span className="grow line-clamp-1">{tag.name}</span>
+      <ChevronRightIcon className="flex-none w-4 h-4" />
     </Link>
   )
 })

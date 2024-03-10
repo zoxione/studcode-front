@@ -11,15 +11,15 @@ import { normalizeDate } from "@/01-shared/utils/normalize-date"
 import { Button } from "@/01-shared/ui/Button"
 import { Review } from "../model/types"
 
-export interface ReviewCardProps extends HTMLAttributes<HTMLAnchorElement> {
+export interface ReviewCardProps extends HTMLAttributes<HTMLDivElement> {
   review: Review
 }
 
-const ReviewCard = forwardRef<HTMLAnchorElement, ReviewCardProps>(({ review, className }, ref) => {
+const ReviewCard = forwardRef<HTMLDivElement, ReviewCardProps>(({ review, className }, ref) => {
   const reviewerInitials = getUserInitials(review.reviewer?.full_name.surname, review.reviewer?.full_name.name)
 
   return (
-    <Card>
+    <Card ref={ref}>
       <CardContent className="p-4 space-y-3">
         <div className="flex flex-row items-center gap-2 ">
           <Avatar className="w-10 h-10" asChild>
@@ -43,13 +43,13 @@ const ReviewCard = forwardRef<HTMLAnchorElement, ReviewCardProps>(({ review, cla
             <Button variant="ghost" size="none" className="p-1">
               <ThumbsUpIcon className="h-4 w-4" />
             </Button>
-            {review.likes.length}
+            {review.likes}
           </span>
           <span className="flex flex-row items-center gap-1">
             <Button variant="ghost" size="none" className="p-1">
               <ThumbsDownIcon className="h-4 w-4" />
             </Button>
-            {review.dislikes.length}
+            {review.dislikes}
           </span>
           <span className="ml-auto">{normalizeDate(review.created_at)}</span>
         </div>

@@ -2,17 +2,22 @@ import * as z from "zod"
 
 import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "./constants"
 
-const teamFormSchema = z.object({
+const teamSchema = z.object({
   name: z
     .string()
     .min(2, { message: "Название должно иметь больше 1 символа" })
     .max(16, { message: "Название должно иметь меньше 17 символов" }),
-  status: z.enum(["opened", "closed"]),
   about: z
-    .string()
-    .min(2, { message: "Описание должно иметь больше 1 символа" })
-    .max(256, { message: "Описание должно иметь меньше 257 символов" })
-    .optional(),
+    .union([
+      z.string().length(0),
+      z
+        .string()
+        .min(2, { message: "Описание должно иметь больше 1 символа" })
+        .max(256, { message: "Описание должно иметь меньше 257 символов" }),
+    ])
+    .optional()
+    .transform((e) => (e === "" ? undefined : e)),
+  status: z.enum(["opened", "closed"]),
   logo_file: z
     .any()
     .refine((files) => files?.length == 1, "Логотип необходим.")
@@ -23,4 +28,4 @@ const teamFormSchema = z.object({
     ),
 })
 
-export { teamFormSchema }
+export { teamSchema }

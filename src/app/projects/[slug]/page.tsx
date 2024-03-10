@@ -1,7 +1,6 @@
-import { GitHubLogoIcon, Pencil1Icon } from "@radix-ui/react-icons"
+import { Pencil1Icon } from "@radix-ui/react-icons"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { YoutubeIcon } from "lucide-react"
 import { Metadata, ResolvingMetadata } from "next"
 import { getServerSession } from "next-auth"
 
@@ -14,7 +13,6 @@ import { Title } from "@/01-shared/ui/Title"
 import { prettyPrice, projectAPI } from "@/02-entities/project"
 import { VoteButton } from "@/02-entities/project/ui/vote-button"
 import { TagBadge } from "@/02-entities/tag"
-import { SubmitReviewForm } from "@/03-features/submit-review"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"
@@ -24,16 +22,15 @@ import { getUserInitials } from "@/01-shared/utils/get-user-initials"
 import { authOptions } from "@/01-shared/lib/auth-options"
 import { cn } from "@/01-shared/utils/cn"
 import { getYouTubeId } from "@/01-shared/utils/get-youtube-id"
+import { CreateReviewForm } from "@/03-features/create-review"
+import { LinksList } from "@/04-widgets/links-list"
 
 interface PageProps {
   params: { slug: string }
   searchParams: { [key: string]: string | string[] | undefined }
 }
 
-export async function generateMetadata(
-  { params }: PageProps,
-  parent: ResolvingMetadata,
-): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps, parent: ResolvingMetadata): Promise<Metadata> {
   const slug = params.slug
   const project = await projectAPI.getOne(slug)
   const previousImages = (await parent).openGraph?.images || []
@@ -62,6 +59,10 @@ export default async function ProjectPage({ params }: PageProps) {
   const creatorInitials = getUserInitials(project.creator.full_name.surname, project.creator.full_name.name)
   const session = await getServerSession(authOptions)
   const isOwner = session?.user.username === project.creator.username
+
+  const mainLink = project.links.find((link) => link.type === "main")
+  const youtubeLink = project.links.find((link) => link.type === "youtube")
+  const youtubeId = youtubeLink ? getYouTubeId(youtubeLink.url) : null
 
   return (
     <Layout header={<Header />} footer={<Footer />} className="">
@@ -92,11 +93,13 @@ export default async function ProjectPage({ params }: PageProps) {
                 <Pencil1Icon className="w-4 h-4" />
               </Link>
             ) : null}
-            <Button variant="default" asChild>
-              <Link href={project.links.main} target="_blank">
-                Посетить
-              </Link>
-            </Button>
+            {mainLink ? (
+              <Button variant="default" asChild>
+                <Link href={mainLink.url} target="_blank">
+                  Посетить
+                </Link>
+              </Button>
+            ) : null}
           </div>
         </div>
 
@@ -117,25 +120,27 @@ export default async function ProjectPage({ params }: PageProps) {
                 </CardContent>
               </Card>
             </div>
-            <div className="space-y-2">
-              <Card>
-                <CardContent className="p-6">
-                  <iframe
-                    className="rounded-lg"
-                    title={project.title}
-                    width="100%"
-                    height="340"
-                    src={`https://www.youtube.com/embed/${getYouTubeId(project.links.demo)}`}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </CardContent>
-              </Card>
-            </div>
+            {youtubeId ? (
+              <div className="space-y-2">
+                <Card>
+                  <CardContent className="p-6">
+                    <iframe
+                      className="rounded-lg"
+                      title={project.title}
+                      width="100%"
+                      height="340"
+                      src={`https://www.youtube.com/embed/${youtubeId}`}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </CardContent>
+                </Card>
+              </div>
+            ) : null}
             <div className="space-y-2">
               <Title order={5}>Обзоры</Title>
               <div className="space-y-4">
-                <SubmitReviewForm project_id={project._id} />
+                <CreateReviewForm project_id={project._id} />
                 <ReviewsList project_id={project._id} />
               </div>
             </div>
@@ -145,24 +150,7 @@ export default async function ProjectPage({ params }: PageProps) {
             <CardContent className="p-6 flex flex-row sm:flex-col sm:items-end justify-between gap-4 text-right">
               <div className="space-y-2">
                 <Title order={6}>Ссылки</Title>
-                <div className="flex flex-col sm:items-end gap-1">
-                  {project.links.github ? (
-                    <Badge variant="outline" className="w-fit" asChild>
-                      <Link href={project.links.github} target="_blank">
-                        <GitHubLogoIcon className="mr-1 h-4 w-4" />
-                        Github
-                      </Link>
-                    </Badge>
-                  ) : null}
-                  {project.links.demo ? (
-                    <Badge variant="outline" className="w-fit" asChild>
-                      <Link href={project.links.demo} target="_blank">
-                        <YoutubeIcon className="mr-1 h-4 w-4" />
-                        Preview
-                      </Link>
-                    </Badge>
-                  ) : null}
-                </div>
+                <LinksList links={project.links} />
               </div>
               <div className="space-y-2">
                 <Title order={6}>Цена</Title>

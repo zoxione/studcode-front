@@ -20,7 +20,7 @@ export const ProjectsList = ({ filter, projectCardProps, className }: ProjectsLi
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    status: statusProjects,
+    status,
   } = useGetAllProjectsInfiniteQuery(filter)
 
   const [ref, inView] = useInView({ threshold: 0.4 })
@@ -32,22 +32,29 @@ export const ProjectsList = ({ filter, projectCardProps, className }: ProjectsLi
     }
   }, [inView])
 
-  if (statusProjects === "error") {
+  if (status === "error") {
     return null
   }
 
   return (
     <div className={cn("space-y-6", className)}>
-      {statusProjects === "pending"
+      {status === "pending"
         ? Array(4)
             .fill(0)
             .map((_, i) => i + 1)
             .map((index) => <ProjectCard key={index} loading />)
         : projects.pages.map((group, i) => (
             <Fragment key={i}>
-              {group.results.map((project) => (
-                <ProjectCard key={project._id} project={project} {...projectCardProps} />
-              ))}
+              {group.results.length > 0 ? (
+                group.results.map((project) => (
+                  <ProjectCard key={project._id} project={project} {...projectCardProps} />
+                ))
+              ) : (
+                <span className="text-sm text-muted-foreground flex justify-center items-center text-center">
+                  {"(>_<)"} <br />
+                  Проекты не найдены.
+                </span>
+              )}
             </Fragment>
           ))}
       <div className="flex items-center justify-center my-6">

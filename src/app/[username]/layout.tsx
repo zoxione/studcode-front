@@ -10,10 +10,10 @@ import { Button } from "@/01-shared/ui/Button"
 import { Title } from "@/01-shared/ui/Title"
 import { getUserInitials } from "@/01-shared/utils/get-user-initials"
 import { prettyCreatedAt, userAPI } from "@/02-entities/user"
-import { UserTabs } from "@/03-features/user-tabs"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"
+import { UserTabs } from "@/04-widgets/user-tabs"
 
 interface PageProps {
   params: { username: string }
@@ -21,10 +21,7 @@ interface PageProps {
   children: ReactNode
 }
 
-export async function generateMetadata(
-  { params }: PageProps,
-  parent: ResolvingMetadata,
-): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps, parent: ResolvingMetadata): Promise<Metadata> {
   const username = params.username
   const user = await userAPI.getOne(params.username)
   const previousImages = (await parent).openGraph?.images || []
@@ -73,7 +70,7 @@ export default async function User({ params, children }: PageProps) {
           <Title order={3}>{`${user?.full_name.surname} ${user?.full_name.name} ${user?.full_name.patronymic}`}</Title>
           <span>@{user?.username}</span>
         </div>
-        <div className="ml-auto flex flex-row items-center gap-2">
+        <div className="md:ml-auto flex flex-row items-center gap-2">
           {/* <Button variant="outline" size="icon">
             <DotsHorizontalIcon className="w-4 h-4" />
           </Button> */}

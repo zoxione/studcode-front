@@ -63,7 +63,7 @@ class TeamAPI {
   }
 
   /**
-   * Получение одной команды по id/slug
+   * Получение одной команды
    */
   async getOne(key: string): Promise<Team> {
     const res = await fetch(`${this.baseUrl}/${key}`, {
@@ -86,10 +86,10 @@ class TeamAPI {
   }
 
   /**
-   * Обновление команды по id
+   * Обновление команды
    */
-  async updateOneById(id: string, team: UpdateTeam): Promise<Team> {
-    const res = await fetch(`${this.baseUrl}/${id}`, {
+  async updateOne(key: string, team: UpdateTeam): Promise<Team> {
+    const res = await fetch(`${this.baseUrl}/${key}`, {
       method: "PUT",
       body: JSON.stringify(team),
       headers: {
@@ -110,10 +110,10 @@ class TeamAPI {
   }
 
   /**
-   * Обновление членов команды по id
+   * Обновление членов команды
    */
-  async updateMembers(team_id: string, members: UpdateTeamMember[]): Promise<Team> {
-    const res = await fetch(`${this.baseUrl}/${team_id}/members`, {
+  async updateMembers(key: string, members: UpdateTeamMember[]): Promise<Team> {
+    const res = await fetch(`${this.baseUrl}/${key}/members`, {
       method: "PUT",
       body: JSON.stringify({ members: members }),
       headers: {
@@ -134,15 +134,15 @@ class TeamAPI {
   }
 
   /**
-   * Загрузка файлов команды по id
+   * Загрузка файлов команды
    */
-  async uploadsOneById(team_id: string, files: TeamFiles): Promise<Team> {
+  async uploadsOne(key: string, files: TeamFiles): Promise<Team> {
     const formData = new FormData()
     if (files.logo_file) {
       formData.append("logo_file", files.logo_file[0])
     }
 
-    const res = await fetch(`${this.baseUrl}/${team_id}/uploads`, {
+    const res = await fetch(`${this.baseUrl}/${key}/uploads`, {
       method: "POST",
       body: formData,
       headers: {
@@ -163,10 +163,10 @@ class TeamAPI {
   }
 
   /**
-   * Удаление команды по id
+   * Удаление команды
    */
-  async deleteOneById(id: string): Promise<Team> {
-    const res = await fetch(`${this.baseUrl}/${id}`, {
+  async deleteOne(key: string): Promise<Team> {
+    const res = await fetch(`${this.baseUrl}/${key}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

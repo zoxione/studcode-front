@@ -4,14 +4,11 @@ import { HTMLAttributes, forwardRef } from "react"
 import { cn } from "@/01-shared/utils/cn"
 import { Tag } from "../model/types"
 
-
 export interface TagCardSmallProps extends HTMLAttributes<HTMLAnchorElement> {
   tag: Tag
 }
 
 const TagCardSmall = forwardRef<HTMLAnchorElement, TagCardSmallProps>(({ tag, className }, ref) => {
-  const tagName = tag.name.ru !== "" ? tag.name.ru : tag.name.en
-
   return (
     <Link
       href={`/tags/${tag.slug}`}
@@ -22,7 +19,7 @@ const TagCardSmall = forwardRef<HTMLAnchorElement, TagCardSmallProps>(({ tag, cl
       )}
     >
       <span>{tag.icon}</span>
-      <span>{tagName}</span>
+      <span>{tag.name}</span>
     </Link>
   )
 })

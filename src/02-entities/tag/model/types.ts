@@ -1,10 +1,8 @@
 interface Tag {
   _id: string
-  name: {
-    ru: string
-    en: string
-  }
+  name: string
   icon: string
+  description: string
   slug: string
   created_at: string
   updated_at: string

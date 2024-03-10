@@ -23,17 +23,17 @@ const useCreateOneProjectMutation = () => {
 }
 
 const useGetAllProjectsQuery = (filter: GetAllProjectsFilter) => {
-  const { page, limit, search, order, time_frame, tag_slug, creator_id, status } = filter
+  const { page, limit, search, order, time_frame, tag_slug, status, creator_id, team_id } = filter
   return useQuery({
-    queryKey: ["projects", page, limit, search, order, time_frame, tag_slug, creator_id, status],
+    queryKey: ["projects", page, limit, search, order, time_frame, tag_slug, status, creator_id, team_id],
     queryFn: () => projectAPI.getAll(filter),
   })
 }
 
 const useGetAllProjectsInfiniteQuery = (filter: GetAllProjectsFilter) => {
-  const { page, limit, search, order, time_frame, tag_slug, creator_id, status } = filter
+  const { page, limit, search, order, time_frame, tag_slug, status, creator_id, team_id } = filter
   return useInfiniteQuery({
-    queryKey: ["projects", page, limit, search, order, time_frame, tag_slug, creator_id, status],
+    queryKey: ["projects", page, limit, search, order, time_frame, tag_slug, status, creator_id, team_id],
     queryFn: async ({ pageParam }: { pageParam: number }) => {
       const res = await projectAPI.getAll({ ...filter, page: pageParam })
       return res
@@ -47,18 +47,18 @@ const useGetAllProjectsInfiniteQuery = (filter: GetAllProjectsFilter) => {
   })
 }
 
-const useGetOneByIdProjectQuery = (id: string) => {
+const useGetOneProjectQuery = (key: string) => {
   return useQuery({
-    queryKey: ["projects", id],
-    queryFn: () => projectAPI.getOne(id),
+    queryKey: ["projects", key],
+    queryFn: () => projectAPI.getOne(key),
   })
 }
 
-const useUpdateOneByIdProjectMutation = () => {
+const useUpdateOneProjectMutation = () => {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ id, project }: { id: string; project: UpdateProject }) => {
-      return projectAPI.updateOneById(id, project)
+    mutationFn: ({ key, project }: { key: string; project: UpdateProject }) => {
+      return projectAPI.updateOne(key, project)
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
@@ -67,11 +67,11 @@ const useUpdateOneByIdProjectMutation = () => {
   })
 }
 
-const useUploadsOneByIdProjectMutation = () => {
+const useUploadsOneProjectMutation = () => {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ id, files }: { id: string; files: ProjectFiles }) => {
-      return projectAPI.uploadsOneById(id, files)
+    mutationFn: ({ key, files }: { key: string; files: ProjectFiles }) => {
+      return projectAPI.uploadsOne(key, files)
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
@@ -80,11 +80,11 @@ const useUploadsOneByIdProjectMutation = () => {
   })
 }
 
-const useVoteOneByIdProjectMutation = () => {
+const useVoteOneProjectMutation = () => {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (id: string) => {
-      return projectAPI.voteOneById(id)
+    mutationFn: (key: string) => {
+      return projectAPI.voteOne(key)
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
@@ -93,12 +93,12 @@ const useVoteOneByIdProjectMutation = () => {
   })
 }
 
-const useDeleteOneByIdProjectMutation = () => {
+const useDeleteOneProjectMutation = () => {
   const queryClient = useQueryClient()
   const router = useRouter()
   return useMutation({
-    mutationFn: (id: string) => {
-      return projectAPI.deleteOneById(id)
+    mutationFn: (key: string) => {
+      return projectAPI.deleteOne(key)
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
@@ -113,9 +113,9 @@ export {
   useCreateOneProjectMutation,
   useGetAllProjectsQuery,
   useGetAllProjectsInfiniteQuery,
-  useGetOneByIdProjectQuery,
-  useUpdateOneByIdProjectMutation,
-  useDeleteOneByIdProjectMutation,
-  useVoteOneByIdProjectMutation,
-  useUploadsOneByIdProjectMutation,
+  useGetOneProjectQuery,
+  useUpdateOneProjectMutation,
+  useDeleteOneProjectMutation,
+  useVoteOneProjectMutation,
+  useUploadsOneProjectMutation,
 }

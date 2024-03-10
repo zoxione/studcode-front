@@ -2,9 +2,9 @@ import Link from "next/link"
 import { ArrowLeftIcon, CrossCircledIcon } from "@radix-ui/react-icons"
 
 import { Title } from "@/01-shared/ui/Title"
-import { BackButton } from "@/03-features/back-button"
 import { buttonVariants } from "@/01-shared/ui/Button"
 import { cn } from "@/01-shared/utils/cn"
+import { BackPageButton } from "@/03-features/back-page"
 
 export default function AccessDenied() {
   return (
@@ -17,10 +17,10 @@ export default function AccessDenied() {
         К этой странице у вас нет доступа. Вот несколько полезных ссылок:
       </p>
       <div className="flex gap-2">
-        <BackButton variant="outline">
+        <BackPageButton variant="outline">
           <ArrowLeftIcon className="w-4 h-4 mr-1" />
           Вернуться
-        </BackButton>
+        </BackPageButton>
         <Link href="/" className={cn(buttonVariants({}))}>
           На главную
         </Link>

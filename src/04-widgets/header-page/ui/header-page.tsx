@@ -13,7 +13,7 @@ interface HeaderPageProps extends HTMLAttributes<HTMLDivElement> {
 
 const HeaderPage = forwardRef<HTMLDivElement, HeaderPageProps>(({ title, description, className }, ref) => {
   return (
-    <div ref={ref} className={cn("flex flex-col items-start gap-4", className)}>
+    <header ref={ref} className={cn("flex flex-col items-start gap-4", className)}>
       <Link href="/" className={cn(buttonVariants({ variant: "link", size: "px" }), "text-foreground")}>
         <ChevronLeftIcon className="mr-1 h-4 w-4" />
         На главную
@@ -22,7 +22,7 @@ const HeaderPage = forwardRef<HTMLDivElement, HeaderPageProps>(({ title, descrip
         <Title order={2}>{title}</Title>
         <span className="">{description}</span>
       </div>
-    </div>
+    </header>
   )
 })
 HeaderPage.displayName = "HeaderPage"

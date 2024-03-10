@@ -1,14 +1,14 @@
-import { GitHubLogoIcon } from "@radix-ui/react-icons"
-import Link from "next/link"
 import { getServerSession } from "next-auth"
+import Link from "next/link"
 
 import { authOptions } from "@/01-shared/lib/auth-options"
-import { Badge, badgeVariants } from "@/01-shared/ui/Badge"
+import { badgeVariants } from "@/01-shared/ui/Badge"
 import { Card, CardContent } from "@/01-shared/ui/Card"
 import { Title } from "@/01-shared/ui/Title"
 import { cn } from "@/01-shared/utils/cn"
 import { TeamBadge, teamAPI } from "@/02-entities/team"
 import { userAPI } from "@/02-entities/user"
+import { LinksList } from "@/04-widgets/links-list"
 
 export default async function UserProfile({ params }: { params: { username: string } }) {
   const session = await getServerSession(authOptions)
@@ -19,44 +19,28 @@ export default async function UserProfile({ params }: { params: { username: stri
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <Title order={6}>Описание</Title>
+        <Title order={6}>О себе</Title>
         <Card>
           <CardContent className="p-6">
-            <p>{user.about}</p>
+            {user.about !== "" ? (
+              <p>{user.about}</p>
+            ) : (
+              <p className="text-sm text-muted-foreground flex justify-center items-center text-center">
+                {"(__ ͡° ͜ʖ ͡°)_"} <br />
+                Похоже тут ничего нет.
+              </p>
+            )}
           </CardContent>
         </Card>
       </div>
       <div className="space-y-2">
         <Title order={6}>Ссылки</Title>
-        {user.links.github ? (
-          <Badge variant="outline" asChild>
-            <Link href={user.links.github} target="_blank">
-              <GitHubLogoIcon className="mr-1 h-4 w-4" />
-              Github
-            </Link>
-          </Badge>
-        ) : null}
-        {user.links.telegram ? (
-          <Badge variant="outline" asChild>
-            <Link href={user.links.telegram} target="_blank">
-              <GitHubLogoIcon className="mr-1 h-4 w-4" />
-              Telegram
-            </Link>
-          </Badge>
-        ) : null}
-        {user.links.vkontakte ? (
-          <Badge variant="outline" asChild>
-            <Link href={user.links.vkontakte} target="_blank">
-              <GitHubLogoIcon className="mr-1 h-4 w-4" />
-              Vk
-            </Link>
-          </Badge>
-        ) : null}
+        {user.links.length > 0 ? (
+          <LinksList links={user.links} />
+        ) : (
+          <span className="text-sm text-muted-foreground">Ссылки не добавлены.</span>
+        )}
       </div>
-      {/* <div className="space-y-2">
-            <Title order={6}>Награды</Title>
-            <Badge variant="outline">Топ 1</Badge>
-          </div> */}
       <div className="space-y-2">
         <Title order={6}>
           Команды
@@ -67,9 +51,11 @@ export default async function UserProfile({ params }: { params: { username: stri
           ) : null}
         </Title>
         <div className="flex flex-wrap gap-2">
-          {teams.map((team) => (
-            <TeamBadge key={team._id} team={team} />
-          ))}
+          {teams.length > 0 ? (
+            teams.map((team) => <TeamBadge key={team._id} team={team} />)
+          ) : (
+            <span className="text-sm text-muted-foreground">Команд нет.</span>
+          )}
         </div>
       </div>
     </div>

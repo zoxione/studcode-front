@@ -1,3 +1,4 @@
+import { DeepPartial } from "@/01-shared/lib/deep-partial"
 import { User } from "../model/types"
 
 interface GetAllUsersFilter {
@@ -21,4 +22,6 @@ interface UserFiles {
   avatar_file?: FileList
 }
 
-export type { GetAllUsersFilter, GetAllUsersResponse, UserFiles }
+interface UpdateUser extends Omit<DeepPartial<User>, "_id" | "created_at" | "updated_at"> {}
+
+export type { GetAllUsersFilter, GetAllUsersResponse, UpdateUser, UserFiles }

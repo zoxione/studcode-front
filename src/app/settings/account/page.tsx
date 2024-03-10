@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "@/01-shared/lib/auth-options"
 import { Separator } from "@/01-shared/ui/Separator"
 import { userAPI } from "@/02-entities/user"
-import { AccountForm } from "@/03-features/account-form"
+import { EditUserAccountForm } from "@/03-features/edit-user-account"
 
 export default async function UserAccount() {
   const session = await getServerSession(authOptions)
@@ -18,7 +18,7 @@ export default async function UserAccount() {
         </p>
       </div>
       <Separator />
-      <AccountForm user={user} />
+      <EditUserAccountForm user={user} />
     </div>
   )
 }

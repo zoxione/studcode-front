@@ -1,5 +1,4 @@
-import { DeepPartial } from "react-hook-form"
-
+import { DeepPartial } from "@/01-shared/lib/deep-partial"
 import { Team, TeamUserRole } from "../model/types"
 
 interface GetAllTeamsFilter {
@@ -30,7 +29,7 @@ interface CreateTeam extends Pick<Team, "name" | "status" | "about"> {
 interface UpdateTeam extends Omit<DeepPartial<Team>, "_id" | "created_at" | "updated_at"> {}
 
 interface UpdateTeamMember {
-  payload: {
+  member: {
     user: string
     role: TeamUserRole
   }

@@ -1,9 +1,12 @@
+import { ILink } from "@/01-shared/types/link"
 import { Tag } from "@/02-entities/tag"
 import { UserFullName } from "@/02-entities/user"
 
 type ProjectPrice = "free" | "free_options" | "payment_required"
 
 type ProjectStatus = "draft" | "published" | "archived" | ""
+
+type ProjectType = "web" | "mobile" | "desktop" | "iot" | "game" | "ui_ux" | "other"
 
 interface ProjectLinks {
   main: string
@@ -18,23 +21,31 @@ interface ProjectCreator {
   full_name: UserFullName
 }
 
+interface ProjectTeam {
+  _id: string
+  name: string
+  logo: string
+}
+
 interface Project {
   _id: string
   title: string
   tagline: string
   status: ProjectStatus
+  type: ProjectType
   description: string
   flames: number
-  links: ProjectLinks
+  links: ILink[]
   logo: string
   screenshots: string[]
   price: ProjectPrice
   rating: number
-  tags: Tag[]
-  creator: ProjectCreator
   slug: string
+  creator: ProjectCreator
+  team: ProjectTeam
+  tags: Tag[]
   created_at: string
   updated_at: string
 }
 
-export type { Project, ProjectPrice, ProjectStatus, ProjectLinks, ProjectCreator }
+export type { Project, ProjectPrice, ProjectStatus, ProjectLinks, ProjectType, ProjectCreator }

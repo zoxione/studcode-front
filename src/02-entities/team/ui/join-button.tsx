@@ -1,5 +1,7 @@
 "use client"
 
+import { ReloadIcon } from "@radix-ui/react-icons"
+
 import { Button, ButtonProps } from "@/01-shared/ui/Button"
 import { useAddMemberTeamMutation } from "../api/team-hooks"
 
@@ -20,8 +22,8 @@ const JoinButton = ({ children, teamName, userId, ...props }: JoinButtonProps) =
   }
 
   return (
-    <Button {...props} onClick={handleButton}>
-      Вступить
+    <Button onClick={handleButton} disabled={status === "pending"} {...props}>
+      {status === "pending" ? <ReloadIcon className="mr-2 h-4 w-4 animate-spin" /> : "Вступить"}
     </Button>
   )
 }

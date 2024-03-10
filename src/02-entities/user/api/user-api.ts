@@ -1,6 +1,5 @@
-import { RecursivePartial } from "@/01-shared/utils/recursive-partial"
 import { User } from "../model/types"
-import { GetAllUsersFilter, GetAllUsersResponse, UserFiles } from "./types"
+import { GetAllUsersFilter, GetAllUsersResponse, UpdateUser, UserFiles } from "./types"
 
 class UserAPI {
   private baseUrl: string = ""
@@ -40,7 +39,7 @@ class UserAPI {
   }
 
   /**
-   * Получение одного пользователя по id/username/email
+   * Получение одного пользователя
    */
   async getOne(key: string): Promise<User> {
     const res = await fetch(`${this.baseUrl}/${key}`, {
@@ -63,10 +62,10 @@ class UserAPI {
   }
 
   /**
-   * Обновление пользователя по id
+   * Обновление пользователя
    */
-  async updateOneById(id: string, user: RecursivePartial<User>): Promise<User> {
-    const res = await fetch(`${this.baseUrl}/${id}`, {
+  async updateOne(key: string, user: UpdateUser): Promise<User> {
+    const res = await fetch(`${this.baseUrl}/${key}`, {
       method: "PUT",
       body: JSON.stringify(user),
       headers: {
@@ -87,15 +86,38 @@ class UserAPI {
   }
 
   /**
-   * Загрузка файлов пользователя по id
+   * Удаление пользователя
    */
-  async uploadsOneById(user_id: string, files: UserFiles): Promise<User> {
+  async deleteOne(key: string): Promise<User> {
+    const res = await fetch(`${this.baseUrl}/${key}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
+      next: {
+        tags: ["users"],
+      },
+    })
+
+    if (!res.ok) {
+      throw new Error(`Failed to delete user: ${res.statusText}`)
+    }
+
+    return await res.json()
+  }
+
+  /**
+   * Загрузка файлов пользователя
+   */
+  async uploadsOne(key: string, files: UserFiles): Promise<User> {
     const formData = new FormData()
     if (files.avatar_file) {
       formData.append("avatar_file", files.avatar_file[0])
     }
 
-    const res = await fetch(`${this.baseUrl}/${user_id}/uploads`, {
+    const res = await fetch(`${this.baseUrl}/${key}/uploads`, {
       method: "POST",
       body: formData,
       headers: {
@@ -110,29 +132,6 @@ class UserAPI {
 
     if (!res.ok) {
       throw new Error(`Failed to uploads files user: ${res.statusText}`)
-    }
-
-    return await res.json()
-  }
-
-  /**
-   * Удаление пользователя по id
-   */
-  async deleteOneById(id: string): Promise<User> {
-    const res = await fetch(`${this.baseUrl}/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      credentials: "include",
-      next: {
-        tags: ["users"],
-      },
-    })
-
-    if (!res.ok) {
-      throw new Error(`Failed to delete user: ${res.statusText}`)
     }
 
     return await res.json()

@@ -1,10 +1,10 @@
 import Link from "next/link"
 
 import { Title } from "@/01-shared/ui/Title"
-import { NewProjectForm } from "@/03-features/new-project"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"
+import { CreateProjectForm } from "@/03-features/create-project"
 
 export default function NewProjectPage() {
   return (
@@ -14,7 +14,7 @@ export default function NewProjectPage() {
           <Title order={3}>Новый проект</Title>
           <p className="text-sm text-muted-foreground">Введите название проекта, чтобы создать его</p>
         </div>
-        <NewProjectForm />
+        <CreateProjectForm />
         <p className="text-center text-sm text-muted-foreground">
           Нажимая кнопку &quot;Создать&quot;, вы соглашаетесь с нашими{" "}
           <Link href="/terms" target="_blank" className="underline underline-offset-4 hover:text-primary">

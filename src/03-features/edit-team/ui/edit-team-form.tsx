@@ -10,12 +10,12 @@ import { useSession } from "next-auth/react"
 import { Button } from "@/01-shared/ui/Button"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
-import { Team, useUpdateOneByIdTeamMutation } from "@/02-entities/team"
-import { teamFormSchema } from "@/02-entities/team"
+import { Team, useUpdateOneTeamMutation } from "@/02-entities/team"
+import { teamSchema } from "@/02-entities/team"
 import { RadioGroup, RadioGroupItem } from "@/01-shared/ui/RadioGroup"
 import { Textarea } from "@/01-shared/ui/Textarea"
 
-const editTeamFormSchema = teamFormSchema.pick({ name: true, status: true, about: true })
+const editTeamSchema = teamSchema.pick({ name: true, status: true, about: true })
 
 interface EditTeamFormProps {
   team: Team
@@ -23,10 +23,10 @@ interface EditTeamFormProps {
 
 const EditTeamForm = ({ team }: EditTeamFormProps) => {
   const { data: session } = useSession()
-  const { mutate: updateTeam, status } = useUpdateOneByIdTeamMutation()
+  const { mutate: updateTeam, status } = useUpdateOneTeamMutation()
 
-  const editTeamForm = useForm<z.infer<typeof editTeamFormSchema>>({
-    resolver: zodResolver(editTeamFormSchema),
+  const editTeamForm = useForm<z.infer<typeof editTeamSchema>>({
+    resolver: zodResolver(editTeamSchema),
     defaultValues: {
       name: team.name,
       status: team.status,
@@ -34,13 +34,13 @@ const EditTeamForm = ({ team }: EditTeamFormProps) => {
     },
   })
 
-  const onSubmit = (values: z.infer<typeof editTeamFormSchema>) => {
+  const onSubmit = (values: z.infer<typeof editTeamSchema>) => {
     if (!session) {
       toast.error("Вы не авторизованы")
       return
     }
     updateTeam({
-      id: team._id,
+      key: team._id,
       team: {
         name: values.name,
         status: values.status,

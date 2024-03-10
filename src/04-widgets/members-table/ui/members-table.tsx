@@ -4,7 +4,7 @@ import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-tabl
 
 import { columns } from "./columns"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/01-shared/ui/Table"
-import { useGetOneByIdTeamQuery } from "@/02-entities/team"
+import { useGetOneTeamQuery } from "@/02-entities/team"
 
 interface MembersTableProps<TData, TValue> {
   // columns: ColumnDef<TData, TValue>[]
@@ -13,7 +13,7 @@ interface MembersTableProps<TData, TValue> {
 }
 
 const MembersTable = <TData, TValue>({ teamName }: MembersTableProps<TData, TValue>) => {
-  const { data: team } = useGetOneByIdTeamQuery(teamName)
+  const { data: team } = useGetOneTeamQuery(teamName)
 
   const table = useReactTable({
     data: team?.members || [],

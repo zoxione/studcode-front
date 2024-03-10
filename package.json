@@ -1,6 +1,6 @@
 {
   "name": "studcode-front",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "private": true,
   "scripts": {
     "dev": "explorer http://localhost:3030 & next dev -p 3030",

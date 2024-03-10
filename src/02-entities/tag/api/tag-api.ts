@@ -9,27 +9,6 @@ class TagAPI {
   }
 
   /**
-   * Создание нового тега
-   */
-  // async createOne(tag: CreateTag): Promise<Tag> {
-  //   const res = await fetch(`${this.baseUrl}`, {
-  //     method: "POST",
-  //     body: JSON.stringify(tag),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json",
-  //     },
-  //     credentials: "include",
-  //   })
-
-  //   if (!res.ok) {
-  //     throw new Error(`Failed to create tag: ${res.statusText}`)
-  //   }
-
-  //   return await res.json()
-  // }
-
-  /**
    * Получение всех тегов
    */
   async getAll(filter: GetAllTagsFilter): Promise<GetAllTagsResponse> {
@@ -56,6 +35,9 @@ class TagAPI {
     return await res.json()
   }
 
+  /**
+   * Получение всех популярных тегов
+   */
   async getAllPopular(): Promise<Tag[]> {
     const res = await fetch(`${this.baseUrl}/popular`, {
       method: "GET",
@@ -74,10 +56,10 @@ class TagAPI {
   }
 
   /**
-   * Получение одного тега по id
+   * Получение одного тега
    */
-  async getOneById(id: string): Promise<Tag> {
-    const res = await fetch(`${this.baseUrl}/${id}`, {
+  async getOne(key: string): Promise<Tag> {
+    const res = await fetch(`${this.baseUrl}/${key}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -88,67 +70,6 @@ class TagAPI {
 
     if (!res.ok) {
       throw new Error(`Failed to get one tag: ${res.statusText}`)
-    }
-
-    return await res.json()
-  }
-
-  /**
-   * Получение одного тега по slug
-   */
-  async getOneBySlug(slug: string): Promise<Tag> {
-    const res = await fetch(`${this.baseUrl}/${slug}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      credentials: "include",
-    })
-
-    if (!res.ok) {
-      throw new Error(`Failed to get one tag: ${res.statusText}`)
-    }
-
-    return await res.json()
-  }
-
-  /**
-   * Обновление тега по id
-   */
-  async updateOneById(id: string, project: Tag): Promise<Tag> {
-    const res = await fetch(`${this.baseUrl}/${id}`, {
-      method: "PUT",
-      body: JSON.stringify(project),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      credentials: "include",
-    })
-
-    if (!res.ok) {
-      throw new Error(`Failed to update tag: ${res.statusText}`)
-    }
-
-    return await res.json()
-  }
-
-  /**
-   * Удаление тега по id
-   */
-  async deleteOneById(id: string): Promise<Tag> {
-    const res = await fetch(`${this.baseUrl}/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      credentials: "include",
-    })
-
-    if (!res.ok) {
-      throw new Error(`Failed to delete tag: ${res.statusText}`)
     }
 
     return await res.json()

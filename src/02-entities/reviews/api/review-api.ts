@@ -63,10 +63,10 @@ class ReviewAPI {
   }
 
   /**
-   * Получение одного обзора по id
+   * Получение одного обзора
    */
-  async getOneById(id: string): Promise<Review> {
-    const res = await fetch(`${this.baseUrl}/${id}`, {
+  async getOne(key: string): Promise<Review> {
+    const res = await fetch(`${this.baseUrl}/${key}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -86,10 +86,10 @@ class ReviewAPI {
   }
 
   /**
-   * Обновление обзора по id
+   * Обновление обзора
    */
-  async updateOneById(id: string, project: Review): Promise<Review> {
-    const res = await fetch(`${this.baseUrl}/${id}`, {
+  async updateOne(key: string, project: Review): Promise<Review> {
+    const res = await fetch(`${this.baseUrl}/${key}`, {
       method: "PUT",
       body: JSON.stringify(project),
       headers: {
@@ -110,10 +110,10 @@ class ReviewAPI {
   }
 
   /**
-   * Удаление обзора по id
+   * Удаление обзора
    */
-  async deleteOneById(id: string): Promise<Review> {
-    const res = await fetch(`${this.baseUrl}/${id}`, {
+  async deleteOne(key: string): Promise<Review> {
+    const res = await fetch(`${this.baseUrl}/${key}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

@@ -17,7 +17,7 @@ const useCreateOneTeamMutation = () => {
       queryClient.invalidateQueries({ queryKey: ["teams"] })
       await fetch(`/api/revalidate?tag=teams`)
       toast.success("Команда успешно создана")
-      router.push(`/teams/${team.name}`)
+      router.push(`/teams/${team.slug}`)
     },
   })
 }
@@ -30,24 +30,40 @@ const useGetAllTeamsQuery = (filter: GetAllTeamsFilter) => {
   })
 }
 
-const useGetOneByIdTeamQuery = (id: string) => {
+const useGetOneTeamQuery = (key: string) => {
   return useQuery({
-    queryKey: ["teams", id],
-    queryFn: () => teamAPI.getOne(id),
+    queryKey: ["teams", key],
+    queryFn: () => teamAPI.getOne(key),
   })
 }
 
-const useUpdateOneByIdTeamMutation = () => {
+const useUpdateOneTeamMutation = () => {
   const queryClient = useQueryClient()
   const router = useRouter()
   return useMutation({
-    mutationFn: ({ id, team }: { id: string; team: UpdateTeam }) => {
-      return teamAPI.updateOneById(id, team)
+    mutationFn: ({ key, team }: { key: string; team: UpdateTeam }) => {
+      return teamAPI.updateOne(key, team)
     },
     onSuccess: async (team: Team) => {
       queryClient.invalidateQueries({ queryKey: ["teams"] })
       await fetch(`/api/revalidate?tag=teams`)
-      router.push(`/teams/${team.name}`)
+      router.push(`/teams/${team.slug}`)
+    },
+  })
+}
+
+const useDeleteOneTeamMutation = () => {
+  const queryClient = useQueryClient()
+  const router = useRouter()
+  return useMutation({
+    mutationFn: (key: string) => {
+      return teamAPI.deleteOne(key)
+    },
+    onSuccess: async () => {
+      queryClient.invalidateQueries({ queryKey: ["teams"] })
+      await fetch(`/api/revalidate?tag=teams`)
+      toast.success("Команда успешно удалена")
+      router.back()
     },
   })
 }
@@ -59,7 +75,7 @@ const useAddMemberTeamMutation = () => {
       return teamAPI.updateMembers(key, [
         {
           action: "add",
-          payload: {
+          member: {
             user: userId,
             role: role,
           },
@@ -80,7 +96,7 @@ const useRemoveMemberTeamMutation = () => {
       return teamAPI.updateMembers(key, [
         {
           action: "remove",
-          payload: {
+          member: {
             user: userId,
             role: role,
           },
@@ -94,42 +110,26 @@ const useRemoveMemberTeamMutation = () => {
   })
 }
 
-const useUploadsOneByIdTeamMutation = () => {
+const useUploadsOneTeamMutation = () => {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ id, files }: { id: string; files: TeamFiles }) => {
-      return teamAPI.uploadsOneById(id, files)
+    mutationFn: ({ key, files }: { key: string; files: TeamFiles }) => {
+      return teamAPI.uploadsOne(key, files)
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["teams"] })
       await fetch(`/api/revalidate?tag=teams`)
-    },
-  })
-}
-
-const useDeleteOneByIdTeamMutation = () => {
-  const queryClient = useQueryClient()
-  const router = useRouter()
-  return useMutation({
-    mutationFn: (id: string) => {
-      return teamAPI.deleteOneById(id)
-    },
-    onSuccess: async () => {
-      queryClient.invalidateQueries({ queryKey: ["teams"] })
-      await fetch(`/api/revalidate?tag=teams`)
-      toast.success("Команда успешно удалена")
-      router.back()
     },
   })
 }
 
 export {
   useCreateOneTeamMutation,
-  useDeleteOneByIdTeamMutation,
+  useDeleteOneTeamMutation,
   useGetAllTeamsQuery,
-  useGetOneByIdTeamQuery,
-  useUpdateOneByIdTeamMutation,
-  useUploadsOneByIdTeamMutation,
+  useGetOneTeamQuery,
+  useUpdateOneTeamMutation,
+  useUploadsOneTeamMutation,
   useAddMemberTeamMutation,
   useRemoveMemberTeamMutation,
 }

@@ -43,14 +43,12 @@ export const authOptions: NextAuthOptions = {
             email,
             password,
           }),
-          // credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
         })
 
-        if (res.status == 401) {
-          console.log(res.statusText)
+        if (!res.ok) {
           return null
         }
 

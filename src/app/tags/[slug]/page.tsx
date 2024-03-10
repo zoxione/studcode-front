@@ -2,12 +2,12 @@ import { notFound } from "next/navigation"
 import { z } from "zod"
 
 import { tagAPI } from "@/02-entities/tag"
-import { SortProjects } from "@/03-features/sort-projects"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { HeaderPage } from "@/04-widgets/header-page"
 import { Layout } from "@/04-widgets/layout"
 import { ProjectsList } from "@/04-widgets/projects-list"
+import { SortProjectsSelect } from "@/03-features/sort-projects"
 
 const allowedValues = {
   order: ["title", "flames"],
@@ -23,13 +23,12 @@ interface PageProps {
 }
 
 export default async function TagPage({ params, searchParams }: PageProps) {
-  const { slug } = params
-  const tag = await tagAPI.getOneBySlug(slug)
-  if (!tag) {
+  let tag
+  try {
+    tag = await tagAPI.getOne(params.slug)
+  } catch {
     notFound()
   }
-
-  const tagName = tag?.name?.ru !== "" ? tag?.name?.ru : tag?.name?.en
 
   const searchParamsParsed = ParamsSchema.parse({
     order: searchParams?.order,
@@ -37,13 +36,9 @@ export default async function TagPage({ params, searchParams }: PageProps) {
 
   return (
     <Layout header={<Header />} footer={<Footer />} className="space-y-8">
-      <HeaderPage
-        className="my-8"
-        title={tagName}
-        description="Лучшие приложения для рабочей и личной продуктивности"
-      />
+      <HeaderPage className="my-8" title={tag.name} description={tag.description} />
 
-      <SortProjects order={searchParamsParsed.order} />
+      <SortProjectsSelect order={searchParamsParsed.order} />
 
       <ProjectsList filter={{ tag_slug: tag.slug, order: searchParamsParsed.order }} />
     </Layout>

@@ -19,15 +19,16 @@ export default async function ProjectsPage({}: PageProps) {
 
   return (
     <Layout header={<Header />} footer={<Footer />} className="space-y-8 pb-8">
-      <HeaderPage
-        className="my-8"
-        title="Проекты"
-        description="Лучшие приложения для рабочей и личной продуктивности"
-      />
+      <HeaderPage className="my-8" title="Проекты" description="Проекты самых популярных тегов." />
 
-      {popularTags.map((tag) => (
-        <ProjectsCarousel key={tag._id} label={tag.name.ru} tagSlug={tag.slug} />
-      ))}
+      {popularTags.length > 0 ? (
+        popularTags.map((tag) => <ProjectsCarousel key={tag._id} label={tag.name} tagSlug={tag.slug} />)
+      ) : (
+        <span className="text-sm text-muted-foreground flex justify-center items-center text-center">
+          {"(>_<)"} <br />
+          Проекты не найдены.
+        </span>
+      )}
 
       <Link href="/tags" className={cn(buttonVariants({ variant: "secondary" }), "w-full")}>
         Посмотреть все

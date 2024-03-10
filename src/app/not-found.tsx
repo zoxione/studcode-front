@@ -3,9 +3,9 @@ import { InfoIcon } from "lucide-react"
 import { ArrowLeftIcon } from "@radix-ui/react-icons"
 
 import { Title } from "@/01-shared/ui/Title"
-import { BackButton } from "@/03-features/back-button"
 import { buttonVariants } from "@/01-shared/ui/Button"
 import { cn } from "@/01-shared/utils/cn"
+import { BackPageButton } from "@/03-features/back-page"
 
 export default function NotFound() {
   return (
@@ -18,10 +18,10 @@ export default function NotFound() {
         Страница, которую вы ищете, не существует. Вот несколько полезных ссылок:
       </p>
       <div className="flex gap-2">
-        <BackButton variant="outline">
+        <BackPageButton variant="outline">
           <ArrowLeftIcon className="w-4 h-4 mr-1" />
           Вернуться
-        </BackButton>
+        </BackPageButton>
         <Link href="/" className={cn(buttonVariants({}))}>
           На главную
         </Link>

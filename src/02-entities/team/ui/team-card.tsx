@@ -31,8 +31,8 @@ const TeamCard = forwardRef<HTMLAnchorElement, TeamCardProps>(({ team, loading, 
 
   return (
     <Link
+      href={`/teams/${team.slug}`}
       ref={ref}
-      href={`/teams/${team.name}`}
       className={cn(
         "w-fit flex flex-row items-center gap-2 rounded-md hover:bg-gradient-to-l from-accent duration-200",
         className,

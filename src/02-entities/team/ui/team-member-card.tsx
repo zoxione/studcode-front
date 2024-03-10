@@ -14,7 +14,8 @@ const TeamMemberCard = forwardRef<HTMLAnchorElement, TeamMemberCardProps>(({ mem
     <Link
       key={member.user._id}
       href={`/${member.user.username}`}
-      className="w-fit flex items-center hover:bg-accent rounded-l-3xl rounded-r-md"
+      ref={ref}
+      className="w-fit flex items-center hover:bg-accent rounded-full"
     >
       <Avatar className="w-8 h-8 text-sm">
         <AvatarImage src={member.user.avatar} width={32} height={32} alt={member.user.username} />

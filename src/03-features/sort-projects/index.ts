@@ -1,1 +1,1 @@
-export { SortProjects } from "./ui/sort-projects"
+export { SortProjectsSelect } from "./ui/sort-projects-select"

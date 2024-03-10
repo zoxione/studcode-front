@@ -8,8 +8,7 @@ import { Button } from "@/01-shared/ui/Button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/01-shared/ui/Card"
 import { Dialog, DialogContent } from "@/01-shared/ui/Dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/01-shared/ui/Tabs"
-import { SignInForm } from "@/03-features/sign-in"
-import { SignUpForm } from "@/03-features/sign-up"
+import { SignInForm, SignUpForm } from "@/03-features/auth"
 
 const AuthDialog = () => {
   const router = useRouter()

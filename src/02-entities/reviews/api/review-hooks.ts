@@ -18,25 +18,25 @@ const useCreateOneReviewMutation = () => {
 }
 
 const useGetAllReviewsQuery = (filter: GetAllReviewsFilter) => {
-  const { page, limit, search, order } = filter
+  const { page, limit, search, order, project_id } = filter
   return useQuery({
-    queryKey: ["reviews", page, limit, search, order],
+    queryKey: ["reviews", page, limit, search, order, project_id],
     queryFn: () => reviewAPI.getAll(filter),
   })
 }
 
-const useGetOneByIdReviewQuery = (id: string) => {
+const useGetOneReviewQuery = (key: string) => {
   return useQuery({
-    queryKey: ["reviews", id],
-    queryFn: () => reviewAPI.getOneById(id),
+    queryKey: ["reviews", key],
+    queryFn: () => reviewAPI.getOne(key),
   })
 }
 
-const useUpdateOneByIdReviewMutation = () => {
+const useUpdateOneReviewMutation = () => {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ id, review }: { id: string; review: Review }) => {
-      return reviewAPI.updateOneById(id, review)
+    mutationFn: ({ key, review }: { key: string; review: Review }) => {
+      return reviewAPI.updateOne(key, review)
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["reviews"] })
@@ -45,11 +45,11 @@ const useUpdateOneByIdReviewMutation = () => {
   })
 }
 
-const useDeleteOneByIdReviewMutation = () => {
+const useDeleteOneReviewMutation = () => {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (id: string) => {
-      return reviewAPI.deleteOneById(id)
+    mutationFn: (key: string) => {
+      return reviewAPI.deleteOne(key)
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["reviews"] })
@@ -61,7 +61,7 @@ const useDeleteOneByIdReviewMutation = () => {
 export {
   useCreateOneReviewMutation,
   useGetAllReviewsQuery,
-  useGetOneByIdReviewQuery,
-  useUpdateOneByIdReviewMutation,
-  useDeleteOneByIdReviewMutation,
+  useGetOneReviewQuery,
+  useUpdateOneReviewMutation,
+  useDeleteOneReviewMutation,
 }

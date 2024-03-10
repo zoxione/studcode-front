@@ -1,3 +1,4 @@
+import { DeepPartial } from "@/01-shared/lib/deep-partial"
 import { Review } from "../model/types"
 
 interface GetAllReviewsFilter {
@@ -25,4 +26,6 @@ interface CreateReview {
   reviewer: string
 }
 
-export type { GetAllReviewsFilter, GetAllReviewsResponse, CreateReview }
+interface UpdateReview extends Omit<DeepPartial<Review>, "_id" | "created_at" | "updated_at"> {}
+
+export type { GetAllReviewsFilter, GetAllReviewsResponse, CreateReview, UpdateReview }

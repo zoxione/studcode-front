@@ -1,8 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 
-import { Tag } from "../model/types"
-import { GetAllTagsFilter } from "./types"
 import { tagAPI } from "./tag-api"
+import { GetAllTagsFilter } from "./types"
 
 const useGetAllTagsQuery = (filter: GetAllTagsFilter) => {
   const { page, limit, search, order } = filter
@@ -12,50 +11,18 @@ const useGetAllTagsQuery = (filter: GetAllTagsFilter) => {
   })
 }
 
-const useGetOneByIdTagQuery = (id: string) => {
+const useGetAllPopularTagsQuery = () => {
   return useQuery({
-    queryKey: ["tags", id],
-    queryFn: () => tagAPI.getOneById(id),
+    queryKey: ["tags"],
+    queryFn: () => tagAPI.getAllPopular(),
   })
 }
 
-const useGetOneBySlugTagQuery = (slug: string) => {
+const useGetOneTagQuery = (key: string) => {
   return useQuery({
-    queryKey: ["tags", slug],
-    queryFn: () => tagAPI.getOneBySlug(slug),
+    queryKey: ["tags", key],
+    queryFn: () => tagAPI.getOne(key),
   })
 }
 
-const useUpdateOneByIdTagMutation = () => {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: ({ id, tag }: { id: string; tag: Tag }) => {
-      return tagAPI.updateOneById(id, tag)
-    },
-    onSuccess: async () => {
-      queryClient.invalidateQueries({ queryKey: ["tags"] })
-      await fetch(`/api/revalidate?tag=tags`)
-    },
-  })
-}
-
-const useDeleteOneByIdTagMutation = () => {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: (id: string) => {
-      return tagAPI.deleteOneById(id)
-    },
-    onSuccess: async () => {
-      queryClient.invalidateQueries({ queryKey: ["tags"] })
-      await fetch(`/api/revalidate?tag=tags`)
-    },
-  })
-}
-
-export {
-  useGetAllTagsQuery,
-  useGetOneByIdTagQuery,
-  useGetOneBySlugTagQuery,
-  useUpdateOneByIdTagMutation,
-  useDeleteOneByIdTagMutation,
-}
+export { useGetAllTagsQuery, useGetAllPopularTagsQuery, useGetOneTagQuery }

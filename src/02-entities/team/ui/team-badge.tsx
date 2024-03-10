@@ -13,7 +13,7 @@ export interface TeamBadgeProps extends HTMLAttributes<HTMLAnchorElement> {
 const TeamBadge = forwardRef<HTMLAnchorElement, TeamBadgeProps>(({ team, className }, ref) => {
   return (
     <Link
-      href={`/teams/${team.name}`}
+      href={`/teams/${team.slug}`}
       ref={ref}
       className={cn(badgeVariants({ variant: "outline" }), "w-fit gap-1", className)}
     >

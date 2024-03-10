@@ -1,5 +1,4 @@
-import { DeepPartial } from "react-hook-form"
-
+import { DeepPartial } from "@/01-shared/lib/deep-partial"
 import { Project, ProjectStatus } from "../model/types"
 
 type TimeFrameProject = "day" | "week" | "month" | "year" | "all"
@@ -11,8 +10,9 @@ interface GetAllProjectsFilter {
   order?: keyof Project
   time_frame?: TimeFrameProject
   tag_slug?: string
-  creator_id?: string
   status?: ProjectStatus
+  creator_id?: string
+  team_id?: string
 }
 
 interface GetAllProjectsResponse {

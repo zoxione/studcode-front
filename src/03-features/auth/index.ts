@@ -1,3 +1,5 @@
 export { authAPI } from "./api/auth-api"
 export * from "./api/auth-hooks"
 export * from "./api/types"
+export { SignInForm } from "./ui/sign-in-form"
+export { SignUpForm } from "./ui/sign-up-form"

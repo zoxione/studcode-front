@@ -1,9 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useSession } from "next-auth/react"
 
-import { RecursivePartial } from "@/01-shared/utils/recursive-partial"
 import { User } from "../model/types"
-import { GetAllUsersFilter, UserFiles } from "./types"
+import { GetAllUsersFilter, UpdateUser, UserFiles } from "./types"
 import { userAPI } from "./user-api"
 
 const useGetAllUsersQuery = (filter: GetAllUsersFilter) => {
@@ -14,19 +13,19 @@ const useGetAllUsersQuery = (filter: GetAllUsersFilter) => {
   })
 }
 
-const useGetOneByIdUserQuery = (id: string) => {
+const useGetOneUserQuery = (key: string) => {
   return useQuery({
-    queryKey: ["users", id],
-    queryFn: () => userAPI.getOne(id),
+    queryKey: ["users", key],
+    queryFn: () => userAPI.getOne(key),
   })
 }
 
-const useUpdateOneByIdUserMutation = () => {
+const useUpdateOneUserMutation = () => {
   const queryClient = useQueryClient()
   const { update } = useSession()
   return useMutation({
-    mutationFn: ({ id, user }: { id: string; user: RecursivePartial<User> }) => {
-      return userAPI.updateOneById(id, user)
+    mutationFn: ({ key, user }: { key: string; user: UpdateUser }) => {
+      return userAPI.updateOne(key, user)
     },
     onSuccess: async (user: User) => {
       queryClient.invalidateQueries({ queryKey: ["users"] })
@@ -38,11 +37,11 @@ const useUpdateOneByIdUserMutation = () => {
   })
 }
 
-const useUploadsOneByIdUserMutation = () => {
+const useDeleteOneUserMutation = () => {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ id, files }: { id: string; files: UserFiles }) => {
-      return userAPI.uploadsOneById(id, files)
+    mutationFn: (key: string) => {
+      return userAPI.deleteOne(key)
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["users"] })
@@ -51,11 +50,11 @@ const useUploadsOneByIdUserMutation = () => {
   })
 }
 
-const useDeleteOneByIdUserMutation = () => {
+const useUploadsOneUserMutation = () => {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (id: string) => {
-      return userAPI.deleteOneById(id)
+    mutationFn: ({ key, files }: { key: string; files: UserFiles }) => {
+      return userAPI.uploadsOne(key, files)
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["users"] })
@@ -66,8 +65,8 @@ const useDeleteOneByIdUserMutation = () => {
 
 export {
   useGetAllUsersQuery,
-  useGetOneByIdUserQuery,
-  useUpdateOneByIdUserMutation,
-  useUploadsOneByIdUserMutation,
-  useDeleteOneByIdUserMutation,
+  useGetOneUserQuery,
+  useUpdateOneUserMutation,
+  useUploadsOneUserMutation,
+  useDeleteOneUserMutation,
 }

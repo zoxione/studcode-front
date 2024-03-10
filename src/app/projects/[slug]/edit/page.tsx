@@ -3,11 +3,11 @@ import { getServerSession } from "next-auth"
 
 import { Title } from "@/01-shared/ui/Title"
 import { DeleteProjectButton, prettyStatus, projectAPI } from "@/02-entities/project"
-import { EditProjectForm } from "@/04-widgets/edit-project"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"
 import { authOptions } from "@/01-shared/lib/auth-options"
+import { EditProjectForm } from "@/03-features/edit-project"
 
 export default async function EditProjectPage({ params }: { params: { slug: string } }) {
   const { slug } = params

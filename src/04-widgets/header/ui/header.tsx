@@ -11,7 +11,7 @@ import { Button } from "@/01-shared/ui/Button"
 import { ScrollArea } from "@/01-shared/ui/ScrollArea"
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "@/01-shared/ui/Sheet"
 import { cn } from "@/01-shared/utils/cn"
-import { Search } from "@/03-features/search"
+import { SearchDialog } from "@/03-features/search"
 import { Logo } from "@/04-widgets/logo"
 import { ToggleTheme } from "@/03-features/toggle-theme"
 import { UserMenu } from "../../../02-entities/user"
@@ -93,7 +93,7 @@ export const Header = ({ className }: IHeaderProps) => {
         </Sheet>
 
         <div className="flex flex-1 items-center justify-between gap-2 md:justify-end">
-          <Search className="flex-1 lg:flex-none" />
+          <SearchDialog className="flex-1 lg:flex-none" />
           {status === "loading" ? (
             <Button variant="ghost" size="icon">
               <ReloadIcon className="h-4 w-4 animate-spin" />

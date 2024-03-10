@@ -3,7 +3,6 @@
 import { ReloadIcon } from "@radix-ui/react-icons"
 import { Trash2Icon } from "lucide-react"
 
-
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -15,14 +14,14 @@ import {
   AlertDialogTrigger,
 } from "@/01-shared/ui/AlertDialog"
 import { Button } from "@/01-shared/ui/Button"
-import { useDeleteOneByIdProjectMutation } from "../api/project-hooks"
+import { useDeleteOneProjectMutation } from "../api/project-hooks"
 
 interface DeleteProjectButtonProps {
   id: string
 }
 
 const DeleteProjectButton = ({ id }: DeleteProjectButtonProps) => {
-  const { mutate: deleteProject, status } = useDeleteOneByIdProjectMutation()
+  const { mutate: deleteProject, status } = useDeleteOneProjectMutation()
 
   const handleButton = () => {
     deleteProject(id)
@@ -45,14 +44,7 @@ const DeleteProjectButton = ({ id }: DeleteProjectButtonProps) => {
         <AlertDialogFooter>
           <AlertDialogCancel>Закрыть</AlertDialogCancel>
           <Button onClick={handleButton} variant="destructive" disabled={status === "pending"}>
-            {status === "pending" ? (
-              <>
-                <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-                Удаление...
-              </>
-            ) : (
-              <>Удалить</>
-            )}
+            {status === "pending" ? <ReloadIcon className="mr-2 h-4 w-4 animate-spin" /> : "Удалить"}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

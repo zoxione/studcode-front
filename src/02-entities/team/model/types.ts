@@ -14,21 +14,14 @@ interface TeamMember {
   role: TeamUserRole
 }
 
-interface TeamProject {
-  _id: string
-  title: string
-  tagline: string
-  logo: string
-}
-
 interface Team {
   _id: string
   name: string
   about: string
   status: TeamStatus
   logo: string
+  slug: string
   members: TeamMember[]
-  projects: TeamProject[]
   created_at: string
   updated_at: string
 }

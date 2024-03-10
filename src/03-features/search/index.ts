@@ -1,1 +1,1 @@
-export { Search } from "./ui/search"
+export { SearchDialog } from "./ui/search-dialog"
