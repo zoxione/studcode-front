@@ -1,82 +1,50 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useEffect, useState } from "react"
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
 import * as z from "zod"
+import { CheckCircledIcon, ImageIcon, PlusCircledIcon, TextAlignRightIcon } from "@radix-ui/react-icons"
 
 import { Button } from "@/01-shared/ui/Button"
 import { Form } from "@/01-shared/ui/Form"
-import { Project, projectSchema } from "@/02-entities/project"
+import { Project } from "@/02-entities/project"
 import { useEditProject } from "../lib/use-edit-project"
 import { ExtrasSection } from "./extras-section"
 import { ImagesAndMediaSection } from "./images-and-media-section"
 import { MainInfoSection } from "./main-info-section"
 import { PublishSection } from "./publish-section"
-
-export const editProjectSchema = projectSchema.pick({
-  title: true,
-  tagline: true,
-  description: true,
-  main_link: true,
-  github_link: true,
-  youtube_link: true,
-  logo_file: true,
-  screenshots_files: true,
-  price: true,
-  tags: true,
-})
+import { editProjectSchema } from "../lib/edit-project-schema"
+import { ScrollArea, ScrollBar } from "@/01-shared/ui/ScrollArea"
 
 interface EditProjectFormProps {
   project: Project
 }
 
 const EditProjectForm = ({ project }: EditProjectFormProps) => {
-  const [currentSection, setCurrentSection] = useState(0)
-  const { handlePublish, handleSaveDraft, isLoading } = useEditProject()
-
-  const editProjectForm = useForm<z.infer<typeof editProjectSchema>>({
-    resolver: zodResolver(editProjectSchema),
-    defaultValues: {
-      title: project.title,
-      tagline: project.tagline,
-      description: project.description,
-      main_link: project.links.find((link) => link.type === "main")?.url || "",
-      github_link: project.links.find((link) => link.type === "github")?.url || "",
-      youtube_link: project.links.find((link) => link.type === "youtube")?.url || "",
-      logo_file: [],
-      screenshots_files: [],
-      price: project.price,
-      tags: project.tags.map((tag) => ({ label: tag.name, value: tag._id })),
-    },
-  })
-
-  useEffect(() => {
-    if (editProjectForm.formState.isSubmitted && Object.keys(editProjectForm.formState.errors).length > 0) {
-      toast.error("Введены некорректные данные")
-      console.error(editProjectForm.formState.errors)
-    }
-  }, [editProjectForm.formState.submitCount, editProjectForm.formState.errors])
+  const { editProjectForm, handlePublish, handleSaveDraft, isLoading, currentSection, setCurrentSection } =
+    useEditProject({ project })
 
   const sections = [
     {
       title: "Основная информация",
+      icon: <TextAlignRightIcon className="w-4 h-4" />,
       content: <MainInfoSection form={editProjectForm} />,
     },
     {
       title: "Изображения и медиа",
-      content: <ImagesAndMediaSection form={editProjectForm} />,
+      icon: <ImageIcon className="w-4 h-4" />,
+      content: <ImagesAndMediaSection form={editProjectForm} project={project} />,
     },
     {
       title: "Дополнительно",
+      icon: <PlusCircledIcon className="w-4 h-4" />,
       content: <ExtrasSection form={editProjectForm} />,
     },
     {
       title: "Публикация",
+      icon: <CheckCircledIcon className="w-4 h-4" />,
       content: (
         <PublishSection
           form={editProjectForm}
+          project={project}
           onSaveDraft={() => handleSaveDraft(project._id, project.slug, editProjectForm.getValues())}
           isLoading={isLoading}
         />
@@ -85,21 +53,28 @@ const EditProjectForm = ({ project }: EditProjectFormProps) => {
   ]
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 auto-rows-min gap-8 lg:gap-16 h-full">
-      <aside className="flex flex-col gap-2 lg:sticky lg:top-[80px] lg:h-[calc(100vh-80px-116px)]">
-        {sections.map((section, index) => (
-          <Button
-            key={section.title}
-            variant={currentSection === index ? "default" : "ghost"}
-            size="lg"
-            className="justify-start px-4"
-            onClick={() => {
-              setCurrentSection(index)
-            }}
-          >
-            {section.title}
-          </Button>
-        ))}
+    <div className="grid grid-cols-1 lg:grid-cols-4 auto-rows-min gap-8 lg:gap-16">
+      <aside className="flex flex-col gap-2 lg:sticky lg:top-[90px] lg:h-fit">
+        <nav>
+          <ScrollArea>
+            <div className="flex lg:flex-col gap-2 py-3 lg:py-0">
+              {sections.map((section, index) => (
+                <Button
+                  key={section.title}
+                  variant={currentSection === index ? "default" : "ghost"}
+                  className="justify-start gap-2"
+                  onClick={() => {
+                    setCurrentSection(index)
+                  }}
+                >
+                  {section.icon}
+                  {section.title}
+                </Button>
+              ))}
+            </div>
+            <ScrollBar orientation="horizontal" className="mt-2" />
+          </ScrollArea>
+        </nav>
       </aside>
       <section className="col-span-1 lg:col-span-3 h-full">
         <Form {...editProjectForm}>

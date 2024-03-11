@@ -1,57 +1,59 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
-import * as z from "zod"
-import { ReloadIcon } from "@radix-ui/react-icons"
-import { useSession } from "next-auth/react"
+import { ImageIcon, ReloadIcon } from "@radix-ui/react-icons"
 
 import { Button } from "@/01-shared/ui/Button"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
-import { Team, useUpdateOneTeamMutation } from "@/02-entities/team"
-import { teamSchema } from "@/02-entities/team"
 import { RadioGroup, RadioGroupItem } from "@/01-shared/ui/RadioGroup"
 import { Textarea } from "@/01-shared/ui/Textarea"
-
-const editTeamSchema = teamSchema.pick({ name: true, status: true, about: true })
+import { useEditTeam } from "../lib/use-edit-team"
+import { ACCEPTED_IMAGE_TYPES, Team } from "@/02-entities/team"
+import { Dropzone } from "@/01-shared/ui/Dropzone"
 
 interface EditTeamFormProps {
   team: Team
 }
 
 const EditTeamForm = ({ team }: EditTeamFormProps) => {
-  const { data: session } = useSession()
-  const { mutate: updateTeam, status } = useUpdateOneTeamMutation()
-
-  const editTeamForm = useForm<z.infer<typeof editTeamSchema>>({
-    resolver: zodResolver(editTeamSchema),
-    defaultValues: {
-      name: team.name,
-      status: team.status,
-      about: team.about,
-    },
-  })
-
-  const onSubmit = (values: z.infer<typeof editTeamSchema>) => {
-    if (!session) {
-      toast.error("Вы не авторизованы")
-      return
-    }
-    updateTeam({
-      key: team._id,
-      team: {
-        name: values.name,
-        status: values.status,
-        about: values.about || "",
-      },
-    })
-  }
+  const { editTeamForm, onSubmit, isLoading } = useEditTeam({ team })
 
   return (
     <Form {...editTeamForm}>
       <form onSubmit={editTeamForm.handleSubmit(onSubmit)} className="space-y-4">
+        <div className="space-y-4">
+          <div className="flex flex-row items-center gap-6">
+            <FormField
+              control={editTeamForm.control}
+              name="logo_file"
+              render={({ field }) => (
+                <FormItem className="">
+                  <FormControl>
+                    <Dropzone
+                      classNameWrapper="w-24 h-24 rounded-full overflow-hidden"
+                      accept={ACCEPTED_IMAGE_TYPES.join(", ")}
+                      preview
+                      classNamePreview="size-full aspect-square"
+                      dropContent={
+                        team.logo !== "" ? (
+                          <img src={team.logo} alt={team.name} className="max-h-[200px] size-full aspect-square" />
+                        ) : (
+                          <ImageIcon className="h-6 w-6" />
+                        )
+                      }
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex flex-col text-sm">
+              <span>Разрешенные форматы: JPG, JPEG, PNG, WEBP.</span>
+              <span>Максимальный размер: 5 МБ.</span>
+            </div>
+          </div>
+        </div>
         <FormField
           control={editTeamForm.control}
           name="name"
@@ -109,8 +111,8 @@ const EditTeamForm = ({ team }: EditTeamFormProps) => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="" disabled={status === "pending"}>
-          {status === "pending" ? <ReloadIcon className="h-4 w-4 animate-spin" /> : "Обновить"}
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? <ReloadIcon className="h-4 w-4 animate-spin" /> : "Обновить"}
         </Button>
       </form>
     </Form>

@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
+import { useState } from "react"
 
 import { userAPI, userSchema } from "@/02-entities/user"
 import { useAddMemberTeamMutation } from "@/02-entities/team"
@@ -13,7 +14,8 @@ interface useAddTeamMemberProps {
 }
 
 const useAddTeamMember = ({ teamName }: useAddTeamMemberProps) => {
-  const { mutate: addTeamMember, status } = useAddMemberTeamMutation()
+  const [isLoading, setIsLoading] = useState(false)
+  const { mutateAsync: addTeamMemberAsync } = useAddMemberTeamMutation()
 
   const addTeamMemberForm = useForm<z.infer<typeof addTeamMemberSchema>>({
     resolver: zodResolver(addTeamMemberSchema),
@@ -24,23 +26,28 @@ const useAddTeamMember = ({ teamName }: useAddTeamMemberProps) => {
 
   async function onSubmit(values: z.infer<typeof addTeamMemberSchema>) {
     try {
+      setIsLoading(true)
       const user = await userAPI.getOne(values.username)
-      if (user) {
-        addTeamMember({
-          key: teamName,
-          userId: user._id,
-          role: "member",
-        })
+      if (!user) {
+        toast.error("Пользователь не найден")
+        return
       }
+      await addTeamMemberAsync({
+        key: teamName,
+        userId: user._id,
+        role: "member",
+      })
     } catch (error) {
-      toast.error("Пользователь не найден")
+      toast.error("Произошла ошибка")
+    } finally {
+      setIsLoading(false)
     }
   }
 
   return {
     addTeamMemberForm,
     onSubmit,
-    status,
+    isLoading,
   }
 }
 

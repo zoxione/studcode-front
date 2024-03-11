@@ -12,7 +12,7 @@ interface AddTeamMemberFormProps {
 }
 
 const AddTeamMemberForm = ({ teamName }: AddTeamMemberFormProps) => {
-  const { addTeamMemberForm, onSubmit, status } = useAddTeamMember({ teamName })
+  const { addTeamMemberForm, onSubmit, isLoading } = useAddTeamMember({ teamName })
 
   return (
     <Form {...addTeamMemberForm}>
@@ -23,14 +23,14 @@ const AddTeamMemberForm = ({ teamName }: AddTeamMemberFormProps) => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input type="username" placeholder="example" {...field} />
+                <Input type="username" placeholder="Имя пользователя" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={status === "pending"}>
-          {status === "pending" ? <ReloadIcon className="h-4 w-4 animate-spin" /> : "Добавить"}
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? <ReloadIcon className="h-4 w-4 animate-spin" /> : "Добавить"}
         </Button>
       </form>
     </Form>

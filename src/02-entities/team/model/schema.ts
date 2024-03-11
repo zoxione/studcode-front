@@ -5,15 +5,15 @@ import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "./constants"
 const teamSchema = z.object({
   name: z
     .string()
-    .min(2, { message: "Название должно иметь больше 1 символа" })
-    .max(16, { message: "Название должно иметь меньше 17 символов" }),
+    .min(2, { message: "Минимальная длина названия - 2 символа" })
+    .max(16, { message: "Максимальная длина названия - 16 символов" }),
   about: z
     .union([
       z.string().length(0),
       z
         .string()
-        .min(2, { message: "Описание должно иметь больше 1 символа" })
-        .max(256, { message: "Описание должно иметь меньше 257 символов" }),
+        .min(2, { message: "Минимальная длина описания - 2 символа" })
+        .max(256, { message: "Максимальная длина описания - 256 символов" }),
     ])
     .optional()
     .transform((e) => (e === "" ? undefined : e)),
@@ -25,7 +25,8 @@ const teamSchema = z.object({
     .refine(
       (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
       "Принимаются только файлы типа .jpg, .jpeg, .png и .webp.",
-    ),
+    )
+    .optional(),
 })
 
 export { teamSchema }

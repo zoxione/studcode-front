@@ -6,7 +6,7 @@ import * as z from "zod"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { RadioGroup, RadioGroupItem } from "@/01-shared/ui/RadioGroup"
 import { Title } from "@/01-shared/ui/Title"
-import { editProjectSchema } from "./edit-project-form"
+import { editProjectSchema } from "../lib/edit-project-schema"
 
 interface ExtrasSectionProps {
   form: UseFormReturn<z.infer<typeof editProjectSchema>>

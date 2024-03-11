@@ -15,13 +15,13 @@ const TagCard = forwardRef<HTMLAnchorElement, TagCardProps>(({ tag, className },
       href={`/tags/${tag.slug}`}
       ref={ref}
       className={cn(
-        "h-full w-full flex flex-row items-center gap-2 p-4 rounded-md hover:bg-accent duration-200",
+        "group h-full w-full flex flex-row items-center gap-2 p-4 rounded-md hover:bg-accent duration-200",
         className,
       )}
     >
       <span className="flex-none w-10 h-10 bg-accent rounded-md flex justify-center items-center">{tag.icon}</span>
       <span className="grow line-clamp-1">{tag.name}</span>
-      <ChevronRightIcon className="flex-none w-4 h-4" />
+      <ChevronRightIcon className="flex-none w-4 h-4 hidden group-hover:block" />
     </Link>
   )
 })

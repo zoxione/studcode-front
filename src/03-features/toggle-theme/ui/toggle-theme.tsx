@@ -1,18 +1,18 @@
 "use client"
 
 import { LaptopIcon, MoonIcon, SunIcon } from "lucide-react"
-import { useTheme } from "next-themes"
 
 import { Button } from "@/01-shared/ui/Button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/01-shared/ui/DropdownMenu"
 import { cn } from "@/01-shared/utils/cn"
+import { useToggleTheme } from "../lib/use-toggle-theme"
 
 interface ToggleThemeProps {
   className?: string
 }
 
 const ToggleTheme = ({ className }: ToggleThemeProps) => {
-  const { setTheme } = useTheme()
+  const { setTheme } = useToggleTheme({})
 
   return (
     <DropdownMenu>

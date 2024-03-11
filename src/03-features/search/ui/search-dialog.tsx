@@ -1,10 +1,7 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
 import { ReloadIcon } from "@radix-ui/react-icons"
 import { SearchIcon } from "lucide-react"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
 
 import { Button } from "@/01-shared/ui/Button"
 import { Dialog, DialogContent, DialogFooter, DialogTrigger } from "@/01-shared/ui/Dialog"
@@ -12,47 +9,24 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/01-shared
 import { Input } from "@/01-shared/ui/Input"
 import { ScrollArea } from "@/01-shared/ui/ScrollArea"
 import { Title } from "@/01-shared/ui/Title"
-import { useDebounce } from "@/01-shared/utils/use-debounce"
-import { ProjectCard, useGetAllProjectsQuery } from "@/02-entities/project"
-import { useGetAllPopularTagsQuery } from "@/02-entities/tag"
-import { TagCardSmall } from "@/02-entities/tag/ui/tag-card-small"
 import { cn } from "@/01-shared/utils/cn"
-
-const searchDialogSchema = z.object({
-  query: z
-    .string()
-    .min(2, { message: "Минимальная длина запроса 2 символа" })
-    .max(32, { message: "Максимальная длина запроса 32 символа" }),
-})
+import { ProjectCard } from "@/02-entities/project"
+import { TagCardSmall } from "@/02-entities/tag/ui/tag-card-small"
+import { useSearch } from "../lib/use-search"
 
 interface SearchDialogProps {
   className?: string
 }
 
 const SearchDialog = ({ className }: SearchDialogProps) => {
-  const { data: popularTags } = useGetAllPopularTagsQuery()
-
-  const searchDialogForm = useForm<z.infer<typeof searchDialogSchema>>({
-    resolver: zodResolver(searchDialogSchema),
-    defaultValues: {
-      query: "",
-    },
-  })
-
-  const debouncedSearchDialogQuery = useDebounce(searchDialogForm.watch("query"), 200)
-
-  const { data: projects, fetchStatus } = useGetAllProjectsQuery({
-    search: debouncedSearchDialogQuery,
-    status: "published",
-  })
-
-  const onSubmit = async (values: z.infer<typeof searchDialogSchema>) => {}
+  const { searchDialogForm, onSubmit, isLoading, popularTags, projects, status } = useSearch({})
 
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline" className={cn("md:w-40 lg:w-64 justify-start", className)}>
-          <SearchIcon className="mr-2 h-4 w-4" /> Поиск...
+          Поиск...
+          <SearchIcon className="ml-auto h-4 w-4" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-lg" withBackButton={false}>
@@ -70,14 +44,13 @@ const SearchDialog = ({ className }: SearchDialogProps) => {
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={fetchStatus === "fetching"}>
-              {fetchStatus === "fetching" ? <ReloadIcon className="mr-2 h-4 w-4 animate-spin" /> : null}
-              Поиск
+            <Button type="submit" disabled={status === "pending"}>
+              {status === "pending" ? <ReloadIcon className="mr-2 h-4 w-4 animate-spin" /> : "Поиск"}
             </Button>
           </form>
         </Form>
         {searchDialogForm.formState.isDirty ? (
-          fetchStatus === "fetching" ? (
+          status === "pending" ? (
             <div>
               <Title order={6}>Поиск...</Title>
               <ScrollArea className="mt-2 w-full h-[280px]">

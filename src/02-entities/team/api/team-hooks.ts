@@ -1,23 +1,18 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
 
-import { Team, TeamUserRole } from "../model/types"
+import { TeamUserRole } from "../model/types"
 import { teamAPI } from "./team-api"
 import { CreateTeam, GetAllTeamsFilter, TeamFiles, UpdateTeam } from "./types"
 
 const useCreateOneTeamMutation = () => {
   const queryClient = useQueryClient()
-  const router = useRouter()
   return useMutation({
     mutationFn: (team: CreateTeam) => {
       return teamAPI.createOne(team)
     },
-    onSuccess: async (team: Team) => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["teams"] })
       await fetch(`/api/revalidate?tag=teams`)
-      toast.success("Команда успешно создана")
-      router.push(`/teams/${team.slug}`)
     },
   })
 }
@@ -39,22 +34,19 @@ const useGetOneTeamQuery = (key: string) => {
 
 const useUpdateOneTeamMutation = () => {
   const queryClient = useQueryClient()
-  const router = useRouter()
   return useMutation({
     mutationFn: ({ key, team }: { key: string; team: UpdateTeam }) => {
       return teamAPI.updateOne(key, team)
     },
-    onSuccess: async (team: Team) => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["teams"] })
       await fetch(`/api/revalidate?tag=teams`)
-      router.push(`/teams/${team.slug}`)
     },
   })
 }
 
 const useDeleteOneTeamMutation = () => {
   const queryClient = useQueryClient()
-  const router = useRouter()
   return useMutation({
     mutationFn: (key: string) => {
       return teamAPI.deleteOne(key)
@@ -62,8 +54,6 @@ const useDeleteOneTeamMutation = () => {
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["teams"] })
       await fetch(`/api/revalidate?tag=teams`)
-      toast.success("Команда успешно удалена")
-      router.back()
     },
   })
 }
@@ -124,12 +114,12 @@ const useUploadsOneTeamMutation = () => {
 }
 
 export {
+  useAddMemberTeamMutation,
   useCreateOneTeamMutation,
   useDeleteOneTeamMutation,
   useGetAllTeamsQuery,
   useGetOneTeamQuery,
+  useRemoveMemberTeamMutation,
   useUpdateOneTeamMutation,
   useUploadsOneTeamMutation,
-  useAddMemberTeamMutation,
-  useRemoveMemberTeamMutation,
 }

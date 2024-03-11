@@ -1,23 +1,19 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
 
-import { Project } from "../model/types"
 import { projectAPI } from "./project-api"
 import { CreateProject, GetAllProjectsFilter, ProjectFiles, UpdateProject } from "./types"
 
 const useCreateOneProjectMutation = () => {
   const queryClient = useQueryClient()
-  const router = useRouter()
   return useMutation({
     mutationFn: (project: CreateProject) => {
       return projectAPI.createOne(project)
     },
-    onSuccess: async (project: Project) => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
       await fetch(`/api/revalidate?tag=projects`)
-      toast.success("Проект успешно создан")
-      router.push(`/projects/${project.slug}/edit`)
+      queryClient.invalidateQueries({ queryKey: ["tags"] })
+      await fetch(`/api/revalidate?tag=tags`)
     },
   })
 }
@@ -63,6 +59,8 @@ const useUpdateOneProjectMutation = () => {
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
       await fetch(`/api/revalidate?tag=projects`)
+      queryClient.invalidateQueries({ queryKey: ["tags"] })
+      await fetch(`/api/revalidate?tag=tags`)
     },
   })
 }
@@ -95,7 +93,6 @@ const useVoteOneProjectMutation = () => {
 
 const useDeleteOneProjectMutation = () => {
   const queryClient = useQueryClient()
-  const router = useRouter()
   return useMutation({
     mutationFn: (key: string) => {
       return projectAPI.deleteOne(key)
@@ -103,19 +100,17 @@ const useDeleteOneProjectMutation = () => {
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] })
       await fetch(`/api/revalidate?tag=projects`)
-      toast.success("Проект успешно удален")
-      router.back()
     },
   })
 }
 
 export {
   useCreateOneProjectMutation,
-  useGetAllProjectsQuery,
+  useDeleteOneProjectMutation,
   useGetAllProjectsInfiniteQuery,
+  useGetAllProjectsQuery,
   useGetOneProjectQuery,
   useUpdateOneProjectMutation,
-  useDeleteOneProjectMutation,
-  useVoteOneProjectMutation,
   useUploadsOneProjectMutation,
+  useVoteOneProjectMutation,
 }

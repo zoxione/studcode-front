@@ -1,6 +1,6 @@
 import { Separator } from "@/01-shared/ui/Separator"
 import { teamAPI } from "@/02-entities/team"
-import { EditTeamForm } from "@/03-features/edit-team"
+import { EditTeam } from "@/03-features/edit-team"
 
 interface PageProps {
   params: { slug: string }
@@ -17,7 +17,7 @@ export default async function TeamsEditPage({ params }: PageProps) {
         <p className="text-sm text-muted-foreground">Именно так другие увидят ее на сайте.</p>
       </div>
       <Separator />
-      <EditTeamForm team={team} />
+      <EditTeam teamId={team._id} />
     </div>
   )
 }

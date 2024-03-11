@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "@/01-shared/lib/auth-options"
 import { Separator } from "@/01-shared/ui/Separator"
 import { userAPI } from "@/02-entities/user"
-import { EditUserProfileForm } from "@/03-features/edit-user-profile"
+import { EditUserProfile } from "@/03-features/edit-user-profile"
 
 export default async function UserProfile() {
   const session = await getServerSession(authOptions)
@@ -16,7 +16,7 @@ export default async function UserProfile() {
         <p className="text-sm text-muted-foreground">Именно так другие увидят вас на сайте.</p>
       </div>
       <Separator />
-      <EditUserProfileForm user={user} />
+      <EditUserProfile userId={user._id} />
     </div>
   )
 }

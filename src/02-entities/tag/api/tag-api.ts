@@ -26,6 +26,9 @@ class TagAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["tags"],
+      },
     })
 
     if (!res.ok) {
@@ -46,6 +49,9 @@ class TagAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["tags"],
+      },
     })
 
     if (!res.ok) {
@@ -66,6 +72,9 @@ class TagAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["tags"],
+      },
     })
 
     if (!res.ok) {

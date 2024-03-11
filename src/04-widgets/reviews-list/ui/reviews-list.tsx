@@ -7,7 +7,7 @@ interface ReviewsListProps {
 }
 
 const ReviewsList = ({ project_id }: ReviewsListProps) => {
-  const { data: reviews } = useGetAllReviewsQuery({ project_id: project_id })
+  const { data: reviews } = useGetAllReviewsQuery({ project_id: project_id, order: "created_at" })
 
   if (!reviews) {
     return null

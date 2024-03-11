@@ -145,10 +145,6 @@ class TeamAPI {
     const res = await fetch(`${this.baseUrl}/${key}/uploads`, {
       method: "POST",
       body: formData,
-      headers: {
-        // "Content-Type": "application/json",
-        // Accept: "application/json",
-      },
       credentials: "include",
       next: {
         tags: ["teams"],

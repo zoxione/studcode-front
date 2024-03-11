@@ -1,1 +1,1 @@
-export { EditTeamForm } from "./ui/edit-team-form"
+export { EditTeam } from "./ui/edit-team"

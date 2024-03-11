@@ -1,13 +1,14 @@
-import { notFound, redirect } from "next/navigation"
 import { getServerSession } from "next-auth"
+import { notFound, redirect } from "next/navigation"
 
-import { Title } from "@/01-shared/ui/Title"
+import { authOptions } from "@/01-shared/lib/auth-options"
 import { DeleteProjectButton, prettyStatus, projectAPI } from "@/02-entities/project"
+import { EditProject } from "@/03-features/edit-project"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
+import { HeaderSettingsPage } from "@/04-widgets/header-settings-page"
 import { Layout } from "@/04-widgets/layout"
-import { authOptions } from "@/01-shared/lib/auth-options"
-import { EditProjectForm } from "@/03-features/edit-project"
+import Link from "next/link"
 
 export default async function EditProjectPage({ params }: { params: { slug: string } }) {
   const { slug } = params
@@ -23,14 +24,16 @@ export default async function EditProjectPage({ params }: { params: { slug: stri
 
   return (
     <Layout header={<Header />} footer={<Footer />} className="">
-      <div className="my-8 flex flex-row justify-between items-center">
-        <div>
-          <Title order={4}>{project.title}</Title>
-          <span className="text-muted-foreground text-sm">Статус: {prettyStatus(project.status)}</span>
-        </div>
-        <DeleteProjectButton id={project._id} />
-      </div>
-      <EditProjectForm project={project} />
+      <HeaderSettingsPage
+        title={
+          <Link href={`/projects/${project.slug}`} target="_blank">
+            {project.title}
+          </Link>
+        }
+        description={`Статус: ${prettyStatus(project.status)}`}
+        right={<DeleteProjectButton id={project._id} />}
+      />
+      <EditProject projectId={project._id} />
     </Layout>
   )
 }

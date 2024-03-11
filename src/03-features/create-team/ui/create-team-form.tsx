@@ -1,47 +1,16 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
-import * as z from "zod"
 import { ReloadIcon } from "@radix-ui/react-icons"
-import { useSession } from "next-auth/react"
 
 import { Button } from "@/01-shared/ui/Button"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
-import { useCreateOneTeamMutation } from "@/02-entities/team"
-import { teamSchema } from "@/02-entities/team"
 import { RadioGroup, RadioGroupItem } from "@/01-shared/ui/RadioGroup"
 import { Textarea } from "@/01-shared/ui/Textarea"
-
-const createTeamSchema = teamSchema.pick({ name: true, status: true, about: true })
+import { useCreateTeam } from "../lib/use-create-team"
 
 const CreateTeamForm = () => {
-  const { data: session } = useSession()
-  const { mutate: createTeam, status } = useCreateOneTeamMutation()
-
-  const createTeamForm = useForm<z.infer<typeof createTeamSchema>>({
-    resolver: zodResolver(createTeamSchema),
-    defaultValues: {
-      name: "",
-      status: "opened",
-      about: "",
-    },
-  })
-
-  const onSubmit = (values: z.infer<typeof createTeamSchema>) => {
-    if (!session) {
-      toast.error("Вы не авторизованы")
-      return
-    }
-    createTeam({
-      name: values.name,
-      status: values.status,
-      about: values.about || "",
-      members: [{ user: session.user._id, role: "owner" }],
-    })
-  }
+  const { createTeamForm, onSubmit, isLoading } = useCreateTeam({})
 
   return (
     <Form {...createTeamForm}>
@@ -103,15 +72,8 @@ const CreateTeamForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full" disabled={status === "pending"}>
-          {status === "pending" ? (
-            <>
-              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-              Создание...
-            </>
-          ) : (
-            <>Создать</>
-          )}
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          {isLoading ? <ReloadIcon className="h-4 w-4 animate-spin" /> : "Создать"}
         </Button>
       </form>
     </Form>

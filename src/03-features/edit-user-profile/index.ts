@@ -1,1 +1,1 @@
-export { EditUserProfileForm } from "./ui/edit-user-profile-form"
+export { EditUserProfile } from "./ui/edit-user-profile"

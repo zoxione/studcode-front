@@ -67,13 +67,13 @@ export default async function ProjectPage({ params }: PageProps) {
   return (
     <Layout header={<Header />} footer={<Footer />} className="">
       {project.screenshots.length > 0 ? (
-        <ScreensCarousel className="absolute left-0 border-b-4 border-b-border" screens={project.screenshots} />
+        <ScreensCarousel className="absolute left-0 border-b-4 border-b-border w-full" screens={project.screenshots} />
       ) : null}
 
       <div className={`${project.screenshots.length > 0 ? "mt-[488px]" : ""} py-12 space-y-12`}>
         <div className=" flex flex-row items-center justify-between">
           <div className="flex flex-row items-center gap-4">
-            <Avatar className="w-20 h-20 text-3xl">
+            <Avatar className="w-20 h-20 text-3xl rounded-md">
               <AvatarImage src={project.logo} width={80} height={80} alt={project.title} />
               <AvatarFallback>{project.title[0]}</AvatarFallback>
             </Avatar>
@@ -140,7 +140,7 @@ export default async function ProjectPage({ params }: PageProps) {
             <div className="space-y-2">
               <Title order={5}>Обзоры</Title>
               <div className="space-y-4">
-                <CreateReviewForm project_id={project._id} />
+                <CreateReviewForm projectId={project._id} />
                 <ReviewsList project_id={project._id} />
               </div>
             </div>
@@ -157,7 +157,7 @@ export default async function ProjectPage({ params }: PageProps) {
                 <Badge>{prettyPrice(project.price)}</Badge>
               </div>
               <div className="space-y-2">
-                <Title order={6}>Автор</Title>
+                <Title order={6}>Авторы</Title>
                 <Avatar className="w-8 h-8 ml-auto text-sm" asChild>
                   <Link href={`/${project.creator.username}`}>
                     <AvatarImage src={project.creator.avatar} width={32} height={32} alt={project.creator.username} />

@@ -1,72 +1,22 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { HTMLAttributes, useState } from "react"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
-import { ImageIcon } from "@radix-ui/react-icons"
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
+import { ImageIcon, ReloadIcon } from "@radix-ui/react-icons"
+import { HTMLAttributes } from "react"
 
 import { Button } from "@/01-shared/ui/Button"
+import { Dropzone } from "@/01-shared/ui/Dropzone"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
 import { Textarea } from "@/01-shared/ui/Textarea"
-import {
-  ACCEPTED_IMAGE_TYPES,
-  User,
-  useUpdateOneUserMutation,
-  useUploadsOneUserMutation,
-  userSchema,
-} from "@/02-entities/user"
-import { Dropzone } from "@/01-shared/ui/Dropzone"
-
-const editUserProfileSchema = userSchema.pick({ avatar_file: true, full_name: true, about: true })
+import { ACCEPTED_IMAGE_TYPES, User } from "@/02-entities/user"
+import { useEditUserProfile } from "../lib/use-edit-user-profile"
 
 interface EditUserProfileFormProps extends HTMLAttributes<HTMLFormElement> {
   user: User
 }
 
 const EditUserProfileForm = ({ user }: EditUserProfileFormProps) => {
-  const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
-  const { mutateAsync: updateUserAsync } = useUpdateOneUserMutation()
-  const { mutateAsync: uploadsFilesAsync } = useUploadsOneUserMutation()
-
-  const editUserProfileForm = useForm<z.infer<typeof editUserProfileSchema>>({
-    resolver: zodResolver(editUserProfileSchema),
-    defaultValues: {
-      full_name: {
-        name: user?.full_name.name || "",
-        surname: user?.full_name.surname || "",
-        patronymic: user?.full_name.patronymic || "",
-      },
-      about: user?.about || "",
-    },
-  })
-
-  const onSubmit = async (values: z.infer<typeof editUserProfileSchema>) => {
-    try {
-      setIsLoading(true)
-      await uploadsFilesAsync({
-        key: user._id,
-        files: { avatar_file: values.avatar_file },
-      })
-      await updateUserAsync({
-        key: user._id,
-        user: {
-          full_name: values.full_name,
-          about: values.about,
-        },
-      })
-      toast.success("Профиль обновлен")
-      router.push(`/${user.username}`)
-    } catch (e) {
-      toast.error("Произошла ошибка при обновлении профиля")
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  const { editUserProfileForm, onSubmit, isLoading } = useEditUserProfile({ user })
 
   return (
     <Form {...editUserProfileForm}>
@@ -84,7 +34,13 @@ const EditUserProfileForm = ({ user }: EditUserProfileFormProps) => {
                       accept={ACCEPTED_IMAGE_TYPES.join(", ")}
                       preview
                       classNamePreview="size-full aspect-square"
-                      dropContent={<ImageIcon className="h-6 w-6" />}
+                      dropContent={
+                        user.avatar !== "" ? (
+                          <img src={user.avatar} alt="avatar" className="max-h-[200px] size-full aspect-square" />
+                        ) : (
+                          <ImageIcon className="h-6 w-6" />
+                        )
+                      }
                       {...field}
                     />
                   </FormControl>
@@ -150,7 +106,9 @@ const EditUserProfileForm = ({ user }: EditUserProfileFormProps) => {
             </FormItem>
           )}
         />
-        <Button type="submit">Обновить профиль</Button>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? <ReloadIcon className="h-4 w-4 animate-spin" /> : "Обновить профиль"}
+        </Button>
       </form>
     </Form>
   )

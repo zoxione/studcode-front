@@ -1,7 +1,6 @@
 import { User } from "@/02-entities/user"
 import { LogoutResponse, RefreshResponse, RegisterUser, SessionUser, SignIn, SignInResponse } from "./types"
 
-
 class AuthAPI {
   private baseUrl: string = ""
 
@@ -21,6 +20,9 @@ class AuthAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["auth-user"],
+      },
     })
 
     if (!res.ok) {
@@ -42,6 +44,9 @@ class AuthAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["auth-user"],
+      },
     })
 
     if (!res.ok) {
@@ -62,6 +67,9 @@ class AuthAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["auth-user"],
+      },
     })
 
     if (!res.ok) {
@@ -82,6 +90,9 @@ class AuthAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["auth-user"],
+      },
     })
 
     if (!res.ok) {
@@ -102,6 +113,9 @@ class AuthAPI {
         Accept: "application/json",
       },
       credentials: "include",
+      next: {
+        tags: ["auth-user"],
+      },
     })
 
     if (!res.ok) {

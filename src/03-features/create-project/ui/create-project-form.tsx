@@ -1,40 +1,14 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
-import * as z from "zod"
 import { ReloadIcon } from "@radix-ui/react-icons"
-import { useSession } from "next-auth/react"
 
 import { Button } from "@/01-shared/ui/Button"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
-import { projectSchema, useCreateOneProjectMutation } from "@/02-entities/project"
-
-const createProjectSchema = projectSchema.pick({ title: true })
+import { useCreateProject } from "../lib/use-create-project"
 
 const CreateProjectForm = () => {
-  const { data: session } = useSession()
-  const { mutate: createProject, status } = useCreateOneProjectMutation()
-
-  const createProjectForm = useForm<z.infer<typeof createProjectSchema>>({
-    resolver: zodResolver(createProjectSchema),
-    defaultValues: {
-      title: "",
-    },
-  })
-
-  const onSubmit = (values: z.infer<typeof createProjectSchema>) => {
-    if (!session) {
-      toast.error("Вы не авторизованы")
-      return
-    }
-    createProject({
-      title: values.title,
-      creator: session.user._id,
-    })
-  }
+  const { createProjectForm, onSubmit, isLoading } = useCreateProject({})
 
   return (
     <Form {...createProjectForm}>
@@ -51,15 +25,8 @@ const CreateProjectForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full" disabled={status === "pending"}>
-          {status === "pending" ? (
-            <>
-              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-              Создание...
-            </>
-          ) : (
-            <>Создать</>
-          )}
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          {isLoading ? <ReloadIcon className="h-4 w-4 animate-spin" /> : "Создать"}
         </Button>
       </form>
     </Form>

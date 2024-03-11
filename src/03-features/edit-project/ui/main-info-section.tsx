@@ -9,7 +9,7 @@ import { Textarea } from "@/01-shared/ui/Textarea"
 import { Title } from "@/01-shared/ui/Title"
 import { useGetAllTagsQuery } from "@/02-entities/tag"
 import { MultiSelect, Option } from "@/01-shared/ui/MultiSelect"
-import { editProjectSchema } from "./edit-project-form"
+import { editProjectSchema } from "../lib/edit-project-schema"
 
 interface MainInfoSectionProps {
   form: UseFormReturn<z.infer<typeof editProjectSchema>>
