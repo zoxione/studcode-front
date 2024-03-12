@@ -1,22 +1,26 @@
 "use client"
 
-import { ImageIcon, ReloadIcon } from "@radix-ui/react-icons"
+import { ImageIcon, ReloadIcon, TrashIcon } from "@radix-ui/react-icons"
 import { HTMLAttributes } from "react"
 
 import { Button } from "@/01-shared/ui/Button"
 import { Dropzone } from "@/01-shared/ui/Dropzone"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
 import { Input } from "@/01-shared/ui/Input"
 import { Textarea } from "@/01-shared/ui/Textarea"
 import { ACCEPTED_IMAGE_TYPES, User } from "@/02-entities/user"
 import { useEditUserProfile } from "../lib/use-edit-user-profile"
+import { cn } from "@/01-shared/utils/cn"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/01-shared/ui/Select"
+import { linkTypeValues } from "@/01-shared/types/link"
+import { prettyLinkType } from "@/01-shared/utils/pretty-link-type"
 
 interface EditUserProfileFormProps extends HTMLAttributes<HTMLFormElement> {
   user: User
 }
 
 const EditUserProfileForm = ({ user }: EditUserProfileFormProps) => {
-  const { editUserProfileForm, onSubmit, isLoading } = useEditUserProfile({ user })
+  const { editUserProfileForm, onSubmit, isLoading, fields, append, remove } = useEditUserProfile({ user })
 
   return (
     <Form {...editUserProfileForm}>
@@ -106,6 +110,81 @@ const EditUserProfileForm = ({ user }: EditUserProfileFormProps) => {
             </FormItem>
           )}
         />
+        <div>
+          {fields.map((field, index) => (
+            <div key={field.id} className="space-y-2">
+              <FormLabel className={cn(index !== 0 && "sr-only")}>Ссылки</FormLabel>
+              <FormDescription className={cn(index !== 0 && "sr-only")}>
+                Добавьте ссылки на свой веб-сайт, блог или профили в социальных сетях (максимально 5). Ссылки будут
+                отображаться в профиле.
+              </FormDescription>
+              <div className="grid grid-cols-6 gap-2">
+                <FormField
+                  control={editUserProfileForm.control}
+                  name={`links.${index}.type`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Тип ссылки" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {linkTypeValues.map((type) => (
+                              <SelectItem key={type} value={type}>
+                                {prettyLinkType(type)}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={editUserProfileForm.control}
+                  name={`links.${index}.label`}
+                  render={({ field }) => (
+                    <FormItem className="col-span-2">
+                      <FormControl>
+                        <Input placeholder="Название ссылки" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={editUserProfileForm.control}
+                  name={`links.${index}.url`}
+                  render={({ field }) => (
+                    <FormItem className="col-span-3 space-y-0 flex flex-row items-center gap-2">
+                      <FormControl>
+                        <Input placeholder="URL ссылки" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                      <Button onClick={() => remove(index)} type="button" variant="destructive" size="icon">
+                        <TrashIcon className="h-4 w-4" />
+                      </Button>
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+          ))}
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="mt-2"
+            disabled={isLoading || fields.length >= 5}
+            onClick={() => append({ type: "other", label: "", url: "" })}
+          >
+            Добавить ссылку
+          </Button>
+        </div>
         <Button type="submit" disabled={isLoading}>
           {isLoading ? <ReloadIcon className="h-4 w-4 animate-spin" /> : "Обновить профиль"}
         </Button>

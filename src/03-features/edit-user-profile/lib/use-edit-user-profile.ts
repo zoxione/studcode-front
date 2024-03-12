@@ -1,14 +1,20 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useSession } from "next-auth/react"
 import { useState } from "react"
-import { useForm } from "react-hook-form"
+import { useFieldArray, useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 import { useRouter } from "next/navigation"
 
 import { User, useUpdateOneUserMutation, useUploadsOneUserMutation, userSchema } from "@/02-entities/user"
 
-const editUserProfileSchema = userSchema.pick({ avatar: true, avatar_file: true, full_name: true, about: true })
+const editUserProfileSchema = userSchema.pick({
+  avatar: true,
+  avatar_file: true,
+  full_name: true,
+  about: true,
+  links: true,
+})
 
 interface useEditUserProfileProps {
   user: User
@@ -30,7 +36,13 @@ const useEditUserProfile = ({ user }: useEditUserProfileProps) => {
         patronymic: user?.full_name.patronymic || "",
       },
       about: user?.about || "",
+      links: user?.links || [],
     },
+  })
+
+  const { fields, append, remove } = useFieldArray({
+    name: "links",
+    control: editUserProfileForm.control,
   })
 
   const onSubmit = async (values: z.infer<typeof editUserProfileSchema>) => {
@@ -46,15 +58,16 @@ const useEditUserProfile = ({ user }: useEditUserProfileProps) => {
           files: { avatar_file: values.avatar_file },
         })
       }
-      await updateUserAsync({
+      const res = await updateUserAsync({
         key: user._id,
         user: {
           full_name: values.full_name,
           about: values.about,
+          links: values.links,
         },
       })
       toast.success("Профиль обновлен")
-      router.push(`/${user.username}`)
+      router.push(`/${res.username}`)
     } catch (error) {
       toast.error("Произошла ошибка")
     } finally {
@@ -66,6 +79,9 @@ const useEditUserProfile = ({ user }: useEditUserProfileProps) => {
     editUserProfileForm,
     onSubmit,
     isLoading,
+    fields,
+    append,
+    remove,
   }
 }
 

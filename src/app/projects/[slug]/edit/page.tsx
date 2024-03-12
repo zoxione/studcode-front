@@ -1,5 +1,6 @@
 import { getServerSession } from "next-auth"
 import { notFound, redirect } from "next/navigation"
+import Link from "next/link"
 
 import { authOptions } from "@/01-shared/lib/auth-options"
 import { DeleteProjectButton, prettyStatus, projectAPI } from "@/02-entities/project"
@@ -8,7 +9,6 @@ import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { HeaderSettingsPage } from "@/04-widgets/header-settings-page"
 import { Layout } from "@/04-widgets/layout"
-import Link from "next/link"
 
 export default async function EditProjectPage({ params }: { params: { slug: string } }) {
   const { slug } = params

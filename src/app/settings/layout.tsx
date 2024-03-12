@@ -1,8 +1,6 @@
 import { ReactNode } from "react"
 import { PersonIcon, TextAlignRightIcon } from "@radix-ui/react-icons"
 
-import { Separator } from "@/01-shared/ui/Separator"
-import { Title } from "@/01-shared/ui/Title"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"

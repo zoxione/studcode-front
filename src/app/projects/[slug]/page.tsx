@@ -150,7 +150,7 @@ export default async function ProjectPage({ params }: PageProps) {
             <CardContent className="p-6 flex flex-row sm:flex-col sm:items-end justify-between gap-4 text-right">
               <div className="space-y-2">
                 <Title order={6}>Ссылки</Title>
-                <LinksList links={project.links} />
+                <LinksList className="flex-col sm:items-end" links={project.links} />
               </div>
               <div className="space-y-2">
                 <Title order={6}>Цена</Title>

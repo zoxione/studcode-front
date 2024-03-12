@@ -1,7 +1,6 @@
 "use client"
 
 import { ReloadIcon } from "@radix-ui/react-icons"
-import { Trash2Icon } from "lucide-react"
 
 import {
   AlertDialog,

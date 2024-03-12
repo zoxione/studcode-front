@@ -167,7 +167,7 @@ class ProjectAPI {
    */
   async voteOne(key: string): Promise<Project> {
     const res = await fetch(`${this.baseUrl}/${key}/vote`, {
-      method: "PUT",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",

@@ -5,8 +5,6 @@ import { PlusCircledIcon, TextAlignRightIcon } from "@radix-ui/react-icons"
 import { Users2Icon } from "lucide-react"
 
 import { authOptions } from "@/01-shared/lib/auth-options"
-import { Separator } from "@/01-shared/ui/Separator"
-import { Title } from "@/01-shared/ui/Title"
 import { teamAPI } from "@/02-entities/team"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"

@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
+import { useRouter } from "next/navigation"
 
 import { teamSchema, useCreateOneTeamMutation } from "@/02-entities/team"
 
@@ -14,6 +15,7 @@ interface useCreateTeamProps {}
 const useCreateTeam = ({}: useCreateTeamProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const { data: session } = useSession()
+  const router = useRouter()
   const { mutateAsync: createTeamAsync } = useCreateOneTeamMutation()
 
   const createTeamForm = useForm<z.infer<typeof createTeamSchema>>({
@@ -32,12 +34,14 @@ const useCreateTeam = ({}: useCreateTeamProps) => {
         toast.error("Вы не авторизованы")
         return
       }
-      await createTeamAsync({
+      const res = await createTeamAsync({
         name: values.name,
         status: values.status,
         about: values.about || "",
         members: [{ user: session.user._id, role: "owner" }],
       })
+      toast.success("Команда создана")
+      router.push(`/teams/${res.slug}`)
     } catch (error) {
       toast.error("Произошла ошибка")
     } finally {
