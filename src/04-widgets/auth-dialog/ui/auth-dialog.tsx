@@ -4,10 +4,10 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
-import { Button } from "@/01-shared/ui/Button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/01-shared/ui/Card"
-import { Dialog, DialogContent } from "@/01-shared/ui/Dialog"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/01-shared/ui/Tabs"
+import { Button } from "@/01-shared/ui/button"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/01-shared/ui/card"
+import { Dialog, DialogContent } from "@/01-shared/ui/dialog"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/01-shared/ui/tabs"
 import { SignInForm, SignUpForm } from "@/03-features/auth"
 
 const AuthDialog = () => {

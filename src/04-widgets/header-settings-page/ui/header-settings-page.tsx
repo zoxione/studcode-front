@@ -1,7 +1,7 @@
 import { ReactNode, forwardRef } from "react"
 
-import { Separator } from "@/01-shared/ui/Separator"
-import { Title } from "@/01-shared/ui/Title"
+import { Separator } from "@/01-shared/ui/separator"
+import { Title } from "@/01-shared/ui/title"
 import { cn } from "@/01-shared/utils/cn"
 
 interface HeaderSettingsPageProps {

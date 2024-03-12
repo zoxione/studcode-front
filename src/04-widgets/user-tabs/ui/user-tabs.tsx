@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 import { User } from "@/02-entities/user"
-import { Tabs, TabsList, TabsTrigger } from "@/01-shared/ui/Tabs"
+import { Tabs, TabsList, TabsTrigger } from "@/01-shared/ui/tabs"
 import { cn } from "@/01-shared/utils/cn"
 
 interface UserTabsProps {

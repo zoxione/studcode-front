@@ -4,9 +4,9 @@ import { UseFormReturn } from "react-hook-form"
 import * as z from "zod"
 import { ReloadIcon } from "@radix-ui/react-icons"
 
-import { Button } from "@/01-shared/ui/Button"
-import { Checkbox } from "@/01-shared/ui/Checkbox"
-import { Title } from "@/01-shared/ui/Title"
+import { Button } from "@/01-shared/ui/button"
+import { Checkbox } from "@/01-shared/ui/checkbox"
+import { Title } from "@/01-shared/ui/title"
 import { editProjectSchema } from "../lib/edit-project-schema"
 import { Project } from "@/02-entities/project"
 

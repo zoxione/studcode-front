@@ -1,8 +1,8 @@
 import Link from "next/link"
 import { ArrowLeftIcon, CrossCircledIcon } from "@radix-ui/react-icons"
 
-import { Title } from "@/01-shared/ui/Title"
-import { buttonVariants } from "@/01-shared/ui/Button"
+import { Title } from "@/01-shared/ui/title"
+import { buttonVariants } from "@/01-shared/ui/button"
 import { cn } from "@/01-shared/utils/cn"
 import { BackPageButton } from "@/03-features/back-page"
 

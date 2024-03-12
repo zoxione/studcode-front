@@ -1,6 +1,6 @@
 "use client"
 
-import { Carousel, CarouselContent, CarouselItem } from "@/01-shared/ui/Carousel"
+import { Carousel, CarouselContent, CarouselItem } from "@/01-shared/ui/carousel"
 import { cn } from "@/01-shared/utils/cn"
 import { Fancybox } from "@/01-shared/lib/fancybox"
 

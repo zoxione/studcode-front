@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth"
 
 import { authOptions } from "@/01-shared/lib/auth-options"
-import { Separator } from "@/01-shared/ui/Separator"
+import { Separator } from "@/01-shared/ui/separator"
 import { userAPI } from "@/02-entities/user"
 import { EditUserProfile } from "@/03-features/edit-user-profile"
 

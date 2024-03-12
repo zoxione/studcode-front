@@ -3,8 +3,8 @@
 import * as z from "zod"
 import { CheckCircledIcon, ImageIcon, PlusCircledIcon, TextAlignRightIcon } from "@radix-ui/react-icons"
 
-import { Button } from "@/01-shared/ui/Button"
-import { Form } from "@/01-shared/ui/Form"
+import { Button } from "@/01-shared/ui/button"
+import { Form } from "@/01-shared/ui/form"
 import { Project } from "@/02-entities/project"
 import { useEditProject } from "../lib/use-edit-project"
 import { ExtrasSection } from "./extras-section"
@@ -12,7 +12,7 @@ import { ImagesAndMediaSection } from "./images-and-media-section"
 import { MainInfoSection } from "./main-info-section"
 import { PublishSection } from "./publish-section"
 import { editProjectSchema } from "../lib/edit-project-schema"
-import { ScrollArea, ScrollBar } from "@/01-shared/ui/ScrollArea"
+import { ScrollArea, ScrollBar } from "@/01-shared/ui/scroll-area"
 
 interface EditProjectFormProps {
   project: Project

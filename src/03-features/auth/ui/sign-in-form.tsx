@@ -9,9 +9,9 @@ import { toast } from "sonner"
 import { ReloadIcon } from "@radix-ui/react-icons"
 import { useRouter } from "next/navigation"
 
-import { Button } from "@/01-shared/ui/Button"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
-import { Input } from "@/01-shared/ui/Input"
+import { Button } from "@/01-shared/ui/button"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/form"
+import { Input } from "@/01-shared/ui/input"
 import { userSchema } from "@/02-entities/user"
 
 const signInSchema = userSchema.pick({ email: true, password: true })

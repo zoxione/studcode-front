@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { Title } from "@/01-shared/ui/Title"
+import { Title } from "@/01-shared/ui/title"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"

@@ -3,10 +3,10 @@
 import { HTMLAttributes } from "react"
 import { ReloadIcon } from "@radix-ui/react-icons"
 
-import { Button } from "@/01-shared/ui/Button"
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/01-shared/ui/Form"
-import { Rating } from "@/01-shared/ui/Rating"
-import { Textarea } from "@/01-shared/ui/Textarea"
+import { Button } from "@/01-shared/ui/button"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/01-shared/ui/form"
+import { Rating } from "@/01-shared/ui/rating"
+import { Textarea } from "@/01-shared/ui/textarea"
 import { useCreateReview } from "../lib/use-create-review"
 
 interface CreateReviewFormProps extends HTMLAttributes<HTMLFormElement> {

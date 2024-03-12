@@ -1,10 +1,10 @@
 import Link from "next/link"
 import { HTMLAttributes, forwardRef } from "react"
 
-import { badgeVariants } from "@/01-shared/ui/Badge"
+import { badgeVariants } from "@/01-shared/ui/badge"
 import { cn } from "@/01-shared/utils/cn"
 import { Team } from "../model/types"
-import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/Avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
 
 export interface TeamBadgeProps extends HTMLAttributes<HTMLAnchorElement> {
   team: Team

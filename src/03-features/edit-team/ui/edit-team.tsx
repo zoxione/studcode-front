@@ -2,7 +2,7 @@
 
 import { InfoIcon } from "lucide-react"
 
-import { Skeleton } from "@/01-shared/ui/Skeleton"
+import { Skeleton } from "@/01-shared/ui/skeleton"
 import { useGetOneTeamQuery } from "@/02-entities/team"
 import { EditTeamForm } from "./edit-team-form"
 

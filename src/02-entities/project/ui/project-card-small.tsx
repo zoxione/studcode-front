@@ -1,9 +1,8 @@
 import Link from "next/link"
 import { HTMLAttributes, forwardRef } from "react"
 
-
 import { cn } from "@/01-shared/utils/cn"
-import { Title } from "@/01-shared/ui/Title"
+import { Title } from "@/01-shared/ui/title"
 import { Project } from "../model/types"
 
 export interface ProjectCardSmallProps extends HTMLAttributes<HTMLAnchorElement> {

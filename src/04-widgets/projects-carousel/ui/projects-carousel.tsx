@@ -1,8 +1,8 @@
 "use client"
 
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/01-shared/ui/Carousel"
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/01-shared/ui/carousel"
 import { cn } from "@/01-shared/utils/cn"
-import { Title } from "@/01-shared/ui/Title"
+import { Title } from "@/01-shared/ui/title"
 import { ProjectCardSmall, useGetAllProjectsQuery } from "@/02-entities/project"
 
 interface ScreensCarouselProps {

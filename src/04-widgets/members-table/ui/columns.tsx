@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/Avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
 import { getUserInitials } from "@/01-shared/utils/get-user-initials"
 import { TeamMember } from "@/02-entities/team"
 import { prettyTeamRole } from "@/02-entities/team/utils/pretty-team-role"

@@ -3,7 +3,7 @@
 import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table"
 
 import { columns } from "./columns"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/01-shared/ui/Table"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/01-shared/ui/table"
 import { useGetOneTeamQuery } from "@/02-entities/team"
 
 interface MembersTableProps<TData, TValue> {

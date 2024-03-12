@@ -8,9 +8,9 @@ import { ReloadIcon } from "@radix-ui/react-icons"
 import { toast } from "sonner"
 import { signIn } from "next-auth/react"
 
-import { Button } from "@/01-shared/ui/Button"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
-import { Input } from "@/01-shared/ui/Input"
+import { Button } from "@/01-shared/ui/button"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/form"
+import { Input } from "@/01-shared/ui/input"
 import { userSchema } from "@/02-entities/user"
 import { useRegisterMutation } from "@/03-features/auth"
 

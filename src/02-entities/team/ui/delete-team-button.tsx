@@ -11,8 +11,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/01-shared/ui/AlertDialog"
-import { Button } from "@/01-shared/ui/Button"
+} from "@/01-shared/ui/alert-dialog"
+import { Button } from "@/01-shared/ui/button"
 import { useDeleteOneTeamMutation } from "../api/team-hooks"
 
 interface DeleteTeamButtonProps {

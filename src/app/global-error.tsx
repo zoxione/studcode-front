@@ -3,8 +3,8 @@
 import { ReloadIcon } from "@radix-ui/react-icons"
 import { InfoIcon } from "lucide-react"
 
-import { Button } from "@/01-shared/ui/Button"
-import { Title } from "@/01-shared/ui/Title"
+import { Button } from "@/01-shared/ui/button"
+import { Title } from "@/01-shared/ui/title"
 
 export default function GlobalError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   return (

@@ -2,9 +2,9 @@
 
 import { ReloadIcon } from "@radix-ui/react-icons"
 
-import { Button } from "@/01-shared/ui/Button"
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/01-shared/ui/Form"
-import { Input } from "@/01-shared/ui/Input"
+import { Button } from "@/01-shared/ui/button"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/01-shared/ui/form"
+import { Input } from "@/01-shared/ui/input"
 import { useAddTeamMember } from "../lib/use-add-team-member"
 
 interface AddTeamMemberFormProps {

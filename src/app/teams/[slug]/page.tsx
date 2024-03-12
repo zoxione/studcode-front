@@ -3,16 +3,16 @@ import { getServerSession } from "next-auth"
 import Link from "next/link"
 
 import { authOptions } from "@/01-shared/lib/auth-options"
-import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/Avatar"
-import { Card, CardContent } from "@/01-shared/ui/Card"
-import { Title } from "@/01-shared/ui/Title"
+import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
+import { Card, CardContent } from "@/01-shared/ui/card"
+import { Title } from "@/01-shared/ui/title"
 import { JoinButton, teamAPI } from "@/02-entities/team"
 import { TeamMemberCard } from "@/02-entities/team/ui/team-member-card"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"
 import { cn } from "@/01-shared/utils/cn"
-import { buttonVariants } from "@/01-shared/ui/Button"
+import { buttonVariants } from "@/01-shared/ui/button"
 
 interface PageProps {
   params: { slug: string }

@@ -1,4 +1,4 @@
-import { Separator } from "@/01-shared/ui/Separator"
+import { Separator } from "@/01-shared/ui/separator"
 import { teamAPI } from "@/02-entities/team"
 import { EditTeam } from "@/03-features/edit-team"
 

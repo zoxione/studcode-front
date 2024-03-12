@@ -2,7 +2,7 @@
 
 import { ReloadIcon } from "@radix-ui/react-icons"
 
-import { Button, ButtonProps } from "@/01-shared/ui/Button"
+import { Button, ButtonProps } from "@/01-shared/ui/button"
 import { useAddMemberTeamMutation } from "../api/team-hooks"
 
 interface JoinButtonProps extends ButtonProps {

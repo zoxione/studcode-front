@@ -1,4 +1,4 @@
-import { Title } from "@/01-shared/ui/Title"
+import { Title } from "@/01-shared/ui/title"
 import { CreateTeamForm } from "@/03-features/create-team"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"

@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react"
 import { useState } from "react"
 import { toast } from "sonner"
 
-import { Button, ButtonProps } from "@/01-shared/ui/Button"
+import { Button, ButtonProps } from "@/01-shared/ui/button"
 import { useDislikeOneReviewMutation } from "@/02-entities/reviews"
 
 interface DislikeReviewButtonProps extends ButtonProps {

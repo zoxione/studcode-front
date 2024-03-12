@@ -6,7 +6,7 @@ import { toast } from "sonner"
 import { useSession } from "next-auth/react"
 import { ReloadIcon } from "@radix-ui/react-icons"
 
-import { Button } from "@/01-shared/ui/Button"
+import { Button } from "@/01-shared/ui/button"
 import { useVoteOneProjectMutation } from "../api/project-hooks"
 
 interface VoteButtonProps {

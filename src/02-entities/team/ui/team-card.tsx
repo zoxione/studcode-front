@@ -1,8 +1,8 @@
 import Link from "next/link"
 import { HTMLAttributes, forwardRef } from "react"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/Avatar"
-import { Skeleton } from "@/01-shared/ui/Skeleton"
+import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
+import { Skeleton } from "@/01-shared/ui/skeleton"
 import { cn } from "@/01-shared/utils/cn"
 import { Team } from "../model/types"
 

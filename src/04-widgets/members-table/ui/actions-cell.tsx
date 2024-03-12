@@ -4,14 +4,14 @@ import { usePathname } from "next/navigation"
 import { ExternalLinkIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
 
-import { Button } from "@/01-shared/ui/Button"
+import { Button } from "@/01-shared/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@/01-shared/ui/DropdownMenu"
+} from "@/01-shared/ui/dropdown-menu"
 import { TeamMember, useRemoveMemberTeamMutation } from "@/02-entities/team"
 
 const ActionsCell = ({ row }: { row: Row<TeamMember> }) => {

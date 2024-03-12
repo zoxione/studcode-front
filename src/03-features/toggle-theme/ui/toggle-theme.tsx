@@ -2,8 +2,8 @@
 
 import { LaptopIcon, MoonIcon, SunIcon } from "lucide-react"
 
-import { Button } from "@/01-shared/ui/Button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/01-shared/ui/DropdownMenu"
+import { Button } from "@/01-shared/ui/button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/01-shared/ui/dropdown-menu"
 import { cn } from "@/01-shared/utils/cn"
 import { useToggleTheme } from "../lib/use-toggle-theme"
 

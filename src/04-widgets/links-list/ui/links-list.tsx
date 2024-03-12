@@ -4,7 +4,7 @@ import { HTMLAttributes, ReactNode, forwardRef } from "react"
 import { GitlabIcon, YoutubeIcon } from "lucide-react"
 
 import { ILink } from "@/01-shared/types/link"
-import { badgeVariants } from "@/01-shared/ui/Badge"
+import { badgeVariants } from "@/01-shared/ui/badge"
 import { cn } from "@/01-shared/utils/cn"
 
 export interface LinksListProps extends HTMLAttributes<HTMLDivElement> {

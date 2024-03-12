@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { buttonVariants } from "@/01-shared/ui/Button"
+import { buttonVariants } from "@/01-shared/ui/button"
 import { cn } from "@/01-shared/utils/cn"
 import { tagAPI } from "@/02-entities/tag"
 import { Footer } from "@/04-widgets/footer"

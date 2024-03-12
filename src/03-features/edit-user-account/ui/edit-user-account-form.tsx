@@ -3,9 +3,9 @@
 import { HTMLAttributes } from "react"
 import { ReloadIcon } from "@radix-ui/react-icons"
 
-import { Button } from "@/01-shared/ui/Button"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
-import { Input } from "@/01-shared/ui/Input"
+import { Button } from "@/01-shared/ui/button"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/form"
+import { Input } from "@/01-shared/ui/input"
 import { User } from "@/02-entities/user"
 import { useEditUserAccount } from "../lib/use-edit-user-account"
 

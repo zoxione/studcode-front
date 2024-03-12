@@ -14,8 +14,8 @@ import { signOut } from "next-auth/react"
 import Link from "next/link"
 import { useState } from "react"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/Avatar"
-import { Button } from "@/01-shared/ui/Button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
+import { Button } from "@/01-shared/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,8 +24,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/01-shared/ui/DropdownMenu"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/01-shared/ui/Tooltip"
+} from "@/01-shared/ui/dropdown-menu"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/01-shared/ui/tooltip"
 
 interface UserMenuProps {
   user: Session["user"]

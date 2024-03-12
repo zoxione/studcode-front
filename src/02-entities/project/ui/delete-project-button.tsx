@@ -12,8 +12,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/01-shared/ui/AlertDialog"
-import { Button } from "@/01-shared/ui/Button"
+} from "@/01-shared/ui/alert-dialog"
+import { Button } from "@/01-shared/ui/button"
 import { useDeleteOneProjectMutation } from "../api/project-hooks"
 
 interface DeleteProjectButtonProps {

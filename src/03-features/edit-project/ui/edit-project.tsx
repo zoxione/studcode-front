@@ -2,7 +2,7 @@
 
 import { InfoIcon } from "lucide-react"
 
-import { Skeleton } from "@/01-shared/ui/Skeleton"
+import { Skeleton } from "@/01-shared/ui/skeleton"
 import { useGetOneProjectQuery } from "@/02-entities/project"
 import { EditProjectForm } from "./edit-project-form"
 

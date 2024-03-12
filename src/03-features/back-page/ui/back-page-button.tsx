@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation"
 
-import { Button, ButtonProps } from "@/01-shared/ui/Button"
+import { Button, ButtonProps } from "@/01-shared/ui/button"
 
 const BackPageButton = ({ children, ...props }: ButtonProps) => {
   const router = useRouter()

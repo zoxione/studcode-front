@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/01-shared/ui/Card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/01-shared/ui/card"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"

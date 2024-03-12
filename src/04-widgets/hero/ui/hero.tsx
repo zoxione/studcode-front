@@ -2,8 +2,8 @@ import { PlusCircledIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
 import { HTMLAttributes } from "react"
 
-import { buttonVariants } from "@/01-shared/ui/Button"
-import { Title } from "@/01-shared/ui/Title"
+import { buttonVariants } from "@/01-shared/ui/button"
+import { Title } from "@/01-shared/ui/title"
 import { cn } from "@/01-shared/utils/cn"
 
 interface HeroProps extends HTMLAttributes<HTMLDivElement> {}

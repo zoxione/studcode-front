@@ -1,7 +1,7 @@
 import { z } from "zod"
 import { getServerSession } from "next-auth"
 
-import { Title } from "@/01-shared/ui/Title"
+import { Title } from "@/01-shared/ui/title"
 import { normalizeTimeFrame } from "@/01-shared/utils/normalize-time-frame"
 import { TagBadge, tagAPI } from "@/02-entities/tag"
 import { Footer } from "@/04-widgets/footer"

@@ -4,9 +4,9 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { HTMLAttributes, ReactNode } from "react"
 
-import { buttonVariants } from "@/01-shared/ui/Button"
+import { buttonVariants } from "@/01-shared/ui/button"
 import { cn } from "@/01-shared/utils/cn"
-import { ScrollArea, ScrollBar } from "@/01-shared/ui/ScrollArea"
+import { ScrollArea, ScrollBar } from "@/01-shared/ui/scroll-area"
 
 interface Item {
   href: string

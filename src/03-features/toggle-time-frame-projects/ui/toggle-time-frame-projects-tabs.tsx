@@ -1,6 +1,6 @@
 "use client"
 
-import { Tabs, TabsList, TabsTrigger } from "@/01-shared/ui/Tabs"
+import { Tabs, TabsList, TabsTrigger } from "@/01-shared/ui/tabs"
 import { TimeFrameProject } from "@/02-entities/project/api/types"
 import { useToggleTimeFrameProjects } from "../lib/use-toggle-time-frame-projects"
 

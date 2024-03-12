@@ -7,7 +7,7 @@ import { ThemeProvider } from "next-themes"
 import { ReactNode, Suspense } from "react"
 import { toast } from "sonner"
 
-import { Toaster } from "@/01-shared/ui/Sonner"
+import { Toaster } from "@/01-shared/ui/sonner"
 import { DialogProvider } from "./dialog-provider"
 
 interface IProviders {

@@ -1,4 +1,4 @@
-import { Title } from "@/01-shared/ui/Title"
+import { Title } from "@/01-shared/ui/title"
 import { tagAPI } from "@/02-entities/tag"
 import { TagCard } from "@/02-entities/tag"
 import { Footer } from "@/04-widgets/footer"

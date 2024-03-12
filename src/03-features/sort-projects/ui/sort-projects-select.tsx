@@ -1,6 +1,6 @@
 "use client"
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/01-shared/ui/Select"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/01-shared/ui/select"
 import { useSortProjects } from "../lib/use-sort-projects"
 
 interface SortProjectsSelectProps {

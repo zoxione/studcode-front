@@ -1,4 +1,4 @@
-import { Separator } from "@/01-shared/ui/Separator"
+import { Separator } from "@/01-shared/ui/separator"
 import { DeleteTeamButton, teamAPI } from "@/02-entities/team"
 
 interface PageProps {

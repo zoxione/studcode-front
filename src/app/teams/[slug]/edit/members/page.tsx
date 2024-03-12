@@ -1,4 +1,4 @@
-import { Separator } from "@/01-shared/ui/Separator"
+import { Separator } from "@/01-shared/ui/separator"
 import { teamAPI } from "@/02-entities/team"
 import { AddTeamMemberForm } from "@/03-features/add-team-member"
 import { MembersTable } from "@/04-widgets/members-table"

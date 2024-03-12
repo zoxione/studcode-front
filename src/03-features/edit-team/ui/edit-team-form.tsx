@@ -2,14 +2,14 @@
 
 import { ImageIcon, ReloadIcon } from "@radix-ui/react-icons"
 
-import { Button } from "@/01-shared/ui/Button"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/Form"
-import { Input } from "@/01-shared/ui/Input"
-import { RadioGroup, RadioGroupItem } from "@/01-shared/ui/RadioGroup"
-import { Textarea } from "@/01-shared/ui/Textarea"
+import { Button } from "@/01-shared/ui/button"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/form"
+import { Input } from "@/01-shared/ui/input"
+import { RadioGroup, RadioGroupItem } from "@/01-shared/ui/radio-group"
+import { Textarea } from "@/01-shared/ui/textarea"
 import { useEditTeam } from "../lib/use-edit-team"
 import { ACCEPTED_IMAGE_TYPES, Team } from "@/02-entities/team"
-import { Dropzone } from "@/01-shared/ui/Dropzone"
+import { Dropzone } from "@/01-shared/ui/dropzone"
 
 interface EditTeamFormProps {
   team: Team

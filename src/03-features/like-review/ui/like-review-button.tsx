@@ -7,7 +7,7 @@ import { toast } from "sonner"
 import { ReloadIcon } from "@radix-ui/react-icons"
 
 import { useLikeOneReviewMutation } from "@/02-entities/reviews"
-import { Button, ButtonProps } from "@/01-shared/ui/Button"
+import { Button, ButtonProps } from "@/01-shared/ui/button"
 
 interface LikeReviewButtonProps extends ButtonProps {
   reviewId: string
