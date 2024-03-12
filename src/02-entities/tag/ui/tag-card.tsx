@@ -19,7 +19,7 @@ const TagCard = forwardRef<HTMLAnchorElement, TagCardProps>(({ tag, className },
         className,
       )}
     >
-      <span className="flex-none w-10 h-10 bg-accent rounded-md flex justify-center items-center">{tag.icon}</span>
+      <span className="flex-none w-10 h-10 bg-primary/5 rounded-md flex justify-center items-center">{tag.icon}</span>
       <span className="grow line-clamp-1">{tag.name}</span>
       <ChevronRightIcon className="flex-none w-4 h-4 hidden group-hover:block" />
     </Link>

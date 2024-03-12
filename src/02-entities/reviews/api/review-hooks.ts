@@ -58,10 +58,38 @@ const useDeleteOneReviewMutation = () => {
   })
 }
 
+const useLikeOneReviewMutation = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (key: string) => {
+      return reviewAPI.likeOne(key)
+    },
+    onSuccess: async () => {
+      queryClient.invalidateQueries({ queryKey: ["reviews"] })
+      await fetch(`/api/revalidate?tag=reviews`)
+    },
+  })
+}
+
+const useDislikeOneReviewMutation = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (key: string) => {
+      return reviewAPI.dislikeOne(key)
+    },
+    onSuccess: async () => {
+      queryClient.invalidateQueries({ queryKey: ["reviews"] })
+      await fetch(`/api/revalidate?tag=reviews`)
+    },
+  })
+}
+
 export {
   useCreateOneReviewMutation,
   useGetAllReviewsQuery,
   useGetOneReviewQuery,
   useUpdateOneReviewMutation,
   useDeleteOneReviewMutation,
+  useLikeOneReviewMutation,
+  useDislikeOneReviewMutation,
 }

@@ -51,7 +51,11 @@ export default async function Home({
           <div className="flex flex-col gap-4">
             <Title order={4}>Популярные теги</Title>
             {tags.length > 0 ? (
-              tags.map((tag) => <TagBadge key={tag._id} tag={tag} />)
+              <div className="flex flex-wrap gap-2">
+                {tags.map((tag) => (
+                  <TagBadge key={tag._id} tag={tag} />
+                ))}
+              </div>
             ) : (
               <span className="text-sm text-muted-foreground flex justify-center items-center text-center">
                 {"(='X'=)"} <br />

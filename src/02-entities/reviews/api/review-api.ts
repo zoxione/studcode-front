@@ -131,6 +131,52 @@ class ReviewAPI {
 
     return await res.json()
   }
+
+  /**
+   * Лайк обзора
+   */
+  async likeOne(key: string): Promise<Review> {
+    const res = await fetch(`${this.baseUrl}/${key}/like`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
+      next: {
+        tags: ["reviews"],
+      },
+    })
+
+    if (!res.ok) {
+      throw new Error(`Failed to like review: ${res.statusText}`)
+    }
+
+    return await res.json()
+  }
+
+  /**
+   * Дизлайк обзора
+   */
+  async dislikeOne(key: string): Promise<Review> {
+    const res = await fetch(`${this.baseUrl}/${key}/dislike`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
+      next: {
+        tags: ["reviews"],
+      },
+    })
+
+    if (!res.ok) {
+      throw new Error(`Failed to dislike review: ${res.statusText}`)
+    }
+
+    return await res.json()
+  }
 }
 
 export const reviewAPI = new ReviewAPI(`${process.env.API_URL}/v1/reviews`)
