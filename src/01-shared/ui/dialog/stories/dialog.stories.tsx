@@ -14,7 +14,7 @@ import {
 import { Label } from "../../label"
 
 const meta = {
-  title: "UI/dialog",
+  title: "UI/Dialog",
   component: Dialog,
   parameters: {},
   tags: ["autodocs"],

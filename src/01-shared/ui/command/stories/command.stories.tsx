@@ -14,7 +14,7 @@ import {
 } from "../ui/command"
 
 const meta = {
-  title: "UI/command",
+  title: "UI/Command",
   component: Command,
   parameters: {},
   tags: ["autodocs"],

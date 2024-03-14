@@ -15,7 +15,7 @@ import { Button } from "../../button"
 import { Label } from "../../label"
 
 const meta = {
-  title: "UI/sheet",
+  title: "UI/Sheet",
   component: Sheet,
   parameters: {},
   tags: ["autodocs"],

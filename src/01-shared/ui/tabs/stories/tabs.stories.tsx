@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
 
 const meta = {
-  title: "UI/tabs",
+  title: "UI/Tabs",
   component: Tabs,
   parameters: {},
   tags: ["autodocs"],

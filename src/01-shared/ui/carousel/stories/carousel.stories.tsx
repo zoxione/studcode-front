@@ -4,7 +4,7 @@ import { Card, CardContent } from "../../card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel"
 
 const meta = {
-  title: "UI/carousel",
+  title: "UI/Carousel",
   component: Carousel,
   parameters: {},
   tags: ["autodocs"],

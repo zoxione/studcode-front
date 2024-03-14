@@ -1,22 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { Slider } from "../ui/slider"
+import { Separator } from "../ui/separator"
 
 const meta = {
-  title: "UI/Slider",
-  component: Slider,
+  title: "UI/Separator",
+  component: Separator,
   parameters: {},
   tags: ["autodocs"],
   argTypes: {},
-} satisfies Meta<typeof Slider>
+} satisfies Meta<typeof Separator>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {
-    defaultValue: [50],
-    max: 100,
-    step: 1,
-  },
+  args: {},
 }

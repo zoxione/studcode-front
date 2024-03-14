@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Button } from "../ui/button"
 
 const meta = {
-  title: "UI/button",
+  title: "UI/Button",
   component: Button,
   parameters: {},
   tags: ["autodocs"],

@@ -4,7 +4,7 @@ import { Switch } from "../ui/switch"
 import { Label } from "../../label"
 
 const meta = {
-  title: "UI/switch",
+  title: "UI/Switch",
   component: Switch,
   parameters: {},
   tags: ["autodocs"],

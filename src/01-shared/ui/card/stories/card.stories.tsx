@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Label } from "../../label"
 
 const meta = {
-  title: "UI/card",
+  title: "UI/Card",
   component: Card,
   parameters: {},
   tags: ["autodocs"],

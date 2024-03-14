@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/select"
 
 const meta = {
-  title: "UI/select",
+  title: "UI/Select",
   component: Select,
   parameters: {},
   tags: ["autodocs"],

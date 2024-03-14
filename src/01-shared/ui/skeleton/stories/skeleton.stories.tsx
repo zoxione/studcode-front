@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Skeleton } from "../ui/skeleton"
 
 const meta = {
-  title: "UI/skeleton",
+  title: "UI/Skeleton",
   component: Skeleton,
   parameters: {},
   tags: ["autodocs"],
