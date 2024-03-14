@@ -36,13 +36,19 @@ const ProjectDraftCard = forwardRef<HTMLAnchorElement, ProjectDraftCardProps>(
         href={`/projects/${project.slug}`}
         ref={ref}
         className={cn(
-          "flex flex-row items-center gap-4 max-w-xl rounded-md hover:bg-gradient-to-l from-accent duration-200",
+          "group flex flex-row items-center gap-4 max-w-xl rounded-md hover:bg-gradient-to-l from-accent duration-200",
           className,
         )}
       >
         <Avatar className="w-[60px] h-[60px] text-lg rounded-md">
-          <AvatarImage src={project.logo} width={60} height={60} alt={project.title} />
-          <AvatarFallback>{project.title[0]}</AvatarFallback>
+          <AvatarImage
+            className="group-hover:scale-110 duration-200"
+            src={project.logo}
+            width={60}
+            height={60}
+            alt={project.title}
+          />
+          <AvatarFallback className="group-hover:scale-110 duration-200">{project.title[0]}</AvatarFallback>
         </Avatar>
         <div className="flex-1 flex flex-col overflow-hidden pr-3">
           <span className="text-base font-semibold">{project.title}</span>

@@ -1,20 +1,21 @@
 "use client"
 
+import { ReloadIcon } from "@radix-ui/react-icons"
 import { Flame } from "lucide-react"
+import { useSession } from "next-auth/react"
 import { MouseEvent } from "react"
 import { toast } from "sonner"
-import { useSession } from "next-auth/react"
-import { ReloadIcon } from "@radix-ui/react-icons"
 
-import { Button } from "@/01-shared/ui/button"
+import { Button, ButtonProps } from "@/01-shared/ui/button"
 import { useVoteOneProjectMutation } from "../api/project-hooks"
 
-interface VoteButtonProps {
+interface VoteButtonProps extends ButtonProps {
   id: string
   flames: number
+  voted: boolean
 }
 
-const VoteButton = ({ id, flames }: VoteButtonProps) => {
+const VoteButton = ({ id, flames, voted, ...props }: VoteButtonProps) => {
   const { data: session } = useSession()
   const { mutate: voteOneProject, status } = useVoteOneProjectMutation()
 
@@ -32,13 +33,22 @@ const VoteButton = ({ id, flames }: VoteButtonProps) => {
       onClick={handleButtonClick}
       variant="outline"
       size="icon"
-      className="flex flex-col h-10 w-8"
+      className="group flex flex-col h-10 w-8"
       disabled={status === "pending"}
+      {...props}
     >
-      <Flame className="h-4 w-4" />
-      <span className="text-[10px] leading-normal">
-        {status === "pending" ? <ReloadIcon className="mr-2 h-4 w-4 animate-spin" /> : flames}
-      </span>
+      {status === "pending" ? (
+        <ReloadIcon className="h-3 w-3 animate-spin" />
+      ) : (
+        <>
+          <Flame
+            className={`h-4 w-4 stroke-2 ${
+              voted ? "fill-primary stroke-primary/90" : ""
+            } animate-in zoom-in duration-200 group-hover:scale-110`}
+          />
+          <span className="text-[10px] leading-normal">{flames}</span>
+        </>
+      )}
     </Button>
   )
 }

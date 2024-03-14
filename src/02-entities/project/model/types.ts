@@ -46,6 +46,7 @@ interface Project {
   tags: Tag[]
   created_at: string
   updated_at: string
+  voted: boolean
 }
 
 export type { Project, ProjectPrice, ProjectStatus, ProjectLinks, ProjectType, ProjectCreator }

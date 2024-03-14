@@ -35,7 +35,7 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(({ project, loa
   }
 
   return (
-    <div className="h-[60px] max-w-xl relative" ref={ref}>
+    <div className="group h-[60px] max-w-xl relative" ref={ref}>
       <Link
         href={`/projects/${project.slug}`}
         className={cn(
@@ -44,8 +44,14 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(({ project, loa
         )}
       >
         <Avatar className="w-[60px] h-[60px] text-lg rounded-md">
-          <AvatarImage src={project.logo} width={60} height={60} alt={project.title} />
-          <AvatarFallback>{project.title[0]}</AvatarFallback>
+          <AvatarImage
+            className="group-hover:scale-110 duration-200"
+            src={project.logo}
+            width={60}
+            height={60}
+            alt={project.title}
+          />
+          <AvatarFallback className="group-hover:scale-110 duration-200">{project.title[0]}</AvatarFallback>
         </Avatar>
         <div className="flex-1 flex flex-col gap-2 overflow-hidden">
           <div className="mb-6 flex flex-row items-center gap-1 text-base font-semibold">
@@ -55,7 +61,7 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(({ project, loa
           </div>
         </div>
         <div className="w-fit pr-3">
-          <VoteButton id={project._id} flames={project.flames} />
+          <VoteButton id={project._id} flames={project.flames} voted={project.voted} />
         </div>
       </Link>
 
