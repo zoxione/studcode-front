@@ -23,7 +23,7 @@ export default async function UserProfile({ params }: { params: { username: stri
         <Card>
           <CardContent className="p-6">
             {user.about !== "" ? (
-              <p>{user.about}</p>
+              <p className="whitespace-pre-line">{user.about}</p>
             ) : (
               <p className="text-sm text-muted-foreground flex justify-center items-center text-center">
                 {"(__ ͡° ͜ʖ ͡°)_"} <br />

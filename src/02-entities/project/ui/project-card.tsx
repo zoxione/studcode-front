@@ -61,7 +61,7 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(({ project, loa
           </div>
         </div>
         <div className="w-fit pr-3">
-          <VoteButton id={project._id} flames={project.flames} voted={project.voted} />
+          <VoteButton project_id={project._id} />
         </div>
       </Link>
 

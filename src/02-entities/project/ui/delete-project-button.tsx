@@ -2,7 +2,12 @@
 
 import { ReloadIcon } from "@radix-ui/react-icons"
 import { Trash2Icon } from "lucide-react"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { toast } from "sonner"
 
+import { Button } from "@/01-shared/ui/button"
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -13,18 +18,33 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/01-shared/ui/alert-dialog"
-import { Button } from "@/01-shared/ui/button"
 import { useDeleteOneProjectMutation } from "../api/project-hooks"
 
 interface DeleteProjectButtonProps {
-  id: string
+  project_id: string
 }
 
-const DeleteProjectButton = ({ id }: DeleteProjectButtonProps) => {
-  const { mutate: deleteProject, status } = useDeleteOneProjectMutation()
+const DeleteProjectButton = ({ project_id }: DeleteProjectButtonProps) => {
+  const [isLoading, setIsLoading] = useState(false)
+  const { data: session } = useSession()
+  const router = useRouter()
+  const { mutateAsync: deleteProjectAsync } = useDeleteOneProjectMutation()
 
-  const handleButton = () => {
-    deleteProject(id)
+  const handleButton = async () => {
+    try {
+      setIsLoading(true)
+      if (!session) {
+        toast.error("Вы не авторизованы")
+        return
+      }
+      await deleteProjectAsync(project_id)
+      toast.success("Проект удален")
+      router.push(`/${session.user._id}/projects`)
+    } catch (error) {
+      toast.error("Произошла ошибка")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -43,8 +63,8 @@ const DeleteProjectButton = ({ id }: DeleteProjectButtonProps) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Закрыть</AlertDialogCancel>
-          <Button onClick={handleButton} variant="destructive" disabled={status === "pending"}>
-            {status === "pending" ? <ReloadIcon className="mr-2 h-4 w-4 animate-spin" /> : "Удалить"}
+          <Button onClick={handleButton} variant="destructive" disabled={isLoading}>
+            {isLoading ? <ReloadIcon className="h-4 w-4 animate-spin" /> : "Удалить"}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

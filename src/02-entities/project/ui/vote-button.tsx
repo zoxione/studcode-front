@@ -7,16 +7,15 @@ import { MouseEvent } from "react"
 import { toast } from "sonner"
 
 import { Button, ButtonProps } from "@/01-shared/ui/button"
-import { useVoteOneProjectMutation } from "../api/project-hooks"
+import { useGetOneProjectQuery, useVoteOneProjectMutation } from "../api/project-hooks"
 
 interface VoteButtonProps extends ButtonProps {
-  id: string
-  flames: number
-  voted: boolean
+  project_id: string
 }
 
-const VoteButton = ({ id, flames, voted, ...props }: VoteButtonProps) => {
+const VoteButton = ({ project_id, ...props }: VoteButtonProps) => {
   const { data: session } = useSession()
+  const { data: project } = useGetOneProjectQuery(project_id)
   const { mutate: voteOneProject, status } = useVoteOneProjectMutation()
 
   const handleButtonClick = async (event: MouseEvent<HTMLButtonElement>) => {
@@ -25,7 +24,11 @@ const VoteButton = ({ id, flames, voted, ...props }: VoteButtonProps) => {
       toast.error("Необходимо авторизоваться")
       return
     }
-    voteOneProject(id)
+    voteOneProject(project_id)
+  }
+
+  if (!project) {
+    return null
   }
 
   return (
@@ -41,12 +44,14 @@ const VoteButton = ({ id, flames, voted, ...props }: VoteButtonProps) => {
         <ReloadIcon className="h-3 w-3 animate-spin" />
       ) : (
         <>
-          <Flame
-            className={`h-4 w-4 stroke-2 ${
-              voted ? "fill-primary stroke-primary/90" : ""
-            } animate-in zoom-in duration-200 group-hover:scale-110`}
-          />
-          <span className="text-[10px] leading-normal">{flames}</span>
+          {project.voted ? (
+            <Flame
+              className={`h-4 w-4 stroke-2 fill-primary stroke-primary/90 animate-in zoom-in duration-200 group-hover:scale-110`}
+            />
+          ) : (
+            <Flame className={`h-4 w-4 stroke-2 animate-in zoom-in duration-200 group-hover:scale-110`} />
+          )}
+          <span className="text-[10px] leading-normal">{project.flames}</span>
         </>
       )}
     </Button>

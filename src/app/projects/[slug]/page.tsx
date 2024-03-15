@@ -84,7 +84,7 @@ export default async function ProjectPage({ params }: PageProps) {
             </div>
           </div>
           <div className="flex flex-row gap-2 items-center">
-            <VoteButton id={project._id} flames={project.flames} voted={project.voted} />
+            <VoteButton project_id={project._id} />
             {isOwner ? (
               <Link
                 href={`/projects/${project.slug}/edit`}

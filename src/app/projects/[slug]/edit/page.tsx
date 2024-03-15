@@ -31,7 +31,7 @@ export default async function EditProjectPage({ params }: { params: { slug: stri
           </Link>
         }
         description={`Статус: ${prettyStatus(project.status)}`}
-        right={<DeleteProjectButton id={project._id} />}
+        right={<DeleteProjectButton project_id={project._id} />}
       />
       <EditProject projectId={project._id} />
     </Layout>
