@@ -6,13 +6,15 @@ import { authOptions } from "@/01-shared/lib/auth-options"
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
 import { Card, CardContent } from "@/01-shared/ui/card"
 import { Title } from "@/01-shared/ui/title"
-import { JoinButton, teamAPI } from "@/02-entities/team"
+import { teamAPI } from "@/02-entities/team"
 import { TeamMemberCard } from "@/02-entities/team/ui/team-member-card"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"
 import { cn } from "@/01-shared/utils/cn"
 import { buttonVariants } from "@/01-shared/ui/button"
+import { JoinTeamButton } from "@/03-features/join-team"
+import { LeaveTeamButton } from "@/03-features/leave-team"
 
 interface PageProps {
   params: { slug: string }
@@ -42,14 +44,18 @@ export default async function TeamsPage({ params }: PageProps) {
           <AvatarFallback>{team.name[0]}</AvatarFallback>
         </Avatar>
         <Title order={2}>{team.name}</Title>
-        {isOwner ? (
-          <Link href={`/teams/${team.slug}/edit`} className={cn(buttonVariants({ variant: "default" }))}>
-            Редактировать
-          </Link>
-        ) : null}
-        {!isOwner && !isMember ? (
-          <JoinButton teamName={team.name} userId={session?.user._id || ""} disabled={team.status === "closed"} />
-        ) : null}
+        <div className="flex gap-2">
+          {isOwner ? (
+            <Link href={`/teams/${team.slug}/edit`} className={cn(buttonVariants({ variant: "outline" }))}>
+              Редактировать
+            </Link>
+          ) : null}
+          {!isOwner && !isMember ? (
+            <JoinTeamButton teamName={team.name} userId={session?.user._id || ""} disabled={team.status === "closed"} />
+          ) : (
+            <LeaveTeamButton teamName={team.name} userId={session?.user._id || ""} disabled={isOwner} />
+          )}
+        </div>
       </div>
       <div className="space-y-2">
         <Title order={5}>О команде</Title>

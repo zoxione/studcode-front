@@ -7,6 +7,7 @@ interface GetAllReviewsFilter {
   search?: string
   order?: keyof Review
   project_id?: string
+  user_id?: string
 }
 
 interface GetAllReviewsResponse {

@@ -7,6 +7,7 @@ import { useInView } from "react-intersection-observer"
 import { GetAllProjectsFilter, ProjectCard, useGetAllProjectsInfiniteQuery } from "@/02-entities/project"
 import { cn } from "@/01-shared/utils/cn"
 import { ProjectCardProps } from "@/02-entities/project/ui/project-card"
+import { VoteProjectButton } from "@/03-features/vote-project"
 
 interface ProjectsListProps {
   className?: string
@@ -47,7 +48,12 @@ export const ProjectsList = ({ filter, projectCardProps, className }: ProjectsLi
             <Fragment key={i}>
               {group.results.length > 0 ? (
                 group.results.map((project) => (
-                  <ProjectCard key={project._id} project={project} {...projectCardProps} />
+                  <ProjectCard
+                    key={project._id}
+                    project={project}
+                    actions={[<VoteProjectButton key="vote" projectId={project._id} />]}
+                    {...projectCardProps}
+                  />
                 ))
               ) : (
                 <span className="text-sm text-muted-foreground flex justify-center items-center text-center">

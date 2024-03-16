@@ -1,5 +1,6 @@
 import { Separator } from "@/01-shared/ui/separator"
-import { DeleteTeamButton, teamAPI } from "@/02-entities/team"
+import { teamAPI } from "@/02-entities/team"
+import { DeleteTeamButton } from "@/03-features/delete-team"
 
 interface PageProps {
   params: { slug: string }
@@ -18,7 +19,7 @@ export default async function TeamsEditPage({ params }: PageProps) {
       <Separator />
       <div className="flex flex-row items-center justify-between">
         <span>Удалить команду и все данные (восстановить невозможно)</span>
-        <DeleteTeamButton id={team._id} />
+        <DeleteTeamButton teamId={team._id} />
       </div>
     </div>
   )

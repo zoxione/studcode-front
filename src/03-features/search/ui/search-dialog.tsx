@@ -13,6 +13,7 @@ import { cn } from "@/01-shared/utils/cn"
 import { ProjectCard } from "@/02-entities/project"
 import { TagCardSmall } from "@/02-entities/tag/ui/tag-card-small"
 import { useSearch } from "../lib/use-search"
+import { VoteProjectButton } from "@/03-features/vote-project"
 
 interface SearchDialogProps {
   className?: string
@@ -71,7 +72,11 @@ const SearchDialog = ({ className }: SearchDialogProps) => {
                 {projects?.results?.length && projects?.results?.length > 0 ? (
                   <div className="space-y-4">
                     {projects?.results.map((project) => (
-                      <ProjectCard key={project._id} project={project} />
+                      <ProjectCard
+                        key={project._id}
+                        project={project}
+                        actions={[<VoteProjectButton key="vote" projectId={project._id} />]}
+                      />
                     ))}
                   </div>
                 ) : (

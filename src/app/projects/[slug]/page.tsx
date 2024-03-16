@@ -1,29 +1,28 @@
 import { Pencil1Icon } from "@radix-ui/react-icons"
-import Link from "next/link"
-import { notFound } from "next/navigation"
 import { Metadata, ResolvingMetadata } from "next"
 import { getServerSession } from "next-auth"
+import Link from "next/link"
+import { notFound } from "next/navigation"
 
+import { authOptions } from "@/01-shared/lib/auth-options"
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
 import { Badge } from "@/01-shared/ui/badge"
 import { Button, buttonVariants } from "@/01-shared/ui/button"
 import { Card, CardContent } from "@/01-shared/ui/card"
 import { Rating } from "@/01-shared/ui/rating"
 import { Title } from "@/01-shared/ui/title"
+import { cn } from "@/01-shared/utils/cn"
+import { getUserInitials } from "@/01-shared/utils/get-user-initials"
+import { getYouTubeId } from "@/01-shared/utils/get-youtube-id"
 import { prettyPrice, projectAPI } from "@/02-entities/project"
-import { VoteButton } from "@/02-entities/project/ui/vote-button"
 import { TagBadge } from "@/02-entities/tag"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"
+import { LinksList } from "@/04-widgets/links-list"
 import { ReviewsList } from "@/04-widgets/reviews-list"
 import { ScreensCarousel } from "@/04-widgets/screens-carousel"
-import { getUserInitials } from "@/01-shared/utils/get-user-initials"
-import { authOptions } from "@/01-shared/lib/auth-options"
-import { cn } from "@/01-shared/utils/cn"
-import { getYouTubeId } from "@/01-shared/utils/get-youtube-id"
-import { CreateReviewForm } from "@/03-features/create-review"
-import { LinksList } from "@/04-widgets/links-list"
+import { VoteProjectButton } from "@/03-features/vote-project"
 
 interface PageProps {
   params: { slug: string }
@@ -84,7 +83,7 @@ export default async function ProjectPage({ params }: PageProps) {
             </div>
           </div>
           <div className="flex flex-row gap-2 items-center">
-            <VoteButton project_id={project._id} />
+            <VoteProjectButton projectId={project._id} />
             {isOwner ? (
               <Link
                 href={`/projects/${project.slug}/edit`}
@@ -140,8 +139,7 @@ export default async function ProjectPage({ params }: PageProps) {
             <div className="space-y-2">
               <Title order={5}>Обзоры</Title>
               <div className="space-y-4">
-                <CreateReviewForm projectId={project._id} />
-                <ReviewsList project_id={project._id} />
+                <ReviewsList projectId={project._id} userId={session?.user._id} />
               </div>
             </div>
           </div>

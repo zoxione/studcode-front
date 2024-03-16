@@ -18,10 +18,21 @@ const useCreateOneReviewMutation = () => {
 }
 
 const useGetAllReviewsQuery = (filter: GetAllReviewsFilter) => {
-  const { page, limit, search, order, project_id } = filter
+  const { page, limit, search, order, project_id, user_id } = filter
   return useQuery({
-    queryKey: ["reviews", page, limit, search, order, project_id],
+    queryKey: ["reviews", page, limit, search, order, project_id, user_id],
     queryFn: () => reviewAPI.getAll(filter),
+  })
+}
+
+const useGetOneMyReviewQuery = (
+  filter: Pick<GetAllReviewsFilter, "project_id" | "user_id"> & { enabled?: boolean },
+) => {
+  const { project_id, user_id } = filter
+  return useQuery({
+    queryKey: ["reviews", project_id, user_id],
+    queryFn: () => reviewAPI.getAll({ project_id: filter.project_id, user_id: filter.user_id }),
+    enabled: filter.enabled,
   })
 }
 
@@ -92,4 +103,5 @@ export {
   useDeleteOneReviewMutation,
   useLikeOneReviewMutation,
   useDislikeOneReviewMutation,
+  useGetOneMyReviewQuery,
 }
