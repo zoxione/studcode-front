@@ -14,7 +14,7 @@ const DeleteProjectButton = ({ projectId, ...props }: DeleteProjectButtonProps) 
   const { handleDelete, isLoading } = useDeleteProject({ projectId })
 
   return (
-    <Button onClick={handleDelete} variant="ghost" size="none" className="p-1 gap-1" disabled={isLoading} {...props}>
+    <Button onClick={handleDelete} variant="destructive" size="icon" disabled={isLoading} {...props}>
       {isLoading ? <ReloadIcon className="h-4 w-4 animate-spin" /> : <Trash className="h-4 w-4" />}
     </Button>
   )

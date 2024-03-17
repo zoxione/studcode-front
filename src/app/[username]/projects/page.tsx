@@ -9,5 +9,5 @@ export default async function UserProjects({ params }: { params: { username: str
   const user = await userAPI.getOne(params.username)
   const isOwner = session?.user._id === user._id
 
-  return <ProjectsList filter={{ creator_id: user._id, status: "published" }} projectCardProps={{ isEdit: isOwner }} />
+  return <ProjectsList filter={{ creator_id: user._id, status: "published" }} isEdit={isOwner} />
 }

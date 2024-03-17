@@ -37,7 +37,7 @@ const useCreateProject = ({}: useCreateProjectProps) => {
         creator: session.user._id,
       })
       toast.success("Проект создан")
-      router.push(`/projects/${res.slug}`)
+      router.push(`/projects/${res.slug}/edit`)
     } catch (error) {
       toast.error("Произошла ошибка")
     } finally {

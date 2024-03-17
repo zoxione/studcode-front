@@ -112,7 +112,9 @@ export const Header = ({ className }: IHeaderProps) => {
             </>
           ) : (
             <Button asChild>
-              <Link href="/?dialog=auth">Войти</Link>
+              <Link href="?dialog=auth" scroll={false}>
+                Войти
+              </Link>
             </Button>
           )}
         </div>

@@ -38,7 +38,7 @@ const SignInForm = ({ className }: SignInFormProps) => {
         toast.error("Неверная электронная почта или пароль")
       } else {
         toast.success("Вы вошли в аккаунт")
-        router.push("/")
+        window.location.replace("/")
       }
     } catch (e) {
       toast.error("Произошла ошибка")

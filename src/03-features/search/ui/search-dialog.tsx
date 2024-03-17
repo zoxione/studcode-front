@@ -75,7 +75,14 @@ const SearchDialog = ({ className }: SearchDialogProps) => {
                       <ProjectCard
                         key={project._id}
                         project={project}
-                        actions={[<VoteProjectButton key="vote" projectId={project._id} />]}
+                        actions={[
+                          <VoteProjectButton
+                            key="vote"
+                            projectId={project._id}
+                            flames={project.flames}
+                            voted={project.voted}
+                          />,
+                        ]}
                       />
                     ))}
                   </div>

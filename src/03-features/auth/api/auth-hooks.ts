@@ -31,4 +31,11 @@ const useRefreshQuery = () => {
   })
 }
 
-export { useRefreshQuery, useRegisterMutation, useWhoamiQuery }
+const useVerifyEmailQuery = () => {
+  return useQuery({
+    queryKey: ["auth-user"],
+    queryFn: () => authAPI.verifyEmail(),
+  })
+}
+
+export { useRefreshQuery, useRegisterMutation, useWhoamiQuery, useVerifyEmailQuery }

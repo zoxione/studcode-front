@@ -45,7 +45,7 @@ const EditProjectForm = ({ project }: EditProjectFormProps) => {
         <PublishSection
           form={editProjectForm}
           project={project}
-          onSaveDraft={() => handleSaveDraft(project._id, project.slug, editProjectForm.getValues())}
+          onSaveDraft={() => handleSaveDraft(editProjectForm.getValues())}
           isLoading={isLoading}
         />
       ),
@@ -80,7 +80,7 @@ const EditProjectForm = ({ project }: EditProjectFormProps) => {
         <Form {...editProjectForm}>
           <form
             onSubmit={editProjectForm.handleSubmit((values: z.infer<typeof editProjectSchema>) =>
-              handlePublish(project._id, project.slug, values),
+              handlePublish(values),
             )}
             className="space-y-8 mb-8"
           >

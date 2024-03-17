@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 import { Button } from "@/01-shared/ui/button"
@@ -12,22 +12,27 @@ import { SignInForm, SignUpForm } from "@/03-features/auth"
 
 const AuthDialog = () => {
   const router = useRouter()
+  const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     setIsOpen(true)
   }, [])
 
+  const handleClose = () => {
+    router.push(pathname, { scroll: false })
+  }
+
   return (
     <Dialog open={isOpen}>
       <DialogContent
         className="sm:max-w-[380px] sm:max-h-[90vh] overflow-y-auto"
         withBackButton={false}
-        onCloseButton={() => router.push("/")}
-        onCloseAutoFocus={() => router.push("/")}
-        onEscapeKeyDown={() => router.push("/")}
-        onPointerDownOutside={() => router.push("/")}
-        onInteractOutside={() => router.push("/")}
+        onCloseButton={handleClose}
+        onCloseAutoFocus={handleClose}
+        onEscapeKeyDown={handleClose}
+        onPointerDownOutside={handleClose}
+        onInteractOutside={handleClose}
       >
         <Tabs defaultValue="sign-in" className="w-full">
           <TabsList className="grid w-full grid-cols-2">

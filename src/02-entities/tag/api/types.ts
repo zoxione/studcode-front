@@ -4,7 +4,7 @@ interface GetAllTagsFilter {
   page?: number
   limit?: number
   search?: string
-  order?: keyof Tag
+  order?: keyof Tag | `!${keyof Tag}`
 }
 
 interface GetAllTagsResponse {

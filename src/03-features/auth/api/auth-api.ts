@@ -124,6 +124,29 @@ class AuthAPI {
 
     return await res.json()
   }
+
+  /**
+   * Подтверждение почты
+   */
+  async verifyEmail(token?: string): Promise<any> {
+    const res = await fetch(`${this.baseUrl}/verify?token=${token || ""}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
+      next: {
+        tags: ["auth-user"],
+      },
+    })
+
+    if (!res.ok) {
+      throw new Error(`Failed to verify email: ${res.statusText}`)
+    }
+
+    return await res.json()
+  }
 }
 
 export const authAPI = new AuthAPI(`${process.env.API_URL}/v1/auth`)

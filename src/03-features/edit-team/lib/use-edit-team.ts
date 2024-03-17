@@ -4,7 +4,6 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
-import { useRouter } from "next/navigation"
 
 import { Team, teamSchema, useUpdateOneTeamMutation, useUploadsOneTeamMutation } from "@/02-entities/team"
 
@@ -17,7 +16,6 @@ interface useEditTeamProps {
 const useEditTeam = ({ team }: useEditTeamProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const { data: session } = useSession()
-  const router = useRouter()
   const { mutateAsync: updateTeamAsync } = useUpdateOneTeamMutation()
   const { mutateAsync: uploadsFilesAsync } = useUploadsOneTeamMutation()
 
@@ -43,7 +41,7 @@ const useEditTeam = ({ team }: useEditTeamProps) => {
           files: { logo_file: values.logo_file },
         })
       }
-      const res = await updateTeamAsync({
+      await updateTeamAsync({
         key: team._id,
         team: {
           name: values.name,
@@ -52,7 +50,6 @@ const useEditTeam = ({ team }: useEditTeamProps) => {
         },
       })
       toast.success("Команда обновлена")
-      router.push(`/teams/${res.slug}`)
     } catch (error) {
       toast.error("Произошла ошибка")
     } finally {

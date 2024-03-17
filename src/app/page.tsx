@@ -45,7 +45,7 @@ export default async function Home({
           <Title order={4} className="mt-6 mb-4">
             Лучшие проекты за {timeFrameNormalized}
           </Title>
-          <ProjectsList filter={{ time_frame: searchParamsParsed.timeFrame, status: "published" }} />
+          <ProjectsList filter={{ time_frame: searchParamsParsed.timeFrame, status: "published", order: "!flames" }} />
         </div>
         <div className="space-y-8">
           <div className="flex flex-col gap-4">

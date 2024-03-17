@@ -4,7 +4,6 @@ import { useState } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
-import { useRouter } from "next/navigation"
 
 import { User, useUpdateOneUserMutation, useUploadsOneUserMutation, userSchema } from "@/02-entities/user"
 
@@ -23,7 +22,6 @@ interface useEditUserProfileProps {
 const useEditUserProfile = ({ user }: useEditUserProfileProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const { data: session } = useSession()
-  const router = useRouter()
   const { mutateAsync: updateUserAsync } = useUpdateOneUserMutation()
   const { mutateAsync: uploadsFilesAsync } = useUploadsOneUserMutation()
 
@@ -58,7 +56,7 @@ const useEditUserProfile = ({ user }: useEditUserProfileProps) => {
           files: { avatar_file: values.avatar_file },
         })
       }
-      const res = await updateUserAsync({
+      await updateUserAsync({
         key: user._id,
         user: {
           full_name: values.full_name,
@@ -67,7 +65,6 @@ const useEditUserProfile = ({ user }: useEditUserProfileProps) => {
         },
       })
       toast.success("Профиль обновлен")
-      router.push(`/${res.username}`)
     } catch (error) {
       toast.error("Произошла ошибка")
     } finally {

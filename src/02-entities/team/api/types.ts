@@ -5,7 +5,7 @@ interface GetAllTeamsFilter {
   page?: number
   limit?: number
   search?: string
-  order?: keyof Team
+  order?: keyof Team | `!${keyof Team}`
   member_id?: string
 }
 

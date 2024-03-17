@@ -5,7 +5,7 @@ interface GetAllReviewsFilter {
   page?: number
   limit?: number
   search?: string
-  order?: keyof Review
+  order?: keyof Review | `!${keyof Review}`
   project_id?: string
   user_id?: string
 }

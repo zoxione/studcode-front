@@ -3,19 +3,16 @@ import { useRouter } from "next/navigation"
 import { MouseEvent, useState } from "react"
 import { toast } from "sonner"
 
-import { useVoteOneProjectMutation } from "@/02-entities/project"
+import { authAPI } from "@/03-features/auth"
 
-interface useVoteProjectProps {
-  projectId: string
-}
+interface useVerifyEmailUserProps {}
 
-const useVoteProject = ({ projectId }: useVoteProjectProps) => {
+const useVerifyEmailUser = ({}: useVerifyEmailUserProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const { data: session } = useSession()
   const router = useRouter()
-  const { mutateAsync: voteProjectAsync } = useVoteOneProjectMutation()
 
-  const handleVote = async (event: MouseEvent<HTMLButtonElement>) => {
+  const handleVerifyEmail = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     try {
       setIsLoading(true)
@@ -23,7 +20,8 @@ const useVoteProject = ({ projectId }: useVoteProjectProps) => {
         toast.error("Вы не авторизованы")
         return
       }
-      await voteProjectAsync(projectId)
+      await authAPI.verifyEmail()
+      toast.success("Письмо отправлено на вашу почту")
     } catch (error) {
       toast.error("Произошла ошибка")
     } finally {
@@ -32,9 +30,9 @@ const useVoteProject = ({ projectId }: useVoteProjectProps) => {
   }
 
   return {
-    handleVote,
+    handleVerifyEmail,
     isLoading,
   }
 }
 
-export { useVoteProject }
+export { useVerifyEmailUser }

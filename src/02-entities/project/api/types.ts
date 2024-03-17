@@ -7,7 +7,7 @@ interface GetAllProjectsFilter {
   page?: number
   limit?: number
   search?: string
-  order?: keyof Project
+  order?: keyof Project | `!${keyof Project}`
   time_frame?: TimeFrameProject
   tag_slug?: string
   status?: ProjectStatus

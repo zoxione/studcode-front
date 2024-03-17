@@ -50,10 +50,10 @@ const useEditProject = ({ project }: useEditProjectProps) => {
 
   const handleProject = async (
     projectId: string,
-    projectSlug: string,
     values: z.infer<typeof editProjectSchema>,
     status: ProjectStatus,
     successMessage: string,
+    redirectUrl: string,
   ) => {
     try {
       setIsLoading(true)
@@ -91,7 +91,7 @@ const useEditProject = ({ project }: useEditProjectProps) => {
         },
       })
       toast.success(successMessage)
-      router.push(`/projects/${projectSlug}`)
+      router.push(redirectUrl)
     } catch (e) {
       toast.error("Произошла ошибка")
     } finally {
@@ -99,12 +99,12 @@ const useEditProject = ({ project }: useEditProjectProps) => {
     }
   }
 
-  const handlePublish = async (projectId: string, projectSlug: string, values: z.infer<typeof editProjectSchema>) => {
-    await handleProject(projectId, projectSlug, values, "published", "Проект опубликован")
+  const handlePublish = async (values: z.infer<typeof editProjectSchema>) => {
+    await handleProject(project._id, values, "published", "Проект опубликован", `/${session?.user.username}/projects`)
   }
 
-  const handleSaveDraft = async (projectId: string, projectSlug: string, values: z.infer<typeof editProjectSchema>) => {
-    await handleProject(projectId, projectSlug, values, "draft", "Проект сохранен в черновик")
+  const handleSaveDraft = async (values: z.infer<typeof editProjectSchema>) => {
+    await handleProject(project._id, values, "draft", "Проект сохранен в черновик", `/${session?.user.username}/drafts`)
   }
 
   return {

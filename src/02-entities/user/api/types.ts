@@ -5,7 +5,7 @@ interface GetAllUsersFilter {
   page?: number
   limit?: number
   search?: string
-  order?: keyof User
+  order?: keyof User | `!${keyof User}`
 }
 
 interface GetAllUsersResponse {

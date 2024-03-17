@@ -8,14 +8,16 @@ import { GetAllProjectsFilter, ProjectCard, useGetAllProjectsInfiniteQuery } fro
 import { cn } from "@/01-shared/utils/cn"
 import { ProjectCardProps } from "@/02-entities/project/ui/project-card"
 import { VoteProjectButton } from "@/03-features/vote-project"
+import { EditProjectButton } from "@/03-features/edit-project"
 
 interface ProjectsListProps {
   className?: string
   filter: GetAllProjectsFilter
+  isEdit?: boolean
   projectCardProps?: ProjectCardProps
 }
 
-export const ProjectsList = ({ filter, projectCardProps, className }: ProjectsListProps) => {
+export const ProjectsList = ({ filter, isEdit, projectCardProps, className }: ProjectsListProps) => {
   const {
     data: projects,
     fetchNextPage,
@@ -51,7 +53,15 @@ export const ProjectsList = ({ filter, projectCardProps, className }: ProjectsLi
                   <ProjectCard
                     key={project._id}
                     project={project}
-                    actions={[<VoteProjectButton key="vote" projectId={project._id} />]}
+                    actions={[
+                      isEdit ? <EditProjectButton key="edit" projectSlug={project.slug} /> : null,
+                      <VoteProjectButton
+                        key="vote"
+                        projectId={project._id}
+                        flames={project.flames}
+                        voted={project.voted}
+                      />,
+                    ]}
                     {...projectCardProps}
                   />
                 ))
