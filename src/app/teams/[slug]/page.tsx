@@ -61,7 +61,7 @@ export default async function TeamsPage({ params }: PageProps) {
         <Title order={5}>О команде</Title>
         <Card>
           <CardContent className="p-6">
-            <p>{team.about}</p>
+            <p className="whitespace-pre-line">{team.about}</p>
           </CardContent>
         </Card>
       </div>

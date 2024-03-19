@@ -11,8 +11,8 @@ import { useGetAllPopularTagsQuery } from "@/02-entities/tag"
 const searchSchema = z.object({
   query: z
     .string()
-    .min(2, { message: "Минимальная длина запроса 2 символа" })
-    .max(32, { message: "Максимальная длина запроса 32 символа" }),
+    .min(1, { message: "Минимальная длина запроса 1 символ." })
+    .max(32, { message: "Максимальная длина запроса 32 символа." }),
 })
 
 interface useSearchProps {}

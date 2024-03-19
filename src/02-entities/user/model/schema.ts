@@ -6,19 +6,19 @@ import { linkSchema } from "@/01-shared/types/link"
 const fullNameSchema = z.object({
   surname: z
     .string()
-    .min(2, { message: "Минимальная длина фамилии - 2 символа" })
-    .max(32, { message: "Максимальная длина фамилии - 32 символов" }),
+    .min(1, { message: "Минимальная длина фамилии - 1 символ." })
+    .max(32, { message: "Максимальная длина фамилии - 32 символа." }),
   name: z
     .string()
-    .min(2, { message: "Минимальная длина имени - 2 символа" })
-    .max(32, { message: "Максимальная длина имени - 32 символов" }),
+    .min(1, { message: "Минимальная длина имени - 1 символ." })
+    .max(32, { message: "Максимальная длина имени - 32 символа." }),
   patronymic: z
     .union([
       z.string().length(0),
       z
         .string()
-        .min(2, { message: "Минимальная длина отчества - 2 символа" })
-        .max(32, { message: "Максимальная длина отчества - 32 символов" }),
+        .min(1, { message: "Минимальная длина отчества - 1 символ." })
+        .max(32, { message: "Максимальная длина отчества - 32 символа." }),
     ])
     .optional()
     .transform((e) => (e === "" ? undefined : e)),
@@ -27,13 +27,13 @@ const fullNameSchema = z.object({
 const userSchema = z.object({
   username: z
     .string()
-    .min(2, { message: "Минимальная длина имени - 2 символа" })
-    .max(16, { message: "Максимальная длина имени - 16 символов" }),
-  email: z.string().email({ message: "Некорректная почта" }),
+    .min(3, { message: "Минимальная длина имени пользователя - 3 символа." })
+    .max(16, { message: "Максимальная длина имени - 16 символов." }),
+  email: z.string().email({ message: "Некорректная почта." }),
   password: z
     .string()
-    .min(6, { message: "Минимальная длина пароля - 6 символов" })
-    .max(24, { message: "Максимальная длина пароля - 24 символов" }),
+    .min(6, { message: "Минимальная длина пароля - 6 символов." })
+    .max(24, { message: "Максимальная длина пароля - 24 символа." }),
   full_name: fullNameSchema,
   avatar_file: z
     .any()
@@ -49,13 +49,13 @@ const userSchema = z.object({
       z.string().length(0),
       z
         .string()
-        .min(2, { message: "Минимальная длина о себе - 2 символа" })
-        .max(256, { message: "Максимальная длина о себе - 256 символов" }),
+        .min(1, { message: "Минимальная длина о себе - 1 символ." })
+        .max(512, { message: "Максимальная длина о себе - 512 символов." }),
     ])
     .optional()
     .transform((e) => (e === "" ? undefined : e)),
   links: z.array(linkSchema).max(5, {
-    message: "Максимальное количество ссылок - 5",
+    message: "Максимальное количество ссылок - 5.",
   }),
 })
 

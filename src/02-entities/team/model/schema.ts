@@ -5,15 +5,15 @@ import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "./constants"
 const teamSchema = z.object({
   name: z
     .string()
-    .min(2, { message: "Минимальная длина названия - 2 символа" })
-    .max(16, { message: "Максимальная длина названия - 16 символов" }),
+    .min(1, { message: "Минимальная длина названия - 1 символ." })
+    .max(16, { message: "Максимальная длина названия - 16 символов." }),
   about: z
     .union([
       z.string().length(0),
       z
         .string()
-        .min(2, { message: "Минимальная длина описания - 2 символа" })
-        .max(256, { message: "Максимальная длина описания - 256 символов" }),
+        .min(1, { message: "Минимальная длина описания - 1 символ." })
+        .max(512, { message: "Максимальная длина описания - 512 символов." }),
     ])
     .optional()
     .transform((e) => (e === "" ? undefined : e)),

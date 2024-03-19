@@ -82,10 +82,10 @@ const useEditProject = ({ project }: useEditProjectProps) => {
           status: status,
           description: values.description,
           links: [
-            { type: "github", label: "GitHub", url: values.github_link || "" },
+            { type: "github", label: "GitHub", url: values.github_link },
             { type: "main", label: "Main", url: values.main_link },
-            { type: "youtube", label: "YouTube", url: values.youtube_link || "" },
-          ],
+            { type: "youtube", label: "YouTube", url: values.youtube_link },
+          ].filter((link) => link.url !== undefined && link.url !== "") as Project["links"],
           price: values.price,
           tags: values.tags.map((tag) => tag.value),
         },
