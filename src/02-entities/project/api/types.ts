@@ -35,7 +35,7 @@ interface UpdateProject extends Omit<DeepPartial<Project>, "_id" | "tags" | "cre
 
 interface ProjectFiles {
   logo_file?: FileList
-  screenshots_files?: FileList
+  screenshots_files?: FileList[]
 }
 
 export type {

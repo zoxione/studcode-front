@@ -15,13 +15,15 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    options: [
-      { value: "React", label: "React" },
-      { value: "Angular", label: "Angular" },
-      { value: "Vue", label: "Vue" },
-      { value: "Svelte", label: "Svelte" },
+    value: [{ value: "React", label: "React" }],
+    defaultOptions: [
+      { value: "react", label: "React" },
+      { value: "angular", label: "Angular" },
+      { value: "bue", label: "Vue" },
+      { value: "svelte", label: "Svelte" },
     ],
     placeholder: "Выберите фреймворк",
     emptyIndicator: <span className="text-center">Ничего не найдено</span>,
+    className: "mt-36",
   },
 }

@@ -37,10 +37,10 @@ const EditUserProfileForm = ({ user }: EditUserProfileFormProps) => {
                       classNameWrapper="w-24 h-24 rounded-full overflow-hidden"
                       accept={ACCEPTED_IMAGE_TYPES.join(", ")}
                       preview
-                      classNamePreview="size-full aspect-square"
+                      classNamePreview="size-full aspect-square object-cover"
                       dropContent={
                         user.avatar !== "" ? (
-                          <img src={user.avatar} alt="avatar" className="max-h-[200px] size-full aspect-square" />
+                          <img src={user.avatar} alt="avatar" className="size-full aspect-square object-cover" />
                         ) : (
                           <ImageIcon className="h-6 w-6" />
                         )

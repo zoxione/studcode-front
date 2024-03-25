@@ -11,6 +11,7 @@ interface DropzoneProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>
   preview?: boolean
   value: FileList | null
   onChange: (files: FileList | null) => void
+  onUpdate?: (file: FileList | null) => void
 }
 
 const Dropzone = React.forwardRef<HTMLDivElement, DropzoneProps>(
@@ -21,6 +22,7 @@ const Dropzone = React.forwardRef<HTMLDivElement, DropzoneProps>(
       dropContent,
       value,
       onChange,
+      onUpdate,
       accept,
       multiple = false,
       classNamePreview,
@@ -72,7 +74,7 @@ const Dropzone = React.forwardRef<HTMLDivElement, DropzoneProps>(
           onClick={handleButtonClick}
         >
           <div className="flex items-center justify-center text-muted-foreground overflow-hidden rounded-md">
-            <span className="font-medium flex flex-row flex-wrap items-center gap-2">
+            <span className="font-medium flex flex-row flex-wrap items-center gap-2 min-h-[24px]">
               {value?.length && preview
                 ? Array.from(value).map((file) => {
                     if (file.type.includes("image")) {
@@ -80,7 +82,7 @@ const Dropzone = React.forwardRef<HTMLDivElement, DropzoneProps>(
                         <img
                           key={file.name}
                           src={URL.createObjectURL(file)}
-                          className={cn("max-h-[200px]", classNamePreview)}
+                          className={cn("", classNamePreview)}
                           alt={file.name}
                         />
                       )
@@ -98,7 +100,10 @@ const Dropzone = React.forwardRef<HTMLDivElement, DropzoneProps>(
               accept={accept}
               multiple={multiple}
               className={cn("hidden", className)}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.target.files)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                onChange(e.target.files)
+                if (onUpdate) onUpdate(e.target.files || null)
+              }}
             />
           </div>
         </CardContent>

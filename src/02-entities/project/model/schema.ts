@@ -8,6 +8,20 @@ const optionSchema = z.object({
   disable: z.boolean().optional(),
 })
 
+const screenshotSchema = z
+  .any()
+  .refine((files) => files?.length >= 1, "Скриншот необходим.")
+  .refine((files) => files?.length <= 10, "Максимальное количество скриншотов - 10.")
+  .refine(
+    (files) => Array.from(files).every((file: any) => file?.size <= MAX_FILE_SIZE),
+    `Максимальный размер скриншота - 5MB.`,
+  )
+  .refine(
+    (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
+    "Принимаются только файлы типа .jpg, .jpeg, .png и .webp.",
+  )
+  .optional()
+
 const projectSchema = z.object({
   title: z
     .string()
@@ -52,17 +66,10 @@ const projectSchema = z.object({
     )
     .optional(),
   screenshots_files: z
-    .any()
-    .refine((files) => files?.length >= 1, "Скриншоты необходимы.")
-    .refine((files) => files?.length <= 10, "Максимальное количество скриншотов - 10.")
-    .refine(
-      (files) => Array.from(files).every((file: any) => file?.size <= MAX_FILE_SIZE),
-      `Максимальный размер скриншота - 5MB.`,
-    )
-    .refine(
-      (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
-      "Принимаются только файлы типа .jpg, .jpeg, .png и .webp.",
-    )
+    .array(screenshotSchema)
+    .max(10, {
+      message: "Выберите максимум 10 скриншотов.",
+    })
     .optional(),
   price: z.enum(["free", "free_options", "payment_required"]),
   tags: z.array(optionSchema).min(1, { message: "Выберите хотя бы 1 тег." }).max(3, {

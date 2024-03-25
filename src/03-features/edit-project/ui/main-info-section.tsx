@@ -119,6 +119,7 @@ const MainInfoSection = ({ form }: MainInfoSectionProps) => {
                 <MultiSelect
                   value={field.value}
                   onChange={field.onChange}
+                  defaultOptions={tagsItems}
                   options={tagsItems}
                   placeholder="Выберите до трех тем"
                   emptyIndicator={<span className="text-center">Ничего не найдено</span>}

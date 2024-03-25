@@ -33,10 +33,10 @@ const EditTeamForm = ({ team }: EditTeamFormProps) => {
                       classNameWrapper="w-24 h-24 rounded-full overflow-hidden"
                       accept={ACCEPTED_IMAGE_TYPES.join(", ")}
                       preview
-                      classNamePreview="size-full aspect-square"
+                      classNamePreview="size-full aspect-square object-cover"
                       dropContent={
                         team.logo !== "" ? (
-                          <img src={team.logo} alt={team.name} className="max-h-[200px] size-full aspect-square" />
+                          <img src={team.logo} alt={team.name} className="size-full aspect-square object-cover" />
                         ) : (
                           <ImageIcon className="h-6 w-6" />
                         )

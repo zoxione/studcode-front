@@ -1,6 +1,8 @@
 import React, { useRef, useEffect } from "react"
 import { Fancybox as NativeFancybox } from "@fancyapps/ui"
+
 import "@fancyapps/ui/dist/fancybox/fancybox.css"
+import { cn } from "../utils/cn"
 
 const Fancybox = (props: any) => {
   const containerRef = useRef(null)
@@ -19,7 +21,11 @@ const Fancybox = (props: any) => {
     }
   })
 
-  return <div ref={containerRef}>{props.children}</div>
+  return (
+    <div ref={containerRef} className={cn(props.className)}>
+      {props.children}
+    </div>
+  )
 }
 
 export { Fancybox }

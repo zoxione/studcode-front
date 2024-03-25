@@ -32,6 +32,10 @@ const PublishSection = ({ form, project, onSaveDraft, isLoading }: PublishSectio
             Слоган
           </label>
           <label className="flex items-center gap-2 text-sm font-medium leading-none">
+            <Checkbox checked={form.getValues().main_link !== ""} />
+            Ссылка на проект
+          </label>
+          <label className="flex items-center gap-2 text-sm font-medium leading-none">
             <Checkbox checked={form.getValues().description !== ""} />
             Описание
           </label>
@@ -44,7 +48,13 @@ const PublishSection = ({ form, project, onSaveDraft, isLoading }: PublishSectio
             Логотип
           </label>
           <label className="flex items-center gap-2 text-sm font-medium leading-none">
-            <Checkbox checked={form.getValues().screenshots_files?.length > 0 || project.screenshots?.length > 0} />
+            <Checkbox
+              checked={
+                ((form.getValues().screenshots_files?.length || 0) > 0 &&
+                  form.getValues().screenshots_files?.at(0) instanceof FileList) ||
+                project.screenshots?.length > 0
+              }
+            />
             Скриншоты (хотя бы 1)
           </label>
         </div>
@@ -54,16 +64,12 @@ const PublishSection = ({ form, project, onSaveDraft, isLoading }: PublishSectio
         <Title order={5}>Дополнительная информация</Title>
         <div className="grid grid-rows-4 grid-flow-col justify-start gap-y-4 gap-x-24">
           <label className="flex items-center gap-2 text-sm font-medium leading-none">
-            <Checkbox checked={form.getValues().main_link !== ""} />
-            Другие ссылки
-          </label>
-          <label className="flex items-center gap-2 text-sm font-medium leading-none">
             <Checkbox checked={form.getValues().github_link !== ""} />
-            Цены
+            Ссылка на исходный код
           </label>
           <label className="flex items-center gap-2 text-sm font-medium leading-none">
             <Checkbox checked={form.getValues().youtube_link !== ""} />
-            YouTube видео
+            Ссылка на демонстрацию
           </label>
         </div>
       </div>

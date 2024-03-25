@@ -43,7 +43,7 @@ const useEditProject = ({ project }: useEditProjectProps) => {
 
   useEffect(() => {
     if (editProjectForm.formState.isSubmitted && Object.keys(editProjectForm.formState.errors).length > 0) {
-      toast.error("Введены некорректные данные")
+      toast.error(`Введены некорректные данные: ${Object.keys(editProjectForm.formState.errors).join(", ")}`)
       console.error(editProjectForm.formState.errors)
     }
   }, [editProjectForm.formState.submitCount, editProjectForm.formState.errors])

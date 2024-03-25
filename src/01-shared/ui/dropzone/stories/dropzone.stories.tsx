@@ -17,6 +17,12 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     value: null,
+  },
+}
+
+export const Single: Story = {
+  args: {
+    value: null,
     classNameWrapper: "w-24 h-24 rounded-full overflow-hidden",
     preview: true,
     classNamePreview: "size-full aspect-square",

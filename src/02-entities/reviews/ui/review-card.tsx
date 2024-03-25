@@ -36,7 +36,7 @@ const ReviewCard = forwardRef<HTMLDivElement, ReviewCardProps>(({ review, action
           </div>
           <Rating defaultValue={review.rating} readOnly className="ml-auto mb-auto" />
         </div>
-        <p>{review.text}</p>
+        <p className="whitespace-pre-line">{review.text}</p>
         <div className="flex flex-row items-center gap-2 text-muted-foreground text-sm">
           {actions}
           <span className="ml-auto">{normalizeDate(review.created_at)}</span>

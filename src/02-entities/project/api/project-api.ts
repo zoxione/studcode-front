@@ -141,8 +141,10 @@ class ProjectAPI {
       formData.append("logo_file", files.logo_file[0])
     }
     if (files.screenshots_files) {
-      for (const file of Array.from(files.screenshots_files)) {
-        formData.append("screenshots_files", file)
+      for (const filesList of Array.from(files.screenshots_files)) {
+        for (const file of Array.from(filesList)) {
+          formData.append("screenshots_files", file)
+        }
       }
     }
 
