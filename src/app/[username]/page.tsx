@@ -10,7 +10,11 @@ import { TeamBadge, teamAPI } from "@/02-entities/team"
 import { userAPI } from "@/02-entities/user"
 import { LinksList } from "@/04-widgets/links-list"
 
-export default async function UserProfile({ params }: { params: { username: string } }) {
+interface PageProps {
+  params: { username: string }
+}
+
+export default async function Page({ params }: PageProps) {
   const session = await getServerSession(authOptions)
   const user = await userAPI.getOne(params.username)
   const { results: teams } = await teamAPI.getAll({ member_id: user._id })

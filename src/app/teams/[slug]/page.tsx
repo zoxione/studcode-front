@@ -21,7 +21,7 @@ interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined }
 }
 
-export default async function TeamsPage({ params }: PageProps) {
+export default async function Page({ params }: PageProps) {
   let team
   try {
     team = await teamAPI.getOne(params.slug)

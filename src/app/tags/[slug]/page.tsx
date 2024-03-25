@@ -22,7 +22,7 @@ interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined }
 }
 
-export default async function TagPage({ params, searchParams }: PageProps) {
+export default async function Page({ params, searchParams }: PageProps) {
   let tag
   try {
     tag = await tagAPI.getOne(params.slug)
@@ -40,7 +40,7 @@ export default async function TagPage({ params, searchParams }: PageProps) {
 
       <SortProjectsSelect order={searchParamsParsed.order} />
 
-      <ProjectsList filter={{ tag_slug: tag.slug, order: searchParamsParsed.order }} />
+      <ProjectsList filter={{ tag_slug: tag.slug, order: searchParamsParsed.order, status: "published" }} />
     </Layout>
   )
 }

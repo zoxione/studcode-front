@@ -14,7 +14,9 @@ interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined }
 }
 
-export default async function ProjectsPage({}: PageProps) {
+export const revalidate = 60
+
+export default async function Page({}: PageProps) {
   const popularTags = await tagAPI.getAllPopular()
 
   return (

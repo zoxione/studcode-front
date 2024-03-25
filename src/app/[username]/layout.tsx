@@ -15,13 +15,13 @@ import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"
 import { UserTabs } from "@/04-widgets/user-tabs"
 
-interface PageProps {
+interface LayoutPageProps {
   params: { username: string }
   searchParams: { [key: string]: string | string[] | undefined }
   children: ReactNode
 }
 
-export async function generateMetadata({ params }: PageProps, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata({ params }: LayoutPageProps, parent: ResolvingMetadata): Promise<Metadata> {
   const username = params.username
   const user = await userAPI.getOne(params.username)
   const previousImages = (await parent).openGraph?.images || []
@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: PageProps, parent: ResolvingM
 
 export const revalidate = 60
 
-export default async function User({ params, children }: PageProps) {
+export default async function LayoutPage({ params, children }: LayoutPageProps) {
   let user
   try {
     user = await userAPI.getOne(params.username)

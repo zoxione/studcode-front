@@ -5,7 +5,7 @@ import { Separator } from "@/01-shared/ui/separator"
 import { userAPI } from "@/02-entities/user"
 import { EditUserAccount } from "@/03-features/edit-user-account"
 
-export default async function UserAccount() {
+export default async function Page() {
   const session = await getServerSession(authOptions)
   const user = await userAPI.getOne(session?.user._id as string)
 

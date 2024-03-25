@@ -11,7 +11,11 @@ import { HeaderSettingsPage } from "@/04-widgets/header-settings-page"
 import { Layout } from "@/04-widgets/layout"
 import { DeleteProjectButton } from "@/03-features/delete-project"
 
-export default async function EditProjectPage({ params }: { params: { slug: string } }) {
+interface PageProps {
+  params: { slug: string }
+}
+
+export default async function Page({ params }: PageProps) {
   const { slug } = params
   const project = await projectAPI.getOne(slug)
   if (!project) {

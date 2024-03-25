@@ -5,7 +5,11 @@ import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"
 
-export default async function Rules({ children }: { children: ReactNode }) {
+interface LayoutPageProps {
+  children: ReactNode
+}
+
+export default async function LayoutPage({ children }: LayoutPageProps) {
   return (
     <Layout header={<Header />} footer={<Footer />} className="flex justify-center items-center py-8">
       <Card>

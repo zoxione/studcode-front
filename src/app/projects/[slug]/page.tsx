@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: PageProps, parent: ResolvingM
 
 export const revalidate = 60
 
-export default async function ProjectPage({ params }: PageProps) {
+export default async function Page({ params }: PageProps) {
   const { slug } = params
   const project = await projectAPI.getOne(slug)
   if (!project) {

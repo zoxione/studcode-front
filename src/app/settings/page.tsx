@@ -5,7 +5,7 @@ import { Separator } from "@/01-shared/ui/separator"
 import { userAPI } from "@/02-entities/user"
 import { EditUserProfile } from "@/03-features/edit-user-profile"
 
-export default async function UserProfile() {
+export default async function Page() {
   const session = await getServerSession(authOptions)
   const user = await userAPI.getOne(session?.user._id as string)
 

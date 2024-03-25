@@ -12,12 +12,12 @@ import { Layout } from "@/04-widgets/layout"
 import { Sidebar } from "@/04-widgets/sidebar"
 import { HeaderSettingsPage } from "@/04-widgets/header-settings-page"
 
-interface PageProps {
+interface LayoutPageProps {
   params: { slug: string }
   children: ReactNode
 }
 
-export default async function TeamsEdit({ params, children }: PageProps) {
+export default async function LayoutPage({ params, children }: LayoutPageProps) {
   let team
   try {
     team = await teamAPI.getOne(params.slug)

@@ -7,7 +7,11 @@ import { Layout } from "@/04-widgets/layout"
 import { Sidebar } from "@/04-widgets/sidebar"
 import { HeaderSettingsPage } from "@/04-widgets/header-settings-page"
 
-export default async function UserSettings({ children }: { children: ReactNode }) {
+interface LayoutPageProps {
+  children: ReactNode
+}
+
+export default async function LayoutPage({ children }: LayoutPageProps) {
   return (
     <Layout header={<Header />} footer={<Footer />} className="mb-6">
       <HeaderSettingsPage title="Настройки" description="Управляйте настройками учетной записи." />

@@ -21,11 +21,11 @@ const ParamsSchema = z.object({
   timeFrame: z.enum(allowedValues.timeFrame).catch(allowedValues.timeFrame[0]),
 })
 
-export default async function Home({
-  searchParams,
-}: {
+interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined }
-}) {
+}
+
+export default async function Page({ searchParams }: PageProps) {
   const searchParamsParsed = ParamsSchema.parse({
     timeFrame: searchParams?.timeFrame,
   })

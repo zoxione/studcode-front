@@ -4,7 +4,7 @@ import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"
 
-export default function NewTeamPage() {
+export default function Page() {
   return (
     <Layout header={<Header />} footer={<Footer />} className="flex flex-col justify-center items-center gap-8 py-8">
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
