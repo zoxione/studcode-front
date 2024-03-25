@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
 import { Skeleton } from "@/01-shared/ui/skeleton"
 import { cn } from "@/01-shared/utils/cn"
 import { TagBadge } from "@/02-entities/tag"
-import { Project } from "../model/types"
+import { Project } from "../../../model/types"
 
 export interface ProjectCardProps extends HTMLAttributes<HTMLDivElement> {
   project?: Project

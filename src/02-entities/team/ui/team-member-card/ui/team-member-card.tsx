@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { HTMLAttributes, forwardRef } from "react"
 
-import { TeamMember } from "../model/types"
+import { TeamMember } from "../../../model/types"
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
 import { getUserInitials } from "@/01-shared/utils/get-user-initials"
 

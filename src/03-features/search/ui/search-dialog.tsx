@@ -11,7 +11,7 @@ import { ScrollArea } from "@/01-shared/ui/scroll-area"
 import { Title } from "@/01-shared/ui/title"
 import { cn } from "@/01-shared/utils/cn"
 import { ProjectCard } from "@/02-entities/project"
-import { TagCardSmall } from "@/02-entities/tag/ui/tag-card-small"
+import { TagCardSmall } from "@/02-entities/tag/ui/tag-card-small/ui/tag-card-small"
 import { useSearch } from "../lib/use-search"
 import { VoteProjectButton } from "@/03-features/vote-project"
 

@@ -6,7 +6,7 @@ import { useInView } from "react-intersection-observer"
 
 import { GetAllProjectsFilter, ProjectCard, useGetAllProjectsInfiniteQuery } from "@/02-entities/project"
 import { cn } from "@/01-shared/utils/cn"
-import { ProjectCardProps } from "@/02-entities/project/ui/project-card"
+import { ProjectCardProps } from "@/02-entities/project/ui/project-card/ui/project-card"
 import { VoteProjectButton } from "@/03-features/vote-project"
 import { EditProjectButton } from "@/03-features/edit-project"
 

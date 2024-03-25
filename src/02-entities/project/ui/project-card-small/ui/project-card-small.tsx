@@ -3,7 +3,7 @@ import { HTMLAttributes, forwardRef } from "react"
 
 import { cn } from "@/01-shared/utils/cn"
 import { Title } from "@/01-shared/ui/title"
-import { Project } from "../model/types"
+import { Project } from "../../../model/types"
 
 export interface ProjectCardSmallProps extends HTMLAttributes<HTMLAnchorElement> {
   project: Project

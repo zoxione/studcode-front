@@ -7,7 +7,7 @@ import { Rating } from "@/01-shared/ui/rating"
 import { Title } from "@/01-shared/ui/title"
 import { getUserInitials } from "@/01-shared/utils/get-user-initials"
 import { normalizeDate } from "@/01-shared/utils/normalize-date"
-import { Review } from "../model/types"
+import { Review } from "../../../model/types"
 
 export interface ReviewCardProps extends HTMLAttributes<HTMLDivElement> {
   review: Review

@@ -4,7 +4,7 @@ import { HTMLAttributes, forwardRef } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
 import { Skeleton } from "@/01-shared/ui/skeleton"
 import { cn } from "@/01-shared/utils/cn"
-import { Team } from "../model/types"
+import { Team } from "../../../model/types"
 
 export interface TeamCardProps extends HTMLAttributes<HTMLAnchorElement> {
   team?: Team
