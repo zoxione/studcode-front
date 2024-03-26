@@ -199,9 +199,9 @@ const ImagesAndMediaSection = ({ form, project }: ImagesAndMediaSectionProps) =>
           name="youtube_link"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="demo_link">Ссылка на видео</FormLabel>
+              <FormLabel>Ссылка на видео</FormLabel>
               <FormControl>
-                <Input type="url" id="demo_link" placeholder="https://www.youtube.com/" {...field} />
+                <Input type="url" placeholder="https://www.youtube.com/" {...field} />
               </FormControl>
               <FormDescription>Демонстрация работы</FormDescription>
               <FormMessage />

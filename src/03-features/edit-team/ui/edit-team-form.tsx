@@ -59,9 +59,9 @@ const EditTeamForm = ({ team }: EditTeamFormProps) => {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="name">Название</FormLabel>
+              <FormLabel>Название</FormLabel>
               <FormControl>
-                <Input type="text" id="name" placeholder="Супер команда" {...field} />
+                <Input type="text" placeholder="Супер команда" {...field} />
               </FormControl>
               <FormDescription>Это публичное название вашей команды</FormDescription>
               <FormMessage />
@@ -102,9 +102,9 @@ const EditTeamForm = ({ team }: EditTeamFormProps) => {
           name="about"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="about">Описание</FormLabel>
+              <FormLabel>Описание</FormLabel>
               <FormControl>
-                <Textarea id="about" placeholder="Супер команда" {...field} />
+                <Textarea placeholder="Супер команда" rows={3} className="resize-y" {...field} />
               </FormControl>
               <FormDescription>Описание вашей команды</FormDescription>
               <FormMessage />

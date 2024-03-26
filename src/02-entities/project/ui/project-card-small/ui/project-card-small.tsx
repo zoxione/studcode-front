@@ -21,7 +21,6 @@ const ProjectCardSmall = forwardRef<HTMLAnchorElement, ProjectCardSmallProps>(({
     >
       <img src={project.logo} alt={project.title} className="w-12 h-12 rounded-md" />
       <Title order={6}>{project.title}</Title>
-      <p className="text-sm line-clamp-3">{project.tagline}</p>
     </Link>
   )
 })

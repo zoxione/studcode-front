@@ -54,7 +54,7 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(({ project, loa
           <div className="mb-6 flex flex-row items-center gap-1 text-base font-semibold">
             <span className="flex-none">{project.title}</span>
             <span>—</span>
-            <p className="line-clamp-1">{project.tagline}</p>
+            <p className="line-clamp-1">{project.tagline.toLowerCase()}</p>
           </div>
         </div>
         <div className="w-fit flex items-center gap-2 pr-3">{actions}</div>

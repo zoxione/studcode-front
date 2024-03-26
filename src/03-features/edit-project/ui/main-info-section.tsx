@@ -28,9 +28,9 @@ const MainInfoSection = ({ form }: MainInfoSectionProps) => {
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="title">Название</FormLabel>
+              <FormLabel>Название</FormLabel>
               <FormControl>
-                <Input type="text" id="title" placeholder="Мега крутой проект" {...field} />
+                <Input type="text" placeholder="Мега крутой проект" {...field} />
               </FormControl>
               <FormDescription>Это публичное название вашего проекта</FormDescription>
               <FormMessage />
@@ -42,11 +42,10 @@ const MainInfoSection = ({ form }: MainInfoSectionProps) => {
           name="tagline"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="tagline">Слоган</FormLabel>
+              <FormLabel>Слоган</FormLabel>
               <FormControl>
                 <Input
                   type="text"
-                  id="tagline"
                   placeholder="Сервис по созданию чат-бота с искусственным интеллектом для поддержки клиентов."
                   {...field}
                 />
@@ -64,9 +63,9 @@ const MainInfoSection = ({ form }: MainInfoSectionProps) => {
           name="main_link"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="source_link">Ссылка на проект</FormLabel>
+              <FormLabel>Ссылка на проект</FormLabel>
               <FormControl>
-                <Input type="url" id="source_link" placeholder="https://sample.com" {...field} />
+                <Input type="url" placeholder="https://sample.com" {...field} />
               </FormControl>
               <FormDescription>Ссылка на публикацию проекта</FormDescription>
               <FormMessage />
@@ -78,9 +77,9 @@ const MainInfoSection = ({ form }: MainInfoSectionProps) => {
           name="github_link"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="github_link">Ссылка на исходный код</FormLabel>
+              <FormLabel>Ссылка на исходный код</FormLabel>
               <FormControl>
-                <Input type="url" id="github_link" placeholder="https://github.com" {...field} />
+                <Input type="url" placeholder="https://github.com" {...field} />
               </FormControl>
               <FormDescription>Ссылка на исходный код</FormDescription>
               <FormMessage />
@@ -96,9 +95,9 @@ const MainInfoSection = ({ form }: MainInfoSectionProps) => {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="description">Описание</FormLabel>
+              <FormLabel>Описание</FormLabel>
               <FormControl>
-                <Textarea id="description" placeholder="Это краткое описание" {...field} />
+                <Textarea placeholder="Это краткое описание" rows={5} className="resize-y" {...field} />
               </FormControl>
               <FormDescription>Краткое описание проекта</FormDescription>
               <FormMessage />
@@ -114,7 +113,7 @@ const MainInfoSection = ({ form }: MainInfoSectionProps) => {
           name="tags"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="tags">Теги</FormLabel>
+              <FormLabel>Теги</FormLabel>
               <FormControl>
                 <MultiSelect
                   value={field.value}

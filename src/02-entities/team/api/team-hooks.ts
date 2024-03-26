@@ -13,6 +13,8 @@ const useCreateOneTeamMutation = () => {
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["teams"] })
       await fetch(`/api/revalidate?tag=teams`)
+      queryClient.invalidateQueries({ queryKey: ["users"] })
+      await fetch(`/api/revalidate?tag=users`)
     },
   })
 }
@@ -41,6 +43,8 @@ const useUpdateOneTeamMutation = () => {
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["teams"] })
       await fetch(`/api/revalidate?tag=teams`)
+      queryClient.invalidateQueries({ queryKey: ["users"] })
+      await fetch(`/api/revalidate?tag=users`)
     },
   })
 }
@@ -54,6 +58,8 @@ const useDeleteOneTeamMutation = () => {
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["teams"] })
       await fetch(`/api/revalidate?tag=teams`)
+      queryClient.invalidateQueries({ queryKey: ["users"] })
+      await fetch(`/api/revalidate?tag=users`)
     },
   })
 }
@@ -75,6 +81,8 @@ const useAddMemberTeamMutation = () => {
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["teams"] })
       await fetch(`/api/revalidate?tag=teams`)
+      queryClient.invalidateQueries({ queryKey: ["users"] })
+      await fetch(`/api/revalidate?tag=users`)
     },
   })
 }
@@ -96,6 +104,8 @@ const useRemoveMemberTeamMutation = () => {
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["teams"] })
       await fetch(`/api/revalidate?tag=teams`)
+      queryClient.invalidateQueries({ queryKey: ["users"] })
+      await fetch(`/api/revalidate?tag=users`)
     },
   })
 }
@@ -109,6 +119,8 @@ const useUploadsOneTeamMutation = () => {
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["teams"] })
       await fetch(`/api/revalidate?tag=teams`)
+      queryClient.invalidateQueries({ queryKey: ["users"] })
+      await fetch(`/api/revalidate?tag=users`)
     },
   })
 }

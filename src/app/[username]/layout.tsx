@@ -68,7 +68,7 @@ export default async function LayoutPage({ params, children }: LayoutPageProps) 
         </div>
         <div className="flex flex-col">
           <Title order={3}>{`${user?.full_name.surname} ${user?.full_name.name} ${user?.full_name.patronymic}`}</Title>
-          <span>@{user?.username}</span>
+          <span className="text-muted-foreground text-center md:text-start">@{user?.username}</span>
         </div>
         <div className="md:ml-auto flex flex-row items-center gap-2">
           {/* <Button variant="outline" size="icon">

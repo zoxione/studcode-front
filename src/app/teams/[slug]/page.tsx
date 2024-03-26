@@ -60,7 +60,14 @@ export default async function Page({ params }: PageProps) {
         <Title order={5}>О команде</Title>
         <Card>
           <CardContent className="p-6">
-            <p className="whitespace-pre-line">{team.about}</p>
+            {team.about !== "" ? (
+              <p className="whitespace-pre-line">{team.about}</p>
+            ) : (
+              <p className="text-sm text-muted-foreground flex justify-center items-center text-center">
+                {"(≥o≤)"} <br />
+                Похоже тут ничего нет.
+              </p>
+            )}
           </CardContent>
         </Card>
       </div>

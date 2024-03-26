@@ -54,7 +54,11 @@ const SearchDialog = ({ className }: SearchDialogProps) => {
             </CommandItem>
           ) : null}
           {status === "success" && projects && projects.results.length === 0 ? (
-            <CommandEmpty>Ничего не найдено.</CommandEmpty>
+            <CommandEmpty>
+              {"(¬_¬)"}
+              <br />
+              Ничего не найдено.
+            </CommandEmpty>
           ) : null}
           {status === "success" && projects && projects.results.length > 0 ? (
             <CommandGroup heading="Проекты">

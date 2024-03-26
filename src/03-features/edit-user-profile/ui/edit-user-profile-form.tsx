@@ -10,7 +10,6 @@ import { Input } from "@/01-shared/ui/input"
 import { Textarea } from "@/01-shared/ui/textarea"
 import { ACCEPTED_IMAGE_TYPES, User } from "@/02-entities/user"
 import { useEditUserProfile } from "../lib/use-edit-user-profile"
-import { cn } from "@/01-shared/utils/cn"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/01-shared/ui/select"
 import { linkTypeValues } from "@/01-shared/types/link"
 import { prettyLinkType } from "@/01-shared/utils/pretty-link-type"
@@ -104,21 +103,21 @@ const EditUserProfileForm = ({ user }: EditUserProfileFormProps) => {
             <FormItem className="col-span-2">
               <FormLabel>О себе</FormLabel>
               <FormControl>
-                <Textarea placeholder="Расскажи нам немного о себе" {...field} />
+                <Textarea placeholder="Расскажи нам немного о себе" rows={3} className="resize-y" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <div>
-          {fields.map((field, index) => (
-            <div key={field.id} className="space-y-2">
-              <FormLabel className={cn(index !== 0 && "sr-only")}>Ссылки</FormLabel>
-              <FormDescription className={cn(index !== 0 && "sr-only")}>
-                Добавьте ссылки на свой веб-сайт, блог или профили в социальных сетях (максимально 5). Ссылки будут
-                отображаться в профиле.
-              </FormDescription>
-              <div className="grid grid-cols-6 gap-2">
+          <div className="space-y-2">
+            <FormLabel>Ссылки</FormLabel>
+            <FormDescription>
+              Добавьте ссылки на свой веб-сайт, блог или профили в социальных сетях (максимально 5). Ссылки будут
+              отображаться в профиле.
+            </FormDescription>
+            {fields.map((field, index) => (
+              <div key={field.id} className="grid grid-cols-6 gap-2">
                 <FormField
                   control={editUserProfileForm.control}
                   name={`links.${index}.type`}
@@ -172,8 +171,8 @@ const EditUserProfileForm = ({ user }: EditUserProfileFormProps) => {
                   )}
                 />
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
           <Button
             type="button"
             variant="outline"

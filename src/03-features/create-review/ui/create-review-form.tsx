@@ -25,7 +25,7 @@ const CreateReviewForm = ({ projectId }: CreateReviewFormProps) => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Textarea placeholder="Оставить обзор" className="resize-none" {...field} />
+                <Textarea placeholder="Оставить обзор" rows={3} className="resize-none" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
