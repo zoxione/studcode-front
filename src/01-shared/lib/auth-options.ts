@@ -4,6 +4,8 @@ import { cookies } from "next/headers"
 
 import { refreshTokens } from "../utils/refresh-tokens"
 
+const timeBuffer = 10
+
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
@@ -90,7 +92,7 @@ export const authOptions: NextAuthOptions = {
         return { ...token, ...response }
       }
       const nowUnix = (+new Date() / 1e3) | 0
-      if (nowUnix > token.access_token_exp) {
+      if (nowUnix + timeBuffer > token.access_token_exp) {
         // токен устарел
         console.log("[AUTH] Refreshing access token")
         const data = await refreshTokens(token)

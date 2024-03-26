@@ -18,11 +18,12 @@ const useCreateOneProjectMutation = () => {
   })
 }
 
-const useGetAllProjectsQuery = (filter: GetAllProjectsFilter) => {
+const useGetAllProjectsQuery = (filter: GetAllProjectsFilter & { enabled?: boolean }) => {
   const { page, limit, search, order, time_frame, tag_slug, status, creator_id, team_id } = filter
   return useQuery({
     queryKey: ["projects", page, limit, search, order, time_frame, tag_slug, status, creator_id, team_id],
     queryFn: () => projectAPI.getAll(filter),
+    enabled: filter.enabled,
   })
 }
 

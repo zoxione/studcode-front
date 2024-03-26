@@ -11,10 +11,11 @@ const useGetAllTagsQuery = (filter: GetAllTagsFilter) => {
   })
 }
 
-const useGetAllPopularTagsQuery = () => {
+const useGetAllPopularTagsQuery = ({ enabled }: { enabled?: boolean }) => {
   return useQuery({
     queryKey: ["tags"],
     queryFn: () => tagAPI.getAllPopular(),
+    enabled: enabled,
   })
 }
 
