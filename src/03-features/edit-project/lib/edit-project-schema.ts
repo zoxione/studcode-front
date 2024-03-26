@@ -11,6 +11,7 @@ const editProjectSchema = projectSchema.pick({
   screenshots_files: true,
   price: true,
   tags: true,
+  team: true,
 })
 
 export { editProjectSchema }

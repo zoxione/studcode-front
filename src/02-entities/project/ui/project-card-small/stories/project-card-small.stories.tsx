@@ -44,6 +44,7 @@ export const Default: Story = {
         _id: "1",
         logo: "",
         name: "team",
+        slug: "team",
       },
       tags: [],
       created_at: "2024-01-01T12:09:12.955+00:00",

@@ -75,6 +75,10 @@ const projectSchema = z.object({
   tags: z.array(optionSchema).min(1, { message: "Выберите хотя бы 1 тег." }).max(3, {
     message: "Выберите максимум 3 тега.",
   }),
+  team: z
+    .union([z.string().length(0), z.string()])
+    .optional()
+    .transform((e) => (e === "" ? undefined : e)),
 })
 
 export { projectSchema }

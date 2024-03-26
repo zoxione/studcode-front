@@ -29,8 +29,10 @@ interface CreateProject extends Pick<Project, "title"> {
   creator: string
 }
 
-interface UpdateProject extends Omit<DeepPartial<Project>, "_id" | "tags" | "creator" | "created_at" | "updated_at"> {
+interface UpdateProject
+  extends Omit<DeepPartial<Project>, "_id" | "tags" | "team" | "creator" | "created_at" | "updated_at"> {
   tags?: string[]
+  team?: string | null
 }
 
 interface ProjectFiles {

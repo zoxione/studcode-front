@@ -71,6 +71,10 @@ const PublishSection = ({ form, project, onSaveDraft, isLoading }: PublishSectio
             <Checkbox checked={form.getValues().youtube_link !== ""} />
             Ссылка на демонстрацию
           </label>
+          <label className="flex items-center gap-2 text-sm font-medium leading-none">
+            <Checkbox checked={form.getValues().team !== ""} />
+            Команда
+          </label>
         </div>
       </div>
 

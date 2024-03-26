@@ -156,12 +156,22 @@ export default async function Page({ params }: PageProps) {
               </div>
               <div className="space-y-2">
                 <Title order={6}>Авторы</Title>
-                <Avatar className="w-8 h-8 ml-auto text-sm" asChild>
-                  <Link href={`/${project.creator.username}`}>
-                    <AvatarImage src={project.creator.avatar} width={32} height={32} alt={project.creator.username} />
-                    <AvatarFallback>{creatorInitials}</AvatarFallback>
-                  </Link>
-                </Avatar>
+                <div className="flex items-center justify-end -space-x-2 relative">
+                  <Avatar className="w-8 h-8 ml-auto text-sm" asChild>
+                    <Link href={`/${project.creator.username}`}>
+                      <AvatarImage src={project.creator.avatar} width={32} height={32} alt={project.creator.username} />
+                      <AvatarFallback>{creatorInitials}</AvatarFallback>
+                    </Link>
+                  </Avatar>
+                  {project.team ? (
+                    <Avatar className="w-8 h-8 ml-auto text-sm" asChild>
+                      <Link href={`/teams/${project.team.slug}`}>
+                        <AvatarImage src={project.team.logo} width={32} height={32} alt={project.team.name} />
+                        <AvatarFallback>{project.team.name[0]}</AvatarFallback>
+                      </Link>
+                    </Avatar>
+                  ) : null}
+                </div>
               </div>
             </CardContent>
           </Card>

@@ -38,6 +38,7 @@ const useEditProject = ({ project }: useEditProjectProps) => {
       youtube_link: project.links.find((link) => link.type === "youtube")?.url || "",
       price: project.price,
       tags: project.tags.map((tag) => ({ label: tag.name, value: tag._id })),
+      team: project.team?._id || "",
     },
   })
 
@@ -88,6 +89,7 @@ const useEditProject = ({ project }: useEditProjectProps) => {
           ].filter((link) => link.url !== undefined && link.url !== "") as Project["links"],
           price: values.price,
           tags: values.tags.map((tag) => tag.value),
+          team: values.team === "" ? null : values.team,
         },
       })
       toast.success(successMessage)

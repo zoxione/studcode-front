@@ -36,7 +36,7 @@ const EditProjectForm = ({ project }: EditProjectFormProps) => {
     {
       title: "Дополнительно",
       icon: <PlusCircledIcon className="w-4 h-4" />,
-      content: <ExtrasSection form={editProjectForm} />,
+      content: <ExtrasSection form={editProjectForm} project={project} />,
     },
     {
       title: "Публикация",

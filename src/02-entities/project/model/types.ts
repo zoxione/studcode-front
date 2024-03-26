@@ -25,6 +25,7 @@ interface ProjectTeam {
   _id: string
   name: string
   logo: string
+  slug: string
 }
 
 interface Project {
@@ -42,7 +43,7 @@ interface Project {
   rating: number
   slug: string
   creator: ProjectCreator
-  team: ProjectTeam
+  team: ProjectTeam | null
   tags: Tag[]
   created_at: string
   updated_at: string
