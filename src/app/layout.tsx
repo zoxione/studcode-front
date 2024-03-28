@@ -4,11 +4,10 @@ import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import type { Metadata, Viewport } from "next"
 
-import { Providers } from "@/07-core/providers/providers"
-import { YandexMetrika } from "@/01-shared/lib/yandex-metrika"
-
-
 import "@/07-core/styles/globals.css"
+import { Providers } from "@/07-core/providers/providers"
+import { CookieBanner } from "@/04-widgets/cookie-banner"
+import { YandexMetrika } from "@/01-shared/lib/yandex-metrika"
 
 const roboto = Roboto({ subsets: ["latin", "cyrillic"], weight: ["400", "700"] })
 
@@ -53,6 +52,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           {children}
           <Analytics />
           <SpeedInsights />
+          <CookieBanner />
         </Providers>
       </body>
     </html>
