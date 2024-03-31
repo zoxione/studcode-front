@@ -19,8 +19,12 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(({ project, loa
       <div className="w-full max-w-xl flex items-center space-x-4">
         <Skeleton className="h-[60px] w-[60px] rounded-md" />
         <div className="flex-1 space-y-2">
-          <Skeleton className="h-4 w-5/6" />
-          <Skeleton className="h-4 w-3/6" />
+          <Skeleton className="h-5 w-5/6" />
+          <div className="flex flex-row items-center gap-1">
+            <Skeleton className="h-4 w-16" />
+            <Skeleton className="h-4 w-16" />
+            <Skeleton className="h-4 w-16" />
+          </div>
         </div>
         <Skeleton className="h-10 w-8" />
       </div>

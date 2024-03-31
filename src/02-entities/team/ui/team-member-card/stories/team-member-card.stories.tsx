@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { TeamMemberCard } from "../ui/team-member-card"
+import { TeamMember } from "@/02-entities/team"
 
 const meta = {
   title: "Team/TeamMemberCard",
@@ -13,20 +14,22 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+const mockTeamMember: TeamMember = {
+  role: "owner",
+  user: {
+    _id: "1",
+    username: "user",
+    avatar: "",
+    full_name: {
+      surname: "surname",
+      name: "name",
+      patronymic: "patronymic",
+    },
+  },
+}
+
 export const Default: Story = {
   args: {
-    member: {
-      role: "owner",
-      user: {
-        _id: "1",
-        username: "user",
-        avatar: "",
-        full_name: {
-          surname: "surname",
-          name: "name",
-          patronymic: "patronymic",
-        },
-      },
-    },
+    member: mockTeamMember,
   },
 }

@@ -13,13 +13,15 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+const mockUser = {
+  _id: "1",
+  username: "user",
+  avatar: "",
+  email: "email@email.com",
+}
+
 export const Default: Story = {
   args: {
-    user: {
-      _id: "1",
-      username: "user",
-      avatar: "",
-      email: "email@email.com",
-    },
+    user: mockUser,
   },
 }
