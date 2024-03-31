@@ -19,14 +19,16 @@ const titleVariants = cva([""], {
   },
 })
 
-interface TitleProps extends HTMLAttributes<HTMLHeadingElement>, VariantProps<typeof titleVariants> {}
+interface TitleProps extends HTMLAttributes<HTMLHeadingElement>, VariantProps<typeof titleVariants> {
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
+}
 
-const Title = ({ children, order = 1, className }: TitleProps) => {
+const Title = ({ children, order = 1, as, className }: TitleProps) => {
   if (![1, 2, 3, 4, 5, 6, null].includes(order)) {
     return null
   }
 
-  const Element = `h${order}` as keyof JSX.IntrinsicElements
+  const Element = as || (`h${order}` as keyof JSX.IntrinsicElements)
 
   return <Element className={cn(titleVariants({ order, className }))}>{children}</Element>
 }

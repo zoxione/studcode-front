@@ -22,7 +22,7 @@ import { Layout } from "@/04-widgets/layout"
 import { LinksList } from "@/04-widgets/links-list"
 import { ReviewsList } from "@/04-widgets/reviews-list"
 import { ScreensCarousel } from "@/04-widgets/screens-carousel"
-import { VoteProjectButton } from "@/03-features/vote-project"
+import { VoteProject } from "@/03-features/vote-project"
 
 interface PageProps {
   params: { slug: string }
@@ -83,7 +83,7 @@ export default async function Page({ params }: PageProps) {
             </div>
           </div>
           <div className="flex flex-row gap-2 items-center">
-            <VoteProjectButton projectId={project._id} flames={project.flames} voted={project.voted} />
+            <VoteProject projectId={project._id} />
             {isOwner ? (
               <Link
                 href={`/projects/${project.slug}/edit`}
