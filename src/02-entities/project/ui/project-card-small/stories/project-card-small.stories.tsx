@@ -55,3 +55,9 @@ export const Default: Story = {
     project: mockProject,
   },
 }
+
+export const Loading: Story = {
+  args: {
+    loading: true,
+  },
+}

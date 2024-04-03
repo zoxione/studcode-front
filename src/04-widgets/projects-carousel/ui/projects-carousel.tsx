@@ -12,7 +12,39 @@ interface ScreensCarouselProps {
 }
 
 const ProjectsCarousel = ({ tagSlug, label, className }: ScreensCarouselProps) => {
-  const { data: projects } = useGetAllProjectsQuery({ tag_slug: tagSlug, status: "published" })
+  const { data: projects, status } = useGetAllProjectsQuery({ tag_slug: tagSlug, status: "published" })
+
+  if (status === "pending") {
+    return (
+      <Carousel
+        opts={{
+          align: "start",
+          dragFree: true,
+        }}
+        className={cn("w-full space-y-2", className)}
+      >
+        <div className="flex flex-row justify-between items-center">
+          <Title order={5} className="font-medium line-clamp-1">
+            {label}
+          </Title>
+          <div className="flex flex-row items-center gap-2 relative">
+            <CarouselPrevious className="static translate-y-0 rounded-md" />
+            <CarouselNext className="static translate-y-0 rounded-md" />
+          </div>
+        </div>
+        <CarouselContent className="">
+          {Array(5)
+            .fill(0)
+            .map((_, i) => i + 1)
+            .map((index) => (
+              <CarouselItem key={index} className="w-fit basis-auto">
+                <ProjectCardSmall loading />
+              </CarouselItem>
+            ))}
+        </CarouselContent>
+      </Carousel>
+    )
+  }
 
   if (projects?.results.length === 0 || !projects) {
     return null
