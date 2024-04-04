@@ -1,40 +1,18 @@
-import { Roboto } from "next/font/google"
-import { ReactNode, Suspense } from "react"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import type { Metadata, Viewport } from "next"
+import type { Viewport } from "next"
+import { Roboto } from "next/font/google"
+import { ReactNode, Suspense } from "react"
 
-import "@/07-core/styles/globals.css"
-import { Providers } from "@/07-core/providers/providers"
-import { CookieBanner } from "@/04-widgets/cookie-banner"
+import { metaData } from "@/01-shared/lib/meta-data"
 import { YandexMetrika } from "@/01-shared/lib/yandex-metrika"
+import { CookieBanner } from "@/04-widgets/cookie-banner"
+import { Providers } from "@/07-core/providers/providers"
+import "@/07-core/styles/globals.css"
 
 const roboto = Roboto({ subsets: ["latin", "cyrillic"], weight: ["400", "700"] })
 
-export const metadata: Metadata = {
-  title: {
-    template: "%s | Студенческий Код",
-    default: "Студенческий Код",
-  },
-  description:
-    "Студенческий Код - это платформа, на которой каждый студент может публиковать свои проекты и взаимодействовать с другими студентами, обсуждая и оценивая их работы",
-  keywords: ["студенческий код", "проекты", "студенты", "код", "учеба", "студент"],
-  metadataBase: new URL(process.env.APP_URL),
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    type: "website",
-    url: process.env.APP_URL,
-    siteName: "Студенческий Код",
-    locale: "ru-RU",
-    title: "Студенческий Код",
-    description:
-      "Студенческий Код - это платформа, на которой каждый студент может публиковать свои проекты и взаимодействовать с другими студентами, обсуждая и оценивая их работы",
-    images: [{ url: `${process.env.APP_URL}/icon.png`, width: 512, height: 512, alt: "Студенческий Код" }],
-  },
-}
-
+export const metadata = metaData
 export const viewport: Viewport = {}
 
 interface RootLayoutProps {

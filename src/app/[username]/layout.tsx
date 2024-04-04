@@ -1,8 +1,8 @@
+import { Metadata } from "next"
 import { getServerSession } from "next-auth"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ReactNode } from "react"
-import { Metadata, ResolvingMetadata } from "next"
 
 import { authOptions } from "@/01-shared/lib/auth-options"
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
@@ -21,19 +21,17 @@ interface LayoutPageProps {
   children: ReactNode
 }
 
-export async function generateMetadata({ params }: LayoutPageProps, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata({ params }: LayoutPageProps): Promise<Metadata> {
   const username = params.username
-  const user = await userAPI.getOne(params.username)
-  const previousImages = (await parent).openGraph?.images || []
-
+  const user = await userAPI.getOne(username)
   return {
-    title: user.username,
-    description: user.about,
+    title: user.username ?? "",
+    description: user.about ?? "",
     openGraph: {
-      title: user.username,
-      description: user.about,
+      title: `${user.username ?? ""} | Студенческий Код`,
+      description: user.about ?? "",
       url: `${process.env.APP_URL}/${username}`,
-      images: [user.avatar, ...previousImages],
+      images: [user.avatar],
     },
   }
 }

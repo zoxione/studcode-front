@@ -1,5 +1,5 @@
 import { Pencil1Icon } from "@radix-ui/react-icons"
-import { Metadata, ResolvingMetadata } from "next"
+import { Metadata } from "next"
 import { getServerSession } from "next-auth"
 import Link from "next/link"
 import { notFound } from "next/navigation"
@@ -16,32 +16,30 @@ import { getUserInitials } from "@/01-shared/utils/get-user-initials"
 import { getYouTubeId } from "@/01-shared/utils/get-youtube-id"
 import { prettyPrice, projectAPI } from "@/02-entities/project"
 import { TagBadge } from "@/02-entities/tag"
+import { VoteProject } from "@/03-features/vote-project"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"
 import { LinksList } from "@/04-widgets/links-list"
 import { ReviewsList } from "@/04-widgets/reviews-list"
 import { ScreensCarousel } from "@/04-widgets/screens-carousel"
-import { VoteProject } from "@/03-features/vote-project"
 
 interface PageProps {
   params: { slug: string }
   searchParams: { [key: string]: string | string[] | undefined }
 }
 
-export async function generateMetadata({ params }: PageProps, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const slug = params.slug
   const project = await projectAPI.getOne(slug)
-  const previousImages = (await parent).openGraph?.images || []
-
   return {
-    title: project.title,
-    description: project.tagline,
+    title: project.title ?? "",
+    description: project.tagline ?? "",
     openGraph: {
-      title: project.title,
-      description: project.tagline,
-      url: `${process.env.APP_URL}/projects/${slug}`,
-      images: [project.logo, ...previousImages],
+      title: `${project.title ?? ""} | Студенческий Код`,
+      description: project.tagline ?? "",
+      url: `${process.env.APP_URL}/projects/${project.slug}`,
+      images: [project.logo, ...project.screenshots],
     },
   }
 }
