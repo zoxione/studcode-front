@@ -21,17 +21,10 @@ export const authOptions: NextAuthOptions = {
     },
   },
   providers: [
-    // GitHubProvider({
-    //   clientId: process.env.GITHUB_ID,
-    //   clientSecret: process.env.GITHUB_SECRET,
-    // }),
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        email: {
-          label: "Email",
-          type: "email",
-        },
+        email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
@@ -49,14 +42,11 @@ export const authOptions: NextAuthOptions = {
             "Content-Type": "application/json",
           },
         })
-
         if (!res.ok) {
           return null
         }
-
         const data = await res.json()
         const nowUnix = (+new Date() / 1e3) | 0
-
         cookies().set({
           name: process.env.ACCESS_TOKEN_NAME,
           value: data.access_token,
@@ -75,7 +65,6 @@ export const authOptions: NextAuthOptions = {
           sameSite: process.env.NODE_ENV === "production" ? "lax" : "lax",
           maxAge: data.refresh_token_exp - nowUnix,
         })
-
         return data
       },
     }),

@@ -43,7 +43,6 @@ const ActionsCell = ({ row }: { row: Row<TeamMember> }) => {
             removeMember({
               key: teamName,
               userId: user._id,
-              role: role,
             })
           }}
         >

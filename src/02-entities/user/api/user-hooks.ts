@@ -37,18 +37,18 @@ const useUpdateOneUserMutation = () => {
   })
 }
 
-const useDeleteOneUserMutation = () => {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: (key: string) => {
-      return userAPI.deleteOne(key)
-    },
-    onSuccess: async () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] })
-      await fetch(`/api/revalidate?tag=users`)
-    },
-  })
-}
+// const useDeleteOneUserMutation = () => {
+//   const queryClient = useQueryClient()
+//   return useMutation({
+//     mutationFn: (key: string) => {
+//       return userAPI.deleteOne(key)
+//     },
+//     onSuccess: async () => {
+//       queryClient.invalidateQueries({ queryKey: ["users"] })
+//       await fetch(`/api/revalidate?tag=users`)
+//     },
+//   })
+// }
 
 const useUploadsOneUserMutation = () => {
   const queryClient = useQueryClient()
@@ -63,10 +63,4 @@ const useUploadsOneUserMutation = () => {
   })
 }
 
-export {
-  useGetAllUsersQuery,
-  useGetOneUserQuery,
-  useUpdateOneUserMutation,
-  useUploadsOneUserMutation,
-  useDeleteOneUserMutation,
-}
+export { useGetAllUsersQuery, useGetOneUserQuery, useUpdateOneUserMutation, useUploadsOneUserMutation }

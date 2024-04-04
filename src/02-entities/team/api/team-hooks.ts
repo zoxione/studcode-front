@@ -68,15 +68,10 @@ const useAddMemberTeamMutation = () => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: ({ key, userId, role }: { key: string; userId: string; role: TeamUserRole }) => {
-      return teamAPI.updateMembers(key, [
-        {
-          action: "add",
-          member: {
-            user: userId,
-            role: role,
-          },
-        },
-      ])
+      return teamAPI.addMember(key, {
+        user: userId,
+        role: role,
+      })
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["teams"] })
@@ -90,16 +85,8 @@ const useAddMemberTeamMutation = () => {
 const useRemoveMemberTeamMutation = () => {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ key, userId, role }: { key: string; userId: string; role: TeamUserRole }) => {
-      return teamAPI.updateMembers(key, [
-        {
-          action: "remove",
-          member: {
-            user: userId,
-            role: role,
-          },
-        },
-      ])
+    mutationFn: ({ key, userId }: { key: string; userId: string }) => {
+      return teamAPI.removeMember(key, { user: userId })
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["teams"] })

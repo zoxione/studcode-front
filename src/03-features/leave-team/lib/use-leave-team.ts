@@ -23,7 +23,7 @@ const useLeaveTeam = ({ teamName, userId }: useLeaveTeamProps) => {
         toast.error("Вы не авторизованы")
         return
       }
-      await removeMemberTeamAsync({ key: teamName, userId: userId, role: "member" })
+      await removeMemberTeamAsync({ key: teamName, userId: userId })
       toast.success("Вы вышли из команды")
       router.refresh()
     } catch (error) {

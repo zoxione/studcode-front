@@ -88,25 +88,25 @@ class UserAPI {
   /**
    * Удаление пользователя
    */
-  async deleteOne(key: string): Promise<User> {
-    const res = await fetch(`${this.baseUrl}/${key}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      credentials: "include",
-      next: {
-        tags: ["users"],
-      },
-    })
+  // async deleteOne(key: string): Promise<User> {
+  //   const res = await fetch(`${this.baseUrl}/${key}`, {
+  //     method: "DELETE",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json",
+  //     },
+  //     credentials: "include",
+  //     next: {
+  //       tags: ["users"],
+  //     },
+  //   })
 
-    if (!res.ok) {
-      throw new Error(`Failed to delete user: ${res.statusText}`)
-    }
+  //   if (!res.ok) {
+  //     throw new Error(`Failed to delete user: ${res.statusText}`)
+  //   }
 
-    return await res.json()
-  }
+  //   return await res.json()
+  // }
 
   /**
    * Загрузка файлов пользователя

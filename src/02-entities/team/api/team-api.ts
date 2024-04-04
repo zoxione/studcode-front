@@ -110,12 +110,60 @@ class TeamAPI {
   }
 
   /**
-   * Обновление членов команды
+   * Обновление участников команды
    */
   async updateMembers(key: string, members: UpdateTeamMember[]): Promise<Team> {
     const res = await fetch(`${this.baseUrl}/${key}/members`, {
       method: "PUT",
       body: JSON.stringify({ members: members }),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
+      next: {
+        tags: ["teams"],
+      },
+    })
+
+    if (!res.ok) {
+      throw new Error(`Failed to update team: ${res.statusText}`)
+    }
+
+    return await res.json()
+  }
+
+  /**
+   * Добавление участника в команду
+   */
+  async addMember(key: string, member: UpdateTeamMember["member"]): Promise<Team> {
+    const res = await fetch(`${this.baseUrl}/${key}/members/add`, {
+      method: "PUT",
+      body: JSON.stringify(member),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
+      next: {
+        tags: ["teams"],
+      },
+    })
+
+    if (!res.ok) {
+      throw new Error(`Failed to update team: ${res.statusText}`)
+    }
+
+    return await res.json()
+  }
+
+  /**
+   * Удаление участника из команды
+   */
+  async removeMember(key: string, member: Pick<UpdateTeamMember["member"], "user">): Promise<Team> {
+    const res = await fetch(`${this.baseUrl}/${key}/members/remove`, {
+      method: "PUT",
+      body: JSON.stringify(member),
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
