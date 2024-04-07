@@ -66,14 +66,12 @@ export function UserMenu({ user }: UserMenuProps) {
             <p className="text-sm font-medium leading-none">{user.username}</p>
             <div className="flex flex-row items-center justify-between">
               <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <CopyIcon onClick={handleCopyEmail} className="h-4 w-4 hover:text-muted-foreground cursor-copy" />
-                  </TooltipTrigger>
-                  <TooltipContent>Скопировать</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <Tooltip delayDuration={0}>
+                <TooltipTrigger asChild>
+                  <CopyIcon onClick={handleCopyEmail} className="h-4 w-4 hover:text-muted-foreground cursor-copy" />
+                </TooltipTrigger>
+                <TooltipContent>Скопировать</TooltipContent>
+              </Tooltip>
             </div>
           </div>
         </DropdownMenuLabel>

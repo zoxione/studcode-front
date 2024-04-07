@@ -9,6 +9,7 @@ import { toast } from "sonner"
 
 import { Toaster } from "@/01-shared/ui/sonner"
 import { DialogProvider } from "./dialog-provider"
+import { TooltipProvider } from "@/01-shared/ui/tooltip"
 
 interface IProviders {
   children: ReactNode
@@ -44,12 +45,14 @@ const Providers = ({ children }: IProviders) => {
     <SessionProvider>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Toaster position="bottom-right" richColors closeButton />
-          <Suspense>
-            <DialogProvider />
-          </Suspense>
-          {children}
-          <ReactQueryDevtools initialIsOpen={false} />
+          <TooltipProvider>
+            <Toaster position="bottom-right" richColors closeButton />
+            <Suspense>
+              <DialogProvider />
+            </Suspense>
+            {children}
+            <ReactQueryDevtools initialIsOpen={false} />
+          </TooltipProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </SessionProvider>

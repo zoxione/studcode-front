@@ -54,7 +54,7 @@ export default async function LayoutPage({ params, children }: LayoutPageProps) 
     <Layout header={<Header />} footer={<Footer />} className="">
       <div className="absolute left-0 h-36 w-full bg-gradient-to-l from-[#FFA585] to-[#FFEDA0] rounded-xl"></div>
 
-      <Avatar className="absolute top-36 left-1/2 md:left-auto transform -translate-x-1/2 md:translate-x-0 h-36 w-36">
+      <Avatar className="absolute top-36 left-1/2 md:left-auto transform -translate-x-1/2 md:translate-x-0 h-36 w-36 border-8 border-background">
         <AvatarImage src={user?.avatar} alt={user?.username} />
         <AvatarFallback className="text-5xl font-semibold">{userInitials}</AvatarFallback>
       </Avatar>
@@ -65,7 +65,10 @@ export default async function LayoutPage({ params, children }: LayoutPageProps) 
           <span className="font-medium">с {prettyCreatedAt(user.created_at)} г.</span>
         </div>
         <div className="flex flex-col">
-          <Title order={3}>{`${user?.full_name.surname} ${user?.full_name.name} ${user?.full_name.patronymic}`}</Title>
+          <Title
+            order={3}
+            className="text-center md:text-left"
+          >{`${user?.full_name.surname} ${user?.full_name.name} ${user?.full_name.patronymic}`}</Title>
           <span className="text-muted-foreground text-center md:text-start">@{user?.username}</span>
         </div>
         <div className="md:ml-auto flex flex-row items-center gap-2">

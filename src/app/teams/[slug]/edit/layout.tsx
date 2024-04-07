@@ -11,6 +11,7 @@ import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"
 import { Sidebar } from "@/04-widgets/sidebar"
 import { HeaderSettingsPage } from "@/04-widgets/header-settings-page"
+import Link from "next/link"
 
 interface LayoutPageProps {
   params: { slug: string }
@@ -34,7 +35,17 @@ export default async function LayoutPage({ params, children }: LayoutPageProps) 
 
   return (
     <Layout header={<Header />} footer={<Footer />} className="mb-6">
-      <HeaderSettingsPage title="Редактирование команды" description="Управляйте настройками команды." />
+      <HeaderSettingsPage
+        title={
+          <>
+            Редактирование{" "}
+            <Link href={`/teams/${team.slug}`} target="_blank" className="underline hover:text-primary duration-200">
+              {team.name}
+            </Link>
+          </>
+        }
+        description="Управляйте настройками команды."
+      />
       <div className="grid grid-cols-1 lg:grid-cols-4 auto-rows-min gap-8 lg:gap-16 h-full">
         <aside className="flex flex-col gap-2 lg:sticky lg:top-[90px] lg:h-fit">
           <Sidebar

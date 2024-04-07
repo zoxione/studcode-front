@@ -68,8 +68,8 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       <div className={`${project.screenshots.length > 0 ? "mt-[488px]" : ""} py-12 space-y-12`}>
-        <div className=" flex flex-row items-center justify-between">
-          <div className="flex flex-row items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
+          <div className="flex flex-row sm:items-center gap-4">
             <Avatar className="w-20 h-20 text-3xl rounded-md">
               <AvatarImage src={project.logo} width={80} height={80} alt={project.title} />
               <AvatarFallback>{project.title[0]}</AvatarFallback>
@@ -143,7 +143,7 @@ export default async function Page({ params }: PageProps) {
           </div>
 
           <Card className="order-first sm:order-last w-full sm:max-w-[210px] h-fit justify-self-end">
-            <CardContent className="p-6 flex flex-row sm:flex-col sm:items-end justify-between gap-4 text-right">
+            <CardContent className="p-6 flex flex-wrap sm:flex-col sm:items-end justify-between gap-4 text-left sm:text-right">
               <div className="space-y-2">
                 <Title order={6}>Ссылки</Title>
                 <LinksList className="flex-col sm:items-end" links={project.links} />

@@ -31,7 +31,11 @@ export default async function Page({ params }: PageProps) {
     <Layout header={<Header />} footer={<Footer />} className="">
       <HeaderSettingsPage
         title={
-          <Link href={`/projects/${project.slug}`} target="_blank">
+          <Link
+            href={`/projects/${project.slug}`}
+            target="_blank"
+            className="underline hover:text-primary duration-200"
+          >
             {project.title}
           </Link>
         }
