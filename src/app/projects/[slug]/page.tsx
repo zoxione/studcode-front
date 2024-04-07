@@ -14,7 +14,7 @@ import { Title } from "@/01-shared/ui/title"
 import { cn } from "@/01-shared/utils/cn"
 import { getUserInitials } from "@/01-shared/utils/get-user-initials"
 import { getYouTubeId } from "@/01-shared/utils/get-youtube-id"
-import { prettyPrice, projectAPI } from "@/02-entities/project"
+import { prettyPrice, prettyType, projectAPI } from "@/02-entities/project"
 import { TagBadge } from "@/02-entities/tag"
 import { VoteProject } from "@/03-features/vote-project"
 import { Footer } from "@/04-widgets/footer"
@@ -75,9 +75,14 @@ export default async function Page({ params }: PageProps) {
               <AvatarFallback>{project.title[0]}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
-              <Title order={4}>{project.title}</Title>
+              <div className="flex items-center gap-3">
+                <Title order={4}>{project.title}</Title>
+                <Badge variant="outline" className="w-fit">
+                  {prettyType(project.type).toLowerCase()}
+                </Badge>
+              </div>
               <span>{project.tagline}</span>
-              <Rating defaultValue={project.rating} readOnly className="" />
+              <Rating defaultValue={project.rating} readOnly className="mt-2" />
             </div>
           </div>
           <div className="flex flex-row gap-2 items-center">

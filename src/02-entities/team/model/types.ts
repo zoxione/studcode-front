@@ -1,6 +1,9 @@
-import { UserFullName } from "@/02-entities/user"
+import * as z from "zod"
 
-type TeamStatus = "opened" | "closed"
+import { UserFullName } from "@/02-entities/user"
+import { teamSchema } from "./schema"
+
+type TeamStatus = z.infer<typeof teamSchema>["status"]
 
 type TeamUserRole = "owner" | "member"
 

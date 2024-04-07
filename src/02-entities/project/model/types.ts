@@ -1,12 +1,15 @@
+import * as z from "zod"
+
 import { ILink } from "@/01-shared/types/link"
 import { Tag } from "@/02-entities/tag"
 import { UserFullName } from "@/02-entities/user"
+import { projectSchema } from "./schema"
 
-type ProjectPrice = "free" | "free_options" | "payment_required"
+type ProjectPrice = z.infer<typeof projectSchema>["price"]
 
-type ProjectStatus = "draft" | "published" | "archived" | ""
+type ProjectStatus = z.infer<typeof projectSchema>["status"]
 
-type ProjectType = "web" | "mobile" | "desktop" | "iot" | "game" | "ui_ux" | "other"
+type ProjectType = z.infer<typeof projectSchema>["type"]
 
 interface ProjectLinks {
   main: string

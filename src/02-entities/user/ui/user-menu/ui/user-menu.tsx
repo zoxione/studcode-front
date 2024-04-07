@@ -25,7 +25,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/01-shared/ui/dropdown-menu"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/01-shared/ui/tooltip"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/01-shared/ui/tooltip"
 
 interface UserMenuProps {
   user: Session["user"]

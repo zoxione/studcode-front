@@ -7,7 +7,7 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-s
 import { RadioGroup, RadioGroupItem } from "@/01-shared/ui/radio-group"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/01-shared/ui/select"
 import { Title } from "@/01-shared/ui/title"
-import { Project } from "@/02-entities/project"
+import { PROJECT_PRICE_VALUES, Project, prettyPrice } from "@/02-entities/project"
 import { useGetAllTeamsQuery } from "@/02-entities/team"
 import { editProjectSchema } from "../lib/edit-project-schema"
 
@@ -35,24 +35,14 @@ const ExtrasSection = ({ form, project }: ExtrasSectionProps) => {
                   defaultValue={field.value}
                   className="flex flex-col space-y-1"
                 >
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="free" />
-                    </FormControl>
-                    <FormLabel className="font-normal">Бесплатно</FormLabel>
-                  </FormItem>
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="free_options" />
-                    </FormControl>
-                    <FormLabel className="font-normal">Есть бесплатные опции</FormLabel>
-                  </FormItem>
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="payment_required" />
-                    </FormControl>
-                    <FormLabel className="font-normal">Платно</FormLabel>
-                  </FormItem>
+                  {PROJECT_PRICE_VALUES.map((price) => (
+                    <FormItem className="flex items-center space-x-3 space-y-0" key={price}>
+                      <FormControl>
+                        <RadioGroupItem value={price} />
+                      </FormControl>
+                      <FormLabel className="font-normal">{prettyPrice(price)}</FormLabel>
+                    </FormItem>
+                  ))}
                 </RadioGroup>
               </FormControl>
               <FormMessage />

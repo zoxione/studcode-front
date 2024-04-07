@@ -32,6 +32,7 @@ const useEditProject = ({ project }: useEditProjectProps) => {
     defaultValues: {
       title: project.title,
       tagline: project.tagline,
+      type: project.type,
       description: project.description,
       main_link: project.links.find((link) => link.type === "main")?.url || "",
       github_link: project.links.find((link) => link.type === "github")?.url || "",
@@ -80,6 +81,7 @@ const useEditProject = ({ project }: useEditProjectProps) => {
         project: {
           title: values.title,
           tagline: values.tagline,
+          type: values.type,
           status: status,
           description: values.description,
           links: [

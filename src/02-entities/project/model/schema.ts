@@ -1,6 +1,12 @@
 import * as z from "zod"
 
-import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "./constants"
+import {
+  ACCEPTED_IMAGE_TYPES,
+  MAX_FILE_SIZE,
+  PROJECT_PRICE_VALUES,
+  PROJECT_STATUS_VALUES,
+  PROJECT_TYPE_VALUES,
+} from "./constants"
 
 const optionSchema = z.object({
   label: z.string(),
@@ -31,8 +37,8 @@ const projectSchema = z.object({
     .string()
     .min(1, { message: "Минимальная длина слогана - 1 символ." })
     .max(64, { message: "Максимальная длина слогана - 64 символов." }),
-  status: z.enum(["draft", "published", "archived"]),
-  type: z.enum(["web", "mobile", "desktop", "iot", "game", "ui_ux", "other"]),
+  status: z.enum(PROJECT_STATUS_VALUES),
+  type: z.enum(PROJECT_TYPE_VALUES),
   description: z
     .string()
     .min(1, { message: "Минимальная длина описания - 1 символ." })
@@ -71,7 +77,7 @@ const projectSchema = z.object({
       message: "Выберите максимум 10 скриншотов.",
     })
     .optional(),
-  price: z.enum(["free", "free_options", "payment_required"]),
+  price: z.enum(PROJECT_PRICE_VALUES),
   tags: z.array(optionSchema).min(1, { message: "Выберите хотя бы 1 тег." }).max(3, {
     message: "Выберите максимум 3 тега.",
   }),

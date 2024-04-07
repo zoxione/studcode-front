@@ -8,6 +8,7 @@ import { Input } from "@/01-shared/ui/input"
 import { RadioGroup, RadioGroupItem } from "@/01-shared/ui/radio-group"
 import { Textarea } from "@/01-shared/ui/textarea"
 import { useCreateTeam } from "../lib/use-create-team"
+import { TEAM_STATUS_VALUES, prettyStatus } from "@/02-entities/team"
 
 const CreateTeamForm = () => {
   const { createTeamForm, onSubmit, isLoading } = useCreateTeam({})
@@ -41,15 +42,12 @@ const CreateTeamForm = () => {
                   defaultValue={field.value}
                   className="flex flex-col space-y-1"
                 >
-                  {[
-                    { value: "opened", label: "Открытая" },
-                    { value: "closed", label: "Закрытая" },
-                  ].map(({ value, label }) => (
-                    <FormItem className="flex items-center space-x-3 space-y-0" key={value}>
+                  {TEAM_STATUS_VALUES.map((status) => (
+                    <FormItem className="flex items-center space-x-3 space-y-0" key={status}>
                       <FormControl>
-                        <RadioGroupItem value={value} />
+                        <RadioGroupItem value={status} />
                       </FormControl>
-                      <FormLabel className="font-normal">{label}</FormLabel>
+                      <FormLabel className="font-normal">{prettyStatus(status)}</FormLabel>
                     </FormItem>
                   ))}
                 </RadioGroup>

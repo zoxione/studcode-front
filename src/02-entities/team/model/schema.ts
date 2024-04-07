@@ -1,6 +1,6 @@
 import * as z from "zod"
 
-import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "./constants"
+import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE, TEAM_STATUS_VALUES } from "./constants"
 
 const teamSchema = z.object({
   name: z
@@ -17,7 +17,7 @@ const teamSchema = z.object({
     ])
     .optional()
     .transform((e) => (e === "" ? undefined : e)),
-  status: z.enum(["opened", "closed"]),
+  status: z.enum(TEAM_STATUS_VALUES),
   logo_file: z
     .any()
     .refine((files) => files?.length == 1, "Логотип необходим.")

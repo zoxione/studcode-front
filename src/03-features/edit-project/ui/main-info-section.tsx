@@ -10,6 +10,8 @@ import { Title } from "@/01-shared/ui/title"
 import { useGetAllTagsQuery } from "@/02-entities/tag"
 import { MultiSelect, Option } from "@/01-shared/ui/multi-select"
 import { editProjectSchema } from "../lib/edit-project-schema"
+import { RadioGroup, RadioGroupItem } from "@/01-shared/ui/radio-group"
+import { PROJECT_TYPE_VALUES, prettyType } from "@/02-entities/project"
 
 interface MainInfoSectionProps {
   form: UseFormReturn<z.infer<typeof editProjectSchema>>
@@ -51,6 +53,32 @@ const MainInfoSection = ({ form }: MainInfoSectionProps) => {
                 />
               </FormControl>
               <FormDescription>Лаконичный и описательный слоган для проекта</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="type"
+          render={({ field }) => (
+            <FormItem className="space-y-3">
+              <FormLabel>Выберите тип проекта</FormLabel>
+              <FormControl>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  className="flex flex-col space-y-1"
+                >
+                  {PROJECT_TYPE_VALUES.map((type) => (
+                    <FormItem className="flex items-center space-x-3 space-y-0" key={type}>
+                      <FormControl>
+                        <RadioGroupItem value={type} />
+                      </FormControl>
+                      <FormLabel className="font-normal">{prettyType(type).toLowerCase()}</FormLabel>
+                    </FormItem>
+                  ))}
+                </RadioGroup>
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}

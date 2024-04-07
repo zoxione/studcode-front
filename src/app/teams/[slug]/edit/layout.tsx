@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth"
 import { notFound, redirect } from "next/navigation"
 import { PlusCircledIcon, TextAlignRightIcon } from "@radix-ui/react-icons"
 import { Users2Icon } from "lucide-react"
+import Link from "next/link"
 
 import { authOptions } from "@/01-shared/lib/auth-options"
 import { teamAPI } from "@/02-entities/team"
@@ -11,7 +12,6 @@ import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"
 import { Sidebar } from "@/04-widgets/sidebar"
 import { HeaderSettingsPage } from "@/04-widgets/header-settings-page"
-import Link from "next/link"
 
 interface LayoutPageProps {
   params: { slug: string }

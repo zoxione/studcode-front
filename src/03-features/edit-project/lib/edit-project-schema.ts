@@ -3,6 +3,7 @@ import { projectSchema } from "@/02-entities/project"
 const editProjectSchema = projectSchema.pick({
   title: true,
   tagline: true,
+  type: true,
   description: true,
   main_link: true,
   github_link: true,

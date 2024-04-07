@@ -8,7 +8,7 @@ import { Input } from "@/01-shared/ui/input"
 import { RadioGroup, RadioGroupItem } from "@/01-shared/ui/radio-group"
 import { Textarea } from "@/01-shared/ui/textarea"
 import { useEditTeam } from "../lib/use-edit-team"
-import { ACCEPTED_IMAGE_TYPES, Team } from "@/02-entities/team"
+import { ACCEPTED_IMAGE_TYPES, TEAM_STATUS_VALUES, Team, prettyStatus } from "@/02-entities/team"
 import { Dropzone } from "@/01-shared/ui/dropzone"
 
 interface EditTeamFormProps {
@@ -80,15 +80,12 @@ const EditTeamForm = ({ team }: EditTeamFormProps) => {
                   defaultValue={field.value}
                   className="flex flex-col space-y-1"
                 >
-                  {[
-                    { value: "opened", label: "Открытая" },
-                    { value: "closed", label: "Закрытая" },
-                  ].map(({ value, label }) => (
-                    <FormItem className="flex items-center space-x-3 space-y-0" key={value}>
+                  {TEAM_STATUS_VALUES.map((status) => (
+                    <FormItem className="flex items-center space-x-3 space-y-0" key={status}>
                       <FormControl>
-                        <RadioGroupItem value={value} />
+                        <RadioGroupItem value={status} />
                       </FormControl>
-                      <FormLabel className="font-normal">{label}</FormLabel>
+                      <FormLabel className="font-normal">{prettyStatus(status)}</FormLabel>
                     </FormItem>
                   ))}
                 </RadioGroup>
