@@ -39,7 +39,7 @@ export default async function Page({ params }: PageProps) {
             {project.title}
           </Link>
         }
-        description={`Статус: ${prettyStatus(project.status)}`}
+        description={`Статус: ${prettyStatus(project.status).toLowerCase()}`}
         right={<DeleteProjectButton projectId={project._id} />}
       />
       <EditProject projectId={project._id} />

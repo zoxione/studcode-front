@@ -2,7 +2,7 @@ import { Pencil1Icon } from "@radix-ui/react-icons"
 import { Metadata } from "next"
 import { getServerSession } from "next-auth"
 import Link from "next/link"
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/01-shared/lib/auth-options"
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
@@ -56,6 +56,10 @@ export default async function Page({ params }: PageProps) {
   const creatorInitials = getUserInitials(project.creator.full_name.surname, project.creator.full_name.name)
   const session = await getServerSession(authOptions)
   const isOwner = session?.user.username === project.creator.username
+
+  if (project.status !== "published" && !isOwner) {
+    redirect("/denied")
+  }
 
   const mainLink = project.links.find((link) => link.type === "main")
   const youtubeLink = project.links.find((link) => link.type === "youtube")
