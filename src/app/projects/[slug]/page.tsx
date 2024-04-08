@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: `${project.title ?? ""} | Студенческий Код`,
       description: project.tagline ?? "",
       url: `${process.env.APP_URL}/projects/${project.slug}`,
-      images: [project.logo, ...project.screenshots],
+      images: [project.logo !== "" ? project.logo : `${process.env.APP_URL}/icon.png`],
     },
   }
 }

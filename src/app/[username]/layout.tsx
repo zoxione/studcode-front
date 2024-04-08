@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: LayoutPageProps): Promise<Met
       title: `${user.username ?? ""} | Студенческий Код`,
       description: user.about ?? "",
       url: `${process.env.APP_URL}/${username}`,
-      images: [user.avatar],
+      images: [user.avatar !== "" ? user.avatar : `${process.env.APP_URL}/icon.png`],
     },
   }
 }

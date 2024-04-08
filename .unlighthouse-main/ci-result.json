@@ -1,0 +1,178 @@
+[
+  {
+    "path": "/",
+    "score": 0.88,
+    "performance": 0.89,
+    "accessibility": 0.85,
+    "best-practices": 0.78,
+    "seo": 1
+  },
+  {
+    "path": "/about",
+    "score": 0.89,
+    "performance": 0.95,
+    "accessibility": 0.91,
+    "best-practices": 0.78,
+    "seo": 0.92
+  },
+  {
+    "path": "/denied",
+    "score": 0.9,
+    "performance": 0.96,
+    "accessibility": 0.94,
+    "best-practices": 0.78,
+    "seo": 0.91
+  },
+  {
+    "path": "/privacy",
+    "score": 0.87,
+    "performance": 0.89,
+    "accessibility": 0.89,
+    "best-practices": 0.78,
+    "seo": 0.92
+  },
+  {
+    "path": "/projects",
+    "score": 0.86,
+    "performance": 0.84,
+    "accessibility": 0.88,
+    "best-practices": 0.78,
+    "seo": 0.92
+  },
+  {
+    "path": "/projects/devoid-ai-6612afc19c473a2c26c73962",
+    "score": 0.83,
+    "performance": 0.81,
+    "accessibility": 0.81,
+    "best-practices": 0.78,
+    "seo": 0.92
+  },
+  {
+    "path": "/projects/devoid-ai-6612afc19c473a2c26c73962/edit",
+    "score": 0.77,
+    "performance": 0.68,
+    "accessibility": 0.79,
+    "best-practices": 0.78,
+    "seo": 0.83
+  },
+  {
+    "path": "/projects/new",
+    "score": 0.89,
+    "performance": 0.96,
+    "accessibility": 0.91,
+    "best-practices": 0.78,
+    "seo": 0.92
+  },
+  {
+    "path": "/rules",
+    "score": 0.89,
+    "performance": 0.95,
+    "accessibility": 0.91,
+    "best-practices": 0.78,
+    "seo": 0.92
+  },
+  {
+    "path": "/settings",
+    "score": 0.85,
+    "performance": 0.78,
+    "accessibility": 0.91,
+    "best-practices": 0.78,
+    "seo": 0.92
+  },
+  {
+    "path": "/settings/account",
+    "score": 0.83,
+    "performance": 0.81,
+    "accessibility": 0.91,
+    "best-practices": 0.78,
+    "seo": 0.83
+  },
+  {
+    "path": "/tags",
+    "score": 0.85,
+    "performance": 0.82,
+    "accessibility": 0.89,
+    "best-practices": 0.78,
+    "seo": 0.92
+  },
+  {
+    "path": "/tags/iskusstvo",
+    "score": 0.82,
+    "performance": 0.72,
+    "accessibility": 0.85,
+    "best-practices": 0.78,
+    "seo": 0.92
+  },
+  {
+    "path": "/teams/new",
+    "score": 0.88,
+    "performance": 0.94,
+    "accessibility": 0.86,
+    "best-practices": 0.78,
+    "seo": 0.92
+  },
+  {
+    "path": "/teams/rols",
+    "score": 0.84,
+    "performance": 0.77,
+    "accessibility": 0.88,
+    "best-practices": 0.78,
+    "seo": 0.92
+  },
+  {
+    "path": "/teams/rols/edit",
+    "score": 0.82,
+    "performance": 0.73,
+    "accessibility": 0.86,
+    "best-practices": 0.78,
+    "seo": 0.92
+  },
+  {
+    "path": "/teams/rols/edit/additional",
+    "score": 0.89,
+    "performance": 0.94,
+    "accessibility": 0.91,
+    "best-practices": 0.78,
+    "seo": 0.92
+  },
+  {
+    "path": "/teams/rols/edit/members",
+    "score": 0.84,
+    "performance": 0.94,
+    "accessibility": 0.73,
+    "best-practices": 0.78,
+    "seo": 0.92
+  },
+  {
+    "path": "/terms",
+    "score": 0.89,
+    "performance": 0.93,
+    "accessibility": 0.91,
+    "best-practices": 0.78,
+    "seo": 0.92
+  },
+  {
+    "path": "/zoxione",
+    "score": 0.81,
+    "performance": 0.77,
+    "accessibility": 0.85,
+    "best-practices": 0.78,
+    "seo": 0.83
+  },
+  {
+    "path": "/zoxione/drafts",
+    "score": 0.78,
+    "performance": 0.74,
+    "accessibility": 0.87,
+    "best-practices": 0.78,
+    "seo": 0.75
+  },
+  {
+    "path": "/zoxione/projects",
+    "score": 0.79,
+    "performance": 0.73,
+    "accessibility": 0.81,
+    "best-practices": 0.78,
+    "seo": 0.83
+  }
+]
