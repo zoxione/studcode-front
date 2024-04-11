@@ -22,15 +22,19 @@ interface LayoutPageProps {
 }
 
 export async function generateMetadata({ params }: LayoutPageProps): Promise<Metadata> {
-  const username = params.username
-  const user = await userAPI.getOne(username)
+  let user
+  try {
+    user = await userAPI.getOne(params.username)
+  } catch {
+    notFound()
+  }
   return {
     title: user.username ?? "",
     description: user.about ?? "",
     openGraph: {
       title: `${user.username ?? ""} | Студенческий Код`,
       description: user.about ?? "",
-      url: `${process.env.APP_URL}/${username}`,
+      url: `${process.env.APP_URL}/${user.username}`,
       images: [user.avatar !== "" ? user.avatar : `${process.env.APP_URL}/icon.png`],
     },
   }

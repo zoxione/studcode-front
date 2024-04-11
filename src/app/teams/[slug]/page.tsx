@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation"
 import { getServerSession } from "next-auth"
 import Link from "next/link"
+import { Metadata } from "next"
 
 import { authOptions } from "@/01-shared/lib/auth-options"
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
@@ -19,6 +20,27 @@ interface PageProps {
   params: { slug: string }
   searchParams: { [key: string]: string | string[] | undefined }
 }
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  let team
+  try {
+    team = await teamAPI.getOne(params.slug)
+  } catch {
+    notFound()
+  }
+  return {
+    title: team.name ?? "",
+    description: team.about ?? "",
+    openGraph: {
+      title: `${team.name ?? ""} | Студенческий Код`,
+      description: team.about ?? "",
+      url: `${process.env.APP_URL}/teams/${team.slug}`,
+      images: [team.logo !== "" ? team.logo : `${process.env.APP_URL}/icon.png`],
+    },
+  }
+}
+
+export const revalidate = 60
 
 export default async function Page({ params }: PageProps) {
   let team

@@ -30,8 +30,12 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const slug = params.slug
-  const project = await projectAPI.getOne(slug)
+  let project
+  try {
+    project = await projectAPI.getOne(params.slug)
+  } catch {
+    notFound()
+  }
   return {
     title: project.title ?? "",
     description: project.tagline ?? "",
@@ -47,9 +51,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export const revalidate = 60
 
 export default async function Page({ params }: PageProps) {
-  const { slug } = params
-  const project = await projectAPI.getOne(slug)
-  if (!project) {
+  let project
+  try {
+    project = await projectAPI.getOne(params.slug)
+  } catch {
     notFound()
   }
 

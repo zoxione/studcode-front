@@ -16,8 +16,7 @@ interface PageProps {
 }
 
 export default async function Page({ params }: PageProps) {
-  const { slug } = params
-  const project = await projectAPI.getOne(slug)
+  const project = await projectAPI.getOne(params.slug)
   if (!project) {
     notFound()
   }
