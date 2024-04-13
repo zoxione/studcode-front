@@ -146,10 +146,15 @@ const MainInfoSection = ({ form }: MainInfoSectionProps) => {
                 <MultiSelect
                   value={field.value}
                   onChange={field.onChange}
-                  defaultOptions={tagsItems}
                   options={tagsItems}
                   placeholder="Выберите до трех тем"
                   emptyIndicator={<span className="text-center">Ничего не найдено</span>}
+                  commandProps={{
+                    filter: (value: string, search: string) => {
+                      const tag = tagsItems.find((tag) => tag.value === value)
+                      return tag?.label.toLowerCase().includes(search.toLowerCase()) ? 1 : -1
+                    },
+                  }}
                 />
               </FormControl>
               <FormDescription>Выберите до трех тем</FormDescription>

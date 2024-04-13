@@ -2,11 +2,11 @@
 
 import * as React from "react"
 import { X } from "lucide-react"
-import { useEffect } from "react"
-import { Command as CommandPrimitive } from "cmdk"
+import { useEffect, forwardRef } from "react"
+import { useCommandState } from "cmdk"
 
+import { Command, CommandGroup, CommandItem, CommandList, CommandPrimitive } from "../../command"
 import { cn } from "@/01-shared/utils/cn"
-import { Command, CommandGroup, CommandItem, CommandEmpty, CommandList } from "../../command"
 import { Badge } from "../../badge"
 
 export interface Option {
@@ -117,6 +117,32 @@ function removePickedOption(groupOption: GroupOption, picked: Option[]) {
   return cloneOption
 }
 
+/**
+ * The `CommandEmpty` of shadcn/ui will cause the cmdk empty not rendering correctly.
+ * So we create one and copy the `Empty` implementation from `cmdk`.
+ *
+ * @reference: https://github.com/hsuanyi-chou/shadcn-ui-expansions/issues/34#issuecomment-1949561607
+ **/
+const CommandEmpty = forwardRef<HTMLDivElement, React.ComponentProps<typeof CommandPrimitive.Empty>>(
+  ({ className, ...props }, forwardedRef) => {
+    const render = useCommandState((state) => state.filtered.count === 0)
+
+    if (!render) return null
+
+    return (
+      <div
+        ref={forwardedRef}
+        className={cn("py-6 text-center text-sm", className)}
+        cmdk-empty=""
+        role="presentation"
+        {...props}
+      />
+    )
+  },
+)
+
+CommandEmpty.displayName = "CommandEmpty"
+
 const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
   (
     {
@@ -168,7 +194,7 @@ const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
         setSelected(newOptions)
         onChange?.(newOptions)
       },
-      [selected],
+      [onChange, selected],
     )
 
     const handleKeyDown = React.useCallback(
@@ -186,7 +212,7 @@ const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
           }
         }
       },
-      [selected],
+      [handleUnselect, selected],
     )
 
     useEffect(() => {
@@ -227,7 +253,7 @@ const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
       }
 
       void exec()
-    }, [debouncedSearchTerm, open])
+    }, [debouncedSearchTerm, groupBy, open, triggerSearchOnFocus])
 
     const CreatableItem = () => {
       if (!creatable) return undefined
@@ -319,7 +345,6 @@ const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
             {selected.map((option) => {
               return (
                 <Badge
-                  variant="secondary"
                   key={option.value}
                   className={cn(
                     "data-[disabled]:bg-muted-foreground data-[disabled]:text-muted data-[disabled]:hover:bg-muted-foreground",
@@ -378,7 +403,7 @@ const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
             />
           </div>
         </div>
-        <div className="relative">
+        <div className="relative mt-2">
           {open && (
             <CommandList className="absolute bottom-12 z-10 w-full rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
               {isLoading ? (
@@ -429,6 +454,6 @@ const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
     )
   },
 )
-MultiSelect.displayName = "MultiSelect"
 
+MultiSelect.displayName = "MultiSelect"
 export { MultiSelect }

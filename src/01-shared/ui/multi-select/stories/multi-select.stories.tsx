@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { MultiSelect } from "../ui/multi-select"
+import { MultiSelect, Option } from "../ui/multi-select"
 
 const meta = {
   title: "UI/MultiSelect",
@@ -13,16 +13,18 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+const OPTIONS: Option[] = [
+  { label: "Next.js", value: "nextjs" },
+  { label: "Nuxt", value: "nuxt" },
+  { label: "Remix", value: "remix" },
+  { label: "Svelte", value: "svelte" },
+  { label: "Gatsby", value: "gatsby" },
+]
+
 export const Default: Story = {
   args: {
-    value: [{ value: "React", label: "React" }],
-    defaultOptions: [
-      { value: "react", label: "React" },
-      { value: "angular", label: "Angular" },
-      { value: "bue", label: "Vue" },
-      { value: "svelte", label: "Svelte" },
-    ],
-    placeholder: "Выберите фреймворк",
+    defaultOptions: OPTIONS,
+    placeholder: "Выберите фреймворк...",
     emptyIndicator: <span className="text-center">Ничего не найдено</span>,
     className: "mt-36",
   },
