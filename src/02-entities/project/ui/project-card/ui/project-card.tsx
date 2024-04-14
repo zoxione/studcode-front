@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { HTMLAttributes, ReactNode, forwardRef } from "react"
+import Image from "next/image"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
 import { Skeleton } from "@/01-shared/ui/skeleton"
@@ -45,14 +46,10 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(({ project, loa
         )}
       >
         <Avatar className="w-[60px] h-[60px] text-lg rounded-md">
-          <AvatarImage
-            className="group-hover:scale-110 duration-200"
-            src={project.logo}
-            width={60}
-            height={60}
-            alt={project.title}
-          />
-          <AvatarFallback className="group-hover:scale-110 duration-200">{project.title[0]}</AvatarFallback>
+          <AvatarImage src={project.logo} asChild>
+            <Image src={project.logo} alt={project.title} fill className="group-hover:scale-105 duration-200" />
+          </AvatarImage>
+          <AvatarFallback className="group-hover:scale-105 duration-200">{project.title[0]}</AvatarFallback>
         </Avatar>
         <div className="flex-1 flex flex-col gap-2 overflow-hidden">
           <div className="mb-6 flex flex-row items-center gap-1 text-base font-semibold">

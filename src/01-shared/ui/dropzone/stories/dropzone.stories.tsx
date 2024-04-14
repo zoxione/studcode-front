@@ -39,6 +39,7 @@ export const Multiple: Story = {
     value: null,
     classNameWrapper: "",
     multiple: true,
+    preview: true,
     dropContent: (
       <>
         <div className="flex flex-row items-center gap-4 py-12">

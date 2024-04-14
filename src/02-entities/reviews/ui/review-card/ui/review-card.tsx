@@ -1,5 +1,6 @@
 import { HTMLAttributes, ReactNode, forwardRef } from "react"
 import Link from "next/link"
+import Image from "next/image"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
 import { Card, CardContent } from "@/01-shared/ui/card"
@@ -56,7 +57,9 @@ const ReviewCard = forwardRef<HTMLDivElement, ReviewCardProps>(({ review, action
         <div className="flex flex-row items-center gap-2 ">
           <Avatar className="w-10 h-10" asChild>
             <Link href={`/${review.reviewer.username}`}>
-              <AvatarImage src={review.reviewer.avatar} width={40} height={40} alt={review.reviewer.username} />
+              <AvatarImage src={review.reviewer.avatar} asChild>
+                <Image src={review.reviewer.avatar} alt={review.reviewer.username} fill />
+              </AvatarImage>
               <AvatarFallback>{reviewerInitials}</AvatarFallback>
             </Link>
           </Avatar>

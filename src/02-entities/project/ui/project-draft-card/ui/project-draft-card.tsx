@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { HTMLAttributes, forwardRef } from "react"
+import Image from "next/image"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
 import { Skeleton } from "@/01-shared/ui/skeleton"
@@ -40,14 +41,10 @@ const ProjectDraftCard = forwardRef<HTMLAnchorElement, ProjectDraftCardProps>(
         )}
       >
         <Avatar className="w-[60px] h-[60px] text-lg rounded-md">
-          <AvatarImage
-            className="group-hover:scale-110 duration-200"
-            src={project.logo}
-            width={60}
-            height={60}
-            alt={project.title}
-          />
-          <AvatarFallback className="group-hover:scale-110 duration-200">{project.title[0]}</AvatarFallback>
+          <AvatarImage src={project.logo} asChild>
+            <Image src={project.logo} alt={project.title} fill className="group-hover:scale-105 duration-200" />
+          </AvatarImage>
+          <AvatarFallback className="group-hover:scale-105 duration-200">{project.title[0]}</AvatarFallback>
         </Avatar>
         <div className="flex-1 flex flex-col overflow-hidden pr-3">
           <span className="text-base font-semibold">{project.title}</span>

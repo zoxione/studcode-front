@@ -13,6 +13,7 @@ import { Session } from "next-auth"
 import { signOut } from "next-auth/react"
 import Link from "next/link"
 import { useState } from "react"
+import Image from "next/image"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
 import { Button } from "@/01-shared/ui/button"
@@ -50,7 +51,9 @@ export function UserMenu({ user }: UserMenuProps) {
           className={`p-1 gap-0.5 focus-visible:ring-0 ${openMenu ? "bg-accent text-accent-foreground" : ""}`}
         >
           <Avatar className="h-8 w-8">
-            <AvatarImage src={user.avatar} alt={user.username} />
+            <AvatarImage src={user.avatar} asChild>
+              <Image src={user.avatar} alt={user.username} fill />
+            </AvatarImage>
             <AvatarFallback>{user.username[0].toUpperCase()}</AvatarFallback>
           </Avatar>
           {openMenu ? (

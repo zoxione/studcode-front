@@ -1,6 +1,7 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
+import Image from "next/image"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
 import { getUserInitials } from "@/01-shared/utils/get-user-initials"
@@ -15,7 +16,9 @@ export const columns: ColumnDef<TeamMember>[] = [
       const user: TeamMember["user"] = row.getValue("user")
       return (
         <Avatar className="w-9 h-9 text-lg">
-          <AvatarImage src={user.avatar} width={36} height={36} alt={user.username} />
+          <AvatarImage src={user.avatar} asChild>
+            <Image src={user.avatar} alt={user.username} fill />
+          </AvatarImage>
           <AvatarFallback>{getUserInitials(user.full_name.surname, user.full_name.name)}</AvatarFallback>
         </Avatar>
       )

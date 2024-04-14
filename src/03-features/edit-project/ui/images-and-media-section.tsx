@@ -3,6 +3,7 @@
 import { ImageIcon, MagnifyingGlassIcon, TrashIcon } from "@radix-ui/react-icons"
 import { UseFormReturn, useFieldArray } from "react-hook-form"
 import * as z from "zod"
+import Image from "next/image"
 
 import { Fancybox } from "@/01-shared/lib/fancybox"
 import { Button, buttonVariants } from "@/01-shared/ui/button"
@@ -44,11 +45,7 @@ const ImagesAndMediaSection = ({ form, project }: ImagesAndMediaSectionProps) =>
                     classNamePreview="size-full aspect-square object-cover"
                     dropContent={
                       project.logo !== "" ? (
-                        <img
-                          src={project.logo}
-                          alt={`${project.title}-logo`}
-                          className="max-h-[200px] size-full aspect-square"
-                        />
+                        <Image src={project.logo} alt={`${project.title}-logo`} fill className="object-cover" />
                       ) : (
                         <ImageIcon className="h-6 w-6" />
                       )
@@ -86,10 +83,23 @@ const ImagesAndMediaSection = ({ form, project }: ImagesAndMediaSectionProps) =>
                 }}
               >
                 <CarouselContent className="">
-                  {project.screenshots.map((screenshot: string) => (
+                  {project.screenshots.map((screenshot: string, index) => (
                     <CarouselItem key={screenshot} className="w-fit basis-auto">
                       <a href={screenshot} data-fancybox="gallery">
-                        <img key={screenshot} src={screenshot} className="h-20" alt={screenshot} />
+                        <div className="relative aspect-video h-20 overflow-hidden">
+                          <Image
+                            className="block object-cover z-[-10]"
+                            src={screenshot}
+                            fill
+                            alt={`screenshot_${index}_background`}
+                          />
+                          <Image
+                            className="block object-contain backdrop-blur-md"
+                            src={screenshot}
+                            fill
+                            alt={`screenshot_${index}`}
+                          />
+                        </div>
                       </a>
                     </CarouselItem>
                   ))}

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation"
 import { getServerSession } from "next-auth"
 import Link from "next/link"
 import { Metadata } from "next"
+import Image from "next/image"
 
 import { authOptions } from "@/01-shared/lib/auth-options"
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
@@ -61,7 +62,9 @@ export default async function Page({ params }: PageProps) {
     <Layout header={<Header />} footer={<Footer />} className="space-y-8 py-8">
       <div className="w-full flex flex-col justify-center items-center gap-4">
         <Avatar className="w-36 h-36 text-3xl">
-          <AvatarImage src={team.logo} width={144} height={144} alt={team.name} />
+          <AvatarImage src={team.logo} asChild>
+            <Image src={team.logo} alt={team.name} fill />
+          </AvatarImage>
           <AvatarFallback>{team.name[0]}</AvatarFallback>
         </Avatar>
         <Title order={2}>{team.name}</Title>

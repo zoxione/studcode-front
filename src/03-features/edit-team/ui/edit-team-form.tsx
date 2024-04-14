@@ -1,6 +1,7 @@
 "use client"
 
 import { ImageIcon, ReloadIcon } from "@radix-ui/react-icons"
+import Image from "next/image"
 
 import { Button } from "@/01-shared/ui/button"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/form"
@@ -36,7 +37,7 @@ const EditTeamForm = ({ team }: EditTeamFormProps) => {
                       classNamePreview="size-full aspect-square object-cover"
                       dropContent={
                         team.logo !== "" ? (
-                          <img src={team.logo} alt={team.name} className="size-full aspect-square object-cover" />
+                          <Image src={team.logo} alt={`${team.name}-logo`} fill className="object-cover" />
                         ) : (
                           <ImageIcon className="h-6 w-6" />
                         )

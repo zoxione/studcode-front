@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { HTMLAttributes, forwardRef } from "react"
+import Image from "next/image"
 
 import { badgeVariants } from "@/01-shared/ui/badge"
 import { cn } from "@/01-shared/utils/cn"
@@ -18,8 +19,10 @@ const TeamBadge = forwardRef<HTMLAnchorElement, TeamBadgeProps>(({ team, classNa
       className={cn(badgeVariants({ variant: "outline" }), "w-fit gap-1", className)}
     >
       <Avatar className="w-4 h-4 text-lg rounded-md">
-        <AvatarImage src={team.logo} width={16} height={16} alt={team.name} />
-        <AvatarFallback className="text-[10px]">{team.name[0]}</AvatarFallback>
+        <AvatarImage src={team.logo} asChild>
+          <Image src={team.logo} alt={team.name} fill />
+        </AvatarImage>
+        <AvatarFallback>{team.name[0]}</AvatarFallback>
       </Avatar>
       {team.name}
     </Link>

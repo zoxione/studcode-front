@@ -3,6 +3,7 @@ import { Metadata } from "next"
 import { getServerSession } from "next-auth"
 import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
+import Image from "next/image"
 
 import { authOptions } from "@/01-shared/lib/auth-options"
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
@@ -80,7 +81,9 @@ export default async function Page({ params }: PageProps) {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex flex-row sm:items-center gap-4">
             <Avatar className="w-20 h-20 text-3xl rounded-md">
-              <AvatarImage src={project.logo} width={80} height={80} alt={project.title} />
+              <AvatarImage src={project.logo} asChild>
+                <Image src={project.logo} alt={project.title} fill />
+              </AvatarImage>
               <AvatarFallback>{project.title[0]}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
@@ -171,14 +174,18 @@ export default async function Page({ params }: PageProps) {
                 <div className="flex items-center justify-end -space-x-2 relative">
                   <Avatar className="w-8 h-8 ml-auto text-sm" asChild>
                     <Link href={`/${project.creator.username}`}>
-                      <AvatarImage src={project.creator.avatar} width={32} height={32} alt={project.creator.username} />
+                      <AvatarImage src={project.creator.avatar} asChild>
+                        <Image src={project.creator.avatar} alt={project.creator.username} fill />
+                      </AvatarImage>
                       <AvatarFallback>{creatorInitials}</AvatarFallback>
                     </Link>
                   </Avatar>
                   {project.team ? (
                     <Avatar className="w-8 h-8 ml-auto text-sm" asChild>
                       <Link href={`/teams/${project.team.slug}`}>
-                        <AvatarImage src={project.team.logo} width={32} height={32} alt={project.team.name} />
+                        <AvatarImage src={project.team.logo} asChild>
+                          <Image src={project.team.logo} alt={project.team.name} fill />
+                        </AvatarImage>
                         <AvatarFallback>{project.team.name[0]}</AvatarFallback>
                       </Link>
                     </Avatar>

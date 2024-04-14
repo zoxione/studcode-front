@@ -1,5 +1,7 @@
 "use client"
 
+import Image from "next/image"
+
 import { Carousel, CarouselContent, CarouselItem } from "@/01-shared/ui/carousel"
 import { cn } from "@/01-shared/utils/cn"
 import { Fancybox } from "@/01-shared/lib/fancybox"
@@ -23,7 +25,20 @@ const ScreensCarousel = ({ screens, className }: ScreensCarouselProps) => {
           {screens.map((screen, index) => (
             <CarouselItem className="basis-auto pl-1" key={index}>
               <a href={screen} data-fancybox="gallery">
-                <img className="block w-full h-[488px] object-contain" src={screen} alt="screen" />
+                <div className="relative aspect-video h-[488px] overflow-hidden">
+                  <Image
+                    className="block object-cover z-[-10]"
+                    src={screen}
+                    fill
+                    alt={`screenshot_${index}_background`}
+                  />
+                  <Image
+                    className="block object-contain backdrop-blur-xl"
+                    src={screen}
+                    fill
+                    alt={`screenshot_${index}`}
+                  />
+                </div>
               </a>
             </CarouselItem>
           ))}

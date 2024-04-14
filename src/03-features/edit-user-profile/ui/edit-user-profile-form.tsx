@@ -2,6 +2,7 @@
 
 import { ImageIcon, ReloadIcon, TrashIcon } from "@radix-ui/react-icons"
 import { HTMLAttributes } from "react"
+import Image from "next/image"
 
 import { Button } from "@/01-shared/ui/button"
 import { Dropzone } from "@/01-shared/ui/dropzone"
@@ -39,7 +40,7 @@ const EditUserProfileForm = ({ user }: EditUserProfileFormProps) => {
                       classNamePreview="size-full aspect-square object-cover"
                       dropContent={
                         user.avatar !== "" ? (
-                          <img src={user.avatar} alt="avatar" className="size-full aspect-square object-cover" />
+                          <Image src={user.avatar} alt={`${user.username}-avatar`} fill className="object-cover" />
                         ) : (
                           <ImageIcon className="h-6 w-6" />
                         )

@@ -68,13 +68,13 @@ const Dropzone = React.forwardRef<HTMLDivElement, DropzoneProps>(
         )}
       >
         <CardContent
-          className="h-full flex flex-col items-center justify-center space-y-2 p-0 text-xs"
+          className="size-full flex flex-col items-center justify-center space-y-2 p-0 text-xs"
           onDragOver={handleDragOver}
           onDrop={handleDrop}
           onClick={handleButtonClick}
         >
-          <div className="flex items-center justify-center text-muted-foreground overflow-hidden rounded-md">
-            <span className="font-medium flex flex-row flex-wrap items-center gap-2 min-h-[24px]">
+          <div className="size-full flex items-center justify-center text-muted-foreground overflow-hidden rounded-xl">
+            <span className="size-full relative font-medium flex flex-row flex-wrap items-center justify-center gap-2 min-h-[24px]">
               {value?.length && preview
                 ? Array.from(value).map((file) => {
                     if (file.type.includes("image")) {
