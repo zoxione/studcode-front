@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { reviewSchema, useCreateOneReviewMutation } from "@/02-entities/reviews"
+import { reviewSchema, useCreateOneReviewMutation } from "@/02-entities/review"
 
 const createReviewSchema = reviewSchema.pick({ text: true, rating: true })
 

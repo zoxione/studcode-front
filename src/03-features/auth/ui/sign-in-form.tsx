@@ -30,7 +30,7 @@ const SignInForm = ({ className }: SignInFormProps) => {
     },
   })
 
-  async function onSubmit(values: z.infer<typeof signInSchema>) {
+  const onSubmit = async (values: z.infer<typeof signInSchema>) => {
     try {
       setIsLoading(true)
       const res = await signIn("credentials", { ...values, redirect: false })

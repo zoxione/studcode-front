@@ -4,11 +4,13 @@ import { ReloadIcon } from "@radix-ui/react-icons"
 import { Fragment, useEffect } from "react"
 import { useInView } from "react-intersection-observer"
 
-import { GetAllProjectsFilter, ProjectCard, useGetAllProjectsInfiniteQuery } from "@/02-entities/project"
+
+
 import { cn } from "@/01-shared/utils/cn"
+import { GetAllProjectsFilter, ProjectCard, useGetAllProjectsInfiniteQuery } from "@/02-entities/project"
 import { ProjectCardProps } from "@/02-entities/project/ui/project-card/ui/project-card"
 import { VoteProjectButton } from "@/03-features/vote-project"
-import { EditProjectButton } from "@/03-features/edit-project"
+import { ProjectMenu } from "@/04-widgets/project-menu"
 
 interface ProjectsListProps {
   className?: string
@@ -54,7 +56,7 @@ export const ProjectsList = ({ filter, isEdit, projectCardProps, className }: Pr
                     key={project._id}
                     project={project}
                     actions={[
-                      isEdit ? <EditProjectButton key="edit" projectSlug={project.slug} /> : null,
+                      isEdit ? <ProjectMenu key="edit" project={project} /> : null,
                       <VoteProjectButton
                         key="vote"
                         projectId={project._id}

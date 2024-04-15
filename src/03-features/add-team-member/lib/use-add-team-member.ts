@@ -24,7 +24,7 @@ const useAddTeamMember = ({ teamName }: useAddTeamMemberProps) => {
     },
   })
 
-  async function onSubmit(values: z.infer<typeof addTeamMemberSchema>) {
+  const onSubmit = async (values: z.infer<typeof addTeamMemberSchema>) => {
     try {
       setIsLoading(true)
       const user = await userAPI.getOne(values.username)

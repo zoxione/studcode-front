@@ -32,13 +32,12 @@ interface UserMenuProps {
   user: Session["user"]
 }
 
-export function UserMenu({ user }: UserMenuProps) {
+const UserMenu = ({ user }: UserMenuProps) => {
   const [openMenu, setOpenMenu] = useState(false)
 
   const handleLogout = async () => {
     await signOut()
   }
-
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(user.email)
   }
@@ -63,7 +62,7 @@ export function UserMenu({ user }: UserMenuProps) {
           )}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="end" forceMount>
+      <DropdownMenuContent className="w-56" align="end">
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">{user.username}</p>
@@ -97,11 +96,15 @@ export function UserMenu({ user }: UserMenuProps) {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive">
-          Выйти
-          <ExitIcon className="ml-auto h-4 w-4" />
-        </DropdownMenuItem>
+        <DropdownMenuGroup>
+          <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive">
+            Выйти
+            <ExitIcon className="ml-auto h-4 w-4" />
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   )
 }
+
+export { UserMenu }

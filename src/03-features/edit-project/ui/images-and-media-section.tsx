@@ -192,7 +192,7 @@ const ImagesAndMediaSection = ({ form, project }: ImagesAndMediaSectionProps) =>
             onClick={() =>
               append({
                 length: 0,
-                item: function () {
+                item: () => {
                   return null
                 },
               })

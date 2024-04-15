@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth"
-import { notFound, redirect } from "next/navigation"
 import Link from "next/link"
+import { notFound, redirect } from "next/navigation"
 
 import { authOptions } from "@/01-shared/lib/auth-options"
 import { prettyStatus, projectAPI } from "@/02-entities/project"
@@ -9,7 +9,6 @@ import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { HeaderSettingsPage } from "@/04-widgets/header-settings-page"
 import { Layout } from "@/04-widgets/layout"
-import { DeleteProjectButton } from "@/03-features/delete-project"
 
 interface PageProps {
   params: { slug: string }
@@ -39,7 +38,6 @@ export default async function Page({ params }: PageProps) {
           </Link>
         }
         description={`Статус: ${prettyStatus(project.status).toLowerCase()}`}
-        right={<DeleteProjectButton projectId={project._id} />}
       />
       <EditProject projectId={project._id} />
     </Layout>

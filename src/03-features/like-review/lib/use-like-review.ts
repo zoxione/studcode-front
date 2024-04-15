@@ -2,7 +2,7 @@ import { useSession } from "next-auth/react"
 import { useState } from "react"
 import { toast } from "sonner"
 
-import { useLikeOneReviewMutation } from "@/02-entities/reviews"
+import { useLikeOneReviewMutation } from "@/02-entities/review"
 
 interface useLikeReviewProps {
   reviewId: string

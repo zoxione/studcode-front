@@ -1,7 +1,7 @@
 "use client"
 
 import { Separator } from "@/01-shared/ui/separator"
-import { ReviewCard, useGetAllReviewsQuery, useGetOneMyReviewQuery } from "@/02-entities/reviews"
+import { ReviewCard, useGetAllReviewsQuery, useGetOneMyReviewQuery } from "@/02-entities/review"
 import { CreateReviewForm } from "@/03-features/create-review"
 import { DeleteReviewButton } from "@/03-features/delete-review"
 import { DislikeReviewButton } from "@/03-features/dislike-review"

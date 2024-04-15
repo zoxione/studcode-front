@@ -1,1 +1,1 @@
-export { DeleteProjectButton } from "./ui/delete-project-button"
+export { DeleteProjectMenuItem } from "./ui/delete-project-menu-item"

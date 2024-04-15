@@ -3,7 +3,7 @@
 import { JWT } from "next-auth/jwt"
 import { cookies } from "next/headers"
 
-async function refreshTokens(token: JWT): Promise<JWT> {
+const refreshTokens = async (token: JWT): Promise<JWT> => {
   const res = await fetch(process.env.API_URL + "/v1/auth/refresh", {
     method: "GET",
     headers: {

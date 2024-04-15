@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { ReviewCard } from "../ui/review-card"
-import { Review } from "@/02-entities/reviews"
+import { Review } from "@/02-entities/review"
 
 const meta = {
   title: "Review/ReviewCard",
