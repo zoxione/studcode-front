@@ -9,6 +9,7 @@ import { Checkbox } from "@/01-shared/ui/checkbox"
 import { Title } from "@/01-shared/ui/title"
 import { editProjectSchema } from "../lib/edit-project-schema"
 import { Project } from "@/02-entities/project"
+import { Skeleton } from "@/01-shared/ui/skeleton"
 
 interface PublishSectionProps {
   form: UseFormReturn<z.infer<typeof editProjectSchema>>
@@ -90,4 +91,45 @@ const PublishSection = ({ form, project, onSaveDraft, isLoading }: PublishSectio
   )
 }
 
-export { PublishSection }
+const PublishSectionLoading = () => {
+  return (
+    <>
+      <div className="space-y-4">
+        <Skeleton className="h-5 w-2/5" />
+        <div className="grid grid-rows-4 grid-flow-col justify-start gap-y-4 gap-x-24">
+          {Array(7)
+            .fill(0)
+            .map((_, i) => i + 1)
+            .map((index) => (
+              <div key={index} className="flex items-center gap-2">
+                <Skeleton className="h-5 w-5" />
+                <Skeleton className="h-5 w-40" />
+              </div>
+            ))}
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <Skeleton className="h-5 w-2/5" />
+        <div className="grid grid-rows-4 grid-flow-col justify-start gap-y-4 gap-x-24">
+          {Array(3)
+            .fill(0)
+            .map((_, i) => i + 1)
+            .map((index) => (
+              <div key={index} className="flex items-center gap-2">
+                <Skeleton className="h-5 w-5" />
+                <Skeleton className="h-5 w-40" />
+              </div>
+            ))}
+        </div>
+      </div>
+
+      <div className="flex items-center gap-2">
+        <Skeleton className="h-8 w-32" />
+        <Skeleton className="h-8 w-52" />
+      </div>
+    </>
+  )
+}
+
+export { PublishSection, PublishSectionLoading }

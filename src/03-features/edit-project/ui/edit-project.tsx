@@ -15,16 +15,28 @@ const EditProject = ({ projectId }: EditProjectProps) => {
 
   if (status === "pending") {
     return (
-      <div className="space-y-6">
-        {Array(4)
-          .fill(0)
-          .map((_, i) => i + 1)
-          .map((index) => (
-            <div key={index} className="space-y-1">
-              <Skeleton className="h-3 w-2/6" />
-              <Skeleton className="h-8 w-full" />
-            </div>
-          ))}
+      <div className="grid grid-cols-1 lg:grid-cols-4 auto-rows-min gap-8 lg:gap-16">
+        <aside className="flex lg:flex-col gap-2 lg:sticky lg:top-[90px] lg:h-fit">
+          {Array(4)
+            .fill(0)
+            .map((_, i) => i + 1)
+            .map((index) => (
+              <Skeleton key={index} className="h-7 w-full"></Skeleton>
+            ))}
+        </aside>
+        <section className="col-span-1 lg:col-span-3 h-full">
+          <div className="space-y-6">
+            {Array(10)
+              .fill(0)
+              .map((_, i) => i + 1)
+              .map((index) => (
+                <div key={index} className="space-y-1">
+                  <Skeleton className="h-3 w-2/6" />
+                  <Skeleton className="h-8 w-full" />
+                </div>
+              ))}
+          </div>
+        </section>
       </div>
     )
   }

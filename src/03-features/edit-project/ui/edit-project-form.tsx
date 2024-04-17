@@ -2,17 +2,35 @@
 
 import * as z from "zod"
 import { CheckCircledIcon, ImageIcon, PlusCircledIcon, TextAlignRightIcon } from "@radix-ui/react-icons"
+import dynamic from "next/dynamic"
 
 import { Button } from "@/01-shared/ui/button"
 import { Form } from "@/01-shared/ui/form"
 import { Project } from "@/02-entities/project"
 import { useEditProject } from "../lib/use-edit-project"
-import { ExtrasSection } from "./extras-section"
-import { ImagesAndMediaSection } from "./images-and-media-section"
-import { MainInfoSection } from "./main-info-section"
-import { PublishSection } from "./publish-section"
 import { editProjectSchema } from "../lib/edit-project-schema"
 import { ScrollArea, ScrollBar } from "@/01-shared/ui/scroll-area"
+import { MainInfoSectionLoading } from "./main-info-section"
+import { ImagesAndMediaSectionLoading } from "./images-and-media-section"
+import { ExtrasSectionLoading } from "./extras-section"
+import { PublishSectionLoading } from "./publish-section"
+
+const MainInfoSection = dynamic(() => import("./main-info-section").then((mod) => mod.MainInfoSection), {
+  ssr: false,
+  loading: () => <MainInfoSectionLoading />,
+})
+const ImagesAndMediaSection = dynamic(
+  () => import("./images-and-media-section").then((mod) => mod.ImagesAndMediaSection),
+  { ssr: false, loading: () => <ImagesAndMediaSectionLoading /> },
+)
+const ExtrasSection = dynamic(() => import("./extras-section").then((mod) => mod.ExtrasSection), {
+  ssr: false,
+  loading: () => <ExtrasSectionLoading />,
+})
+const PublishSection = dynamic(() => import("./publish-section").then((mod) => mod.PublishSection), {
+  ssr: false,
+  loading: () => <PublishSectionLoading />,
+})
 
 interface EditProjectFormProps {
   project: Project

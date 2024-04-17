@@ -12,6 +12,7 @@ import { MultiSelect, Option } from "@/01-shared/ui/multi-select"
 import { editProjectSchema } from "../lib/edit-project-schema"
 import { RadioGroup, RadioGroupItem } from "@/01-shared/ui/radio-group"
 import { PROJECT_TYPE_VALUES, prettyType } from "@/02-entities/project"
+import { Skeleton } from "@/01-shared/ui/skeleton"
 
 interface MainInfoSectionProps {
   form: UseFormReturn<z.infer<typeof editProjectSchema>>
@@ -167,4 +168,57 @@ const MainInfoSection = ({ form }: MainInfoSectionProps) => {
   )
 }
 
-export { MainInfoSection }
+const MainInfoSectionLoading = () => {
+  return (
+    <>
+      <Skeleton className="h-5 w-2/5" />
+      <div className="space-y-6">
+        {Array(2)
+          .fill(0)
+          .map((_, i) => i + 1)
+          .map((index) => (
+            <div key={index} className="space-y-1">
+              <Skeleton className="h-3 w-2/6" />
+              <Skeleton className="h-8 w-full" />
+            </div>
+          ))}
+        <div className="space-y-1">
+          <Skeleton className="h-3 w-2/6" />
+          {Array(7)
+            .fill(0)
+            .map((_, i) => i + 1)
+            .map((index) => (
+              <Skeleton key={index} className="h-4 w-3/12" />
+            ))}
+        </div>
+      </div>
+
+      <Skeleton className="h-5 w-2/5" />
+      <div className="space-y-6">
+        {Array(2)
+          .fill(0)
+          .map((_, i) => i + 1)
+          .map((index) => (
+            <div key={index} className="space-y-1">
+              <Skeleton className="h-3 w-2/6" />
+              <Skeleton className="h-8 w-full" />
+            </div>
+          ))}
+      </div>
+
+      <Skeleton className="h-5 w-2/5" />
+      <div className="space-y-1">
+        <Skeleton className="h-3 w-2/6" />
+        <Skeleton className="h-24 w-full" />
+      </div>
+
+      <Skeleton className="h-5 w-2/5" />
+      <div className="space-y-1">
+        <Skeleton className="h-3 w-2/6" />
+        <Skeleton className="h-8 w-full" />
+      </div>
+    </>
+  )
+}
+
+export { MainInfoSection, MainInfoSectionLoading }

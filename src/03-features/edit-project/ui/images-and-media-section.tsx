@@ -15,6 +15,7 @@ import { Title } from "@/01-shared/ui/title"
 import { cn } from "@/01-shared/utils/cn"
 import { ACCEPTED_IMAGE_TYPES, Project } from "@/02-entities/project"
 import { editProjectSchema } from "../lib/edit-project-schema"
+import { Skeleton } from "@/01-shared/ui/skeleton"
 
 interface ImagesAndMediaSectionProps {
   form: UseFormReturn<z.infer<typeof editProjectSchema>>
@@ -223,4 +224,44 @@ const ImagesAndMediaSection = ({ form, project }: ImagesAndMediaSectionProps) =>
   )
 }
 
-export { ImagesAndMediaSection }
+const ImagesAndMediaSectionLoading = () => {
+  return (
+    <>
+      <Skeleton className="h-5 w-2/5" />
+      <div className="flex items-center gap-6">
+        <Skeleton className="h-20 w-20" />
+        <Skeleton className="h-8 w-3/6" />
+      </div>
+
+      <Skeleton className="h-5 w-2/5" />
+      <div className="space-y-3">
+        <div className="flex items-center gap-2">
+          {Array(3)
+            .fill(0)
+            .map((_, i) => i + 1)
+            .map((index) => (
+              <Skeleton key={index} className="h-20 w-36" />
+            ))}
+        </div>
+        <Skeleton className="h-4 w-3/6" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-7 w-32" />
+      </div>
+
+      <Skeleton className="h-5 w-2/5" />
+      <div className="space-y-6">
+        {Array(1)
+          .fill(0)
+          .map((_, i) => i + 1)
+          .map((index) => (
+            <div key={index} className="space-y-1">
+              <Skeleton className="h-3 w-2/6" />
+              <Skeleton className="h-8 w-full" />
+            </div>
+          ))}
+      </div>
+    </>
+  )
+}
+
+export { ImagesAndMediaSection, ImagesAndMediaSectionLoading }
