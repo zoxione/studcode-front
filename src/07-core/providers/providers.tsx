@@ -22,12 +22,14 @@ const Providers = ({ children }: IProviders) => {
         if (query.meta?.slug === "auth-user-whoami-query") {
           return
         }
-        toast.error(`Произошла ошибка: ${error.message}`)
+        console.log(error)
+        toast.error(`Ой! Произошла ошибка.`)
       },
     }),
     mutationCache: new MutationCache({
       onError: (error) => {
-        toast.error(`Произошла ошибка: ${error.message}`)
+        console.log(error)
+        toast.error(`Ой! Произошла ошибка.`)
       },
     }),
     defaultOptions: {
@@ -44,7 +46,7 @@ const Providers = ({ children }: IProviders) => {
   return (
     <SessionProvider>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <TooltipProvider>
             <Toaster position="bottom-right" richColors closeButton />
             <Suspense>

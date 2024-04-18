@@ -11,11 +11,11 @@ import {
 import { PROJECT_STATUS_VALUES, Project, prettyStatus } from "@/02-entities/project"
 import { useEditProjectStatus } from "../lib/use-edit-project-status"
 
-interface EditProjectStatusProps {
+interface EditProjectStatusMenuSubProps {
   project: Project
 }
 
-const EditProjectStatusMenuSub = ({ project }: EditProjectStatusProps) => {
+const EditProjectStatusMenuSub = ({ project }: EditProjectStatusMenuSubProps) => {
   const { handleEditStatus, isLoading } = useEditProjectStatus({ project })
 
   return (

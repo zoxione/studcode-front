@@ -3,10 +3,9 @@ import { getServerSession } from "next-auth"
 import { notFound, redirect } from "next/navigation"
 import { PlusCircledIcon, TextAlignRightIcon } from "@radix-ui/react-icons"
 import { Users2Icon } from "lucide-react"
-import Link from "next/link"
 
 import { authOptions } from "@/01-shared/lib/auth-options"
-import { teamAPI } from "@/02-entities/team"
+import { TeamNameLink, teamAPI } from "@/02-entities/team"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"
@@ -35,17 +34,7 @@ export default async function LayoutPage({ params, children }: LayoutPageProps) 
 
   return (
     <Layout header={<Header />} footer={<Footer />} className="mb-6">
-      <HeaderSettingsPage
-        title={
-          <>
-            Редактирование{" "}
-            <Link href={`/teams/${team.slug}`} target="_blank" className="underline hover:text-primary duration-200">
-              {team.name}
-            </Link>
-          </>
-        }
-        description="Управляйте настройками команды."
-      />
+      <HeaderSettingsPage title={<TeamNameLink teamId={team._id} />} description="Управляйте настройками команды." />
       <div className="grid grid-cols-1 lg:grid-cols-4 auto-rows-min gap-8 lg:gap-16 h-full">
         <aside className="flex flex-col gap-2 lg:sticky lg:top-[90px] lg:h-fit">
           <Sidebar

@@ -1,6 +1,7 @@
 "use client"
 
 import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table"
+import { ReloadIcon } from "@radix-ui/react-icons"
 
 import { columns } from "./columns"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/01-shared/ui/table"
@@ -13,7 +14,7 @@ interface MembersTableProps<TData, TValue> {
 }
 
 const MembersTable = <TData, TValue>({ teamName }: MembersTableProps<TData, TValue>) => {
-  const { data: team } = useGetOneTeamQuery(teamName)
+  const { data: team, status } = useGetOneTeamQuery(teamName)
 
   const table = useReactTable({
     data: team?.members || [],
@@ -54,6 +55,12 @@ const MembersTable = <TData, TValue>({ teamName }: MembersTableProps<TData, TVal
                 ))}
               </TableRow>
             ))
+          ) : status === "pending" ? (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                <ReloadIcon className="mx-auto h-4 w-4 animate-spin" />
+              </TableCell>
+            </TableRow>
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">

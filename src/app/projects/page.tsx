@@ -17,21 +17,20 @@ interface PageProps {
 export const revalidate = 60
 
 export default async function Page({}: PageProps) {
-  const popularTags = await tagAPI.getAllPopular()
+  const popularTags = (await tagAPI.getAllPopular()).slice(0, 5)
 
   return (
     <Layout header={<Header />} footer={<Footer />} className="space-y-8 pb-8">
       <HeaderPage className="my-8" title="Проекты" description="Проекты самых популярных тегов." />
-
+      <ProjectsCarousel label="Лучшие проекты за все время" filter={{ order: "!flames" }} />
       {popularTags.length > 0 ? (
-        popularTags.map((tag) => <ProjectsCarousel key={tag._id} label={tag.name} tagSlug={tag.slug} />)
+        popularTags.map((tag) => <ProjectsCarousel key={tag._id} label={tag.name} filter={{ tag_slug: tag.slug }} />)
       ) : (
         <span className="text-sm text-muted-foreground flex justify-center items-center text-center">
           {"(>_<)"} <br />
           Проекты не найдены.
         </span>
       )}
-
       <Link href="/tags" className={cn(buttonVariants({ variant: "secondary" }), "w-full")}>
         Посмотреть все
       </Link>

@@ -3,16 +3,16 @@
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/01-shared/ui/carousel"
 import { cn } from "@/01-shared/utils/cn"
 import { Title } from "@/01-shared/ui/title"
-import { ProjectCardSmall, useGetAllProjectsQuery } from "@/02-entities/project"
+import { GetAllProjectsFilter, ProjectCardSmall, useGetAllProjectsQuery } from "@/02-entities/project"
 
 interface ScreensCarouselProps {
   className?: string
-  tagSlug: string
   label: string
+  filter?: Omit<GetAllProjectsFilter, "status" | "limit">
 }
 
-const ProjectsCarousel = ({ tagSlug, label, className }: ScreensCarouselProps) => {
-  const { data: projects, status } = useGetAllProjectsQuery({ tag_slug: tagSlug, status: "published" })
+const ProjectsCarousel = ({ label, filter, className }: ScreensCarouselProps) => {
+  const { data: projects, status } = useGetAllProjectsQuery({ status: "published", limit: 20, ...filter })
 
   if (status === "pending") {
     return (

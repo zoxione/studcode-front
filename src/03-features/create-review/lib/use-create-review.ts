@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
+import { useRouter } from "next/navigation"
 
 import { reviewSchema, useCreateOneReviewMutation } from "@/02-entities/review"
 
@@ -16,6 +17,7 @@ interface useCreateReviewProps {
 const useCreateReview = ({ projectId }: useCreateReviewProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const { data: session } = useSession()
+  const router = useRouter()
   const { mutateAsync: createReviewAsync } = useCreateOneReviewMutation()
 
   const createReviewForm = useForm<z.infer<typeof createReviewSchema>>({
@@ -30,7 +32,7 @@ const useCreateReview = ({ projectId }: useCreateReviewProps) => {
     try {
       setIsLoading(true)
       if (!session) {
-        toast.error("Вы не авторизованы")
+        router.push("?dialog=auth", { scroll: false })
         return
       }
       await createReviewAsync({

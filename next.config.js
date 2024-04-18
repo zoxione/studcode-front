@@ -5,6 +5,7 @@ const nextConfig = {
   reactStrictMode: false,
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
   images: {
+    minimumCacheTTL: 60,
     remotePatterns: [
       {
         protocol: "https",

@@ -20,7 +20,7 @@ const useVoteProject = ({ projectId }: useVoteProjectProps) => {
     try {
       setIsLoading(true)
       if (!session) {
-        toast.error("Вы не авторизованы")
+        router.push("?dialog=auth", { scroll: false })
         return
       }
       await voteProjectAsync(projectId)

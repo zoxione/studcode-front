@@ -1,15 +1,16 @@
 import { Row } from "@tanstack/react-table"
-import { MoreHorizontal, Trash2Icon } from "lucide-react"
+import { ExternalLinkIcon, MoreHorizontal, Trash2Icon } from "lucide-react"
 import { usePathname } from "next/navigation"
-import { ExternalLinkIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
 
 import { Button } from "@/01-shared/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/01-shared/ui/dropdown-menu"
 import { TeamMember, useRemoveMemberTeamMutation } from "@/02-entities/team"
@@ -29,26 +30,29 @@ const ActionsCell = ({ row }: { row: Row<TeamMember> }) => {
           <MoreHorizontal className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent className="w-40" align="end">
         <DropdownMenuLabel>Действия</DropdownMenuLabel>
-        <DropdownMenuItem asChild>
-          <Link href={`/${user.username}`} target="_blank">
-            <ExternalLinkIcon className="mr-2 h-4 w-4" />
-            Профиль
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          className="text-destructive"
-          onClick={() => {
-            removeMember({
-              key: teamName,
-              userId: user._id,
-            })
-          }}
-        >
-          <Trash2Icon className="mr-2 h-4 w-4" />
-          Удалить
-        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem asChild>
+            <Link href={`/${user.username}`} target="_blank">
+              Профиль
+              <ExternalLinkIcon className="ml-auto h-4 w-4" />
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="text-destructive focus:text-destructive"
+            onClick={() => {
+              removeMember({
+                key: teamName,
+                userId: user._id,
+              })
+            }}
+          >
+            Удалить
+            <Trash2Icon className="ml-auto h-4 w-4" />
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   )
