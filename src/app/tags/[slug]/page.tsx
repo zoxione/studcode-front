@@ -36,7 +36,7 @@ export default async function Page({ params, searchParams }: PageProps) {
 
   return (
     <Layout header={<Header />} footer={<Footer />} className="space-y-8">
-      <HeaderPage className="my-8" title={tag.name} description={tag.description} />
+      <HeaderPage className="my-8" title={`${tag.icon} ${tag.name}`} description={tag.description} />
 
       <SortProjectsSelect order={searchParamsParsed.order} />
 

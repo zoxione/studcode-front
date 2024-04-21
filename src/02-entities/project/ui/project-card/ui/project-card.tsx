@@ -7,6 +7,7 @@ import { Skeleton } from "@/01-shared/ui/skeleton"
 import { cn } from "@/01-shared/utils/cn"
 import { TagBadge } from "@/02-entities/tag"
 import { Project } from "../../../model/types"
+import { ScrollArea, ScrollBar } from "@/01-shared/ui/scroll-area"
 
 export interface ProjectCardProps extends HTMLAttributes<HTMLDivElement> {
   project?: Project
@@ -65,11 +66,14 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(({ project, loa
         <div className="w-fit flex items-center gap-2 pr-3">{actions}</div>
       </Link>
 
-      <div className="ml-[76px] -mt-7 mr-12 flex flex-row items-center gap-1 overflow-x-hidden">
-        {project.tags.map((tag) => (
-          <TagBadge key={tag._id} tag={tag} />
-        ))}
-      </div>
+      <ScrollArea className="ml-[76px] -mt-7 mr-12">
+        <div className="flex flex-row items-center gap-1">
+          {project.tags.map((tag) => (
+            <TagBadge key={tag._id} tag={tag} />
+          ))}
+        </div>
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
     </div>
   )
 })

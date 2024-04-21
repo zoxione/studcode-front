@@ -14,7 +14,7 @@ const TagBadge = forwardRef<HTMLAnchorElement, TagBadgeProps>(({ tag, className 
     <Link
       href={`/tags/${tag.slug}`}
       ref={ref}
-      className={cn(badgeVariants({ variant: "secondary" }), "w-fit", className)}
+      className={cn(badgeVariants({ variant: "secondary" }), "w-fit whitespace-nowrap", className)}
     >
       {tag.name}
     </Link>

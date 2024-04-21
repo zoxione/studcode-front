@@ -24,6 +24,7 @@ import { Layout } from "@/04-widgets/layout"
 import { LinksList } from "@/04-widgets/links-list"
 import { ReviewsList } from "@/04-widgets/reviews-list"
 import { ScreensCarousel } from "@/04-widgets/screens-carousel"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/01-shared/ui/tooltip"
 
 interface PageProps {
   params: { slug: string }
@@ -100,12 +101,17 @@ export default async function Page({ params }: PageProps) {
           <div className="flex flex-row gap-2 items-center">
             <VoteProject projectId={project._id} />
             {isOwner ? (
-              <Link
-                href={`/projects/${project.slug}/edit`}
-                className={cn(buttonVariants({ variant: "outline", size: "icon" }))}
-              >
-                <Pencil1Icon className="w-4 h-4" />
-              </Link>
+              <Tooltip delayDuration={0}>
+                <TooltipTrigger asChild>
+                  <Link
+                    href={`/projects/${project.slug}/edit`}
+                    className={cn(buttonVariants({ variant: "outline", size: "icon" }))}
+                  >
+                    <Pencil1Icon className="w-4 h-4" />
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent side="top">Изменить</TooltipContent>
+              </Tooltip>
             ) : null}
             {mainLink ? (
               <Button variant="default" asChild>
@@ -172,23 +178,33 @@ export default async function Page({ params }: PageProps) {
               <div className="space-y-2">
                 <Title order={6}>Авторы</Title>
                 <div className="flex items-center justify-end -space-x-2 relative">
-                  <Avatar className="w-8 h-8 ml-auto text-sm" asChild>
-                    <Link href={`/${project.creator.username}`}>
-                      <AvatarImage src={project.creator.avatar} asChild>
-                        <Image src={project.creator.avatar} alt={project.creator.username} fill />
-                      </AvatarImage>
-                      <AvatarFallback>{creatorInitials}</AvatarFallback>
-                    </Link>
-                  </Avatar>
+                  <Tooltip delayDuration={0}>
+                    <TooltipTrigger asChild>
+                      <Avatar className="w-8 h-8 ml-auto text-sm" asChild>
+                        <Link href={`/${project.creator.username}`}>
+                          <AvatarImage src={project.creator.avatar} asChild>
+                            <Image src={project.creator.avatar} alt={project.creator.username} fill />
+                          </AvatarImage>
+                          <AvatarFallback>{creatorInitials}</AvatarFallback>
+                        </Link>
+                      </Avatar>
+                    </TooltipTrigger>
+                    <TooltipContent side="top">{project.creator.username}</TooltipContent>
+                  </Tooltip>
                   {project.team ? (
-                    <Avatar className="w-8 h-8 ml-auto text-sm" asChild>
-                      <Link href={`/teams/${project.team.slug}`}>
-                        <AvatarImage src={project.team.logo} asChild>
-                          <Image src={project.team.logo} alt={project.team.name} fill />
-                        </AvatarImage>
-                        <AvatarFallback>{project.team.name[0]}</AvatarFallback>
-                      </Link>
-                    </Avatar>
+                    <Tooltip delayDuration={0}>
+                      <TooltipTrigger asChild>
+                        <Avatar className="w-8 h-8 ml-auto text-sm" asChild>
+                          <Link href={`/teams/${project.team.slug}`}>
+                            <AvatarImage src={project.team.logo} asChild>
+                              <Image src={project.team.logo} alt={project.team.name} fill />
+                            </AvatarImage>
+                            <AvatarFallback>{project.team.name[0]}</AvatarFallback>
+                          </Link>
+                        </Avatar>
+                      </TooltipTrigger>
+                      <TooltipContent side="top">{project.team.name}</TooltipContent>
+                    </Tooltip>
                   ) : null}
                 </div>
               </div>

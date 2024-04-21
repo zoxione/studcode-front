@@ -22,6 +22,9 @@ const useEditProjectStatus = ({ project }: useEditProjectProps) => {
         toast.error("Вы не авторизованы")
         return
       }
+      if (value === project.status) {
+        return
+      }
       if (
         project.title === "" ||
         project.tagline === "" ||

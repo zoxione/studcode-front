@@ -37,7 +37,11 @@ const useAddTeamMember = ({ teamName }: useAddTeamMemberProps) => {
         userId: user._id,
         role: "member",
       })
-    } catch (error) {
+    } catch (error: any) {
+      if (error.message.includes("user") && error.message.includes("Not Found")) {
+        toast.error("Пользователь не найден")
+        return
+      }
       toast.error("Произошла ошибка")
     } finally {
       setIsLoading(false)

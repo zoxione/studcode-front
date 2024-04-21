@@ -72,7 +72,7 @@ const UserMenu = ({ user }: UserMenuProps) => {
                 <TooltipTrigger asChild>
                   <CopyIcon onClick={handleCopyEmail} className="h-4 w-4 hover:text-muted-foreground cursor-copy" />
                 </TooltipTrigger>
-                <TooltipContent>Скопировать</TooltipContent>
+                <TooltipContent side="top">Скопировать</TooltipContent>
               </Tooltip>
             </div>
           </div>

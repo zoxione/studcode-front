@@ -26,7 +26,7 @@ export const ProjectsDraftsList = ({ limit, creator_id, className }: ProjectsDra
   return (
     <div className={cn("space-y-4", className)}>
       {status === "pending" ? (
-        Array(4)
+        Array(3)
           .fill(0)
           .map((_, i) => i + 1)
           .map((index) => <ProjectDraftCard key={index} loading />)

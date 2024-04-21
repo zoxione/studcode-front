@@ -4,8 +4,6 @@ import { ReloadIcon } from "@radix-ui/react-icons"
 import { Fragment, useEffect } from "react"
 import { useInView } from "react-intersection-observer"
 
-
-
 import { cn } from "@/01-shared/utils/cn"
 import { GetAllProjectsFilter, ProjectCard, useGetAllProjectsInfiniteQuery } from "@/02-entities/project"
 import { ProjectCardProps } from "@/02-entities/project/ui/project-card/ui/project-card"
@@ -44,7 +42,7 @@ export const ProjectsList = ({ filter, isEdit, projectCardProps, className }: Pr
   return (
     <div className={cn("space-y-6", className)}>
       {status === "pending"
-        ? Array(4)
+        ? Array(3)
             .fill(0)
             .map((_, i) => i + 1)
             .map((index) => <ProjectCard key={index} loading />)
