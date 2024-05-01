@@ -57,7 +57,13 @@ export default async function LayoutPage({ params, children }: LayoutPageProps) 
 
   return (
     <Layout header={<Header />} footer={<Footer />} className="">
-      <div className="absolute left-0 h-36 w-full bg-gradient-to-l from-[#FFA585] to-[#FFEDA0] rounded-xl"></div>
+      <div className="absolute left-0 h-36 w-full rounded-xl overflow-hidden">
+        {user.cover !== "" ? (
+          <Image src={user.cover} alt={`${user.username}-cover`} fill className="object-cover" />
+        ) : (
+          <div className="size-full bg-gradient-to-l from-[#FFA585] to-[#FFEDA0]"></div>
+        )}
+      </div>
 
       <Avatar className="absolute top-36 left-1/2 md:left-auto transform -translate-x-1/2 md:translate-x-0 h-36 w-36 border-8 border-background">
         <AvatarImage src={user?.avatar} asChild>

@@ -6,12 +6,13 @@ import { toast } from "sonner"
 import * as z from "zod"
 
 import { Option } from "@/01-shared/ui/multi-select"
-import { User, useUpdateOneUserMutation, useUploadsOneUserMutation, userSchema } from "@/02-entities/user"
+import { User, UserFiles, useUpdateOneUserMutation, useUploadsOneUserMutation, userSchema } from "@/02-entities/user"
 import { useGetAllSpecializationsQuery } from "@/02-entities/specialization"
 
 const editUserProfileSchema = userSchema.pick({
   avatar: true,
   avatar_file: true,
+  cover_file: true,
   full_name: true,
   about: true,
   links: true,
@@ -57,10 +58,17 @@ const useEditUserProfile = ({ user }: useEditUserProfileProps) => {
         toast.error("Вы не авторизованы")
         return
       }
-      if (values.avatar_file) {
+      if (values.avatar_file || values.cover_file) {
+        let files: UserFiles = {}
+        if (values.avatar_file) {
+          files.avatar_file = values.avatar_file
+        }
+        if (values.cover_file) {
+          files.cover_file = values.cover_file
+        }
         await uploadsFilesAsync({
           key: user._id,
-          files: { avatar_file: values.avatar_file },
+          files,
         })
       }
       await updateUserAsync({

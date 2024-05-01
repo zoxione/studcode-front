@@ -19,6 +19,7 @@ interface User {
   refresh_token: string
   full_name: UserFullName
   avatar: string
+  cover: string
   about: string
   links: ILink[]
   specializations: Specialization[]

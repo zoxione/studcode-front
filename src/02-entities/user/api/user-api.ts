@@ -116,6 +116,9 @@ class UserAPI {
     if (files.avatar_file) {
       formData.append("avatar_file", files.avatar_file[0])
     }
+    if (files.cover_file) {
+      formData.append("cover_file", files.cover_file[0])
+    }
 
     const res = await fetch(`${this.baseUrl}/${key}/uploads`, {
       method: "POST",

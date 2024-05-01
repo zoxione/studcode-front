@@ -20,6 +20,7 @@ interface GetAllUsersResponse {
 
 interface UserFiles {
   avatar_file?: FileList
+  cover_file?: FileList
 }
 
 interface UpdateUser extends Omit<DeepPartial<User>, "_id" | "specializations" | "created_at" | "updated_at"> {

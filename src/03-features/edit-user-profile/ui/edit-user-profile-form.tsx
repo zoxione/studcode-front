@@ -28,6 +28,31 @@ const EditUserProfileForm = ({ user }: EditUserProfileFormProps) => {
   return (
     <Form {...editUserProfileForm}>
       <form onSubmit={editUserProfileForm.handleSubmit(onSubmit)} className="space-y-4">
+        <FormField
+          control={editUserProfileForm.control}
+          name="cover_file"
+          render={({ field }) => (
+            <FormItem className="">
+              <FormControl>
+                <Dropzone
+                  classNameWrapper="w-full h-36 rounded-xl overflow-hidden"
+                  accept={ACCEPTED_IMAGE_TYPES.join(", ")}
+                  preview
+                  classNamePreview="size-full object-cover"
+                  dropContent={
+                    user.cover !== "" ? (
+                      <Image src={user.cover} alt={`${user.username}-cover`} fill className="object-cover" />
+                    ) : (
+                      <ImageIcon className="h-6 w-6" />
+                    )
+                  }
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <div className="space-y-4">
           <div className="flex flex-row items-center gap-6">
             <FormField
@@ -220,6 +245,9 @@ const EditUserProfileForm = ({ user }: EditUserProfileFormProps) => {
           {isLoading ? <ReloadIcon className="h-4 w-4 animate-spin" /> : "Обновить профиль"}
         </Button>
       </form>
+      <span className="text-xs text-muted-foreground">
+        * Данные могут не сразу обновится. Возможно придется обновить страницу или подождать некоторое время.
+      </span>
     </Form>
   )
 }
