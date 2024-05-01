@@ -5,11 +5,12 @@ import { User } from "../model/types"
 import { GetAllUsersFilter, UpdateUser, UserFiles } from "./types"
 import { userAPI } from "./user-api"
 
-const useGetAllUsersQuery = (filter: GetAllUsersFilter) => {
+const useGetAllUsersQuery = (filter: GetAllUsersFilter & { enabled?: boolean }) => {
   const { page, limit, search, order } = filter
   return useQuery({
     queryKey: ["users", page, limit, search, order],
     queryFn: () => userAPI.getAll(filter),
+    enabled: filter.enabled,
   })
 }
 

@@ -65,6 +65,7 @@ const EditProjectForm = ({ project }: EditProjectFormProps) => {
           project={project}
           onSaveDraft={() => handleSaveDraft(editProjectForm.getValues())}
           isLoading={isLoading}
+          setCurrentSection={setCurrentSection}
         />
       ),
     },

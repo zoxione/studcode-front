@@ -28,7 +28,7 @@ const userSchema = z.object({
   username: z
     .string()
     .min(3, { message: "Минимальная длина имени пользователя - 3 символа." })
-    .max(16, { message: "Максимальная длина имени - 16 символов." }),
+    .max(16, { message: "Максимальная длина имени - 24 символов." }),
   email: z.string().email({ message: "Некорректная почта." }),
   password: z
     .string()

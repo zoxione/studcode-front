@@ -1,10 +1,12 @@
 "use client"
 
-import { ReloadIcon } from "@radix-ui/react-icons"
+import { CaretSortIcon, CheckIcon, ReloadIcon } from "@radix-ui/react-icons"
 
 import { Button } from "@/01-shared/ui/button"
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/01-shared/ui/form"
-import { Input } from "@/01-shared/ui/input"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/01-shared/ui/command"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/form"
+import { Popover, PopoverContent, PopoverTrigger } from "@/01-shared/ui/popover"
+import { cn } from "@/01-shared/utils/cn"
 import { useAddTeamMember } from "../lib/use-add-team-member"
 
 interface AddTeamMemberFormProps {
@@ -12,26 +14,73 @@ interface AddTeamMemberFormProps {
 }
 
 const AddTeamMemberForm = ({ teamName }: AddTeamMemberFormProps) => {
-  const { addTeamMemberForm, onSubmit, isLoading } = useAddTeamMember({ teamName })
+  const { addTeamMemberForm, onSubmit, isLoading, searchQuery, setSearchQuery, users } = useAddTeamMember({ teamName })
 
   return (
     <Form {...addTeamMemberForm}>
-      <form onSubmit={addTeamMemberForm.handleSubmit(onSubmit)} className="flex flex-wrap gap-2">
+      <form onSubmit={addTeamMemberForm.handleSubmit(onSubmit)} className="space-y-2">
+        <FormLabel>Добавить пользователя</FormLabel>
         <FormField
           control={addTeamMemberForm.control}
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormControl>
-                <Input type="username" placeholder="Имя пользователя" {...field} />
-              </FormControl>
+              <div className="flex items-start gap-2">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        className={cn("w-[200px] justify-between", !field.value && "text-muted-foreground")}
+                      >
+                        {addTeamMemberForm.watch("username") !== ""
+                          ? addTeamMemberForm.watch("username")
+                          : "Выберите пользователя"}
+                        <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[200px] p-0">
+                    <Command>
+                      <CommandInput
+                        value={searchQuery}
+                        onValueChange={setSearchQuery}
+                        placeholder="Поиск пользователя..."
+                        className="h-9"
+                      />
+                      <CommandEmpty>Пользователь не найден</CommandEmpty>
+                      <CommandGroup>
+                        {users.map((user) => (
+                          <CommandItem
+                            value={user.username}
+                            key={user.username}
+                            onSelect={() => {
+                              addTeamMemberForm.setValue("username", user.username)
+                            }}
+                          >
+                            {user.username}
+                            <CheckIcon
+                              className={cn(
+                                "ml-auto h-4 w-4",
+                                user.username === field.value ? "opacity-100" : "opacity-0",
+                              )}
+                            />
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+                <Button type="submit" disabled={isLoading}>
+                  {isLoading ? <ReloadIcon className="h-4 w-4 animate-spin" /> : "Добавить"}
+                </Button>
+              </div>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={isLoading}>
-          {isLoading ? <ReloadIcon className="h-4 w-4 animate-spin" /> : "Добавить"}
-        </Button>
+        <FormDescription>Добавляет пользователя в команду {teamName} (без подтверждения).</FormDescription>
       </form>
     </Form>
   )

@@ -31,8 +31,8 @@ const screenshotSchema = z
 const projectSchema = z.object({
   title: z
     .string()
-    .min(1, { message: "Минимальная длина заголовка - 1 символ." })
-    .max(16, { message: "Максимальная длина заголовка - 16 символов." }),
+    .min(1, { message: "Минимальная длина названия - 1 символ." })
+    .max(16, { message: "Максимальная длина названия - 24 символов." }),
   tagline: z
     .string()
     .min(1, { message: "Минимальная длина слогана - 1 символ." })
