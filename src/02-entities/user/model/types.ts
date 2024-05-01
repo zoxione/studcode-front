@@ -1,4 +1,5 @@
 import { ILink } from "@/01-shared/types/link"
+import { Specialization } from "@/02-entities/specialization"
 
 type UserRole = "user" | "admin"
 
@@ -20,6 +21,7 @@ interface User {
   avatar: string
   about: string
   links: ILink[]
+  specializations: Specialization[]
   created_at: string
   updated_at: string
 }

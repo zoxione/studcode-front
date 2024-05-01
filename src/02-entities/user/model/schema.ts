@@ -1,7 +1,13 @@
 import * as z from "zod"
 
-import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "./constants"
 import { linkSchema } from "@/01-shared/types/link"
+import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "./constants"
+
+const optionSchema = z.object({
+  label: z.string(),
+  value: z.string(),
+  disable: z.boolean().optional(),
+})
 
 const fullNameSchema = z.object({
   surname: z
@@ -56,6 +62,9 @@ const userSchema = z.object({
     .transform((e) => (e === "" ? undefined : e)),
   links: z.array(linkSchema).max(5, {
     message: "Максимальное количество ссылок - 5.",
+  }),
+  specializations: z.array(optionSchema).max(3, {
+    message: "Максимальное количество специализаций - 3.",
   }),
 })
 

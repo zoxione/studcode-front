@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryFn, StoryObj } from "@storybook/react"
 
+import { TooltipProvider } from "@/01-shared/ui/tooltip"
 import { UserMenu } from "../ui/user-menu"
 
 const meta = {
@@ -20,8 +21,8 @@ const mockUser = {
   email: "email@email.com",
 }
 
-export const Default: Story = {
-  args: {
-    user: mockUser,
-  },
-}
+export const Default: StoryFn = () => (
+  <TooltipProvider>
+    <UserMenu user={mockUser} />
+  </TooltipProvider>
+)

@@ -14,13 +14,16 @@ import { useEditUserProfile } from "../lib/use-edit-user-profile"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/01-shared/ui/select"
 import { linkTypeValues } from "@/01-shared/types/link"
 import { prettyLinkType } from "@/01-shared/utils/pretty-link-type"
+import { MultiSelect } from "@/01-shared/ui/multi-select"
 
 interface EditUserProfileFormProps extends HTMLAttributes<HTMLFormElement> {
   user: User
 }
 
 const EditUserProfileForm = ({ user }: EditUserProfileFormProps) => {
-  const { editUserProfileForm, onSubmit, isLoading, fields, append, remove } = useEditUserProfile({ user })
+  const { editUserProfileForm, onSubmit, isLoading, fields, append, remove, specializationsItems } = useEditUserProfile(
+    { user },
+  )
 
   return (
     <Form {...editUserProfileForm}>
@@ -110,8 +113,36 @@ const EditUserProfileForm = ({ user }: EditUserProfileFormProps) => {
             </FormItem>
           )}
         />
+        <FormField
+          control={editUserProfileForm.control}
+          name="specializations"
+          render={({ field }) => (
+            <FormItem className="space-y-1">
+              <FormLabel>Специализации</FormLabel>
+              <FormDescription>
+                Добавьте специализации, которые вас интересуют. Максимально можно выбрать до трех.
+              </FormDescription>
+              <FormControl>
+                <MultiSelect
+                  value={field.value}
+                  onChange={field.onChange}
+                  options={specializationsItems}
+                  placeholder="Выберите до трех специализаций"
+                  emptyIndicator={<span className="text-center">Ничего не найдено</span>}
+                  commandProps={{
+                    filter: (value: string, search: string) => {
+                      const spec = specializationsItems.find((spec) => spec.value === value)
+                      return spec?.label.toLowerCase().includes(search.toLowerCase()) ? 1 : -1
+                    },
+                  }}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <div>
-          <div className="space-y-2">
+          <div className="space-y-1">
             <FormLabel>Ссылки</FormLabel>
             <FormDescription>
               Добавьте ссылки на свой веб-сайт, блог или профили в социальных сетях (максимально 5). Ссылки будут

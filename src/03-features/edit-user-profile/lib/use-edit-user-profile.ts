@@ -5,7 +5,9 @@ import { useFieldArray, useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
+import { Option } from "@/01-shared/ui/multi-select"
 import { User, useUpdateOneUserMutation, useUploadsOneUserMutation, userSchema } from "@/02-entities/user"
+import { useGetAllSpecializationsQuery } from "@/02-entities/specialization"
 
 const editUserProfileSchema = userSchema.pick({
   avatar: true,
@@ -13,6 +15,7 @@ const editUserProfileSchema = userSchema.pick({
   full_name: true,
   about: true,
   links: true,
+  specializations: true,
 })
 
 interface useEditUserProfileProps {
@@ -24,6 +27,9 @@ const useEditUserProfile = ({ user }: useEditUserProfileProps) => {
   const { data: session } = useSession()
   const { mutateAsync: updateUserAsync } = useUpdateOneUserMutation()
   const { mutateAsync: uploadsFilesAsync } = useUploadsOneUserMutation()
+  const { data: specializations } = useGetAllSpecializationsQuery({ limit: 100, order: "name" })
+  const specializationsItems: Option[] =
+    specializations?.results.map((spec) => ({ label: spec.name, value: spec._id })) || []
 
   const editUserProfileForm = useForm<z.infer<typeof editUserProfileSchema>>({
     resolver: zodResolver(editUserProfileSchema),
@@ -35,6 +41,7 @@ const useEditUserProfile = ({ user }: useEditUserProfileProps) => {
       },
       about: user?.about || "",
       links: user?.links || [],
+      specializations: user?.specializations.map((spec) => ({ label: spec.name, value: spec._id })) || [],
     },
   })
 
@@ -62,6 +69,7 @@ const useEditUserProfile = ({ user }: useEditUserProfileProps) => {
           full_name: values.full_name,
           about: values.about,
           links: values.links,
+          specializations: values.specializations.map((spec) => spec.value),
         },
       })
       toast.success("Профиль обновлен")
@@ -79,6 +87,7 @@ const useEditUserProfile = ({ user }: useEditUserProfileProps) => {
     fields,
     append,
     remove,
+    specializationsItems,
   }
 }
 

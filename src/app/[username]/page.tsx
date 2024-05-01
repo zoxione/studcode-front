@@ -9,6 +9,7 @@ import { cn } from "@/01-shared/utils/cn"
 import { TeamBadge, teamAPI } from "@/02-entities/team"
 import { userAPI } from "@/02-entities/user"
 import { LinksList } from "@/04-widgets/links-list"
+import { SpecializationBadge } from "@/02-entities/specialization"
 
 interface PageProps {
   params: { username: string }
@@ -36,6 +37,18 @@ export default async function Page({ params }: PageProps) {
             )}
           </CardContent>
         </Card>
+      </div>
+      <div className="space-y-2">
+        <Title order={6}>Специализации</Title>
+        {user.specializations.length > 0 ? (
+          <div className="flex flex-wrap gap-1">
+            {user.specializations.map((spec) => (
+              <SpecializationBadge key={spec._id} specialization={spec} />
+            ))}
+          </div>
+        ) : (
+          <span className="text-sm text-muted-foreground">Специализации не добавлены.</span>
+        )}
       </div>
       <div className="space-y-2">
         <Title order={6}>Ссылки</Title>

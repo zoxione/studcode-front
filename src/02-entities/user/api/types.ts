@@ -22,6 +22,8 @@ interface UserFiles {
   avatar_file?: FileList
 }
 
-interface UpdateUser extends Omit<DeepPartial<User>, "_id" | "created_at" | "updated_at"> {}
+interface UpdateUser extends Omit<DeepPartial<User>, "_id" | "specializations" | "created_at" | "updated_at"> {
+  specializations?: string[]
+}
 
 export type { GetAllUsersFilter, GetAllUsersResponse, UpdateUser, UserFiles }
