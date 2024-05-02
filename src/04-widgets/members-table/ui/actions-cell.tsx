@@ -2,6 +2,7 @@ import { Row } from "@tanstack/react-table"
 import { ExternalLinkIcon, MoreHorizontal, Trash2Icon } from "lucide-react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
+import { useSession } from "next-auth/react"
 
 import { Button } from "@/01-shared/ui/button"
 import {
@@ -17,6 +18,7 @@ import { TeamMember, useRemoveMemberTeamMutation } from "@/02-entities/team"
 
 const ActionsCell = ({ row }: { row: Row<TeamMember> }) => {
   const { mutate: removeMember } = useRemoveMemberTeamMutation()
+  const { data: session } = useSession()
   const pathname = usePathname()
   const segments = pathname.split("/")
   const teamName = segments[segments.indexOf("teams") + 1]
@@ -42,6 +44,7 @@ const ActionsCell = ({ row }: { row: Row<TeamMember> }) => {
           </DropdownMenuItem>
           <DropdownMenuItem
             className="text-destructive focus:text-destructive"
+            disabled={session?.user?._id === user._id}
             onClick={() => {
               removeMember({
                 key: teamName,

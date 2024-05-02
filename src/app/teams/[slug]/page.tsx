@@ -1,21 +1,22 @@
-import { notFound } from "next/navigation"
-import { getServerSession } from "next-auth"
-import Link from "next/link"
 import { Metadata } from "next"
+import { getServerSession } from "next-auth"
 import Image from "next/image"
+import Link from "next/link"
+import { notFound } from "next/navigation"
 
 import { authOptions } from "@/01-shared/lib/auth-options"
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
+import { buttonVariants } from "@/01-shared/ui/button"
 import { Card, CardContent } from "@/01-shared/ui/card"
 import { Title } from "@/01-shared/ui/title"
+import { cn } from "@/01-shared/utils/cn"
 import { TeamMemberCard, teamAPI } from "@/02-entities/team"
+import { JoinTeamButton } from "@/03-features/join-team"
+import { LeaveTeamButton } from "@/03-features/leave-team"
 import { Footer } from "@/04-widgets/footer"
 import { Header } from "@/04-widgets/header"
 import { Layout } from "@/04-widgets/layout"
-import { cn } from "@/01-shared/utils/cn"
-import { buttonVariants } from "@/01-shared/ui/button"
-import { JoinTeamButton } from "@/03-features/join-team"
-import { LeaveTeamButton } from "@/03-features/leave-team"
+import { ProjectsList } from "@/04-widgets/projects-list"
 
 interface PageProps {
   params: { slug: string }
@@ -81,30 +82,40 @@ export default async function Page({ params }: PageProps) {
           )}
         </div>
       </div>
-      <div className="space-y-2">
-        <Title order={5}>О команде</Title>
-        <Card>
-          <CardContent className="p-6">
-            {team.about !== "" ? (
-              <p className="whitespace-pre-line">{team.about}</p>
-            ) : (
-              <p className="text-sm text-muted-foreground flex justify-center items-center text-center">
-                {"(≥o≤)"} <br />
-                Похоже тут ничего нет.
-              </p>
-            )}
-          </CardContent>
-        </Card>
-      </div>
-      <div className="space-y-2">
-        <Title order={5}>Участники</Title>
-        <Card>
-          <CardContent className="p-6 flex flex-wrap gap-2">
-            {team.members.map((member) => (
-              <TeamMemberCard key={member.user._id} member={member} />
-            ))}
-          </CardContent>
-        </Card>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="col-span-1 md:col-span-2 space-y-2">
+          <Title order={5}>О команде</Title>
+          <Card>
+            <CardContent className="p-6">
+              {team.about !== "" ? (
+                <p className="whitespace-pre-line">{team.about}</p>
+              ) : (
+                <p className="text-sm text-muted-foreground flex justify-center items-center text-center">
+                  {"(≥o≤)"} <br />
+                  Похоже тут ничего нет.
+                </p>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+        <div className="space-y-2">
+          <Title order={5}>Участники</Title>
+          <Card>
+            <CardContent className="p-6 grid gap-6">
+              {team.members.map((member) => (
+                <TeamMemberCard key={member.user._id} member={member} />
+              ))}
+            </CardContent>
+          </Card>
+        </div>
+        <div className="space-y-2">
+          <Title order={5}>Проекты</Title>
+          <Card>
+            <CardContent className="p-6">
+              <ProjectsList filter={{ team_id: team._id }} />
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </Layout>
   )

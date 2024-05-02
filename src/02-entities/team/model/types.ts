@@ -1,6 +1,6 @@
 import * as z from "zod"
 
-import { UserFullName } from "@/02-entities/user"
+import { User } from "@/02-entities/user"
 import { teamSchema } from "./schema"
 
 type TeamStatus = z.infer<typeof teamSchema>["status"]
@@ -8,12 +8,7 @@ type TeamStatus = z.infer<typeof teamSchema>["status"]
 type TeamUserRole = "owner" | "member"
 
 interface TeamMember {
-  user: {
-    _id: string
-    username: string
-    avatar: string
-    full_name: UserFullName
-  }
+  user: Pick<User, "_id" | "username" | "avatar" | "full_name" | "email" | "specializations">
   role: TeamUserRole
 }
 

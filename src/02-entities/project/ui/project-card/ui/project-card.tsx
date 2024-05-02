@@ -18,7 +18,7 @@ export interface ProjectCardProps extends HTMLAttributes<HTMLDivElement> {
 const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(({ project, loading, actions, className }, ref) => {
   if (loading) {
     return (
-      <div className="w-full max-w-xl flex items-center space-x-4">
+      <div className="animate-in fade-in duration-300 w-full max-w-xl flex items-center space-x-4">
         <Skeleton className="h-[60px] w-[60px] rounded-md" />
         <div className="flex-1 space-y-2">
           <Skeleton className="h-5 w-5/6" />
@@ -38,7 +38,7 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(({ project, loa
   }
 
   return (
-    <div className="group h-[60px] max-w-xl relative" ref={ref}>
+    <div className="animate-in fade-in duration-300 group h-[60px] max-w-xl relative" ref={ref}>
       <Link
         href={`/projects/${project.slug}`}
         className={cn(

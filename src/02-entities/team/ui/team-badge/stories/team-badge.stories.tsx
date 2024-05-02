@@ -33,6 +33,8 @@ const mockTeam: Team = {
           name: "name",
           patronymic: "patronymic",
         },
+        email: "email",
+        specializations: [],
       },
     },
   ],

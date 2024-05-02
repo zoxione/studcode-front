@@ -32,7 +32,7 @@ const MembersTable = <TData, TValue>({ teamName }: MembersTableProps<TData, TVal
                 return (
                   <TableHead
                     key={header.id}
-                    className="[&:has([role=option])]:w-[0%] [&:has([role=option])]:sticky [&:has([role=option])]:right-0 [&:has([role=option])]:bg-background"
+                    className="[&:has([role=option])]:w-[0%] [&:has([role=option])]:sticky [&:has([role=option])]:right-0 [&:has([role=option])]:bg-background text-nowrap"
                   >
                     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                   </TableHead>

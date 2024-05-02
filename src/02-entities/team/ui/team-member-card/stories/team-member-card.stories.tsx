@@ -25,6 +25,8 @@ const mockTeamMember: TeamMember = {
       name: "name",
       patronymic: "patronymic",
     },
+    email: "email",
+    specializations: [],
   },
 }
 

@@ -73,9 +73,11 @@ export const ProjectsList = ({ filter, isEdit, projectCardProps, className }: Pr
               )}
             </Fragment>
           ))}
-      <div className="flex items-center justify-center my-6">
-        {hasNextPage ? <ReloadIcon ref={ref} className="h-4 w-4 animate-spin" /> : null}
-      </div>
+      {hasNextPage ? (
+        <div className="flex items-center justify-center my-6">
+          <ReloadIcon ref={ref} className="h-4 w-4 animate-spin" />{" "}
+        </div>
+      ) : null}
     </div>
   )
 }
