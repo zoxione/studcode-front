@@ -5,15 +5,22 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { Team, teamSchema, useUpdateOneTeamMutation, useUploadsOneTeamMutation } from "@/02-entities/team"
+import {
+  Team,
+  TeamFilesResponse,
+  teamSchema,
+  useUpdateOneTeamMutation,
+  useUploadsOneTeamMutation,
+} from "@/02-entities/team"
 
 const editTeamSchema = teamSchema.pick({ logo_file: true, name: true, status: true, about: true })
 
 interface useEditTeamProps {
   team: Team
+  files: TeamFilesResponse
 }
 
-const useEditTeam = ({ team }: useEditTeamProps) => {
+const useEditTeam = ({ team, files }: useEditTeamProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const { data: session } = useSession()
   const { mutateAsync: updateTeamAsync } = useUpdateOneTeamMutation()
@@ -25,6 +32,7 @@ const useEditTeam = ({ team }: useEditTeamProps) => {
       name: team.name,
       status: team.status,
       about: team.about,
+      logo_file: files.logo_file !== null ? [files.logo_file] : null,
     },
   })
 
@@ -35,12 +43,11 @@ const useEditTeam = ({ team }: useEditTeamProps) => {
         toast.error("Вы не авторизованы")
         return
       }
-      if (values.logo_file) {
-        await uploadsFilesAsync({
-          key: team._id,
-          files: { logo_file: values.logo_file },
-        })
-      }
+      console.log(values)
+      await uploadsFilesAsync({
+        key: team._id,
+        files: { logo_file: values.logo_file },
+      })
       await updateTeamAsync({
         key: team._id,
         team: {

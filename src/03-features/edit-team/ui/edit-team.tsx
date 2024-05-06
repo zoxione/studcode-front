@@ -3,7 +3,7 @@
 import { InfoIcon } from "lucide-react"
 
 import { Skeleton } from "@/01-shared/ui/skeleton"
-import { useGetOneTeamQuery } from "@/02-entities/team"
+import { useGetOneTeamFilesQuery, useGetOneTeamQuery } from "@/02-entities/team"
 import { EditTeamForm } from "./edit-team-form"
 
 interface EditTeamProps {
@@ -11,9 +11,10 @@ interface EditTeamProps {
 }
 
 const EditTeam = ({ teamId }: EditTeamProps) => {
-  const { data: team, status } = useGetOneTeamQuery(teamId)
+  const { data: team, status: teamStatus } = useGetOneTeamQuery(teamId)
+  const { data: files, status: filesStatus } = useGetOneTeamFilesQuery(teamId)
 
-  if (status === "pending") {
+  if (teamStatus === "pending" || filesStatus === "pending") {
     return (
       <div className="space-y-6">
         {Array(4)
@@ -29,7 +30,7 @@ const EditTeam = ({ teamId }: EditTeamProps) => {
     )
   }
 
-  if (status === "error") {
+  if (teamStatus === "error" || filesStatus === "error") {
     return (
       <div className="flex flex-col justify-center items-center">
         <InfoIcon className="w-6 h-6 text-primary" />
@@ -38,7 +39,7 @@ const EditTeam = ({ teamId }: EditTeamProps) => {
     )
   }
 
-  return <EditTeamForm team={team} />
+  return <EditTeamForm team={team} files={files} />
 }
 
 export { EditTeam }

@@ -1,7 +1,6 @@
 "use client"
 
 import { ImageIcon, ReloadIcon } from "@radix-ui/react-icons"
-import Image from "next/image"
 
 import { Button } from "@/01-shared/ui/button"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/form"
@@ -9,15 +8,16 @@ import { Input } from "@/01-shared/ui/input"
 import { RadioGroup, RadioGroupItem } from "@/01-shared/ui/radio-group"
 import { Textarea } from "@/01-shared/ui/textarea"
 import { useEditTeam } from "../lib/use-edit-team"
-import { ACCEPTED_IMAGE_TYPES, TEAM_STATUS_VALUES, Team, prettyStatus } from "@/02-entities/team"
+import { ACCEPTED_IMAGE_TYPES, TEAM_STATUS_VALUES, Team, TeamFilesResponse, prettyStatus } from "@/02-entities/team"
 import { Dropzone } from "@/01-shared/ui/dropzone"
 
 interface EditTeamFormProps {
   team: Team
+  files: TeamFilesResponse
 }
 
-const EditTeamForm = ({ team }: EditTeamFormProps) => {
-  const { editTeamForm, onSubmit, isLoading } = useEditTeam({ team })
+const EditTeamForm = ({ team, files }: EditTeamFormProps) => {
+  const { editTeamForm, onSubmit, isLoading } = useEditTeam({ team, files })
 
   return (
     <Form {...editTeamForm}>
@@ -35,13 +35,7 @@ const EditTeamForm = ({ team }: EditTeamFormProps) => {
                       accept={ACCEPTED_IMAGE_TYPES.join(", ")}
                       preview
                       classNamePreview="size-full aspect-square object-cover"
-                      dropContent={
-                        team.logo !== "" ? (
-                          <Image src={team.logo} alt={`${team.name}-logo`} fill className="object-cover" />
-                        ) : (
-                          <ImageIcon className="h-6 w-6" />
-                        )
-                      }
+                      dropContent={<ImageIcon className="h-6 w-6" />}
                       {...field}
                     />
                   </FormControl>

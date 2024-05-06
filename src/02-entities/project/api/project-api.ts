@@ -1,5 +1,12 @@
 import { Project } from "../model/types"
-import { CreateProject, GetAllProjectsFilter, GetAllProjectsResponse, ProjectFiles, UpdateProject } from "./types"
+import {
+  CreateProject,
+  GetAllProjectsFilter,
+  GetAllProjectsResponse,
+  ProjectFiles,
+  ProjectFilesResponse,
+  UpdateProject,
+} from "./types"
 
 class ProjectAPI {
   private baseUrl: string = ""
@@ -185,6 +192,31 @@ class ProjectAPI {
     }
 
     return await res.json()
+  }
+
+  /**
+   * Получение файлов одного проекта
+   */
+  async getOneFiles(key: string): Promise<ProjectFilesResponse> {
+    const project = await this.getOne(key)
+    let logo_file: Blob | null = null
+    let screenshots_files = []
+
+    if (project.logo !== "") {
+      const res = await fetch(project.logo, {
+        method: "GET",
+      })
+      logo_file = await res.blob()
+    }
+    for (const screenshot of project.screenshots) {
+      const res = await fetch(screenshot, {
+        method: "GET",
+      })
+      const data = await res.blob()
+      screenshots_files.push(data)
+    }
+
+    return { logo_file, screenshots_files }
   }
 }
 

@@ -64,4 +64,17 @@ const useUploadsOneUserMutation = () => {
   })
 }
 
-export { useGetAllUsersQuery, useGetOneUserQuery, useUpdateOneUserMutation, useUploadsOneUserMutation }
+const useGetOneUserFilesQuery = (key: string) => {
+  return useQuery({
+    queryKey: ["users", "files", key],
+    queryFn: () => userAPI.getOneFiles(key),
+  })
+}
+
+export {
+  useGetAllUsersQuery,
+  useGetOneUserQuery,
+  useUpdateOneUserMutation,
+  useUploadsOneUserMutation,
+  useGetOneUserFilesQuery,
+}

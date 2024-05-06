@@ -1,5 +1,13 @@
 import { Team } from "../model/types"
-import { CreateTeam, GetAllTeamsFilter, GetAllTeamsResponse, TeamFiles, UpdateTeam, UpdateTeamMember } from "./types"
+import {
+  CreateTeam,
+  GetAllTeamsFilter,
+  GetAllTeamsResponse,
+  TeamFiles,
+  TeamFilesResponse,
+  UpdateTeam,
+  UpdateTeamMember,
+} from "./types"
 
 class TeamAPI {
   private baseUrl: string = ""
@@ -227,6 +235,23 @@ class TeamAPI {
     }
 
     return await res.json()
+  }
+
+  /**
+   * Получение файлов одной команды
+   */
+  async getOneFiles(key: string): Promise<TeamFilesResponse> {
+    const team = await this.getOne(key)
+    let logo_file: Blob | null = null
+
+    if (team.logo !== "") {
+      const res = await fetch(team.logo, {
+        method: "GET",
+      })
+      logo_file = await res.blob()
+    }
+
+    return { logo_file }
   }
 }
 

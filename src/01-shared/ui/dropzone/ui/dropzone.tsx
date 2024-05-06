@@ -9,9 +9,9 @@ interface DropzoneProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>
   classNamePreview?: string
   dropContent?: ReactNode | string
   preview?: boolean
-  value: FileList | null
-  onChange: (files: FileList | null) => void
-  onUpdate?: (file: FileList | null) => void
+  value: FileList | Blob[] | null
+  onChange: (files: FileList | Blob[] | null) => void
+  onUpdate?: (file: FileList | Blob[] | null) => void
 }
 
 const Dropzone = React.forwardRef<HTMLDivElement, DropzoneProps>(
@@ -59,6 +59,17 @@ const Dropzone = React.forwardRef<HTMLDivElement, DropzoneProps>(
       }
     }
 
+    const handleRemove = (index: number) => {
+      if (value) {
+        if (multiple) {
+          console.log("TODO")
+        } else {
+          onChange(null)
+          if (onUpdate) onUpdate(null)
+        }
+      }
+    }
+
     return (
       <Card
         ref={ref}
@@ -76,15 +87,24 @@ const Dropzone = React.forwardRef<HTMLDivElement, DropzoneProps>(
           <div className="size-full flex items-center justify-center text-muted-foreground overflow-hidden rounded-xl">
             <span className="size-full relative font-medium flex flex-row flex-wrap items-center justify-center gap-2 min-h-[24px]">
               {value?.length && preview
-                ? Array.from(value).map((file) => {
+                ? Array.from(value).map((file, index) => {
                     if (file.type.includes("image")) {
                       return (
-                        <img
-                          key={file.name}
-                          src={URL.createObjectURL(file)}
-                          className={cn("", classNamePreview)}
-                          alt={file.name}
-                        />
+                        <span key={file.size} className="relative">
+                          <img src={URL.createObjectURL(file)} className={cn("", classNamePreview)} alt={file?.name} />
+                          {/* <Button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              handleRemove(index)
+                            }}
+                            variant="destructive"
+                            size="none"
+                            type="button"
+                            className="absolute right-0 bottom-0 z-50 p-1 rounded-xl"
+                          >
+                            <TrashIcon className="h-4 w-4" />
+                          </Button> */}
+                        </span>
                       )
                     } else {
                       return null

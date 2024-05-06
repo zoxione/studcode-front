@@ -40,4 +40,16 @@ interface TeamFiles {
   logo_file?: FileList
 }
 
-export type { GetAllTeamsFilter, GetAllTeamsResponse, CreateTeam, UpdateTeam, TeamFiles, UpdateTeamMember }
+interface TeamFilesResponse {
+  logo_file: Blob | null
+}
+
+export type {
+  GetAllTeamsFilter,
+  GetAllTeamsResponse,
+  CreateTeam,
+  UpdateTeam,
+  TeamFiles,
+  UpdateTeamMember,
+  TeamFilesResponse,
+}

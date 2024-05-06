@@ -1,5 +1,5 @@
 import { User } from "../model/types"
-import { GetAllUsersFilter, GetAllUsersResponse, UpdateUser, UserFiles } from "./types"
+import { GetAllUsersFilter, GetAllUsersResponse, UpdateUser, UserFiles, UserFilesResponse } from "./types"
 
 class UserAPI {
   private baseUrl: string = ""
@@ -134,6 +134,30 @@ class UserAPI {
     }
 
     return await res.json()
+  }
+
+  /**
+   * Получение файлов одного пользователя
+   */
+  async getOneFiles(key: string): Promise<UserFilesResponse> {
+    const user = await this.getOne(key)
+    let avatar_file: Blob | null = null
+    let cover_file: Blob | null = null
+
+    if (user.avatar !== "") {
+      const res = await fetch(user.avatar, {
+        method: "GET",
+      })
+      avatar_file = await res.blob()
+    }
+    if (user.cover !== "") {
+      const res = await fetch(user.cover, {
+        method: "GET",
+      })
+      cover_file = await res.blob()
+    }
+
+    return { avatar_file, cover_file }
   }
 }
 

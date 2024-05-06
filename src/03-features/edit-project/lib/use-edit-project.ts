@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react"
 
 import {
   Project,
-  ProjectFiles,
+  ProjectFilesResponse,
   ProjectStatus,
   useUpdateOneProjectMutation,
   useUploadsOneProjectMutation,
@@ -17,9 +17,10 @@ import { editProjectSchema } from "./edit-project-schema"
 
 interface useEditProjectProps {
   project: Project
+  files: ProjectFilesResponse
 }
 
-const useEditProject = ({ project }: useEditProjectProps) => {
+const useEditProject = ({ project, files }: useEditProjectProps) => {
   const [currentSection, setCurrentSection] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   const { data: session } = useSession()
@@ -40,6 +41,8 @@ const useEditProject = ({ project }: useEditProjectProps) => {
       price: project.price,
       tags: project.tags.map((tag) => ({ label: tag.name, value: tag._id })),
       team: project.team?._id || "",
+      logo_file: files.logo_file !== null ? [files.logo_file] : null,
+      screenshots_files: files.screenshots_files.map((screenshot) => [screenshot]),
     },
   })
 
@@ -63,19 +66,10 @@ const useEditProject = ({ project }: useEditProjectProps) => {
         toast.error("Вы не авторизованы")
         return
       }
-      if (values.logo_file || values.screenshots_files) {
-        let files: ProjectFiles = {}
-        if (values.logo_file) {
-          files.logo_file = values.logo_file
-        }
-        if (values.screenshots_files) {
-          files.screenshots_files = values.screenshots_files
-        }
-        await uploadsFilesAsync({
-          key: projectId,
-          files,
-        })
-      }
+      await uploadsFilesAsync({
+        key: projectId,
+        files: { logo_file: values.logo_file, screenshots_files: values.screenshots_files },
+      })
       await updateProjectAsync({
         key: projectId,
         project: {

@@ -9,7 +9,7 @@ import { Dropzone } from "@/01-shared/ui/dropzone"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/form"
 import { Input } from "@/01-shared/ui/input"
 import { Textarea } from "@/01-shared/ui/textarea"
-import { ACCEPTED_IMAGE_TYPES, User } from "@/02-entities/user"
+import { ACCEPTED_IMAGE_TYPES, User, UserFilesResponse } from "@/02-entities/user"
 import { useEditUserProfile } from "../lib/use-edit-user-profile"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/01-shared/ui/select"
 import { linkTypeValues } from "@/01-shared/types/link"
@@ -18,11 +18,12 @@ import { MultiSelect } from "@/01-shared/ui/multi-select"
 
 interface EditUserProfileFormProps extends HTMLAttributes<HTMLFormElement> {
   user: User
+  files: UserFilesResponse
 }
 
-const EditUserProfileForm = ({ user }: EditUserProfileFormProps) => {
+const EditUserProfileForm = ({ user, files }: EditUserProfileFormProps) => {
   const { editUserProfileForm, onSubmit, isLoading, fields, append, remove, specializationsItems } = useEditUserProfile(
-    { user },
+    { user, files },
   )
 
   return (

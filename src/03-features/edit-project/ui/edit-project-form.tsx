@@ -6,7 +6,7 @@ import dynamic from "next/dynamic"
 
 import { Button } from "@/01-shared/ui/button"
 import { Form } from "@/01-shared/ui/form"
-import { Project } from "@/02-entities/project"
+import { Project, ProjectFilesResponse } from "@/02-entities/project"
 import { useEditProject } from "../lib/use-edit-project"
 import { editProjectSchema } from "../lib/edit-project-schema"
 import { ScrollArea, ScrollBar } from "@/01-shared/ui/scroll-area"
@@ -34,11 +34,12 @@ const PublishSection = dynamic(() => import("./publish-section").then((mod) => m
 
 interface EditProjectFormProps {
   project: Project
+  files: ProjectFilesResponse
 }
 
-const EditProjectForm = ({ project }: EditProjectFormProps) => {
+const EditProjectForm = ({ project, files }: EditProjectFormProps) => {
   const { editProjectForm, handlePublish, handleSaveDraft, isLoading, currentSection, setCurrentSection } =
-    useEditProject({ project })
+    useEditProject({ project, files })
 
   const sections = [
     {

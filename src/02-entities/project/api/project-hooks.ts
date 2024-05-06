@@ -105,6 +105,13 @@ const useDeleteOneProjectMutation = () => {
   })
 }
 
+const useGetOneProjectFilesQuery = (key: string) => {
+  return useQuery({
+    queryKey: ["projects", "files", key],
+    queryFn: () => projectAPI.getOneFiles(key),
+  })
+}
+
 export {
   useCreateOneProjectMutation,
   useDeleteOneProjectMutation,
@@ -114,4 +121,5 @@ export {
   useUpdateOneProjectMutation,
   useUploadsOneProjectMutation,
   useVoteOneProjectMutation,
+  useGetOneProjectFilesQuery,
 }

@@ -12,6 +12,7 @@ import { editProjectSchema } from "../lib/edit-project-schema"
 import { Project } from "@/02-entities/project"
 import { Skeleton } from "@/01-shared/ui/skeleton"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/form"
+import { Badge } from "@/01-shared/ui/badge"
 
 interface PublishSectionProps {
   form: UseFormReturn<z.infer<typeof editProjectSchema>>
@@ -21,94 +22,90 @@ interface PublishSectionProps {
   setCurrentSection: Dispatch<SetStateAction<number>>
 }
 
+interface FieldCheck {
+  id: number
+  name: keyof z.infer<typeof editProjectSchema>
+  label: string
+  section: number
+  required: boolean
+}
+
 const PublishSection = ({ form, project, onSaveDraft, isLoading, setCurrentSection }: PublishSectionProps) => {
+  console.log(form.getValues())
+
+  const fields: FieldCheck[] = [
+    { id: 0, name: "title", label: "Название", section: 0, required: true },
+    { id: 1, name: "tagline", label: "Слоган", section: 0, required: true },
+    { id: 2, name: "main_link", label: "Ссылка на проект", section: 0, required: true },
+    { id: 3, name: "description", label: "Описание", section: 0, required: true },
+    { id: 4, name: "tags", label: "Теги (хотя бы 1)", section: 0, required: true },
+    { id: 5, name: "logo_file", label: "Логотип", section: 1, required: true },
+    { id: 6, name: "screenshots_files", label: "Скриншоты (хотя бы 1)", section: 1, required: true },
+    { id: 7, name: "github_link", label: "Ссылка на исходный код", section: 0, required: false },
+    { id: 8, name: "youtube_link", label: "Ссылка на видео", section: 1, required: false },
+    { id: 9, name: "team", label: "Команда", section: 2, required: false },
+  ]
+  const isCheck = (item: FieldCheck) =>
+    form.getFieldState(item.name, form.formState).isTouched ||
+    (typeof form.getValues(item.name) === "string" && form.getValues(item.name) !== "") ||
+    (typeof form.getValues(item.name) === "object" && form.getValues(item.name)?.length > 0)
+
+  const completedPercentReq =
+    fields.filter((item) => item.required).reduce((sum, item) => (isCheck(item) ? sum + 1 : sum), 0) /
+    fields.filter((item) => item.required).length
+  const completedPercentNotReq =
+    fields.filter((item) => !item.required).reduce((sum, item) => (isCheck(item) ? sum + 1 : sum), 0) /
+    fields.filter((item) => !item.required).length
+
   return (
     <>
       <div className="space-y-4">
-        <Title order={5}>Необходимая информация</Title>
-        <div className="grid grid-rows-4 grid-flow-col justify-start gap-y-4 gap-x-24">
-          <label
-            onClick={() => setCurrentSection(0)}
-            className="flex items-center gap-2 text-sm font-medium leading-none cursor-pointer"
-          >
-            <Checkbox checked={form.getValues().title !== ""} />
-            Название
-          </label>
-          <label
-            onClick={() => setCurrentSection(0)}
-            className="flex items-center gap-2 text-sm font-medium leading-none cursor-pointer"
-          >
-            <Checkbox checked={form.getValues().tagline !== ""} />
-            Слоган
-          </label>
-          <label
-            onClick={() => setCurrentSection(0)}
-            className="flex items-center gap-2 text-sm font-medium leading-none cursor-pointer"
-          >
-            <Checkbox checked={form.getValues().main_link !== ""} />
-            Ссылка на проект
-          </label>
-          <label
-            onClick={() => setCurrentSection(0)}
-            className="flex items-center gap-2 text-sm font-medium leading-none cursor-pointer"
-          >
-            <Checkbox checked={form.getValues().description !== ""} />
-            Описание
-          </label>
-          <label
-            onClick={() => setCurrentSection(0)}
-            className="flex items-center gap-2 text-sm font-medium leading-none cursor-pointer"
-          >
-            <Checkbox checked={form.getValues().tags.length > 0} />
-            Теги (хотя бы 1)
-          </label>
-          <label
-            onClick={() => setCurrentSection(1)}
-            className="flex items-center gap-2 text-sm font-medium leading-none cursor-pointer"
-          >
-            <Checkbox checked={form.getValues().logo_file !== undefined || project.logo !== ""} />
-            Логотип
-          </label>
-          <label
-            onClick={() => setCurrentSection(1)}
-            className="flex items-center gap-2 text-sm font-medium leading-none cursor-pointer"
-          >
-            <Checkbox
-              checked={
-                ((form.getValues().screenshots_files?.length || 0) > 0 &&
-                  form.getValues().screenshots_files?.at(0) instanceof FileList) ||
-                project.screenshots?.length > 0
-              }
-            />
-            Скриншоты (хотя бы 1)
-          </label>
+        <Title order={5}>
+          Необходимая информация
+          <Badge variant={completedPercentReq === 1 ? "default" : "secondary"} className="ml-2">
+            {Math.round(completedPercentReq * 100)}% заполнено
+          </Badge>
+        </Title>
+        <div className="grid sm:grid-rows-4 sm:grid-flow-col justify-start gap-y-4 gap-x-12 sm:gap-x-24">
+          {fields
+            .filter((item) => item.required)
+            .map((item) => (
+              <label
+                key={item.id}
+                onClick={() => setCurrentSection(item.section)}
+                className={`flex items-center gap-2 text-sm font-medium leading-none cursor-pointer ${
+                  form.getFieldState(item.name, form.formState).error ? "text-red-500" : ""
+                }`}
+              >
+                <Checkbox checked={isCheck(item)} disabled />
+                {item.label}
+              </label>
+            ))}
         </div>
       </div>
 
       <div className="space-y-4">
-        <Title order={5}>Дополнительная информация</Title>
-        <div className="grid grid-rows-4 grid-flow-col justify-start gap-y-4 gap-x-24">
-          <label
-            onClick={() => setCurrentSection(0)}
-            className="flex items-center gap-2 text-sm font-medium leading-none cursor-pointer"
-          >
-            <Checkbox checked={form.getValues().github_link !== ""} />
-            Ссылка на исходный код
-          </label>
-          <label
-            onClick={() => setCurrentSection(1)}
-            className="flex items-center gap-2 text-sm font-medium leading-none cursor-pointer"
-          >
-            <Checkbox checked={form.getValues().youtube_link !== ""} />
-            Ссылка на видео
-          </label>
-          <label
-            onClick={() => setCurrentSection(2)}
-            className="flex items-center gap-2 text-sm font-medium leading-none cursor-pointer"
-          >
-            <Checkbox checked={form.getValues().team !== ""} />
-            Команда
-          </label>
+        <Title order={5}>
+          Дополнительная информация
+          <Badge variant={completedPercentNotReq === 1 ? "default" : "secondary"} className="ml-2">
+            {Math.round(completedPercentNotReq * 100)}% заполнено
+          </Badge>
+        </Title>
+        <div className="grid sm:grid-rows-4 sm:grid-flow-col justify-start gap-y-4 gap-x-12 sm:gap-x-24">
+          {fields
+            .filter((item) => !item.required)
+            .map((item) => (
+              <label
+                key={item.id}
+                onClick={() => setCurrentSection(item.section)}
+                className={`flex items-center gap-2 text-sm font-medium leading-none cursor-pointer ${
+                  form.getFieldState(item.name, form.formState).error ? "text-red-500" : ""
+                }`}
+              >
+                <Checkbox checked={isCheck(item)} disabled />
+                {item.label}
+              </label>
+            ))}
         </div>
       </div>
 
@@ -128,8 +125,8 @@ const PublishSection = ({ form, project, onSaveDraft, isLoading, setCurrentSecti
             </FormItem>
           )}
         />
-        <div className="space-x-2">
-          <Button type="submit" disabled={isLoading || form.watch("confirm") !== true}>
+        <div className="flex flex-col sm:flex-row items-center gap-2">
+          <Button type="submit" disabled={isLoading || form.watch("confirm") !== true} className="w-full sm:w-fit">
             {isLoading ? <ReloadIcon className="h-4 w-4 animate-spin" /> : "Опубликовать"}
           </Button>
           <Button
@@ -137,6 +134,7 @@ const PublishSection = ({ form, project, onSaveDraft, isLoading, setCurrentSecti
             variant="outline"
             onClick={onSaveDraft}
             disabled={isLoading || form.watch("confirm") !== true}
+            className="w-full sm:w-fit"
           >
             {isLoading ? <ReloadIcon className="h-4 w-4 animate-spin" /> : "Сохранить в черновиках"}
           </Button>

@@ -3,7 +3,7 @@
 import { InfoIcon } from "lucide-react"
 
 import { Skeleton } from "@/01-shared/ui/skeleton"
-import { useGetOneProjectQuery } from "@/02-entities/project"
+import { useGetOneProjectFilesQuery, useGetOneProjectQuery } from "@/02-entities/project"
 import { EditProjectForm } from "./edit-project-form"
 
 interface EditProjectProps {
@@ -11,9 +11,10 @@ interface EditProjectProps {
 }
 
 const EditProject = ({ projectId }: EditProjectProps) => {
-  const { data: project, status } = useGetOneProjectQuery(projectId)
+  const { data: project, status: projectStatus } = useGetOneProjectQuery(projectId)
+  const { data: files, status: filesStatus } = useGetOneProjectFilesQuery(projectId)
 
-  if (status === "pending") {
+  if (projectStatus === "pending" || filesStatus === "pending") {
     return (
       <div className="grid grid-cols-1 lg:grid-cols-4 auto-rows-min gap-8 lg:gap-16">
         <aside className="flex lg:flex-col gap-2 lg:sticky lg:top-[90px] lg:h-fit">
@@ -41,7 +42,7 @@ const EditProject = ({ projectId }: EditProjectProps) => {
     )
   }
 
-  if (status === "error") {
+  if (projectStatus === "error" || filesStatus === "error") {
     return (
       <div className="flex flex-col justify-center items-center">
         <InfoIcon className="w-6 h-6 text-primary" />
@@ -50,7 +51,7 @@ const EditProject = ({ projectId }: EditProjectProps) => {
     )
   }
 
-  return <EditProjectForm project={project} />
+  return <EditProjectForm project={project} files={files} />
 }
 
 export { EditProject }

@@ -40,6 +40,11 @@ interface ProjectFiles {
   screenshots_files?: FileList[]
 }
 
+interface ProjectFilesResponse {
+  logo_file: Blob | null
+  screenshots_files: Blob[]
+}
+
 export type {
   GetAllProjectsFilter,
   GetAllProjectsResponse,
@@ -47,4 +52,5 @@ export type {
   CreateProject,
   UpdateProject,
   ProjectFiles,
+  ProjectFilesResponse,
 }

@@ -1,13 +1,11 @@
 "use client"
 
-import { ImageIcon, MagnifyingGlassIcon, TrashIcon } from "@radix-ui/react-icons"
+import { ChevronDownIcon, ChevronUpIcon, ImageIcon, MagnifyingGlassIcon, TrashIcon } from "@radix-ui/react-icons"
 import { UseFormReturn, useFieldArray } from "react-hook-form"
 import * as z from "zod"
-import Image from "next/image"
 
 import { Fancybox } from "@/01-shared/lib/fancybox"
 import { Button, buttonVariants } from "@/01-shared/ui/button"
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/01-shared/ui/carousel"
 import { Dropzone } from "@/01-shared/ui/dropzone"
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/form"
 import { Input } from "@/01-shared/ui/input"
@@ -23,7 +21,7 @@ interface ImagesAndMediaSectionProps {
 }
 
 const ImagesAndMediaSection = ({ form, project }: ImagesAndMediaSectionProps) => {
-  const { fields, append, remove, update }: { fields: any; append: any; remove: any; update: any } = useFieldArray({
+  const { fields, append, remove, update, swap } = useFieldArray({
     name: "screenshots_files",
     control: form.control,
   })
@@ -44,13 +42,7 @@ const ImagesAndMediaSection = ({ form, project }: ImagesAndMediaSectionProps) =>
                     accept={ACCEPTED_IMAGE_TYPES.join(", ")}
                     preview
                     classNamePreview="size-full aspect-square object-cover"
-                    dropContent={
-                      project.logo !== "" ? (
-                        <Image src={project.logo} alt={`${project.title}-logo`} fill className="object-cover" />
-                      ) : (
-                        <ImageIcon className="h-6 w-6" />
-                      )
-                    }
+                    dropContent={<ImageIcon className="h-6 w-6" />}
                     {...field}
                   />
                 </FormControl>
@@ -66,59 +58,8 @@ const ImagesAndMediaSection = ({ form, project }: ImagesAndMediaSectionProps) =>
       </div>
       <div className="space-y-4">
         <Title order={5}>Скриншоты</Title>
-        {project.screenshots.length > 0 ? (
-          <div className="space-y-2">
-            <div className="text-sm font-semibold">Текущие скриншоты</div>
-            <Carousel
-              opts={{
-                align: "start",
-                dragFree: true,
-              }}
-              className=""
-            >
-              <Fancybox
-                options={{
-                  Carousel: {
-                    infinite: false,
-                  },
-                }}
-              >
-                <CarouselContent className="">
-                  {project.screenshots.map((screenshot: string, index) => (
-                    <CarouselItem key={screenshot} className="w-fit basis-auto">
-                      <a href={screenshot} data-fancybox="gallery">
-                        <div className="relative aspect-video h-20 overflow-hidden">
-                          <Image
-                            className="block object-cover z-[-10]"
-                            src={screenshot}
-                            fill
-                            alt={`screenshot_${index}_background`}
-                          />
-                          <Image
-                            className="block object-contain backdrop-blur-md"
-                            src={screenshot}
-                            fill
-                            alt={`screenshot_${index}`}
-                          />
-                        </div>
-                      </a>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-              </Fancybox>
-              <CarouselPrevious type="button" className="left-1 rounded-md" />
-              <CarouselNext type="button" className="right-1 rounded-md" />
-            </Carousel>
-            <div className="text-sm">Всего: {project.screenshots.length}</div>
-          </div>
-        ) : null}
         <div className="space-y-2">
-          <div>
-            <span className="text-sm font-semibold">Изменить скриншоты (текущие скриншоты будут удалены)</span>
-            <FormDescription>
-              Добавьте скриншоты проекта (максимально 10). Видео скриншоты не поддерживаются.
-            </FormDescription>
-          </div>
+          <FormLabel>Добавьте скриншоты проекта (максимально 10). Видео скриншоты не поддерживаются.</FormLabel>
           <Fancybox
             className="space-y-2"
             options={{
@@ -137,7 +78,6 @@ const ImagesAndMediaSection = ({ form, project }: ImagesAndMediaSectionProps) =>
                       <FormItem className="grow">
                         <FormControl>
                           <Dropzone
-                            classNameWrapper="h-64"
                             classNamePreview="object-contain aspect-video"
                             accept={ACCEPTED_IMAGE_TYPES.join(", ")}
                             onUpdate={(file) => {
@@ -145,19 +85,17 @@ const ImagesAndMediaSection = ({ form, project }: ImagesAndMediaSectionProps) =>
                             }}
                             preview
                             dropContent={
-                              <>
-                                <div className="flex flex-col items-center justify-center gap-4 p-6">
-                                  <ImageIcon className="shrink-0 h-8 w-8" />
-                                  <div className="flex flex-col gap-1 text-center">
-                                    <span className="font-medium text-sm">
-                                      Перетащите изображения сюда или нажмите, чтобы выбрать файлы
-                                    </span>
-                                    <span className="">
-                                      Рекомендуется разрешение 1270x760px или выше, размер не должен превышать 5 МБ.
-                                    </span>
-                                  </div>
+                              <div className="flex flex-col items-center justify-center gap-4 p-6 aspect-video">
+                                <ImageIcon className="shrink-0 h-8 w-8" />
+                                <div className="flex flex-col gap-1 text-center">
+                                  <span className="font-medium text-sm">
+                                    Перетащите изображения сюда или нажмите, чтобы выбрать файлы
+                                  </span>
+                                  <span className="">
+                                    Рекомендуется разрешение 1270x760px или выше, размер не должен превышать 5 МБ.
+                                  </span>
                                 </div>
-                              </>
+                              </div>
                             }
                             {...field}
                           />
@@ -166,7 +104,16 @@ const ImagesAndMediaSection = ({ form, project }: ImagesAndMediaSectionProps) =>
                       </FormItem>
                     )}
                   />
-                  <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-1">
+                    <Button
+                      onClick={() => swap(index, index - 1)}
+                      disabled={index === 0}
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                    >
+                      <ChevronUpIcon className="h-4 w-4" />
+                    </Button>
                     {field[0] ? (
                       <a
                         href={URL.createObjectURL(field[0])}
@@ -178,6 +125,15 @@ const ImagesAndMediaSection = ({ form, project }: ImagesAndMediaSectionProps) =>
                     ) : null}
                     <Button onClick={() => remove(index)} type="button" variant="destructive" size="icon">
                       <TrashIcon className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      onClick={() => swap(index, index + 1)}
+                      disabled={index === fields.length - 1}
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                    >
+                      <ChevronDownIcon className="h-4 w-4" />
                     </Button>
                   </div>
                 </div>

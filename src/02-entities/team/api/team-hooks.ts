@@ -112,6 +112,13 @@ const useUploadsOneTeamMutation = () => {
   })
 }
 
+const useGetOneTeamFilesQuery = (key: string) => {
+  return useQuery({
+    queryKey: ["teams", "files", key],
+    queryFn: () => teamAPI.getOneFiles(key),
+  })
+}
+
 export {
   useAddMemberTeamMutation,
   useCreateOneTeamMutation,
@@ -121,4 +128,5 @@ export {
   useRemoveMemberTeamMutation,
   useUpdateOneTeamMutation,
   useUploadsOneTeamMutation,
+  useGetOneTeamFilesQuery,
 }

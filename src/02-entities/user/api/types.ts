@@ -18,13 +18,18 @@ interface GetAllUsersResponse {
   results: User[]
 }
 
+interface UpdateUser extends Omit<DeepPartial<User>, "_id" | "specializations" | "created_at" | "updated_at"> {
+  specializations?: string[]
+}
+
 interface UserFiles {
   avatar_file?: FileList
   cover_file?: FileList
 }
 
-interface UpdateUser extends Omit<DeepPartial<User>, "_id" | "specializations" | "created_at" | "updated_at"> {
-  specializations?: string[]
+interface UserFilesResponse {
+  avatar_file: Blob | null
+  cover_file: Blob | null
 }
 
-export type { GetAllUsersFilter, GetAllUsersResponse, UpdateUser, UserFiles }
+export type { GetAllUsersFilter, GetAllUsersResponse, UpdateUser, UserFiles, UserFilesResponse }

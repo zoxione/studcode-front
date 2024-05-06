@@ -3,7 +3,7 @@
 import { InfoIcon } from "lucide-react"
 
 import { Skeleton } from "@/01-shared/ui/skeleton"
-import { useGetOneUserQuery } from "@/02-entities/user"
+import { useGetOneUserFilesQuery, useGetOneUserQuery } from "@/02-entities/user"
 import { EditUserProfileForm } from "./edit-user-profile-form"
 
 interface EditUserProfileProps {
@@ -11,9 +11,10 @@ interface EditUserProfileProps {
 }
 
 const EditUserProfile = ({ userId }: EditUserProfileProps) => {
-  const { data: user, status } = useGetOneUserQuery(userId)
+  const { data: user, status: userStatus } = useGetOneUserQuery(userId)
+  const { data: files, status: filesStatus } = useGetOneUserFilesQuery(userId)
 
-  if (status === "pending") {
+  if (userStatus === "pending" || filesStatus === "pending") {
     return (
       <div className="space-y-6">
         {Array(4)
@@ -29,7 +30,7 @@ const EditUserProfile = ({ userId }: EditUserProfileProps) => {
     )
   }
 
-  if (status === "error") {
+  if (userStatus === "error" || filesStatus === "error") {
     return (
       <div className="flex flex-col justify-center items-center">
         <InfoIcon className="w-6 h-6 text-primary" />
@@ -38,7 +39,7 @@ const EditUserProfile = ({ userId }: EditUserProfileProps) => {
     )
   }
 
-  return <EditUserProfileForm user={user} />
+  return <EditUserProfileForm user={user} files={files} />
 }
 
 export { EditUserProfile }
