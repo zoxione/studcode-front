@@ -18,8 +18,10 @@ interface GetAllUsersResponse {
   results: User[]
 }
 
-interface UpdateUser extends Omit<DeepPartial<User>, "_id" | "specializations" | "created_at" | "updated_at"> {
+interface UpdateUser
+  extends Omit<DeepPartial<User>, "_id" | "specializations" | "education" | "created_at" | "updated_at"> {
   specializations?: string[]
+  education?: string | null
 }
 
 interface UserFiles {

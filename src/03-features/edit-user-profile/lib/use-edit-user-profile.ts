@@ -14,6 +14,7 @@ import {
   userSchema,
 } from "@/02-entities/user"
 import { useGetAllSpecializationsQuery } from "@/02-entities/specialization"
+import { useGetAllEducationsQuery } from "@/02-entities/education"
 
 const editUserProfileSchema = userSchema.pick({
   avatar: true,
@@ -23,6 +24,7 @@ const editUserProfileSchema = userSchema.pick({
   about: true,
   links: true,
   specializations: true,
+  education: true,
 })
 
 interface useEditUserProfileProps {
@@ -38,6 +40,7 @@ const useEditUserProfile = ({ user, files }: useEditUserProfileProps) => {
   const { data: specializations } = useGetAllSpecializationsQuery({ limit: 100, order: "name" })
   const specializationsItems: Option[] =
     specializations?.results.map((spec) => ({ label: spec.name, value: spec._id })) || []
+  const { data: educations } = useGetAllEducationsQuery({ limit: 100, order: "name" })
 
   const editUserProfileForm = useForm<z.infer<typeof editUserProfileSchema>>({
     resolver: zodResolver(editUserProfileSchema),
@@ -52,6 +55,7 @@ const useEditUserProfile = ({ user, files }: useEditUserProfileProps) => {
       avatar_file: files.avatar_file !== null ? [files.avatar_file] : null,
       cover_file: files.cover_file !== null ? [files.cover_file] : null,
       specializations: user?.specializations.map((spec) => ({ label: spec.name, value: spec._id })) || [],
+      education: user?.education?._id || "",
     },
   })
 
@@ -81,6 +85,7 @@ const useEditUserProfile = ({ user, files }: useEditUserProfileProps) => {
           about: values.about,
           links: values.links,
           specializations: values.specializations.map((spec) => spec.value),
+          education: values.education === "" ? null : values.education,
         },
       })
       toast.success("Профиль обновлен")
@@ -99,6 +104,7 @@ const useEditUserProfile = ({ user, files }: useEditUserProfileProps) => {
     append,
     remove,
     specializationsItems,
+    educations,
   }
 }
 

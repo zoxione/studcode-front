@@ -2,7 +2,6 @@
 
 import { ImageIcon, ReloadIcon, TrashIcon } from "@radix-ui/react-icons"
 import { HTMLAttributes } from "react"
-import Image from "next/image"
 
 import { Button } from "@/01-shared/ui/button"
 import { Dropzone } from "@/01-shared/ui/dropzone"
@@ -22,9 +21,8 @@ interface EditUserProfileFormProps extends HTMLAttributes<HTMLFormElement> {
 }
 
 const EditUserProfileForm = ({ user, files }: EditUserProfileFormProps) => {
-  const { editUserProfileForm, onSubmit, isLoading, fields, append, remove, specializationsItems } = useEditUserProfile(
-    { user, files },
-  )
+  const { editUserProfileForm, onSubmit, isLoading, fields, append, remove, specializationsItems, educations } =
+    useEditUserProfile({ user, files })
 
   return (
     <Form {...editUserProfileForm}>
@@ -40,13 +38,7 @@ const EditUserProfileForm = ({ user, files }: EditUserProfileFormProps) => {
                   accept={ACCEPTED_IMAGE_TYPES.join(", ")}
                   preview
                   classNamePreview="size-full object-cover"
-                  dropContent={
-                    user.cover !== "" ? (
-                      <Image src={user.cover} alt={`${user.username}-cover`} fill className="object-cover" />
-                    ) : (
-                      <ImageIcon className="h-6 w-6" />
-                    )
-                  }
+                  dropContent={<ImageIcon className="h-6 w-6" />}
                   {...field}
                 />
               </FormControl>
@@ -67,13 +59,7 @@ const EditUserProfileForm = ({ user, files }: EditUserProfileFormProps) => {
                       accept={ACCEPTED_IMAGE_TYPES.join(", ")}
                       preview
                       classNamePreview="size-full aspect-square object-cover"
-                      dropContent={
-                        user.avatar !== "" ? (
-                          <Image src={user.avatar} alt={`${user.username}-avatar`} fill className="object-cover" />
-                        ) : (
-                          <ImageIcon className="h-6 w-6" />
-                        )
-                      }
+                      dropContent={<ImageIcon className="h-6 w-6" />}
                       {...field}
                     />
                   </FormControl>
@@ -163,6 +149,44 @@ const EditUserProfileForm = ({ user, files }: EditUserProfileFormProps) => {
                   }}
                 />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={editUserProfileForm.control}
+          name="education"
+          render={({ field }) => (
+            <FormItem className="space-y-1">
+              <FormLabel>Образовательное учреждение</FormLabel>
+              <FormDescription>
+                Выберите образовательное учреждение, в котором вы учитесь на данный момент.
+              </FormDescription>
+              <Select onValueChange={field.onChange} value={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Выбрать образовательное учреждение" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      field.onChange("")
+                    }}
+                    className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none text-muted-foreground focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+                  >
+                    Без образовательного учреждения
+                  </div>
+                  {educations?.results.map((education) => (
+                    <SelectItem key={education._id} value={education._id}>
+                      {`${education.abbreviation} — ${education.name.slice(0, 64)}${
+                        education.name.length > 64 ? "..." : ""
+                      }`}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}

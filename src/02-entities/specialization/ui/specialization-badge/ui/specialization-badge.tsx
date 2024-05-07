@@ -12,7 +12,7 @@ export interface SpecializationBadgeProps extends HTMLAttributes<HTMLAnchorEleme
 const SpecializationBadge = forwardRef<HTMLAnchorElement, SpecializationBadgeProps>(
   ({ specialization, className }, ref) => {
     return (
-      <Tooltip delayDuration={0}>
+      <Tooltip delayDuration={200}>
         <TooltipTrigger asChild>
           <Badge variant="secondary" className={cn("w-fit whitespace-nowrap", className)}>
             {specialization.name}

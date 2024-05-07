@@ -43,7 +43,6 @@ const useEditTeam = ({ team, files }: useEditTeamProps) => {
         toast.error("Вы не авторизованы")
         return
       }
-      console.log(values)
       await uploadsFilesAsync({
         key: team._id,
         files: { logo_file: values.logo_file },

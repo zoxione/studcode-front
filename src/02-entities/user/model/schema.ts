@@ -75,6 +75,10 @@ const userSchema = z.object({
   specializations: z.array(optionSchema).max(3, {
     message: "Максимальное количество специализаций - 3.",
   }),
+  education: z
+    .union([z.string().length(0), z.string()])
+    .optional()
+    .transform((e) => (e === "" ? undefined : e)),
 })
 
 export { fullNameSchema, userSchema }

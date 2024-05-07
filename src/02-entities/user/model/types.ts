@@ -1,4 +1,5 @@
 import { ILink } from "@/01-shared/types/link"
+import { Education } from "@/02-entities/education"
 import { Specialization } from "@/02-entities/specialization"
 
 type UserRole = "user" | "admin"
@@ -23,6 +24,7 @@ interface User {
   about: string
   links: ILink[]
   specializations: Specialization[]
+  education: Education | null
   created_at: string
   updated_at: string
 }

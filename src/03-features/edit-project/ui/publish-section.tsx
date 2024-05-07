@@ -31,8 +31,6 @@ interface FieldCheck {
 }
 
 const PublishSection = ({ form, project, onSaveDraft, isLoading, setCurrentSection }: PublishSectionProps) => {
-  console.log(form.getValues())
-
   const fields: FieldCheck[] = [
     { id: 0, name: "title", label: "Название", section: 0, required: true },
     { id: 1, name: "tagline", label: "Слоган", section: 0, required: true },
