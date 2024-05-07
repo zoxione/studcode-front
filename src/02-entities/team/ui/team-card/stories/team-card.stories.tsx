@@ -1,7 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryFn, StoryObj } from "@storybook/react"
 
 import { TeamCard } from "../ui/team-card"
 import { Team } from "@/02-entities/team"
+import { TooltipProvider } from "@/01-shared/ui/tooltip"
 
 const meta = {
   title: "Team/TeamCard",
@@ -42,8 +43,8 @@ const mockTeam: Team = {
   updated_at: "2024-01-01T12:09:12.955+00:00",
 }
 
-export const Default: Story = {
-  args: {
-    team: mockTeam,
-  },
-}
+export const Default: StoryFn = () => (
+  <TooltipProvider>
+    <TeamCard team={mockTeam} />
+  </TooltipProvider>
+)
