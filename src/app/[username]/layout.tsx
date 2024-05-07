@@ -1,9 +1,9 @@
 import { Metadata } from "next"
 import { getServerSession } from "next-auth"
+import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ReactNode } from "react"
-import Image from "next/image"
 
 import { authOptions } from "@/01-shared/lib/auth-options"
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
@@ -56,7 +56,7 @@ export default async function LayoutPage({ params, children }: LayoutPageProps) 
   const isOwner = session?.user.username === user?.username
 
   return (
-    <Layout header={<Header />} footer={<Footer />} className="">
+    <Layout header={<Header />} footer={<Footer />} className="mx-auto max-w-4xl">
       <div className="absolute left-0 h-36 w-full rounded-xl overflow-hidden">
         {user.cover !== "" ? (
           <Image src={user.cover} alt={`${user.username}-cover`} fill className="object-cover" />
@@ -73,8 +73,9 @@ export default async function LayoutPage({ params, children }: LayoutPageProps) 
       </Avatar>
 
       <div className="mt-[152px] flex flex-col md:flex-row items-center md:items-stretch gap-2 md:gap-6">
-        <div className="mt-20 w-36 flex flex-row items-center justify-center gap-2 text-sm">
+        <div className="mt-[72px] w-36 flex flex-row items-center justify-center gap-2 text-sm">
           {/* <span className="text-green-600 font-semibold">+160</span> */}
+          {/* {user.verify_email === "true" ? <Badge>Подтвержден</Badge> : null} */}
           <span className="font-medium">с {prettyCreatedAt(user.created_at)} г.</span>
         </div>
         <div className="flex flex-col">
@@ -82,7 +83,7 @@ export default async function LayoutPage({ params, children }: LayoutPageProps) 
             order={3}
             className="text-center md:text-left"
           >{`${user?.full_name.surname} ${user?.full_name.name} ${user?.full_name.patronymic}`}</Title>
-          <span className="text-muted-foreground text-center md:text-start">@{user?.username}</span>
+          <span className="text-muted-foreground text-center md:text-start leading-none">@{user?.username}</span>
         </div>
         <div className="md:ml-auto flex flex-row items-center gap-2">
           {/* <Button variant="outline" size="icon">
@@ -96,7 +97,7 @@ export default async function LayoutPage({ params, children }: LayoutPageProps) 
         </div>
       </div>
 
-      <div className="my-8 w-full max-w-xl">
+      <div className="my-8 w-full space-y-6">
         <UserTabs user={user} isOwner={isOwner} />
         {children}
       </div>

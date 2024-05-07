@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 import { TeamUserRole } from "../model/types"
 import { teamAPI } from "./team-api"
@@ -24,6 +24,23 @@ const useGetAllTeamsQuery = (filter: GetAllTeamsFilter) => {
   return useQuery({
     queryKey: ["teams", page, limit, search, order, member_id],
     queryFn: () => teamAPI.getAll(filter),
+  })
+}
+
+const useGetAllTeamsInfiniteQuery = (filter: GetAllTeamsFilter) => {
+  const { page, limit, search, order, member_id } = filter
+  return useInfiniteQuery({
+    queryKey: ["teams", page, limit, search, order, member_id],
+    queryFn: async ({ pageParam }: { pageParam: number }) => {
+      const res = await teamAPI.getAll({ ...filter, page: pageParam })
+      return res
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => {
+      const nextPageIndex =
+        lastPage.filter.page < lastPage?.info.count_pages - 1 ? (lastPage?.filter.page as number) + 1 : undefined
+      return nextPageIndex
+    },
   })
 }
 
@@ -124,6 +141,7 @@ export {
   useCreateOneTeamMutation,
   useDeleteOneTeamMutation,
   useGetAllTeamsQuery,
+  useGetAllTeamsInfiniteQuery,
   useGetOneTeamQuery,
   useRemoveMemberTeamMutation,
   useUpdateOneTeamMutation,

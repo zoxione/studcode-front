@@ -5,13 +5,13 @@ import { cn } from "@/01-shared/utils/cn"
 import { Title } from "@/01-shared/ui/title"
 import { GetAllProjectsFilter, ProjectCardSmall, useGetAllProjectsQuery } from "@/02-entities/project"
 
-interface ScreensCarouselProps {
+interface ProjectsCarouselProps {
   className?: string
   label: string
   filter?: Omit<GetAllProjectsFilter, "status" | "limit">
 }
 
-const ProjectsCarousel = ({ label, filter, className }: ScreensCarouselProps) => {
+const ProjectsCarousel = ({ label, filter, className }: ProjectsCarouselProps) => {
   const { data: projects, status } = useGetAllProjectsQuery({ status: "published", limit: 20, ...filter })
 
   if (status === "pending") {

@@ -14,6 +14,7 @@ import { signOut } from "next-auth/react"
 import Link from "next/link"
 import { useState } from "react"
 import Image from "next/image"
+import { UsersIcon } from "lucide-react"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/01-shared/ui/avatar"
 import { Button } from "@/01-shared/ui/button"
@@ -82,6 +83,11 @@ const UserMenu = ({ user }: UserMenuProps) => {
           <DropdownMenuItem asChild>
             <Link href={`/projects/new`}>
               Добавить проект <PlusIcon className="ml-auto h-4 w-4" />
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href={`/teams/new`}>
+              Создать команду <UsersIcon className="ml-auto h-4 w-4" />
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>

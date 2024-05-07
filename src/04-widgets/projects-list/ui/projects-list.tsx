@@ -5,8 +5,12 @@ import { Fragment, useEffect } from "react"
 import { useInView } from "react-intersection-observer"
 
 import { cn } from "@/01-shared/utils/cn"
-import { GetAllProjectsFilter, ProjectCard, useGetAllProjectsInfiniteQuery } from "@/02-entities/project"
-import { ProjectCardProps } from "@/02-entities/project/ui/project-card/ui/project-card"
+import {
+  GetAllProjectsFilter,
+  ProjectCard,
+  ProjectCardProps,
+  useGetAllProjectsInfiniteQuery,
+} from "@/02-entities/project"
 import { VoteProjectButton } from "@/03-features/vote-project"
 import { ProjectMenu } from "@/04-widgets/project-menu"
 
