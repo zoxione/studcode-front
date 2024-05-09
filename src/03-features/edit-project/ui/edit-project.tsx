@@ -5,6 +5,7 @@ import { InfoIcon } from "lucide-react"
 import { Skeleton } from "@/01-shared/ui/skeleton"
 import { useGetOneProjectFilesQuery, useGetOneProjectQuery } from "@/02-entities/project"
 import { EditProjectForm } from "./edit-project-form"
+import { MainInfoSectionLoading } from "./main-info-section"
 
 interface EditProjectProps {
   projectId: string
@@ -22,21 +23,11 @@ const EditProject = ({ projectId }: EditProjectProps) => {
             .fill(0)
             .map((_, i) => i + 1)
             .map((index) => (
-              <Skeleton key={index} className="h-7 w-full"></Skeleton>
+              <Skeleton key={index} className="h-8 w-full"></Skeleton>
             ))}
         </aside>
-        <section className="col-span-1 lg:col-span-3 h-full">
-          <div className="space-y-6">
-            {Array(10)
-              .fill(0)
-              .map((_, i) => i + 1)
-              .map((index) => (
-                <div key={index} className="space-y-1">
-                  <Skeleton className="h-3 w-2/6" />
-                  <Skeleton className="h-8 w-full" />
-                </div>
-              ))}
-          </div>
+        <section className="col-span-1 lg:col-span-3 h-full space-y-8 mb-8">
+          <MainInfoSectionLoading />
         </section>
       </div>
     )

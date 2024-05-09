@@ -2,15 +2,16 @@
 
 import { UseFormReturn } from "react-hook-form"
 import * as z from "zod"
+import { InfoIcon } from "lucide-react"
 
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/01-shared/ui/form"
 import { RadioGroup, RadioGroupItem } from "@/01-shared/ui/radio-group"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/01-shared/ui/select"
+import { Skeleton } from "@/01-shared/ui/skeleton"
 import { Title } from "@/01-shared/ui/title"
 import { PROJECT_PRICE_VALUES, Project, prettyPrice } from "@/02-entities/project"
 import { useGetAllTeamsQuery } from "@/02-entities/team"
 import { editProjectSchema } from "../lib/edit-project-schema"
-import { Skeleton } from "@/01-shared/ui/skeleton"
 
 interface ExtrasSectionProps {
   form: UseFormReturn<z.infer<typeof editProjectSchema>>
@@ -18,7 +19,20 @@ interface ExtrasSectionProps {
 }
 
 const ExtrasSection = ({ form, project }: ExtrasSectionProps) => {
-  const { data: teams } = useGetAllTeamsQuery({ member_id: project.creator._id })
+  const { data: teams, status } = useGetAllTeamsQuery({ member_id: project.creator._id })
+
+  if (status === "pending") {
+    return <ExtrasSectionLoading />
+  }
+
+  if (status === "error") {
+    return (
+      <div className="flex flex-col justify-center items-center">
+        <InfoIcon className="w-6 h-6 text-primary" />
+        <p className="text-sm text-muted-foreground">Возникла неизвестная ошибка.</p>
+      </div>
+    )
+  }
 
   return (
     <>
@@ -76,7 +90,7 @@ const ExtrasSection = ({ form, project }: ExtrasSectionProps) => {
                   >
                     Без команды
                   </div>
-                  {teams?.results.map((team) => (
+                  {teams?.results?.map((team) => (
                     <SelectItem key={team._id} value={team._id}>
                       {team.name}
                     </SelectItem>
@@ -95,30 +109,30 @@ const ExtrasSection = ({ form, project }: ExtrasSectionProps) => {
 const ExtrasSectionLoading = () => {
   return (
     <>
-      <Skeleton className="h-5 w-2/5" />
-      <div className="space-y-6">
-        <div className="space-y-1">
-          <Skeleton className="h-3 w-2/6" />
-          {Array(3)
-            .fill(0)
-            .map((_, i) => i + 1)
-            .map((index) => (
-              <Skeleton key={index} className="h-4 w-3/12" />
-            ))}
+      <div className="space-y-4">
+        <Skeleton className="h-7 w-2/5" />
+        <div className="space-y-3">
+          <Skeleton className="h-4 w-2/6" />
+          <div className="gap-2 flex flex-col space-y-1">
+            {Array(7)
+              .fill(0)
+              .map((_, i) => i + 1)
+              .map((index) => (
+                <div key={index} className="flex items-center space-x-3 space-y-0">
+                  <Skeleton className="h-4 w-4 rounded-full" />
+                  <Skeleton className="h-4 w-3/12" />
+                </div>
+              ))}
+          </div>
         </div>
       </div>
 
-      <Skeleton className="h-5 w-2/5" />
-      <div className="space-y-6">
-        {Array(1)
-          .fill(0)
-          .map((_, i) => i + 1)
-          .map((index) => (
-            <div key={index} className="space-y-1">
-              <Skeleton className="h-3 w-2/6" />
-              <Skeleton className="h-8 w-full" />
-            </div>
-          ))}
+      <div className="space-y-4">
+        <Skeleton className="h-7 w-2/5" />
+        <div className="space-y-3">
+          <Skeleton className="h-4 w-2/6" />
+          <Skeleton className="h-9 w-full" />
+        </div>
       </div>
     </>
   )

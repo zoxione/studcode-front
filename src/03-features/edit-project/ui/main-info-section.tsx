@@ -171,51 +171,64 @@ const MainInfoSection = ({ form }: MainInfoSectionProps) => {
 const MainInfoSectionLoading = () => {
   return (
     <>
-      <Skeleton className="h-5 w-2/5" />
-      <div className="space-y-6">
+      <div className="space-y-4">
+        <Skeleton className="h-7 w-2/5" />
         {Array(2)
           .fill(0)
           .map((_, i) => i + 1)
           .map((index) => (
-            <div key={index} className="space-y-1">
-              <Skeleton className="h-3 w-2/6" />
-              <Skeleton className="h-8 w-full" />
+            <div key={index} className="space-y-2">
+              <Skeleton className="h-4 w-2/6" />
+              <Skeleton className="h-9 w-full" />
+              <Skeleton className="h-5 w-5/6" />
             </div>
           ))}
-        <div className="space-y-1">
-          <Skeleton className="h-3 w-2/6" />
-          {Array(7)
-            .fill(0)
-            .map((_, i) => i + 1)
-            .map((index) => (
-              <Skeleton key={index} className="h-4 w-3/12" />
-            ))}
+        <div className="space-y-3">
+          <Skeleton className="h-4 w-2/6" />
+          <div className="gap-2 flex flex-col space-y-1">
+            {Array(7)
+              .fill(0)
+              .map((_, i) => i + 1)
+              .map((index) => (
+                <div key={index} className="flex items-center space-x-3 space-y-0">
+                  <Skeleton className="h-4 w-4 rounded-full" />
+                  <Skeleton className="h-4 w-3/12" />
+                </div>
+              ))}
+          </div>
         </div>
       </div>
 
-      <Skeleton className="h-5 w-2/5" />
-      <div className="space-y-6">
+      <div className="space-y-4">
+        <Skeleton className="h-7 w-2/5" />
         {Array(2)
           .fill(0)
           .map((_, i) => i + 1)
           .map((index) => (
-            <div key={index} className="space-y-1">
-              <Skeleton className="h-3 w-2/6" />
-              <Skeleton className="h-8 w-full" />
+            <div key={index} className="space-y-2">
+              <Skeleton className="h-4 w-2/6" />
+              <Skeleton className="h-9 w-full" />
+              <Skeleton className="h-5 w-5/6" />
             </div>
           ))}
       </div>
 
-      <Skeleton className="h-5 w-2/5" />
-      <div className="space-y-1">
-        <Skeleton className="h-3 w-2/6" />
-        <Skeleton className="h-24 w-full" />
+      <div className="space-y-4">
+        <Skeleton className="h-7 w-2/5" />
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-2/6" />
+          <Skeleton className="h-32 w-full" />
+          <Skeleton className="h-5 w-5/6" />
+        </div>
       </div>
 
-      <Skeleton className="h-5 w-2/5" />
-      <div className="space-y-1">
-        <Skeleton className="h-3 w-2/6" />
-        <Skeleton className="h-8 w-full" />
+      <div className="space-y-4">
+        <Skeleton className="h-7 w-2/5" />
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-2/6" />
+          <Skeleton className="h-12 w-full" />
+          <Skeleton className="h-5 w-5/6" />
+        </div>
       </div>
     </>
   )

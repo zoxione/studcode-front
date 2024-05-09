@@ -146,8 +146,8 @@ const PublishSectionLoading = () => {
   return (
     <>
       <div className="space-y-4">
-        <Skeleton className="h-5 w-2/5" />
-        <div className="grid grid-rows-4 grid-flow-col justify-start gap-y-4 gap-x-24">
+        <Skeleton className="h-7 w-2/5" />
+        <div className="grid sm:grid-rows-4 sm:grid-flow-col justify-start gap-y-4 gap-x-12 sm:gap-x-24">
           {Array(7)
             .fill(0)
             .map((_, i) => i + 1)
@@ -161,8 +161,8 @@ const PublishSectionLoading = () => {
       </div>
 
       <div className="space-y-4">
-        <Skeleton className="h-5 w-2/5" />
-        <div className="grid grid-rows-4 grid-flow-col justify-start gap-y-4 gap-x-24">
+        <Skeleton className="h-7 w-2/5" />
+        <div className="grid sm:grid-rows-4 sm:grid-flow-col justify-start gap-y-4 gap-x-12 sm:gap-x-24">
           {Array(3)
             .fill(0)
             .map((_, i) => i + 1)
