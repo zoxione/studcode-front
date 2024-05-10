@@ -14,7 +14,7 @@ const EducationCard = forwardRef<HTMLAnchorElement, EducationCardProps>(({ educa
     <div className="flex flex-col sm:flex-row items-center gap-4">
       <div className="relative shrink-0 w-20 h-20 rounded-xl overflow-hidden">
         {education.logo !== "" ? (
-          <Image src={education.logo} alt={education.name} fill className="object-cover" />
+          <Image src={education.logo} alt={education.name} fill className="object-contain" />
         ) : (
           <University className="w-20 h-20" />
         )}

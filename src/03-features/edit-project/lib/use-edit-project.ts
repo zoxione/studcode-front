@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react"
 
 import {
   Project,
+  ProjectFiles,
   ProjectFilesResponse,
   ProjectStatus,
   useUpdateOneProjectMutation,
@@ -66,10 +67,16 @@ const useEditProject = ({ project, files }: useEditProjectProps) => {
         toast.error("Вы не авторизованы")
         return
       }
-      await uploadsFilesAsync({
-        key: projectId,
-        files: { logo_file: values.logo_file, screenshots_files: values.screenshots_files },
-      })
+      const files: ProjectFiles = {
+        screenshots_files: values.screenshots_files,
+        ...(values.logo_file && values.logo_file[0]?.lastModified && { logo_file: values.logo_file }),
+      }
+      if (Object.keys(files).length > 0) {
+        await uploadsFilesAsync({
+          key: projectId,
+          files,
+        })
+      }
       await updateProjectAsync({
         key: projectId,
         project: {
@@ -90,7 +97,8 @@ const useEditProject = ({ project, files }: useEditProjectProps) => {
       })
       toast.success(successMessage)
       router.push(redirectUrl)
-    } catch (e) {
+    } catch (error) {
+      console.error(error)
       toast.error("Произошла ошибка")
     } finally {
       setIsLoading(false)

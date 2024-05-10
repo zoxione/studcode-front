@@ -7,6 +7,7 @@ import * as z from "zod"
 
 import {
   Team,
+  TeamFiles,
   TeamFilesResponse,
   teamSchema,
   useUpdateOneTeamMutation,
@@ -43,10 +44,15 @@ const useEditTeam = ({ team, files }: useEditTeamProps) => {
         toast.error("Вы не авторизованы")
         return
       }
-      await uploadsFilesAsync({
-        key: team._id,
-        files: { logo_file: values.logo_file },
-      })
+      const files: TeamFiles = {
+        ...(values.logo_file && values.logo_file[0]?.lastModified && { logo_file: values.logo_file }),
+      }
+      if (Object.keys(files).length > 0) {
+        await uploadsFilesAsync({
+          key: team._id,
+          files,
+        })
+      }
       await updateTeamAsync({
         key: team._id,
         team: {
@@ -57,6 +63,7 @@ const useEditTeam = ({ team, files }: useEditTeamProps) => {
       })
       toast.success("Команда обновлена")
     } catch (error) {
+      console.error(error)
       toast.error("Произошла ошибка")
     } finally {
       setIsLoading(false)

@@ -42,22 +42,30 @@ const userSchema = z.object({
     .max(24, { message: "Максимальная длина пароля - 24 символа." }),
   full_name: fullNameSchema,
   avatar_file: z
-    .any()
-    .refine((files) => files?.length == 1, "Аватар необходим.")
-    .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, `Максимальный размер аватара - 5MB.`)
-    .refine(
-      (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
-      "Принимаются только файлы типа .jpg, .jpeg, .png и .webp.",
-    )
+    .union([
+      z.null(),
+      z
+        .any()
+        .refine((files) => files?.length == 1, "Аватар необходим.")
+        .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, `Максимальный размер логотипа - 5MB.`)
+        .refine(
+          (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
+          "Принимаются только файлы типа .jpg, .jpeg, .png и .webp.",
+        ),
+    ])
     .optional(),
   cover_file: z
-    .any()
-    .refine((files) => files?.length == 1, "Обложка необходима.")
-    .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, `Максимальный размер обложки - 5MB.`)
-    .refine(
-      (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
-      "Принимаются только файлы типа .jpg, .jpeg, .png и .webp.",
-    )
+    .union([
+      z.null(),
+      z
+        .any()
+        .refine((files) => files?.length == 1, "Обложка необходима.")
+        .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, `Максимальный размер логотипа - 5MB.`)
+        .refine(
+          (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
+          "Принимаются только файлы типа .jpg, .jpeg, .png и .webp.",
+        ),
+    ])
     .optional(),
   about: z
     .union([

@@ -90,21 +90,12 @@ const Dropzone = React.forwardRef<HTMLDivElement, DropzoneProps>(
                 ? Array.from(value).map((file, index) => {
                     if (file.type.includes("image")) {
                       return (
-                        <span key={file.size} className="relative">
-                          <img src={URL.createObjectURL(file)} className={cn("", classNamePreview)} alt={file?.name} />
-                          {/* <Button
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              handleRemove(index)
-                            }}
-                            variant="destructive"
-                            size="none"
-                            type="button"
-                            className="absolute right-0 bottom-0 z-50 p-1 rounded-xl"
-                          >
-                            <TrashIcon className="h-4 w-4" />
-                          </Button> */}
-                        </span>
+                        <img
+                          key={index}
+                          src={URL.createObjectURL(file)}
+                          className={cn("", classNamePreview)}
+                          alt={file?.name}
+                        />
                       )
                     } else {
                       return null

@@ -78,7 +78,7 @@ const ImagesAndMediaSection = ({ form, project }: ImagesAndMediaSectionProps) =>
                       <FormItem className="grow">
                         <FormControl>
                           <Dropzone
-                            classNamePreview="object-contain aspect-video"
+                            classNamePreview="object-contain aspect-video h-72"
                             accept={ACCEPTED_IMAGE_TYPES.join(", ")}
                             onUpdate={(file) => {
                               update(index, file)

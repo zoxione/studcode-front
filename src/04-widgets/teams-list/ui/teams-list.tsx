@@ -4,6 +4,7 @@ import { Pencil1Icon, ReloadIcon } from "@radix-ui/react-icons"
 import { Fragment, useEffect } from "react"
 import { useInView } from "react-intersection-observer"
 import Link from "next/link"
+import { useSession } from "next-auth/react"
 
 import { cn } from "@/01-shared/utils/cn"
 import { GetAllTeamsFilter, TeamCard, TeamCardProps, useGetAllTeamsInfiniteQuery } from "@/02-entities/team"
@@ -18,6 +19,7 @@ interface TeamsListProps {
 
 export const TeamsList = ({ filter, isEdit, teamCardProps, className }: TeamsListProps) => {
   const { data: teams, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useGetAllTeamsInfiniteQuery(filter)
+  const { data: session } = useSession()
 
   const [ref, inView] = useInView({ threshold: 0.4 })
   useEffect(() => {
@@ -39,15 +41,18 @@ export const TeamsList = ({ filter, isEdit, teamCardProps, className }: TeamsLis
             .fill(0)
             .map((_, i) => i + 1)
             .map((index) => <TeamCard key={index} loading />)
-        : teams.pages.map((group, i) => (
+        : teams.pages?.map((group, i) => (
             <Fragment key={i}>
               {group.results.length > 0 ? (
-                group.results.map((team) => (
+                group.results?.map((team) => (
                   <TeamCard
                     key={team._id}
                     team={team}
                     actions={[
-                      isEdit ? (
+                      isEdit &&
+                      team.members.some(
+                        (member) => member.user._id === session?.user?._id && member.role === "owner",
+                      ) ? (
                         <Link
                           key="edit"
                           href={`/teams/${team.slug}/edit`}

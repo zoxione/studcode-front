@@ -8,6 +8,7 @@ import * as z from "zod"
 import { Option } from "@/01-shared/ui/multi-select"
 import {
   User,
+  UserFiles,
   UserFilesResponse,
   useUpdateOneUserMutation,
   useUploadsOneUserMutation,
@@ -71,13 +72,16 @@ const useEditUserProfile = ({ user, files }: useEditUserProfileProps) => {
         toast.error("Вы не авторизованы")
         return
       }
-      await uploadsFilesAsync({
-        key: user._id,
-        files: {
-          avatar_file: values.avatar_file,
-          cover_file: values.cover_file,
-        },
-      })
+      const files: UserFiles = {
+        ...(values.avatar_file && values.avatar_file[0]?.lastModified && { avatar_file: values.avatar_file }),
+        ...(values.cover_file && values.cover_file[0]?.lastModified && { cover_file: values.cover_file }),
+      }
+      if (Object.keys(files).length > 0) {
+        await uploadsFilesAsync({
+          key: user._id,
+          files,
+        })
+      }
       await updateUserAsync({
         key: user._id,
         user: {
@@ -90,6 +94,7 @@ const useEditUserProfile = ({ user, files }: useEditUserProfileProps) => {
       })
       toast.success("Профиль обновлен")
     } catch (error) {
+      console.error(error)
       toast.error("Произошла ошибка")
     } finally {
       setIsLoading(false)
