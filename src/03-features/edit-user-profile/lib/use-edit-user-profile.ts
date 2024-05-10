@@ -41,7 +41,7 @@ const useEditUserProfile = ({ user, files }: useEditUserProfileProps) => {
   const { data: specializations } = useGetAllSpecializationsQuery({ limit: 100, order: "name" })
   const specializationsItems: Option[] =
     specializations?.results.map((spec) => ({ label: spec.name, value: spec._id })) || []
-  const { data: educations } = useGetAllEducationsQuery({ limit: 100, order: "name" })
+  const { data: educations } = useGetAllEducationsQuery({ limit: 500, order: "abbreviation" })
 
   const editUserProfileForm = useForm<z.infer<typeof editUserProfileSchema>>({
     resolver: zodResolver(editUserProfileSchema),
