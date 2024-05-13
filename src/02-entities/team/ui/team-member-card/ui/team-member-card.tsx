@@ -24,7 +24,7 @@ const TeamMemberCard = forwardRef<HTMLAnchorElement, TeamMemberCardProps>(({ mem
         <span className="text-sm font-semibold leading-none group-hover:text-primary duration-200">
           {member.user.full_name.surname} {member.user.full_name.name}
         </span>
-        {member.user.specializations.length > 0 ? (
+        {member.user.specializations?.length > 0 ? (
           <div className="flex flex-wrap gap-1">
             {member.user.specializations.map((spec) => (
               <SpecializationBadge key={spec._id} specialization={spec} />

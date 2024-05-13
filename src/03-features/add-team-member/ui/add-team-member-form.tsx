@@ -69,7 +69,7 @@ const AddTeamMemberForm = ({ teamName }: AddTeamMemberFormProps) => {
                                 </Button>
                               </PopoverTrigger>
                               <PopoverContent className="w-fit flex flex-col gap-1">
-                                {user.specializations.length > 0 ? (
+                                {user.specializations?.length > 0 ? (
                                   user.specializations.map((spec) => (
                                     <SpecializationBadge key={spec._id} specialization={spec} />
                                   ))

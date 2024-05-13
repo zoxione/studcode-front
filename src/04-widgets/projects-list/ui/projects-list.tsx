@@ -52,8 +52,8 @@ export const ProjectsList = ({ filter, isEdit, projectCardProps, className }: Pr
             .map((index) => <ProjectCard key={index} loading />)
         : projects.pages.map((group, i) => (
             <Fragment key={i}>
-              {group.results.length > 0 ? (
-                group.results.map((project) => (
+              {group.results?.length > 0 ? (
+                group.results?.map((project) => (
                   <ProjectCard
                     key={project._id}
                     project={project}

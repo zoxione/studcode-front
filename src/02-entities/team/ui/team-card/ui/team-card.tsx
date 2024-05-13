@@ -39,7 +39,7 @@ const TeamCard = forwardRef<HTMLAnchorElement, TeamCardProps>(({ team, loading, 
             {team.name}
           </Title>
           <div className="flex items-center justify-start -space-x-1">
-            {team.members.slice(0, 3).map((member) => (
+            {team.members?.slice(0, 3).map((member) => (
               <Tooltip key={member.user._id} delayDuration={0}>
                 <TooltipTrigger asChild>
                   <Avatar className="w-6 h-6 text-xs">

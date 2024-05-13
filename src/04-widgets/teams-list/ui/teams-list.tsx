@@ -43,7 +43,7 @@ export const TeamsList = ({ filter, isEdit, teamCardProps, className }: TeamsLis
             .map((index) => <TeamCard key={index} loading />)
         : teams.pages?.map((group, i) => (
             <Fragment key={i}>
-              {group.results.length > 0 ? (
+              {group.results?.length > 0 ? (
                 group.results?.map((team) => (
                   <TeamCard
                     key={team._id}
