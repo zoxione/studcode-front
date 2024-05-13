@@ -112,7 +112,7 @@ export default async function Page({ params }: PageProps) {
           <Title order={5}>Проекты</Title>
           <Card>
             <CardContent className="p-6">
-              <ProjectsList filter={{ team_id: team._id }} />
+              <ProjectsList filter={{ team_id: team._id }} projectCardProps={{ classNameWrapper: "max-w-full" }} />
             </CardContent>
           </Card>
         </div>

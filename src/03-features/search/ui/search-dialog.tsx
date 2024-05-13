@@ -74,6 +74,7 @@ const SearchDialog = ({ className }: SearchDialogProps) => {
                         voted={project.voted}
                       />,
                     ]}
+                    classNameWrapper="w-full"
                   />
                 </CommandItem>
               ))}
