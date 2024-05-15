@@ -43,7 +43,6 @@ const useEditUserAccount = ({ user }: useEditUserAccountProps) => {
         },
       })
       toast.success("Данные обновлены")
-      router.push(`/${res.username}`)
     } catch (error) {
       toast.error("Произошла ошибка")
     } finally {

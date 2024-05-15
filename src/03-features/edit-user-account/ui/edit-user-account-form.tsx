@@ -25,7 +25,7 @@ const EditUserAccountForm = ({ user }: EditUserAccountFormProps) => {
           name="email"
           render={({ field }) => (
             <FormItem className="col-span-2">
-              <FormLabel>Электронная почта</FormLabel>
+              <FormLabel>Электронная почта (нельзя изменить)</FormLabel>
               <FormControl>
                 <Input type="email" placeholder="example@ex.com" disabled {...field} />
               </FormControl>
@@ -56,11 +56,10 @@ const EditUserAccountForm = ({ user }: EditUserAccountFormProps) => {
             <FormItem className="col-span-2">
               <FormLabel>Имя пользователя</FormLabel>
               <FormControl>
-                <Input type="text" placeholder="zoxione" disabled {...field} />
+                <Input type="text" placeholder="zoxione" {...field} />
               </FormControl>
               <FormDescription>
-                Это ваше публичное имя. Это может быть ваше настоящее имя или псевдоним. Вы можете изменять его только
-                один раз в 30 дней.
+                Это ваше публичное имя пользователя, которое может быть вашим настоящим именем или псевдонимом.
               </FormDescription>
               <FormMessage />
             </FormItem>
