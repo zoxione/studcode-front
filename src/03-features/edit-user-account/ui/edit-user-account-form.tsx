@@ -31,7 +31,7 @@ const EditUserAccountForm = ({ user }: EditUserAccountFormProps) => {
               </FormControl>
               <FormMessage />
               <div>
-                {user.verify_email === "true" ? (
+                {user.verify_email ? (
                   <FormDescription className="flex items-center gap-2">
                     <CheckCircledIcon className="h-4 w-4 text-green-500" />
                     <span>Почта подтверждена</span>

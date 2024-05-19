@@ -16,7 +16,7 @@ interface User {
   email: string
   password: string
   role: UserRole
-  verify_email: string
+  verify_email: boolean
   refresh_token: string
   full_name: UserFullName
   avatar: string

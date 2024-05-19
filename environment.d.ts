@@ -9,6 +9,8 @@ namespace NodeJS {
     NEXTAUTH_URL: string
     GITHUB_ID: string
     GITHUB_SECRET: string
+    UMAMI_URL: string
+    UMAMI_WEBSITE_ID: string
     YANDEX_METRIKA_ID: string
   }
 }

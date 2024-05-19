@@ -6,6 +6,8 @@ const prettyTeamRole = (role: TeamUserRole) => {
       return "Участник"
     case "owner":
       return "Владелец"
+    case "invited":
+      return "Приглашен"
   }
 }
 

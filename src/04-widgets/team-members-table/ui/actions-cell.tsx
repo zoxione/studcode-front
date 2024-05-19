@@ -14,10 +14,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/01-shared/ui/dropdown-menu"
-import { TeamMember, useRemoveMemberTeamMutation } from "@/02-entities/team"
+import { TeamMember, useUpdateMembersTeamMutation } from "@/02-entities/team"
 
 const ActionsCell = ({ row }: { row: Row<TeamMember> }) => {
-  const { mutate: removeMember } = useRemoveMemberTeamMutation()
+  const { mutate: updateMembers } = useUpdateMembersTeamMutation()
   const { data: session } = useSession()
   const pathname = usePathname()
   const segments = pathname.split("/")
@@ -46,9 +46,12 @@ const ActionsCell = ({ row }: { row: Row<TeamMember> }) => {
             className="text-destructive focus:text-destructive"
             disabled={session?.user?._id === user._id}
             onClick={() => {
-              removeMember({
+              updateMembers({
                 key: teamName,
-                userId: user._id,
+                updateMember: {
+                  member: { user: user._id },
+                  action: "remove",
+                },
               })
             }}
           >

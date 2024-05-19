@@ -3,6 +3,7 @@ import {
   CreateTeam,
   GetAllTeamsFilter,
   GetAllTeamsResponse,
+  GetOneTeamsFilter,
   TeamFiles,
   TeamFilesResponse,
   UpdateTeam,
@@ -73,8 +74,15 @@ class TeamAPI {
   /**
    * Получение одной команды
    */
-  async getOne(key: string): Promise<Team> {
-    const res = await fetch(`${this.baseUrl}/${key}`, {
+  async getOne(key: string, filter: GetOneTeamsFilter | undefined = {}): Promise<Team> {
+    const url = new URL(`${this.baseUrl}/${key}`)
+    for (const [key, value] of Object.entries(filter)) {
+      if (value) {
+        url.searchParams.append(key, value)
+      }
+    }
+
+    const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -120,10 +128,10 @@ class TeamAPI {
   /**
    * Обновление участников команды
    */
-  async updateMembers(key: string, members: UpdateTeamMember[]): Promise<Team> {
+  async updateMembers(key: string, updateMember: UpdateTeamMember): Promise<Team> {
     const res = await fetch(`${this.baseUrl}/${key}/members`, {
       method: "PUT",
-      body: JSON.stringify({ members: members }),
+      body: JSON.stringify(updateMember),
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -144,10 +152,9 @@ class TeamAPI {
   /**
    * Добавление участника в команду
    */
-  async addMember(key: string, member: UpdateTeamMember["member"]): Promise<Team> {
-    const res = await fetch(`${this.baseUrl}/${key}/members/add`, {
-      method: "PUT",
-      body: JSON.stringify(member),
+  async join(key: string): Promise<Team> {
+    const res = await fetch(`${this.baseUrl}/${key}/members/join`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -168,10 +175,9 @@ class TeamAPI {
   /**
    * Удаление участника из команды
    */
-  async removeMember(key: string, member: Pick<UpdateTeamMember["member"], "user">): Promise<Team> {
-    const res = await fetch(`${this.baseUrl}/${key}/members/remove`, {
-      method: "PUT",
-      body: JSON.stringify(member),
+  async leave(key: string): Promise<Team> {
+    const res = await fetch(`${this.baseUrl}/${key}/members/leave`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -241,7 +247,7 @@ class TeamAPI {
    * Получение файлов одной команды
    */
   async getOneFiles(key: string): Promise<TeamFilesResponse> {
-    const team = await this.getOne(key)
+    const team = await this.getOne(key, {})
     let logo_file: Blob | null = null
 
     if (team.logo !== "") {

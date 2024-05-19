@@ -6,7 +6,7 @@ import * as z from "zod"
 import { useSession } from "next-auth/react"
 
 import { useDebounce } from "@/01-shared/ui/multi-select"
-import { useAddMemberTeamMutation } from "@/02-entities/team"
+import { useUpdateMembersTeamMutation } from "@/02-entities/team"
 import { useGetAllUsersQuery, userAPI, userSchema } from "@/02-entities/user"
 
 const addTeamMemberSchema = userSchema.pick({ username: true })
@@ -18,7 +18,7 @@ interface useAddTeamMemberProps {
 const useAddTeamMember = ({ teamName }: useAddTeamMemberProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const { data: session } = useSession()
-  const { mutateAsync: addTeamMemberAsync } = useAddMemberTeamMutation()
+  const { mutateAsync: updateMembersAsync } = useUpdateMembersTeamMutation()
   const [searchQuery, setSearchQuery] = useState("")
 
   const addTeamMemberForm = useForm<z.infer<typeof addTeamMemberSchema>>({
@@ -46,11 +46,17 @@ const useAddTeamMember = ({ teamName }: useAddTeamMemberProps) => {
         toast.error("Вы не можете добавить себя в команду")
         return
       }
-      await addTeamMemberAsync({
+      await updateMembersAsync({
         key: teamName,
-        userId: user._id,
-        role: "member",
+        updateMember: {
+          member: {
+            user: user._id,
+            role: "member",
+          },
+          action: "add",
+        },
       })
+      toast.success("Пользователю отправлено приглашение на электронную почту")
     } catch (error: any) {
       if (error.message.includes("user") && error.message.includes("Not Found")) {
         toast.error("Пользователь не найден")

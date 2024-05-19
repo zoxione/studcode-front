@@ -74,8 +74,6 @@ export default async function LayoutPage({ params, children }: LayoutPageProps) 
 
       <div className="mt-[152px] flex flex-col md:flex-row items-center md:items-stretch gap-2 md:gap-6">
         <div className="mt-[72px] w-36 flex flex-row items-center justify-center gap-2 text-sm">
-          {/* <span className="text-green-600 font-semibold">+160</span> */}
-          {/* {user.verify_email === "true" ? <Badge>Подтвержден</Badge> : null} */}
           <span className="font-medium">с {prettyCreatedAt(user.created_at)} г.</span>
         </div>
         <div className="flex flex-col">

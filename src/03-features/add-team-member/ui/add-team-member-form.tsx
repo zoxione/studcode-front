@@ -99,7 +99,7 @@ const AddTeamMemberForm = ({ teamName }: AddTeamMemberFormProps) => {
             </FormItem>
           )}
         />
-        <FormDescription>Добавляет пользователя в команду {teamName} (без подтверждения).</FormDescription>
+        <FormDescription>Отправляет приглашение в команду на электронную почту.</FormDescription>
       </form>
     </Form>
   )

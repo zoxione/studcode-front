@@ -1,8 +1,7 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
-import { TeamUserRole } from "../model/types"
 import { teamAPI } from "./team-api"
-import { CreateTeam, GetAllTeamsFilter, TeamFiles, UpdateTeam } from "./types"
+import { CreateTeam, GetAllTeamsFilter, GetOneTeamsFilter, TeamFiles, UpdateTeam, UpdateTeamMember } from "./types"
 
 const useCreateOneTeamMutation = () => {
   const queryClient = useQueryClient()
@@ -44,10 +43,10 @@ const useGetAllTeamsInfiniteQuery = (filter: GetAllTeamsFilter) => {
   })
 }
 
-const useGetOneTeamQuery = (key: string) => {
+const useGetOneTeamQuery = (key: string, filter?: GetOneTeamsFilter) => {
   return useQuery({
     queryKey: ["teams", key],
-    queryFn: () => teamAPI.getOne(key),
+    queryFn: () => teamAPI.getOne(key, filter),
   })
 }
 
@@ -81,14 +80,11 @@ const useDeleteOneTeamMutation = () => {
   })
 }
 
-const useAddMemberTeamMutation = () => {
+const useUpdateMembersTeamMutation = () => {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ key, userId, role }: { key: string; userId: string; role: TeamUserRole }) => {
-      return teamAPI.addMember(key, {
-        user: userId,
-        role: role,
-      })
+    mutationFn: ({ key, updateMember }: { key: string; updateMember: UpdateTeamMember }) => {
+      return teamAPI.updateMembers(key, updateMember)
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["teams"] })
@@ -99,11 +95,26 @@ const useAddMemberTeamMutation = () => {
   })
 }
 
-const useRemoveMemberTeamMutation = () => {
+const useJoinTeamMutation = () => {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ key, userId }: { key: string; userId: string }) => {
-      return teamAPI.removeMember(key, { user: userId })
+    mutationFn: ({ key }: { key: string }) => {
+      return teamAPI.join(key)
+    },
+    onSuccess: async () => {
+      queryClient.invalidateQueries({ queryKey: ["teams"] })
+      await fetch(`/api/revalidate?tag=teams`)
+      queryClient.invalidateQueries({ queryKey: ["users"] })
+      await fetch(`/api/revalidate?tag=users`)
+    },
+  })
+}
+
+const useLeaveTeamMutation = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ key }: { key: string }) => {
+      return teamAPI.leave(key)
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["teams"] })
@@ -137,13 +148,14 @@ const useGetOneTeamFilesQuery = (key: string) => {
 }
 
 export {
-  useAddMemberTeamMutation,
+  useUpdateMembersTeamMutation,
+  useJoinTeamMutation,
   useCreateOneTeamMutation,
   useDeleteOneTeamMutation,
   useGetAllTeamsQuery,
   useGetAllTeamsInfiniteQuery,
   useGetOneTeamQuery,
-  useRemoveMemberTeamMutation,
+  useLeaveTeamMutation,
   useUpdateOneTeamMutation,
   useUploadsOneTeamMutation,
   useGetOneTeamFilesQuery,

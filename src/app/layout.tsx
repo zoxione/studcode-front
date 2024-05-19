@@ -3,6 +3,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import type { Viewport } from "next"
 import { Roboto } from "next/font/google"
 import { ReactNode, Suspense } from "react"
+import Script from "next/script"
 
 import { metaData } from "@/01-shared/lib/meta-data"
 import { YandexMetrika } from "@/01-shared/lib/yandex-metrika"
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body className={`${roboto.className} flex flex-col flex-auto overflow-x-hidden m-0 p-0`}>
         <Suspense>
           <YandexMetrika />
+          <Script defer src={`${process.env.UMAMI_URL}/script.js`} data-website-id={process.env.UMAMI_WEBSITE_ID} />
         </Suspense>
         <Providers>
           {children}

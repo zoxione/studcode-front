@@ -1,7 +1,7 @@
 import { Separator } from "@/01-shared/ui/separator"
 import { teamAPI } from "@/02-entities/team"
 import { AddTeamMemberForm } from "@/03-features/add-team-member"
-import { MembersTable } from "@/04-widgets/members-table"
+import { TeamMembersTable } from "@/04-widgets/team-members-table"
 
 interface PageProps {
   params: { slug: string }
@@ -19,7 +19,7 @@ export default async function Page({ params }: PageProps) {
       </div>
       <Separator />
       <AddTeamMemberForm teamName={team.name} />
-      <MembersTable teamName={team.name} />
+      <TeamMembersTable teamName={team.name} />
     </div>
   )
 }

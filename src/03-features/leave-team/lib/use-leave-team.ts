@@ -3,7 +3,7 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 
-import { useRemoveMemberTeamMutation } from "@/02-entities/team"
+import { useLeaveTeamMutation } from "@/02-entities/team"
 
 interface useLeaveTeamProps {
   teamName: string
@@ -14,7 +14,7 @@ const useLeaveTeam = ({ teamName, userId }: useLeaveTeamProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const { data: session } = useSession()
   const router = useRouter()
-  const { mutateAsync: removeMemberTeamAsync } = useRemoveMemberTeamMutation()
+  const { mutateAsync: leaveTeamAsync } = useLeaveTeamMutation()
 
   const handleLeave = async () => {
     try {
@@ -23,7 +23,7 @@ const useLeaveTeam = ({ teamName, userId }: useLeaveTeamProps) => {
         toast.error("Вы не авторизованы")
         return
       }
-      await removeMemberTeamAsync({ key: teamName, userId: userId })
+      await leaveTeamAsync({ key: teamName })
       toast.success("Вы вышли из команды")
       router.refresh()
     } catch (error) {

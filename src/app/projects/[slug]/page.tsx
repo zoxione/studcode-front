@@ -25,6 +25,7 @@ import { LinksList } from "@/04-widgets/links-list"
 import { ReviewsList } from "@/04-widgets/reviews-list"
 import { ScreensCarousel } from "@/04-widgets/screens-carousel"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/01-shared/ui/tooltip"
+import { UmamiSend } from "@/01-shared/lib/umami-send"
 
 interface PageProps {
   params: { slug: string }
@@ -74,6 +75,8 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <Layout header={<Header />} footer={<Footer />} className="">
+      <UmamiSend projectId={project._id} userId={session?.user._id ? session.user._id : ""} />
+
       {project.screenshots.length > 0 ? (
         <ScreensCarousel className="absolute left-0 border-b-4 border-b-border w-full" screens={project.screenshots} />
       ) : null}

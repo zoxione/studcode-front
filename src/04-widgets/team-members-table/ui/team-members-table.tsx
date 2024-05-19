@@ -7,13 +7,13 @@ import { columns } from "./columns"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/01-shared/ui/table"
 import { useGetOneTeamQuery } from "@/02-entities/team"
 
-interface MembersTableProps<TData, TValue> {
+interface TeamMembersTableProps<TData, TValue> {
   // columns: ColumnDef<TData, TValue>[]
   // data: TData[]
   teamName: string
 }
 
-const MembersTable = <TData, TValue>({ teamName }: MembersTableProps<TData, TValue>) => {
+const TeamMembersTable = <TData, TValue>({ teamName }: TeamMembersTableProps<TData, TValue>) => {
   const { data: team, status } = useGetOneTeamQuery(teamName)
 
   const table = useReactTable({
@@ -74,4 +74,4 @@ const MembersTable = <TData, TValue>({ teamName }: MembersTableProps<TData, TVal
   )
 }
 
-export { MembersTable }
+export { TeamMembersTable }

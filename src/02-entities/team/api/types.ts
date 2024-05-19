@@ -7,6 +7,7 @@ interface GetAllTeamsFilter {
   search?: string
   order?: keyof Team | `!${keyof Team}`
   member_id?: string
+  member_role?: TeamUserRole | `!${TeamUserRole}`
 }
 
 interface GetAllTeamsResponse {
@@ -19,6 +20,10 @@ interface GetAllTeamsResponse {
   results: Team[]
 }
 
+interface GetOneTeamsFilter {
+  member_role?: TeamUserRole | `!${TeamUserRole}`
+}
+
 interface CreateTeam extends Pick<Team, "name" | "status" | "about"> {
   members: {
     user: string
@@ -28,13 +33,22 @@ interface CreateTeam extends Pick<Team, "name" | "status" | "about"> {
 
 interface UpdateTeam extends Omit<DeepPartial<Team>, "_id" | "created_at" | "updated_at"> {}
 
-interface UpdateTeamMember {
+interface AddTeamMember {
+  action: "add"
   member: {
     user: string
     role: TeamUserRole
   }
-  action: "add" | "remove"
 }
+
+interface RemoveTeamMember {
+  action: "remove"
+  member: {
+    user: string
+  }
+}
+
+type UpdateTeamMember = AddTeamMember | RemoveTeamMember
 
 interface TeamFiles {
   logo_file?: FileList
@@ -45,6 +59,7 @@ interface TeamFilesResponse {
 }
 
 export type {
+  GetOneTeamsFilter,
   GetAllTeamsFilter,
   GetAllTeamsResponse,
   CreateTeam,

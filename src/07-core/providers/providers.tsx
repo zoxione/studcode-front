@@ -48,7 +48,7 @@ const Providers = ({ children }: IProviders) => {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <TooltipProvider>
-            <Toaster position="bottom-right" richColors closeButton />
+            <Toaster position="top-center" richColors closeButton />
             <Suspense>
               <DialogProvider />
             </Suspense>

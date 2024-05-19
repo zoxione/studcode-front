@@ -5,7 +5,7 @@ import { teamSchema } from "./schema"
 
 type TeamStatus = z.infer<typeof teamSchema>["status"]
 
-type TeamUserRole = "owner" | "member"
+type TeamUserRole = "owner" | "member" | "invited"
 
 interface TeamMember {
   user: Pick<User, "_id" | "username" | "avatar" | "full_name" | "email" | "specializations">

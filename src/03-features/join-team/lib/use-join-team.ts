@@ -3,7 +3,7 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 
-import { useAddMemberTeamMutation } from "@/02-entities/team"
+import { useJoinTeamMutation } from "@/02-entities/team"
 
 interface useJoinTeamProps {
   teamName: string
@@ -14,7 +14,7 @@ const useJoinTeam = ({ teamName, userId }: useJoinTeamProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const { data: session } = useSession()
   const router = useRouter()
-  const { mutateAsync: addMemberTeamAsync } = useAddMemberTeamMutation()
+  const { mutateAsync: joinTeamAsync } = useJoinTeamMutation()
 
   const handleJoin = async () => {
     try {
@@ -23,7 +23,7 @@ const useJoinTeam = ({ teamName, userId }: useJoinTeamProps) => {
         toast.error("Вы не авторизованы")
         return
       }
-      await addMemberTeamAsync({ key: teamName, userId: userId, role: "member" })
+      await joinTeamAsync({ key: teamName })
       toast.success("Вы вступили в команду")
       router.refresh()
     } catch (error) {

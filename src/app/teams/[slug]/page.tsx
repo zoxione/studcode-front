@@ -26,7 +26,7 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   let team
   try {
-    team = await teamAPI.getOne(params.slug)
+    team = await teamAPI.getOne(params.slug, { member_role: "!invited" })
   } catch {
     notFound()
   }
@@ -47,7 +47,7 @@ export const revalidate = 60
 export default async function Page({ params }: PageProps) {
   let team
   try {
-    team = await teamAPI.getOne(params.slug)
+    team = await teamAPI.getOne(params.slug, { member_role: "!invited" })
   } catch {
     notFound()
   }
