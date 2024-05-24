@@ -26,7 +26,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body className={`${roboto.className} flex flex-col flex-auto overflow-x-hidden m-0 p-0`}>
         <Suspense>
           <YandexMetrika />
-          <Script defer src={`${process.env.UMAMI_URL}/script.js`} data-website-id={process.env.UMAMI_WEBSITE_ID} />
         </Suspense>
         <Providers>
           {children}
