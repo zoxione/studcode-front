@@ -3,7 +3,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import type { Viewport } from "next"
 import { Roboto } from "next/font/google"
 import { ReactNode, Suspense } from "react"
-import Script from "next/script"
 
 import { metaData } from "@/01-shared/lib/meta-data"
 import { YandexMetrika } from "@/01-shared/lib/yandex-metrika"
