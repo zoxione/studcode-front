@@ -47,6 +47,7 @@ const UserMenu = ({ user }: UserMenuProps) => {
     <DropdownMenu onOpenChange={setOpenMenu}>
       <DropdownMenuTrigger asChild>
         <Button
+          id="user-menu"
           variant="ghost"
           className={`p-1 gap-0.5 focus-visible:ring-0 ${openMenu ? "bg-accent text-accent-foreground" : ""}`}
         >
@@ -103,7 +104,7 @@ const UserMenu = ({ user }: UserMenuProps) => {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive">
+          <DropdownMenuItem id="logout" onClick={handleLogout} className="text-destructive focus:text-destructive">
             Выйти
             <ExitIcon className="ml-auto h-4 w-4" />
           </DropdownMenuItem>
