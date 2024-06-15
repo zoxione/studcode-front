@@ -2,9 +2,10 @@
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/01-shared/ui/select"
 import { useSortProjects } from "../lib/use-sort-projects"
+import { GetAllProjectsFilter } from "@/02-entities/project"
 
 interface SortProjectsSelectProps {
-  order: "title" | "flames"
+  order: GetAllProjectsFilter["order"]
 }
 
 const SortProjectsSelect = ({ order }: SortProjectsSelectProps) => {
@@ -17,7 +18,7 @@ const SortProjectsSelect = ({ order }: SortProjectsSelectProps) => {
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="title">По алфавиту</SelectItem>
-        <SelectItem value="flames">По голосам</SelectItem>
+        <SelectItem value="!flames">По голосам</SelectItem>
       </SelectContent>
     </Select>
   )

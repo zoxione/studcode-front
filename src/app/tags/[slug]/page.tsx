@@ -10,7 +10,7 @@ import { ProjectsList } from "@/04-widgets/projects-list"
 import { SortProjectsSelect } from "@/03-features/sort-projects"
 
 const allowedValues = {
-  order: ["title", "flames"],
+  order: ["title", "!flames"],
 } as const
 
 const ParamsSchema = z.object({

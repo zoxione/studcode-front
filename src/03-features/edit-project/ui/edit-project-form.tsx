@@ -3,6 +3,7 @@
 import * as z from "zod"
 import { CheckCircledIcon, ImageIcon, PlusCircledIcon, TextAlignRightIcon } from "@radix-ui/react-icons"
 import dynamic from "next/dynamic"
+import { useEffect } from "react"
 
 import { Button } from "@/01-shared/ui/button"
 import { Form } from "@/01-shared/ui/form"
@@ -71,6 +72,12 @@ const EditProjectForm = ({ project, files }: EditProjectFormProps) => {
       ),
     },
   ]
+
+  useEffect(() => {
+    window.onbeforeunload = () => {
+      return "Вы действительно хотите покинуть страницу?"
+    }
+  }, [])
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 auto-rows-min gap-8 lg:gap-16">
